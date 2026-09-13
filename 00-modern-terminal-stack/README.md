@@ -87,6 +87,15 @@ chsh -s "$(which zsh)"
 
 Après le `chsh`, il faut ouvrir une nouvelle session (ou lancer `exec zsh`) pour que le changement prenne effet.
 
+<details>
+<summary>🎬 Voyez-le en action !</summary>
+
+![Démo zsh](assets/zsh-demo.gif)
+
+*Le résultat peut varier selon votre terminal, votre police et votre système : ne soyez pas surpris si votre rendu diffère légèrement de celui présenté ici.*
+
+</details>
+
 ## Starship — un prompt minimaliste et rapide
 
 **Le problème :** un prompt bash par défaut ne donne aucune information contextuelle (branche git, langage détecté, statut de la dernière commande), ou alors via des configurations maison lentes à charger.
@@ -106,6 +115,15 @@ curl -sS https://starship.rs/install.sh | sh -s -- --yes
 ```zsh
 eval "$(starship init zsh)" # Prompt minimaliste et rapide
 ```
+
+<details>
+<summary>🎬 Voyez-le en action !</summary>
+
+![Démo Starship](assets/starship-demo.gif)
+
+*Le résultat peut varier selon votre terminal, votre police et votre système : ne soyez pas surpris si votre rendu diffère légèrement de celui présenté ici.*
+
+</details>
 
 ---
 
@@ -134,6 +152,15 @@ eval "$(atuin init zsh)"    # Historique de shell consultable
 bindkey '^[[A' atuin-up-search
 ```
 
+<details>
+<summary>🎬 Voyez-le en action !</summary>
+
+![Démo Atuin](assets/atuin-demo.gif)
+
+*Le résultat peut varier selon votre terminal, votre police et votre système : ne soyez pas surpris si votre rendu diffère légèrement de celui présenté ici.*
+
+</details>
+
 ## Zoxide — un `cd` qui apprend vos habitudes
 
 **Le problème :** naviguer entre projets avec `cd` demande de retaper (ou de compléter au Tab) des chemins entiers, encore et encore, y compris pour les répertoires qu'on visite dix fois par jour.
@@ -154,6 +181,15 @@ curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh 
 eval "$(zoxide init zsh)"   # 'cd' intelligent
 alias cd='z'                # Fait de 'cd' un saut intelligent via Zoxide
 ```
+
+<details>
+<summary>🎬 Voyez-le en action !</summary>
+
+![Démo Zoxide](assets/zoxide-demo.gif)
+
+*Le résultat peut varier selon votre terminal, votre police et votre système : ne soyez pas surpris si votre rendu diffère légèrement de celui présenté ici.*
+
+</details>
 
 ---
 
@@ -180,6 +216,15 @@ git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 ```
 
+<details>
+<summary>🎬 Voyez-le en action !</summary>
+
+![Démo fzf](assets/fzf-demo.gif)
+
+*Le résultat peut varier selon votre terminal, votre police et votre système : ne soyez pas surpris si votre rendu diffère légèrement de celui présenté ici.*
+
+</details>
+
 ## eza — `ls` avec des icônes, des couleurs et du bon sens
 
 **Le problème :** la sortie de `ls` est brute — pas de couleurs cohérentes par type de fichier, pas de tri intelligent des répertoires, pas d'icônes.
@@ -205,6 +250,15 @@ sudo apt update && sudo apt install -y eza
 alias ls='eza --icons --group-directories-first' # 'ls' avec icônes et meilleur regroupement
 alias ll='eza -lh --icons --grid'                # 'ls -l' avec icônes et vue grille
 ```
+
+<details>
+<summary>🎬 Voyez-le en action !</summary>
+
+![Démo eza](assets/eza-demo.gif)
+
+*Le résultat peut varier selon votre terminal, votre police et votre système : ne soyez pas surpris si votre rendu diffère légèrement de celui présenté ici.*
+
+</details>
 
 ## bat — `cat` avec coloration syntaxique
 
@@ -236,6 +290,15 @@ alias cat='bat'
 command -v bat &>/dev/null && alias cat='bat' || alias cat='batcat'
 ```
 
+<details>
+<summary>🎬 Voyez-le en action !</summary>
+
+![Démo bat](assets/bat-demo.gif)
+
+*Le résultat peut varier selon votre terminal, votre police et votre système : ne soyez pas surpris si votre rendu diffère légèrement de celui présenté ici.*
+
+</details>
+
 ---
 
 # 4. Une frappe assistée en temps réel
@@ -257,6 +320,15 @@ git clone https://github.com/zsh-users/zsh-autosuggestions ~/.zsh/zsh-autosugges
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 ```
 
+<details>
+<summary>🎬 Voyez-le en action !</summary>
+
+![Démo zsh-autosuggestions](assets/zsh-autosuggestions-demo.gif)
+
+*Le résultat peut varier selon votre terminal, votre police et votre système : ne soyez pas surpris si votre rendu diffère légèrement de celui présenté ici.*
+
+</details>
+
 ## zsh-syntax-highlighting — la coloration en temps réel
 
 **Le problème :** dans un shell nu, une commande mal orthographiée ou une syntaxe invalide ne se révèle qu'à l'exécution — trop tard, et souvent après avoir déjà appuyé sur Entrée.
@@ -274,6 +346,15 @@ git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.zsh/zsh-sy
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 ```
+
+<details>
+<summary>🎬 Voyez-le en action !</summary>
+
+![Démo zsh-syntax-highlighting](assets/zsh-syntax-highlighting-demo.gif)
+
+*Le résultat peut varier selon votre terminal, votre police et votre système : ne soyez pas surpris si votre rendu diffère légèrement de celui présenté ici.*
+
+</details>
 
 ---
 
@@ -312,6 +393,15 @@ bind -n M-Up select-pane -U
 bind -n M-Down select-pane -D
 ```
 
+<details>
+<summary>🎬 Voyez-le en action !</summary>
+
+![Démo Tmux](assets/tmux-demo.gif)
+
+*Le résultat peut varier selon votre terminal, votre police et votre système : ne soyez pas surpris si votre rendu diffère légèrement de celui présenté ici.*
+
+</details>
+
 ## TPM + tmux-resurrect + tmux-continuum — des sessions qui survivent aux redémarrages
 
 **Le problème :** une session Tmux, aussi pratique soit-elle, disparaît si la machine redémarre ou si le service Tmux est tué — perdant d'un coup tous les volets, layouts et répertoires de travail en cours (y compris une session Copilot CLI en plein milieu d'un long workflow).
@@ -340,6 +430,15 @@ Puis, pour installer les plugins déclarés sans intervention manuelle :
 ```bash
 ~/.tmux/plugins/tpm/bin/install_plugins
 ```
+
+<details>
+<summary>🎬 Voyez-le en action !</summary>
+
+![Démo tmux-resurrect](assets/tmux-resurrect-demo.gif)
+
+*Le résultat peut varier selon votre terminal, votre police et votre système : ne soyez pas surpris si votre rendu diffère légèrement de celui présenté ici.*
+
+</details>
 
 ---
 
@@ -383,43 +482,6 @@ Une fois les onze outils en place, voici ce qui change concrètement au quotidie
 | `Alt+Flèche` | Naviguer entre les volets (sans préfixe) |
 | `Ctrl+b` puis `d` | Détacher la session (elle reste active) |
 | `tmux attach` | Reprendre la dernière session |
-
----
-
-<details>
-<summary>🎬 Voyez-le en action ! (cliquer pour développer)</summary>
-
-Chaque outil ci-dessous a sa propre démonstration animée. Prenez le temps de regarder celles qui vous parlent le plus avant de vous lancer dans l'installation.
-
-**1. Le shell et l'invite de commandes**
-
-![Démo zsh](assets/zsh-demo.gif)
-![Démo Starship](assets/starship-demo.gif)
-
-**2. Historique et navigation**
-
-![Démo Atuin](assets/atuin-demo.gif)
-![Démo Zoxide](assets/zoxide-demo.gif)
-
-**3. Chercher et lire plus vite**
-
-![Démo fzf](assets/fzf-demo.gif)
-![Démo eza](assets/eza-demo.gif)
-![Démo bat](assets/bat-demo.gif)
-
-**4. Frappe assistée en temps réel**
-
-![Démo zsh-autosuggestions](assets/zsh-autosuggestions-demo.gif)
-![Démo zsh-syntax-highlighting](assets/zsh-syntax-highlighting-demo.gif)
-
-**5. Tmux et sessions persistantes**
-
-![Démo Tmux](assets/tmux-demo.gif)
-![Démo tmux-resurrect](assets/tmux-resurrect-demo.gif)
-
-*Le résultat peut varier selon votre terminal, votre police et votre système : ne soyez pas surpris si votre rendu diffère légèrement de celui présenté ici.*
-
-</details>
 
 ---
 
