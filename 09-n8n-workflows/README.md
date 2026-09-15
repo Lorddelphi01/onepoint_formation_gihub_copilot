@@ -260,4 +260,6 @@ Vous avez connecté Copilot CLI à une instance n8n locale via MCP, adapté un p
 
 Vous avez maintenant vu Copilot CLI travailler dans deux mondes différents : celui du code, et celui des workflows visuels d'un outil tiers. Le principe reste le même dans les deux cas — décrire un résultat, laisser l'IA assembler les briques, puis relire avant de valider.
 
-**[← Chapitre précédent : Tout assembler](../08-putting-it-together/README.md)** | **[Retour à l'accueil du cours →](../README.md)**
+> 🎁 **Envie d'aller plus loin ?** Le [Chapitre 10 (bonus) : Environnements isolés](../10-isolated-environments/README.md) vous montre comment exécuter Copilot CLI dans un dev container puis dans une sandbox Docker isolée, pour automatiser avec `--allow-all` sans surveillance et sans risque pour le reste de votre machine.
+
+**[← Chapitre précédent : Tout assembler](../08-putting-it-together/README.md)** | **[Retour à l'accueil du cours](../README.md)** | **[Chapitre bonus : Environnements isolés →](../10-isolated-environments/README.md)**
