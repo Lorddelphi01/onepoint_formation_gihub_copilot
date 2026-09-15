@@ -510,6 +510,8 @@ Félicitations ! Vous avez appris :
 
 Vous êtes maintenant équipé pour utiliser GitHub Copilot CLI comme un véritable multiplicateur de force dans votre workflow de développement.
 
+> 🎁 **Envie d'aller plus loin ?** Le [Chapitre 09 (bonus) : Automatiser un workflow visuel avec n8n](../09-n8n-workflows/README.md) applique les mêmes réflexes — décrire un résultat, laisser l'IA assembler, relire avant de valider — à un outil tiers plutôt qu'à du code.
+
 ## ➡️ Et ensuite ?
 
 Votre apprentissage ne s'arrête pas là :
@@ -529,4 +531,4 @@ Votre apprentissage ne s'arrête pas là :
 
 **Excellent travail ! Maintenant, allez construire quelque chose d'extraordinaire.**
 
-**[← Retour au Chapitre 07](../07-mcp-servers/README.md)** | **[Retour à l'accueil du cours →](../README.md)**
+**[← Retour au Chapitre 07](../07-mcp-servers/README.md)** | **[Retour à l'accueil du cours](../README.md)** | **[Chapitre bonus : n8n →](../09-n8n-workflows/README.md)**

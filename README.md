@@ -78,6 +78,7 @@ Ce cours se concentre sur **GitHub Copilot CLI**, qui apporte l'assistance de l'
 | 06 | 🛠️ [Automatiser les tâches répétitives](./06-skills/README.md) | Compétences (skills) qui se chargent automatiquement |
 | 07 | 🔌 [Se connecter à GitHub, aux bases de données et aux API](./07-mcp-servers/README.md) | Intégration de serveurs MCP |
 | 08 | 🎯 [Assembler le tout](./08-putting-it-together/README.md) | Flux de travail complets |
+| 09 | 🔗 [Automatiser un workflow visuel avec n8n](./09-n8n-workflows/README.md) *(bonus, nécessite Docker)* | Un workflow n8n construit par Copilot CLI via MCP et les skills n8n officielles |
 
 ## 📖 Comment fonctionne ce cours
 
