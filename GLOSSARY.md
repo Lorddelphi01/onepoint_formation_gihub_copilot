@@ -64,6 +64,14 @@ Un décorateur Python (`@dataclass`) qui génère automatiquement `__init__`, `_
 
 ---
 
+## D
+
+### Dev Container (conteneur de développement)
+
+Un environnement de développement décrit par un fichier `devcontainer.json` : image Docker, outils préinstallés, extensions VS Code. Garantit que toute l'équipe travaille dans un environnement identique, utilisé par GitHub Codespaces et l'extension VS Code Dev Containers. Présenté au Chapitre 09.
+
+---
+
 ## E
 
 ### Eza
@@ -171,6 +179,10 @@ La commande `/rewind` de Copilot CLI, qui annule une ou plusieurs étapes d'une 
 ---
 
 ## S
+
+### Sandbox
+
+Un environnement d'exécution isolé (conteneur ou microVM) qui restreint l'accès de Copilot CLI au système de fichiers et au réseau, permettant d'utiliser `--allow-all`/`--yolo` sans surveillance humaine constante. Présenté au Chapitre 09 via Docker Sandboxes (`sbx run copilot`).
 
 ### Session
 

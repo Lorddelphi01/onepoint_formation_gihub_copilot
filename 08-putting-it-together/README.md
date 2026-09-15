@@ -492,9 +492,9 @@ Documentez votre workflow au fur et à mesure.
 
 ---
 
-## 🎓 Cours terminé !
+## 🎯 Récapitulatif
 
-Félicitations ! Vous avez appris :
+Vous avez terminé le cœur du cours ! Vous avez appris :
 
 | Chapitre | Ce que vous avez appris |
 |---------|-------------------|
@@ -512,12 +512,13 @@ Vous êtes maintenant équipé pour utiliser GitHub Copilot CLI comme un vérita
 
 ## ➡️ Et ensuite ?
 
-Votre apprentissage ne s'arrête pas là :
+Un chapitre pratique bonus vous attend :
 
-1. **Pratiquez quotidiennement** : utilisez Copilot CLI pour du travail réel
-2. **Construisez des outils personnalisés** : créez des agents et des skills pour vos besoins spécifiques
-3. **Partagez vos connaissances** : aidez votre équipe à adopter ces workflows
-4. **Restez à jour** : suivez les mises à jour de GitHub Copilot pour les nouvelles fonctionnalités
+1. **[Chapitre 09 : Environnements isolés](../09-isolated-environments/README.md)** : exécutez Copilot CLI dans un dev container, puis dans une sandbox Docker isolée, pour automatiser avec `--allow-all` sans surveillance et sans risque pour le reste de votre machine
+2. **Pratiquez quotidiennement** : utilisez Copilot CLI pour du travail réel
+3. **Construisez des outils personnalisés** : créez des agents et des skills pour vos besoins spécifiques
+4. **Partagez vos connaissances** : aidez votre équipe à adopter ces workflows
+5. **Restez à jour** : suivez les mises à jour de GitHub Copilot pour les nouvelles fonctionnalités
 
 ### Ressources
 
@@ -527,6 +528,6 @@ Votre apprentissage ne s'arrête pas là :
 
 ---
 
-**Excellent travail ! Maintenant, allez construire quelque chose d'extraordinaire.**
+**Excellent travail ! Direction le chapitre bonus pour aller encore plus loin.**
 
-**[← Retour au Chapitre 07](../07-mcp-servers/README.md)** | **[Retour à l'accueil du cours →](../README.md)**
+**[← Retour au Chapitre 07](../07-mcp-servers/README.md)** | **[Chapitre 09 →](../09-isolated-environments/README.md)**
