@@ -10,15 +10,15 @@ import sys
 
 # Configuration
 CHAPTERS = {
-    "00-modern-terminal-stack": "Chapter 00: Modern Terminal Stack",
-    "01-quick-start": "Chapter 01: Quick Start",
-    "02-setup-and-first-steps": "Chapter 02: First Steps",
-    "03-context-conversations": "Chapter 03: Context and Conversations",
-    "04-development-workflows": "Chapter 04: Development Workflows",
-    "05-agents-custom-instructions": "Chapter 05: Agents and Custom Instructions",
-    "06-skills": "Chapter 06: Skills System",
-    "07-mcp-servers": "Chapter 07: MCP Servers",
-    "08-putting-it-together": "Chapter 08: Putting It All Together",
+    "00-modern-terminal-stack": "Chapitre 00 : Équipez votre terminal",
+    "01-quick-start": "Chapitre 01 : Démarrage rapide",
+    "02-setup-and-first-steps": "Chapitre 02 : Premiers pas",
+    "03-context-conversations": "Chapitre 03 : Contexte et conversations",
+    "04-development-workflows": "Chapitre 04 : Flux de travail de développement",
+    "05-agents-custom-instructions": "Chapitre 05 : Agents et instructions personnalisées",
+    "06-skills": "Chapitre 06 : Système de Skills",
+    "07-mcp-servers": "Chapitre 07 : Serveurs MCP",
+    "08-putting-it-together": "Chapitre 08 : Tout assembler",
 }
 
 # Get project root (parent of scripts folder)
