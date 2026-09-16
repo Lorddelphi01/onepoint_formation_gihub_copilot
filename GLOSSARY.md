@@ -86,6 +86,10 @@ Un décorateur Python (`@dataclass`) qui génère automatiquement `__init__`, `_
 
 Un environnement de développement décrit par un fichier `devcontainer.json` : image Docker, outils préinstallés, extensions VS Code. Garantit que toute l'équipe travaille dans un environnement identique, utilisé par GitHub Codespaces et l'extension VS Code Dev Containers. Présenté au Chapitre 09.
 
+### DORA (DevOps Research and Assessment)
+
+Un référentiel de recherche indépendant (adossé à Google Cloud) qui publie chaque année un état des lieux des pratiques DevOps et, depuis 2024, de l'impact de l'IA sur le développement logiciel. Sa thèse centrale sur l'IA : elle agit comme un amplificateur des pratiques d'ingénierie déjà en place, pas comme un facteur de progrès universel. Présenté au Chapitre 12.
+
 ---
 
 ## E
@@ -257,6 +261,10 @@ Un dossier contenant des instructions que Copilot charge automatiquement lorsqu'
 ### Slash Command (commande slash)
 
 Commandes commençant par `/` qui contrôlent Copilot (par exemple, `/help`, `/clear`, `/model`).
+
+### SPACE (framework)
+
+Un cadre de mesure de la productivité des développeurs en cinq dimensions (Satisfaction, Performance, Activity, Communication, Efficiency), développé par des chercheurs de GitHub, Microsoft et de l'Université de Victoria. Utilisé pour aller au-delà des seules mesures de vitesse et capturer aussi le bien-être et la collaboration. Présenté au Chapitre 12.
 
 ### Starship
 
