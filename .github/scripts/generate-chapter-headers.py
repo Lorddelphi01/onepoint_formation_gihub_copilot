@@ -21,6 +21,7 @@ CHAPTERS = {
     "08-putting-it-together": "Chapitre 08 : Tout assembler",
     "09-isolated-environments": "Chapitre 09 : Environnements isolés",
     "10-obsidian-rag": "Chapitre 10 : RAG Obsidian",
+    "11-security-with-copilot": "Chapitre 11 : Sécurité",
 }
 
 # Get project root (parent of scripts folder)
