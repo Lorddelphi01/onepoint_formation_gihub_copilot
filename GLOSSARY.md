@@ -18,6 +18,10 @@ Application Programming Interface (interface de programmation d'application). Un
 
 Un remplaçant de l'historique de commandes du shell : au lieu d'une simple liste plate, il stocke l'historique dans une base de données consultable en plein écran, avec recherche floue et filtrage par répertoire. Présenté au Chapitre 00.
 
+### Auto (sélection automatique de modèle)
+
+Un mode de Copilot CLI qui choisit lui-même, à chaque requête, le modèle d'IA le plus adapté selon la disponibilité en temps réel et (depuis juillet 2026) la complexité estimée de la tâche. Activable via `/model` → Auto, `--model auto`, ou `"model": "auto"` dans `~/.copilot/settings.json`. Trois profils de routage optionnels (`efficiency`, `balance`, `intelligence`) via `--auto-tier`. Présenté au Chapitre 01.
+
 ### Autopilot (mode autopilote)
 
 Un mode d'exécution de Copilot CLI qui implémente une tâche sans attendre d'approbation manuelle à chaque étape, souvent combiné à `--plan` (`--plan --mode autopilot`) pour planifier automatiquement puis exécuter directement. Présenté aux Chapitres 02 et 04.
@@ -33,6 +37,10 @@ Un remplaçant de la commande `cat` qui ajoute la coloration syntaxique, les num
 ---
 
 ## C
+
+### Caveman
+
+Un skill + proxy open source (`JuliusBrussee/caveman`) qui réduit la consommation de tokens d'un agent IA en condensant sa prose (sans toucher au code, aux commandes ni aux messages d'erreur) et en compressant les logs/diffs volumineux avant qu'ils n'atteignent le modèle. Intégration Copilot CLI documentée par le projet (`npx -y github:JuliusBrussee/caveman -- --only copilot`). Ne pas confondre avec peon-ping, un outil de notifications sonores sans rapport. Présenté au Chapitre 01.
 
 ### CIMD (Client ID Metadata Document)
 
@@ -98,6 +106,10 @@ Un outil de recherche floue (« fuzzy finder ») qui s'intègre au shell pour fi
 
 Un motif utilisant des caractères génériques pour faire correspondre des chemins de fichiers (par exemple, `*.py` correspond à tous les fichiers Python, `*.js` correspond à tous les fichiers JavaScript).
 
+### Graphiti
+
+Un framework open source (`getzep/graphiti`, paquet PyPI `graphiti-core`) qui construit un graphe de connaissances temporel — mis à jour en continu — pour donner à un agent IA une mémoire persistante et interrogeable au-delà d'une seule session. Nécessite Python 3.10+, une clé API LLM, et une base de données graphe (FalkorDB ou Neo4j). Fournit un serveur MCP officiel ; sa compatibilité avec Copilot CLI n'est pas confirmée par une documentation officielle. Présenté au Chapitre 01.
+
 ---
 
 ## J
@@ -105,6 +117,14 @@ Un motif utilisant des caractères génériques pour faire correspondre des chem
 ### JWT
 
 JSON Web Token. Un moyen sécurisé de transmettre des informations d'authentification entre systèmes.
+
+---
+
+## L
+
+### LSP (Language Server Protocol)
+
+Un protocole standard permettant à un outil de communiquer avec un « serveur de langage » — un processus qui comprend la structure réelle d'un langage de programmation (comme le ferait son compilateur), pour des opérations comme aller à la définition d'un symbole ou le renommer dans tout un projet. Copilot CLI l'utilise pour quelques opérations ciblées de son agent (pas pour des fonctionnalités d'éditeur comme dans un IDE), configurable via `~/.copilot/lsp-config.json` ou `.github/lsp.json`. Présenté au Chapitre 01.
 
 ---
 
@@ -144,6 +164,10 @@ Un outil Node.js qui exécute des paquets npm sans les installer globalement. Ut
 
 ## O
 
+### OpenTelemetry (OTel)
+
+Un standard ouvert d'observabilité (traces, métriques, logs). Copilot CLI peut exporter ses propres traces et métriques (appels modèle, exécutions d'outils, tokens, durées) suivant les OTel GenAI Semantic Conventions, désactivé par défaut. Activation via `COPILOT_OTEL_ENABLED=true`, `OTEL_EXPORTER_OTLP_ENDPOINT`, ou `COPILOT_OTEL_FILE_EXPORTER_PATH` (export fichier local, sans infrastructure). Par défaut, seules des métadonnées sont capturées — pas le contenu des prompts/réponses. Présenté au Chapitre 01.
+
 ### OWASP
 
 Open Web Application Security Project. Une organisation qui publie des bonnes pratiques de sécurité et maintient la liste « OWASP Top 10 » des risques de sécurité les plus critiques pour les applications web.
@@ -151,6 +175,10 @@ Open Web Application Security Project. Une organisation qui publie des bonnes pr
 ---
 
 ## P
+
+### peon-ping
+
+Un outil open source (`PeonPing/peon-ping`) qui joue des notifications sonores (voix Warcraft) lorsqu'un agent IA en ligne de commande a besoin d'attention ou termine une tâche. Compatible avec de nombreux agents (Claude Code, Copilot CLI, Cursor...) via le format ouvert CESP — ce n'est pas un outil spécifique à GitHub ni à Copilot. Ne pas confondre avec Caveman. Présenté au Chapitre 01.
 
 ### PEP 8
 
@@ -208,6 +236,10 @@ Commandes commençant par `/` qui contrôlent Copilot (par exemple, `/help`, `/c
 
 Une invite de commandes (prompt) minimaliste et rapide, écrite en Rust, qui affiche automatiquement le contexte utile (répertoire, branche git, langage détecté). Présenté au Chapitre 00.
 
+### Statusline
+
+La ligne affichée en bas de l'interface interactive de Copilot CLI. Deux mécanismes distincts : les indicateurs prédéfinis (`/statusline` ou `/footer`, stable) et un mode script personnalisé expérimental (`statusLine.command` dans `~/.copilot/settings.json`, nécessitant `"experimental": true`). À ne pas confondre avec la barre d'état d'un autre outil en ligne de commande ou celle de VS Code. Présentée aux Chapitres 01 et 02.
+
 ---
 
 ## T
@@ -219,6 +251,10 @@ Un multiplexeur de terminal : il permet de créer des sessions persistantes avec
 ### Token
 
 Une unité de texte que les modèles d'IA traitent. Environ 4 caractères ou 0,75 mot. Utilisé pour mesurer à la fois l'entrée (tes prompts et le contexte) et la sortie (les réponses de l'IA).
+
+### Tokscale
+
+Une CLI/TUI open source (`junhoyeo/tokscale`) qui agrège localement les journaux d'usage déjà produits par une cinquantaine d'agents IA, dont Copilot CLI, pour estimer coûts et consommation de tokens. Pour Copilot CLI, elle lit les fichiers produits par l'export OpenTelemetry local (`~/.copilot/otel/`) — elle dépend donc de cette instrumentation. N'est ni un serveur MCP ni un mécanisme de facturation officiel de GitHub. Présenté au Chapitre 01.
 
 ### TPM (Tmux Plugin Manager)
 
