@@ -86,6 +86,10 @@ Un environnement de développement décrit par un fichier `devcontainer.json` : 
 
 ## E
 
+### Embedding
+
+Une représentation numérique du sens d'un texte (un vecteur), calculée par un modèle et utilisée pour retrouver des contenus par similarité de sens plutôt que par mot-clé exact. C'est ce que génère le plugin Obsidian Smart Connections pour permettre la recherche sémantique. Présenté au Chapitre 10.
+
 ### Eza
 
 Un remplaçant moderne de la commande `ls`, avec icônes, couleurs par type de fichier, regroupement automatique des répertoires, et une vue grille pour les listes détaillées. Présenté au Chapitre 00.
@@ -160,6 +164,10 @@ Un outil Node.js qui exécute des paquets npm sans les installer globalement. Ut
 
 ## O
 
+### Obsidian
+
+Une application de prise de notes qui stocke chaque note sous forme de fichier Markdown local, organisé en « vault ». Peut être connectée à Copilot CLI via des serveurs MCP pour construire un pipeline RAG sur ses propres notes. Présenté au Chapitre 10.
+
 ### OpenTelemetry (OTel)
 
 Un standard ouvert d'observabilité (traces, métriques, logs). Copilot CLI peut exporter ses propres traces et métriques (appels modèle, exécutions d'outils, tokens, durées) suivant les OTel GenAI Semantic Conventions, désactivé par défaut. Activation via `COPILOT_OTEL_ENABLED=true`, `OTEL_EXPORTER_OTLP_ENDPOINT`, ou `COPILOT_OTEL_FILE_EXPORTER_PATH` (export fichier local, sans infrastructure). Par défaut, seules des métadonnées sont capturées — pas le contenu des prompts/réponses. Présenté au Chapitre 01.
@@ -200,9 +208,17 @@ Exécuter Copilot avec le drapeau `-p` pour des commandes uniques sans interacti
 
 ## R
 
+### RAG (Retrieval-Augmented Generation, génération augmentée par la recherche)
+
+Une technique en trois étapes : *retrieval* (retrouver des contenus pertinents dans une source externe), *augmentation* (les injecter comme contexte), *génération* (produire une réponse qui s'appuie dessus, en citant ses sources). Présenté au Chapitre 10.
+
 ### Rate Limiting (limitation de débit)
 
 Restrictions sur le nombre de requêtes que tu peux effectuer vers une API pendant une période donnée. Copilot peut temporairement limiter les réponses si tu dépasses le quota d'utilisation de ton forfait.
+
+### Recherche sémantique (semantic search)
+
+Une recherche qui retrouve des contenus par similarité de sens (via des embeddings) plutôt que par correspondance exacte de mots-clés. Permet de trouver une note pertinente même si elle n'utilise pas les mêmes mots que la question posée. Présenté au Chapitre 10.
 
 ### Rewind (rembobinage)
 
@@ -259,6 +275,14 @@ Le gestionnaire de plugins de Tmux. Utilisé notamment pour installer `tmux-resu
 ### Type Hints (indications de type)
 
 Annotations Python qui indiquent les types attendus des paramètres de fonction et des valeurs de retour (par exemple, `def add_book(title: str, year: int) -> Book:`). Elles n'imposent pas les types à l'exécution mais aident à la clarté du code, au support des IDE, et aux outils d'analyse statique comme mypy.
+
+---
+
+## V
+
+### Vault (coffre de notes)
+
+Le dossier racine d'une base de notes Obsidian : un ensemble de fichiers Markdown liés entre eux, accompagné d'un dossier `.obsidian` de configuration. Peut être exposé à Copilot CLI via un serveur MCP pour construire un pipeline RAG. Présenté au Chapitre 10.
 
 ---
 
