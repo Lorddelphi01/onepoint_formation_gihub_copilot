@@ -79,14 +79,14 @@ Ce cours se concentre sur **GitHub Copilot CLI**, qui apporte l'assistance de l'
 | 07 | 🔌 [Se connecter à GitHub, aux bases de données et aux API](./07-mcp-servers/README.md) | Intégration de serveurs MCP |
 | 08 | 🎯 [Assembler le tout](./08-putting-it-together/README.md) | Flux de travail complets |
 | 09 | 🐳 [Environnements isolés](./09-isolated-environments/README.md) *(bonus, nécessite Docker)* | Dev container + sandbox Docker isolée pour automatiser avec `--allow-all` en toute confiance |
+| 10 | 🧠 [RAG sur votre vault Obsidian](./10-obsidian-rag/README.md) *(bonus, nécessite Obsidian)* | Un pipeline RAG local (recherche sémantique + citations) sur vos propres notes, via deux serveurs MCP |
+| 11 | 🔒 [Sécuriser votre code avec Copilot CLI](./11-security-with-copilot/README.md) | Une revue de sécurité de bout en bout : commande `/security-review`, instructions sécurisées par défaut, protection des secrets |
 | 12 | 🔍 [Comprendre l'acceptation de l'IA par les développeurs](./12-ai-developer-acceptance/README.md) *(bonus)* | Une auto-évaluation personnelle confrontée aux études GitHub, McKinsey, DORA et Stack Overflow |
 | 13 | 🕰️ [Explorer l'historique de vos sessions avec /chronicle](./13-chronicle-session-insights/README.md) | Des rapports d'activité, conseils et recherches générés à partir de votre historique Copilot CLI |
 | 14 | 📊 [Analyser sa consommation de tokens avec RTK et Tokscale](./14-token-consumption-analysis/README.md) *(bonus)* | Une sortie de commandes compressée avec RTK, et un tableau de bord de consommation avec Tokscale |
 | 15 | 🧠 [Rédiger des instructions IA efficaces et réutilisables](./15-prompt-engineering/README.md) *(bonus)* | Des templates de prompts réutilisables et le principe d'une CLI générée depuis un serveur MCP |
 | 16 | 🌳 [Sessions parallèles avec les worktrees Git](./16-parallel-worktrees/README.md) *(bonus)* | Deux sessions Copilot CLI isolées dans des worktrees Git, travaillant en parallèle sur le même dépôt |
 | 17 | 🪙 [mcp2cli et le coût en tokens](./17-mcp2cli/README.md) *(bonus, complète le Chapitre 07)* | Interroger le serveur Context7 MCP directement depuis le terminal, sans passer par Copilot |
-| 11 | 🔒 [Sécuriser votre code avec Copilot CLI](./11-security-with-copilot/README.md) | Une revue de sécurité de bout en bout : commande `/security-review`, instructions sécurisées par défaut, protection des secrets |
-| 10 | 🧠 [RAG sur votre vault Obsidian](./10-obsidian-rag/README.md) *(bonus, nécessite Obsidian)* | Un pipeline RAG local (recherche sémantique + citations) sur vos propres notes, via deux serveurs MCP |
 
 ## 📖 Comment fonctionne ce cours
 
