@@ -27,6 +27,7 @@ CHAPTERS = {
     "14-token-consumption-analysis": "Chapitre 14 : Consommation de tokens",
     "15-prompt-engineering": "Chapitre 15 : Instructions IA efficaces",
     "16-parallel-worktrees": "Chapitre 16 : Sessions parallèles avec les worktrees",
+    "17-mcp2cli": "Chapitre 17 : mcp2cli",
 }
 
 # Get project root (parent of scripts folder)

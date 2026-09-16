@@ -168,7 +168,7 @@ Model Context Protocol. Un standard pour connecter des assistants IA à des sour
 
 ### mcp2cli
 
-Le nom de plusieurs implémentations open source indépendantes (pas un outil officiel unique) qui génèrent une CLI typée classique — une sous-commande par outil, un flag par paramètre — à partir des outils exposés par un serveur MCP. Le principe : remplacer le dialogue via le protocole MCP complet à chaque appel par une commande shell simple, ce qui réduit la consommation de tokens par interaction. Présenté au Chapitre 15.
+Le nom de plusieurs implémentations open source indépendantes (pas un outil officiel unique) qui génèrent une CLI typée classique — une sous-commande par outil, un flag par paramètre — à partir des outils exposés par un serveur MCP. Le principe : remplacer le dialogue via le protocole MCP complet à chaque appel par une commande shell simple, ce qui réduit la consommation de tokens par interaction. Présenté aux Chapitres 15 et 17.
 
 ---
 
