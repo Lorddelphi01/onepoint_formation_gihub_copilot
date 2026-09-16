@@ -268,4 +268,4 @@ Vous savez maintenant faire tourner Copilot CLI aussi bien dans un environnement
 
 Vous avez maintenant vu Copilot CLI dans trois contextes d'exécution différents à travers ce cours : votre machine locale, un dev container cohérent, et une sandbox strictement isolée. Le principe reste le même partout — plus vous automatisez, plus l'environnement qui vous entoure doit inspirer confiance.
 
-**[← Chapitre précédent : n8n](../09-n8n-workflows/README.md)** | **[Retour à l'accueil du cours →](../README.md)**
+**[← Chapitre précédent : n8n](../09-n8n-workflows/README.md)** | **[Chapitre suivant : Sécuriser votre code →](../11-security-with-copilot/README.md)**

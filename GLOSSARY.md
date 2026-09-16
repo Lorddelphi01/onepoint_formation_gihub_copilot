@@ -58,6 +58,10 @@ Une construction Python utilisant l'instruction `with` qui gère automatiquement
 
 Un format de message de commit qui suit une structure standardisée : `type(scope): description`. Les types courants incluent `feat` (nouvelle fonctionnalité), `fix` (correction de bug), `docs` (documentation), `refactor`, et `test`. Exemple : `feat(auth): add password reset flow`.
 
+### CVE (Common Vulnerabilities and Exposures)
+
+Un identifiant public référençant une vulnérabilité de sécurité connue et documentée (par exemple dans une dépendance publiée). Détecté par des outils comme GitHub Dependabot, pas par la commande `/security-review` de Copilot CLI qui se concentre sur des schémas de code à risque plutôt que sur des correspondances avec des bases de CVE. Présenté au Chapitre 11.
+
 ### Dataclass
 
 Un décorateur Python (`@dataclass`) qui génère automatiquement `__init__`, `__repr__`, et d'autres méthodes pour les classes qui stockent principalement des données. Utilisé dans l'application de gestion de livres pour définir la classe `Book` avec des champs comme `title`, `author`, `year`, et `read`.
@@ -73,6 +77,10 @@ Un environnement de développement décrit par un fichier `devcontainer.json` : 
 ---
 
 ## E
+
+### Exclusion de contenu (content exclusion)
+
+Un réglage GitHub, configurable au niveau organisation ou dépôt, qui empêche certains fichiers d'alimenter les suggestions, le chat ou la revue de code Copilot. Limite importante : ce réglage ne couvre pas Copilot CLI ni le mode agent — un secret ne doit donc jamais reposer uniquement sur une exclusion de contenu pour rester protégé. Présenté au Chapitre 11.
 
 ### Eza
 
@@ -99,6 +107,12 @@ Un outil de recherche floue (« fuzzy finder ») qui s'intègre au shell pour fi
 Un motif utilisant des caractères génériques pour faire correspondre des chemins de fichiers (par exemple, `*.py` correspond à tous les fichiers Python, `*.js` correspond à tous les fichiers JavaScript).
 
 ---
+
+## I
+
+### Injection (SQL, commande, etc.)
+
+Une faille de sécurité où une entrée utilisateur non validée est interprétée comme du code ou une instruction — par exemple concaténée directement dans une requête SQL ou passée telle quelle à une commande shell. L'une des catégories couvertes par la commande `/security-review` de Copilot CLI. Présentée au Chapitre 11.
 
 ## J
 
@@ -230,6 +244,12 @@ Annotations Python qui indiquent les types attendus des paramètres de fonction 
 
 ---
 
+## V
+
+### Vulnérabilité (faille de sécurité)
+
+Une faiblesse dans du code ou une configuration qui peut être exploitée pour compromettre la confidentialité, l'intégrité ou la disponibilité d'une application (par exemple une injection SQL, un secret en dur, ou une désérialisation non sécurisée). La commande `/security-review` de Copilot CLI en détecte plusieurs catégories directement dans le terminal. Présentée au Chapitre 11.
+
 ## W
 
 ### Webhook
@@ -245,6 +265,12 @@ Web Content Accessibility Guidelines (règles pour l'accessibilité des contenus
 Une copie de travail git additionnelle, associée à sa propre branche et disposant de son propre dossier sur disque, qui permet d'isoler une session Copilot CLI (via `/worktree new` ou `--worktree`) sans changer de branche dans le répertoire de travail principal. Présenté aux Chapitres 02, 04 et 08.
 
 ---
+
+## X
+
+### XSS (Cross-Site Scripting)
+
+Une faille de sécurité où du contenu fourni par un utilisateur est affiché sans être échappé, permettant l'exécution de code (généralement du JavaScript) dans le navigateur d'une victime. L'une des catégories couvertes par la commande `/security-review` de Copilot CLI. Présentée au Chapitre 11.
 
 ## Y
 
