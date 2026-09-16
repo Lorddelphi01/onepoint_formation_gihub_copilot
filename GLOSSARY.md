@@ -116,6 +116,12 @@ Model Context Protocol. Un standard pour connecter des assistants IA à des sour
 
 ---
 
+### mcp2cli
+
+Le nom de plusieurs implémentations open source indépendantes (pas un outil officiel unique) qui génèrent une CLI typée classique — une sous-commande par outil, un flag par paramètre — à partir des outils exposés par un serveur MCP. Le principe : remplacer le dialogue via le protocole MCP complet à chaque appel par une commande shell simple, ce qui réduit la consommation de tokens par interaction. Présenté au Chapitre 11.
+
+---
+
 ### Memory (mémoire, Copilot CLI)
 
 Une fonctionnalité qui permet à Copilot CLI de se souvenir de faits et de préférences *à travers toutes les sessions*, pas seulement au sein d'une seule. Contrairement à l'historique de session (qui enregistre une conversation spécifique), la mémoire persiste globalement et s'applique automatiquement dans les sessions futures. Gérée avec la commande slash `/memory` (`/memory on`, `/memory off`, `/memory show`). La mémoire peut être limitée à ton compte utilisateur (visible dans tous les dépôts) ou à un dépôt spécifique (partagée avec les collaborateurs).
@@ -163,6 +169,10 @@ Une interface unifiée de Copilot CLI (depuis la v1.0.81), ouverte indifféremme
 ### Pre-commit Hook (hook de pré-commit)
 
 Un script qui s'exécute automatiquement avant chaque `git commit`. Peut être utilisé pour exécuter des revues de sécurité Copilot ou des vérifications de qualité de code avant que le code ne soit committé.
+
+### Prompt Template (gabarit de prompt)
+
+Un fichier Markdown réutilisable avec des sections fixes (objectif, contraintes, format de sortie attendu) et des emplacements `<...>` à remplir, versionné avec le reste d'un projet pour éviter de réécrire le même prompt à chaque tâche répétitive. Présenté au Chapitre 11, avec des exemples dans `samples/prompt-templates/`.
 
 ### pytest
 

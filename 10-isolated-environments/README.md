@@ -268,4 +268,6 @@ Vous savez maintenant faire tourner Copilot CLI aussi bien dans un environnement
 
 Vous avez maintenant vu Copilot CLI dans trois contextes d'exécution différents à travers ce cours : votre machine locale, un dev container cohérent, et une sandbox strictement isolée. Le principe reste le même partout — plus vous automatisez, plus l'environnement qui vous entoure doit inspirer confiance.
 
-**[← Chapitre précédent : n8n](../09-n8n-workflows/README.md)** | **[Retour à l'accueil du cours →](../README.md)**
+> 🎁 **Envie d'aller plus loin ?** Le [Chapitre 11 (bonus) : Rédiger des instructions IA efficaces et réutilisables](../11-prompt-engineering/README.md) vous montre comment structurer vos prompts pour obtenir de meilleurs résultats et les réutiliser d'une session à l'autre.
+
+**[← Chapitre précédent : n8n](../09-n8n-workflows/README.md)** | **[Retour à l'accueil du cours](../README.md)** | **[Chapitre bonus : Instructions IA efficaces →](../11-prompt-engineering/README.md)**
