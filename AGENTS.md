@@ -16,6 +16,7 @@ Cours pour débutants enseignant GitHub Copilot CLI. Contenu pédagogique, pas u
 | `15-prompt-engineering/` | Chapitre bonus : rédiger des instructions claires et ancrées dans le vocabulaire métier, construire des templates de prompts réutilisables, et le principe d'une CLI générée depuis un serveur MCP |
 | `16-parallel-worktrees/` | Chapitre bonus (optionnel) : isoler plusieurs sessions Copilot CLI dans des worktrees Git pour paralléliser des tâches indépendantes sur le même dépôt |
 | `17-mcp2cli/` | Chapitre bonus (optionnel), complète le Chapitre 07 : le coût en tokens de MCP, et mcp2cli pour interroger un serveur MCP (Context7) directement depuis le terminal sans passer par Copilot |
+| `18-n8n-workflows/` | Chapitre bonus (optionnel, nécessite Docker) : connecter Copilot CLI au serveur MCP de n8n et utiliser les skills n8n officielles pour construire un workflow visuel |
 | `samples/book-app-project/` | **Exemple principal** : application CLI Python de gestion de collection de livres utilisée tout au long des chapitres |
 | `samples/book-app-project-cs/` | Version C# de l'application de collection de livres |
 | `samples/book-app-project-js/` | Version JavaScript de l'application de collection de livres |

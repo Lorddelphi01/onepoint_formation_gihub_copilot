@@ -87,6 +87,7 @@ Ce cours se concentre sur **GitHub Copilot CLI**, qui apporte l'assistance de l'
 | 15 | 🧠 [Rédiger des instructions IA efficaces et réutilisables](./15-prompt-engineering/README.md) *(bonus)* | Des templates de prompts réutilisables et le principe d'une CLI générée depuis un serveur MCP |
 | 16 | 🌳 [Sessions parallèles avec les worktrees Git](./16-parallel-worktrees/README.md) *(bonus)* | Deux sessions Copilot CLI isolées dans des worktrees Git, travaillant en parallèle sur le même dépôt |
 | 17 | 🪙 [mcp2cli et le coût en tokens](./17-mcp2cli/README.md) *(bonus, complète le Chapitre 07)* | Interroger le serveur Context7 MCP directement depuis le terminal, sans passer par Copilot |
+| 18 | 🔗 [Automatiser un workflow visuel avec n8n](./18-n8n-workflows/README.md) *(bonus, nécessite Docker)* | Un workflow n8n construit par Copilot CLI via MCP et les skills n8n officielles |
 
 ## 📖 Comment fonctionne ce cours
 

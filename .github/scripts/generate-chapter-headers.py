@@ -28,6 +28,7 @@ CHAPTERS = {
     "15-prompt-engineering": "Chapitre 15 : Instructions IA efficaces",
     "16-parallel-worktrees": "Chapitre 16 : Sessions parallèles avec les worktrees",
     "17-mcp2cli": "Chapitre 17 : mcp2cli",
+    "18-n8n-workflows": "Chapitre 18 : n8n",
 }
 
 # Get project root (parent of scripts folder)
