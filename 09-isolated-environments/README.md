@@ -264,8 +264,10 @@ Vous savez maintenant faire tourner Copilot CLI aussi bien dans un environnement
 
 ---
 
+> 🎁 **Envie d'aller plus loin ?** Le [Chapitre 10 (bonus) : Automatiser un workflow visuel avec n8n](../10-n8n-workflows/README.md) applique les mêmes réflexes — décrire un résultat, laisser l'IA assembler, relire avant de valider — à un outil tiers plutôt qu'à du code.
+
 ## ➡️ Et ensuite ?
 
 Vous avez maintenant vu Copilot CLI dans trois contextes d'exécution différents à travers ce cours : votre machine locale, un dev container cohérent, et une sandbox strictement isolée. Le principe reste le même partout — plus vous automatisez, plus l'environnement qui vous entoure doit inspirer confiance.
 
-**[← Chapitre précédent : Tout assembler](../08-putting-it-together/README.md)** | **[Retour à l'accueil du cours →](../README.md)**
+**[← Chapitre précédent : Tout assembler](../08-putting-it-together/README.md)** | **[Retour à l'accueil du cours](../README.md)** | **[Chapitre bonus : n8n →](../10-n8n-workflows/README.md)**

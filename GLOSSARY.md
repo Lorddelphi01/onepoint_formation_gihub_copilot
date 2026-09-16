@@ -148,6 +148,14 @@ Un champ optionnel (`model-policy`) du frontmatter d'un agent personnalisé (`.a
 
 ## N
 
+### n8n
+
+Un outil open source d'automatisation de workflows par blocs visuels (« nœuds ») reliés entre eux, plutôt que par du code écrit ligne par ligne. Peut être connecté à Copilot CLI via son propre serveur MCP intégré. Présenté au Chapitre 10.
+
+### Nœud (node, n8n)
+
+Le bloc de base d'un workflow n8n : une étape unique (déclencheur, appel d'API, filtre, mise en forme de données...) que l'on relie à d'autres nœuds pour former un workflow complet. Présenté au Chapitre 10.
+
 ### npx
 
 Un outil Node.js qui exécute des paquets npm sans les installer globalement. Utilisé dans les configurations de serveurs MCP pour lancer des serveurs (par exemple, `npx @modelcontextprotocol/server-filesystem`).
@@ -259,6 +267,10 @@ Annotations Python qui indiquent les types attendus des paramètres de fonction 
 ---
 
 ## W
+
+### Webhook
+
+Une URL générée par un service (ici, un nœud Déclencheur n8n) qui écoute les requêtes HTTP entrantes et déclenche une action dès qu'elle en reçoit une, plutôt que d'être interrogée activement. Présenté au Chapitre 10.
 
 ### WCAG
 
