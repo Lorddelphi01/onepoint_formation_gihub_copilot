@@ -1,15 +1,15 @@
 <!--
 ---
-id: CopilotCLI-10
+id: CopilotCLI-09
 title: !translate Environnements isolés
 description: !translate Exécutez GitHub Copilot CLI dans un dev container, puis isolez-le complètement dans une sandbox Docker pour automatiser en toute confiance avec --allow-all.
 audience: Developers / Students / Terminal users
 slug: isolated-environments
-weight: 11
+weight: 10
 ---
 -->
 
-![Chapitre 10 : Environnements isolés](assets/chapter-header.png)
+![Chapitre 09 : Environnements isolés](assets/chapter-header.png)
 
 > **Et si vous pouviez laisser Copilot CLI travailler en pleine autonomie — `--allow-all`, aucune confirmation à chaque étape — sans jamais craindre pour le reste de votre machine ?**
 
@@ -268,4 +268,4 @@ Vous savez maintenant faire tourner Copilot CLI aussi bien dans un environnement
 
 Vous avez maintenant vu Copilot CLI dans trois contextes d'exécution différents à travers ce cours : votre machine locale, un dev container cohérent, et une sandbox strictement isolée. Le principe reste le même partout — plus vous automatisez, plus l'environnement qui vous entoure doit inspirer confiance.
 
-**[← Chapitre précédent : n8n](../09-n8n-workflows/README.md)** | **[Retour à l'accueil du cours →](../README.md)**
+**[← Chapitre précédent : Tout assembler](../08-putting-it-together/README.md)** | **[Retour à l'accueil du cours →](../README.md)**

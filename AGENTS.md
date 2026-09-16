@@ -7,8 +7,7 @@ Cours pour débutants enseignant GitHub Copilot CLI. Contenu pédagogique, pas u
 | Chemin | Objectif |
 |------|---------|
 | `00-08/` | Chapitres : analogie → concepts → pratique → devoir → suite. `00-modern-terminal-stack/` est un chapitre complémentaire (stack terminal) qui précède l'installation de Copilot CLI (01) et les premiers pas (02) |
-| `09-n8n-workflows/` | Chapitre bonus (optionnel, nécessite Docker) : connecter Copilot CLI au serveur MCP de n8n et utiliser les skills n8n officielles pour construire un workflow visuel |
-| `10-isolated-environments/` | Chapitre bonus (optionnel, nécessite Docker) : exécuter Copilot CLI dans un dev container puis dans une sandbox Docker isolée, pour automatiser avec `--allow-all` sans risque |
+| `09-isolated-environments/` | Chapitre bonus (optionnel, nécessite Docker) : exécuter Copilot CLI dans un dev container puis dans une sandbox Docker isolée, pour automatiser avec `--allow-all` sans risque |
 | `samples/book-app-project/` | **Exemple principal** : application CLI Python de gestion de collection de livres utilisée tout au long des chapitres |
 | `samples/book-app-project-cs/` | Version C# de l'application de collection de livres |
 | `samples/book-app-project-js/` | Version JavaScript de l'application de collection de livres |

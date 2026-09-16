@@ -19,8 +19,7 @@ CHAPTERS = {
     "06-skills": "Chapitre 06 : Système de Skills",
     "07-mcp-servers": "Chapitre 07 : Serveurs MCP",
     "08-putting-it-together": "Chapitre 08 : Tout assembler",
-    "09-n8n-workflows": "Chapitre 09 : n8n",
-    "10-isolated-environments": "Chapitre 10 : Environnements isolés",
+    "09-isolated-environments": "Chapitre 09 : Environnements isolés",
 }
 
 # Get project root (parent of scripts folder)
