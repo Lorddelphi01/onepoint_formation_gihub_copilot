@@ -80,6 +80,8 @@ Ce cours se concentre sur **GitHub Copilot CLI**, qui apporte l'assistance de l'
 | 08 | 🎯 [Assembler le tout](./08-putting-it-together/README.md) | Flux de travail complets |
 | 09 | 🔗 [Automatiser un workflow visuel avec n8n](./09-n8n-workflows/README.md) *(bonus, nécessite Docker)* | Un workflow n8n construit par Copilot CLI via MCP et les skills n8n officielles |
 | 10 | 🐳 [Environnements isolés](./10-isolated-environments/README.md) *(bonus, nécessite Docker)* | Dev container + sandbox Docker isolée pour automatiser avec `--allow-all` en toute confiance |
+| 11 | 🕰️ [Explorer l'historique de vos sessions avec /chronicle](./11-chronicle-session-insights/README.md) | Des rapports d'activité, conseils et recherches générés à partir de votre historique Copilot CLI |
+| 12 | 📊 [Analyser sa consommation de tokens avec RTK et Tokscale](./12-token-consumption-analysis/README.md) *(bonus)* | Une sortie de commandes compressée avec RTK, et un tableau de bord de consommation avec Tokscale |
 
 ## 📖 Comment fonctionne ce cours
 

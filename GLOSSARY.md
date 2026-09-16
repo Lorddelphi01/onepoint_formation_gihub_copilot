@@ -34,6 +34,10 @@ Un remplaçant de la commande `cat` qui ajoute la coloration syntaxique, les num
 
 ## C
 
+### Chronicle
+
+La commande `/chronicle` de Copilot CLI, qui analyse l'historique de vos sessions stockées localement et en tire des rapports d'activité (`standup`), des conseils personnalisés (`tips`, `cost-tips`), une recherche ciblée (`search`) ou des suggestions pour `.github/copilot-instructions.md` (`improve`). Présentée au Chapitre 11.
+
 ### CIMD (Client ID Metadata Document)
 
 Un mécanisme de découverte de métadonnées d'identifiant client qui permet la connexion OAuth d'un serveur MCP distant sans enregistrement manuel préalable du client. Présenté au Chapitre 07.
@@ -144,6 +148,10 @@ Un outil Node.js qui exécute des paquets npm sans les installer globalement. Ut
 
 ## O
 
+### OpenTelemetry (OTel)
+
+Un standard ouvert d'observabilité (traces, métriques, logs). Copilot CLI peut exporter ses propres métriques (appels modèle, exécutions d'outils, tokens, latence), désactivé par défaut : activation via `COPILOT_OTEL_ENABLED=true`, avec un export vers un fichier local (`COPILOT_OTEL_EXPORTER_TYPE=file` + `COPILOT_OTEL_FILE_EXPORTER_PATH`) ou vers un collecteur distant (`COPILOT_OTEL_EXPORTER_TYPE=otlp-http` + `OTEL_EXPORTER_OTLP_ENDPOINT`). Présenté au Chapitre 12, comme prérequis à Tokscale.
+
 ### OWASP
 
 Open Web Application Security Project. Une organisation qui publie des bonnes pratiques de sécurité et maintient la liste « OWASP Top 10 » des risques de sécurité les plus critiques pour les applications web.
@@ -184,6 +192,10 @@ Restrictions sur le nombre de requêtes que tu peux effectuer vers une API penda
 
 La commande `/rewind` de Copilot CLI, qui annule une ou plusieurs étapes d'une session. Depuis la v1.0.78, elle ne nécessite plus de dépôt git, restaure uniquement les fichiers effectivement modifiés par Copilot, et propose un choix entre « conversation seule » et « conversation + fichiers ». Présentée aux Chapitres 03 et 08.
 
+### RTK (Rust Token Killer)
+
+Un outil tiers open source (`rtk-ai/rtk`), écrit en Rust, qui agit comme un proxy CLI : il intercepte des commandes de développement verbeuses (git, npm, cargo, pytest...), les exécute normalement, puis renvoie à l'agent une version compressée de leur sortie. Se connecte à Copilot CLI via `rtk init -g` (hook de réécriture automatique) ou via un fichier `copilot-instructions.md` fourni par le projet `rtk-for-copilot`. Commande d'analyse principale : `rtk gain`. Présenté au Chapitre 12.
+
 ---
 
 ## S
@@ -219,6 +231,10 @@ Un multiplexeur de terminal : il permet de créer des sessions persistantes avec
 ### Token
 
 Une unité de texte que les modèles d'IA traitent. Environ 4 caractères ou 0,75 mot. Utilisé pour mesurer à la fois l'entrée (tes prompts et le contexte) et la sortie (les réponses de l'IA).
+
+### Tokscale
+
+Un outil tiers open source (`junhoyeo/tokscale`), CLI et interface terminal (TUI), qui agrège localement les journaux d'usage déjà produits par une quarantaine d'agents IA, dont Copilot CLI, pour estimer coûts et consommation de tokens. Pour Copilot CLI, il dépend de l'export OpenTelemetry local (voir [OpenTelemetry (OTel)](#opentelemetry-otel)). N'est ni un serveur MCP ni un mécanisme de facturation officiel de GitHub. Présenté au Chapitre 12.
 
 ### TPM (Tmux Plugin Manager)
 
