@@ -11,6 +11,8 @@ Cours pour débutants enseignant GitHub Copilot CLI. Contenu pédagogique, pas u
 | `10-obsidian-rag/` | Chapitre bonus (optionnel, nécessite Obsidian) : connecter Copilot CLI à un vault Obsidian via deux serveurs MCP (recherche sémantique + accès au vault) pour construire un pipeline RAG local sur ses propres notes |
 | `11-security-with-copilot/` | Chapitre : la commande native `/security-review`, des instructions de sécurité par défaut, la protection des secrets, et un audit pratique sur `samples/buggy-code/` |
 | `12-ai-developer-acceptance/` | Chapitre bonus : études (GitHub, McKinsey, DORA, Stack Overflow) sur les impacts positifs de l'IA sur les développeurs, avec auto-évaluation personnelle |
+| `13-chronicle-session-insights/` | Chapitre sur la commande native `/chronicle` : rapports d'activité, conseils personnalisés, recherche et amélioration des instructions à partir de l'historique de sessions |
+| `14-token-consumption-analysis/` | Chapitre bonus (outils tiers) : réduire la sortie de commandes avec RTK et mesurer la consommation de tokens avec Tokscale |
 | `samples/book-app-project/` | **Exemple principal** : application CLI Python de gestion de collection de livres utilisée tout au long des chapitres |
 | `samples/book-app-project-cs/` | Version C# de l'application de collection de livres |
 | `samples/book-app-project-js/` | Version JavaScript de l'application de collection de livres |

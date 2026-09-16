@@ -46,6 +46,10 @@ Un remplaçant de la commande `cat` qui ajoute la coloration syntaxique, les num
 
 Un skill + proxy open source (`JuliusBrussee/caveman`) qui réduit la consommation de tokens d'un agent IA en condensant sa prose (sans toucher au code, aux commandes ni aux messages d'erreur) et en compressant les logs/diffs volumineux avant qu'ils n'atteignent le modèle. Intégration Copilot CLI documentée par le projet (`npx -y github:JuliusBrussee/caveman -- --only copilot`). Ne pas confondre avec peon-ping, un outil de notifications sonores sans rapport. Présenté au Chapitre 01.
 
+### Chronicle
+
+La commande `/chronicle` de Copilot CLI, qui analyse l'historique de vos sessions stockées localement et en tire des rapports d'activité (`standup`), des conseils personnalisés (`tips`, `cost-tips`), une recherche ciblée (`search`) ou des suggestions pour `.github/copilot-instructions.md` (`improve`). Présentée au Chapitre 13.
+
 ### CIMD (Client ID Metadata Document)
 
 Un mécanisme de découverte de métadonnées d'identifiant client qui permet la connexion OAuth d'un serveur MCP distant sans enregistrement manuel préalable du client. Présenté au Chapitre 07.
@@ -241,6 +245,10 @@ Une recherche qui retrouve des contenus par similarité de sens (via des embeddi
 ### Rewind (rembobinage)
 
 La commande `/rewind` de Copilot CLI, qui annule une ou plusieurs étapes d'une session. Depuis la v1.0.78, elle ne nécessite plus de dépôt git, restaure uniquement les fichiers effectivement modifiés par Copilot, et propose un choix entre « conversation seule » et « conversation + fichiers ». Présentée aux Chapitres 03 et 08.
+
+### RTK (Rust Token Killer)
+
+Un outil tiers open source (`rtk-ai/rtk`), écrit en Rust, qui agit comme un proxy CLI : il intercepte des commandes de développement verbeuses (git, npm, cargo, pytest...), les exécute normalement, puis renvoie à l'agent une version compressée de leur sortie. Se connecte à Copilot CLI via `rtk init -g` (hook de réécriture automatique) ou via un fichier `copilot-instructions.md` fourni par le projet `rtk-for-copilot`. Commande d'analyse principale : `rtk gain`. Présenté au Chapitre 14.
 
 ---
 

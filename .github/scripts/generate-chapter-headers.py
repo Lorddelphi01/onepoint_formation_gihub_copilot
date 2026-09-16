@@ -23,6 +23,8 @@ CHAPTERS = {
     "10-obsidian-rag": "Chapitre 10 : RAG Obsidian",
     "11-security-with-copilot": "Chapitre 11 : Sécurité",
     "12-ai-developer-acceptance": "Chapitre 12 : Acceptation de l'IA",
+    "13-chronicle-session-insights": "Chapitre 13 : /chronicle",
+    "14-token-consumption-analysis": "Chapitre 14 : Consommation de tokens",
 }
 
 # Get project root (parent of scripts folder)
