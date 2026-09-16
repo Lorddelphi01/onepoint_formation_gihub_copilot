@@ -22,6 +22,10 @@ Un remplaçant de l'historique de commandes du shell : au lieu d'une simple list
 
 Un mode de Copilot CLI qui choisit lui-même, à chaque requête, le modèle d'IA le plus adapté selon la disponibilité en temps réel et (depuis juillet 2026) la complexité estimée de la tâche. Activable via `/model` → Auto, `--model auto`, ou `"model": "auto"` dans `~/.copilot/settings.json`. Trois profils de routage optionnels (`efficiency`, `balance`, `intelligence`) via `--auto-tier`. Présenté au Chapitre 01.
 
+### AutoCLI
+
+Un outil CLI tiers (Rust, open source) qui récupère des données depuis des sites web via une API publique ou une session navigateur authentifiée, piloté par des pipelines déclaratifs YAML. Présenté en annexe.
+
 ### Autopilot (mode autopilote)
 
 Un mode d'exécution de Copilot CLI qui implémente une tâche sans attendre d'approbation manuelle à chaque étape, souvent combiné à `--plan` (`--plan --mode autopilot`) pour planifier automatiquement puis exécuter directement. Présenté aux Chapitres 02 et 04.

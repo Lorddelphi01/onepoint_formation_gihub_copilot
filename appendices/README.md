@@ -17,6 +17,7 @@ Ces annexes couvrent des sujets supplémentaires qui complètent le contenu prin
 |----------|-------------|--------------|
 | [Fonctionnalités de contexte supplémentaires](additional-context.md) | Travailler avec des images et des permissions multi-répertoires | Chapitre 03 |
 | [Intégration CI/CD](ci-cd-integration.md) | Workflows GitHub Actions pour des revues automatisées | Chapitre 08 |
+| [Récupérer des données web avec AutoCLI](web-data-retrieval-and-autocli.md) | TP sur l'outil AutoCLI et problématiques de récupération de données web en dev IA | Chapitre 04 |
 
 ---
 
