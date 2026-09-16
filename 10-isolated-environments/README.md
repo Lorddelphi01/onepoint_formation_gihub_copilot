@@ -268,4 +268,6 @@ Vous savez maintenant faire tourner Copilot CLI aussi bien dans un environnement
 
 Vous avez maintenant vu Copilot CLI dans trois contextes d'exécution différents à travers ce cours : votre machine locale, un dev container cohérent, et une sandbox strictement isolée. Le principe reste le même partout — plus vous automatisez, plus l'environnement qui vous entoure doit inspirer confiance.
 
-**[← Chapitre précédent : n8n](../09-n8n-workflows/README.md)** | **[Retour à l'accueil du cours →](../README.md)**
+> 🎁 **Un dernier chapitre bonus vous attend.** Le [Chapitre 11 (bonus) : Sessions parallèles avec les worktrees Git](../11-parallel-worktrees/README.md) reprend l'idée d'isolation, mais au service de la parallélisation : plusieurs sessions Copilot CLI actives en même temps sur le même dépôt, chacune sur sa propre tâche.
+
+**[← Chapitre précédent : n8n](../09-n8n-workflows/README.md)** | **[Retour à l'accueil du cours](../README.md)** | **[Chapitre bonus suivant : Worktrees →](../11-parallel-worktrees/README.md)**
