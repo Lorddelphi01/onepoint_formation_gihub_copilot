@@ -18,6 +18,10 @@ Application Programming Interface (interface de programmation d'application). Un
 
 Un remplaçant de l'historique de commandes du shell : au lieu d'une simple liste plate, il stocke l'historique dans une base de données consultable en plein écran, avec recherche floue et filtrage par répertoire. Présenté au Chapitre 00.
 
+### AutoCLI
+
+Un outil CLI tiers (Rust, open source) qui récupère des données depuis des sites web via une API publique ou une session navigateur authentifiée, piloté par des pipelines déclaratifs YAML. Présenté en annexe.
+
 ### Autopilot (mode autopilote)
 
 Un mode d'exécution de Copilot CLI qui implémente une tâche sans attendre d'approbation manuelle à chaque étape, souvent combiné à `--plan` (`--plan --mode autopilot`) pour planifier automatiquement puis exécuter directement. Présenté aux Chapitres 02 et 04.
