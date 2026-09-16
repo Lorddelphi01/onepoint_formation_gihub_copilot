@@ -998,6 +998,8 @@ Certains serveurs MCP distants (protégés par OAuth) nécessitent une authentif
 
 Vous disposez maintenant de tous les éléments de base : les modes, le contexte, les workflows, les agents, les compétences et MCP. Il est temps de tout assembler.
 
+> 🎁 **Envie d'aller plus loin ?** Le [Chapitre 11 (bonus) : mcp2cli et le coût en tokens](../11-mcp2cli/README.md) revient sur ce que MCP coûte en tokens à chaque session, et vous montre comment interroger le serveur Context7 directement depuis le terminal, sans passer par Copilot.
+
 Dans le **[Chapitre 08 : Tout assembler](../08-putting-it-together/README.md)**, vous apprendrez :
 
 - Combiner agents, compétences et MCP dans des workflows unifiés

@@ -80,6 +80,7 @@ Ce cours se concentre sur **GitHub Copilot CLI**, qui apporte l'assistance de l'
 | 08 | 🎯 [Assembler le tout](./08-putting-it-together/README.md) | Flux de travail complets |
 | 09 | 🔗 [Automatiser un workflow visuel avec n8n](./09-n8n-workflows/README.md) *(bonus, nécessite Docker)* | Un workflow n8n construit par Copilot CLI via MCP et les skills n8n officielles |
 | 10 | 🐳 [Environnements isolés](./10-isolated-environments/README.md) *(bonus, nécessite Docker)* | Dev container + sandbox Docker isolée pour automatiser avec `--allow-all` en toute confiance |
+| 11 | 🪙 [mcp2cli et le coût en tokens](./11-mcp2cli/README.md) *(bonus, complète le Chapitre 07)* | Interroger le serveur Context7 MCP directement depuis le terminal, sans passer par Copilot |
 
 ## 📖 Comment fonctionne ce cours
 

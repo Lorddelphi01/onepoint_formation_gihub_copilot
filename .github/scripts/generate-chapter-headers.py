@@ -21,6 +21,7 @@ CHAPTERS = {
     "08-putting-it-together": "Chapitre 08 : Tout assembler",
     "09-n8n-workflows": "Chapitre 09 : n8n",
     "10-isolated-environments": "Chapitre 10 : Environnements isolés",
+    "11-mcp2cli": "Chapitre 11 : mcp2cli",
 }
 
 # Get project root (parent of scripts folder)

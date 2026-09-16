@@ -114,6 +114,10 @@ JSON Web Token. Un moyen sécurisé de transmettre des informations d'authentifi
 
 Model Context Protocol. Un standard pour connecter des assistants IA à des sources de données externes.
 
+### mcp2cli
+
+Un outil tiers en ligne de commande qui transforme n'importe quel serveur MCP en CLI native typée, en découvrant automatiquement ses outils et en les exposant comme des commandes de terminal — pour les invoquer sans passer par un modèle d'IA. Présenté au Chapitre 11.
+
 ---
 
 ### Memory (mémoire, Copilot CLI)
