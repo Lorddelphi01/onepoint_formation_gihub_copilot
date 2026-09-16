@@ -57,7 +57,9 @@ Les deux outils ne sont pas concurrents : RTK agit en amont (moins de bruit envo
 
 | Je veux... | Aller à |
 |---|---|
+| Comparer une commande avant/après RTK | [Comparer une commande avant/après RTK](#comparer-une-commande-avantaprès-rtk) |
 | Réduire la sortie de mes commandes | [RTK — réduire la consommation à la source](#rtk-réduire-la-consommation-à-la-source) |
+| Distinguer les types de tokens | [Trois notions de « tokens » à ne pas confondre](#trois-notions-de--tokens--à-ne-pas-confondre) |
 | Voir mes économies de tokens | [Lire un rapport rtk gain](#lire-un-rapport-rtk-gain) |
 | Activer l'export de données Copilot CLI | [Activer l'export OpenTelemetry de Copilot CLI](#activer-lexport-opentelemetry-de-copilot-cli) |
 | Visualiser ma consommation dans le temps | [Tokscale — mesurer la consommation après coup](#tokscale-mesurer-la-consommation-après-coup) |
@@ -93,6 +95,32 @@ which rtk
 ```
 
 > ⚠️ **Collision de nom possible** : si `rtk --version` échoue ou affiche un comportement inattendu, un autre paquet nommé `rtk` (par exemple « Rust Type Kit ») pourrait déjà occuper ce nom sur votre système. Vérifiez la sortie de `which rtk` pour confirmer que le binaire pointe bien vers `rtk-ai/rtk`.
+
+### Comparer une commande avant/après RTK
+
+<a id="comparer-une-commande-avantaprès-rtk"></a>
+
+Avant d'aller plus loin, observez concrètement l'effet de RTK sur **une seule et même commande**, exécutée deux fois : une fois normalement, une fois via `rtk proxy`.
+
+```bash
+# 1. Sans RTK — la commande brute
+git status
+
+# 2. Avec RTK — la même commande, passée par le proxy
+rtk proxy git status
+```
+
+Exemple de sortie obtenue sur ce projet de cours :
+
+```text
+$ git status | wc -c
+529
+
+$ rtk proxy git status | wc -c
+40
+```
+
+Le contenu affiché (la liste des fichiers modifiés) reste identique dans les deux cas — seule sa taille en caractères change. C'est exactement cette réduction, mesurée sur la sortie brute de la commande, que RTK rapporte ensuite dans `rtk gain` (voir plus bas). Reproduisez cette comparaison avec vos propres commandes (`git log -10`, `npm test`...) pour voir l'ordre de grandeur sur votre projet.
 
 ### Connecter RTK à Copilot CLI
 
@@ -140,6 +168,20 @@ Exemple d'ordre de grandeur documenté par le projet RTK lui-même :
 | `cargo test` | ~5 000 caractères | ~500 caractères | 90 % |
 
 > 💡 **Ce que `rtk gain` mesure réellement** : la documentation de RTK est explicite sur ce point — ces chiffres mesurent la réduction de la **sortie de commandes bash**, pas directement votre facture finale. Cette sortie n'est qu'une partie des tokens d'entrée consommés par une session, qui elle-même n'est qu'une partie de la facture (qui compte aussi les tokens de sortie générés par le modèle). Utilisez `rtk gain` comme un indicateur de tendance, pas comme une facture exacte.
+
+### Trois notions de « tokens » à ne pas confondre
+
+<a id="trois-notions-de--tokens--à-ne-pas-confondre"></a>
+
+Ce chapitre manipule trois mesures différentes qui portent toutes le nom de « tokens » — les confondre mène à des conclusions fausses :
+
+| Notion | Ce qu'elle mesure | Outil |
+|---|---|---|
+| Tokens de **sortie shell** | Le volume de caractères produit par une commande bash avant compression | RTK (`rtk gain`) |
+| Tokens de **contexte Copilot** | Tout ce qui est réellement envoyé au modèle pour une requête : sortie de commandes, fichiers ouverts, historique de conversation, instructions personnalisées | Aucun outil dédié dans ce chapitre — géré par Copilot CLI lui-même |
+| Tokens **facturés (métriques Tokscale)** | L'estimation de coût agrégée à partir des journaux OpenTelemetry d'une session complète (entrée + sortie modèle) | Tokscale |
+
+Réduire les tokens de sortie shell (RTK) diminue une partie des tokens de contexte, mais ne les élimine pas : le contexte inclut aussi vos fichiers, votre historique et les instructions système. C'est pourquoi une baisse de `rtk gain` ne se traduit pas mécaniquement en une baisse identique dans Tokscale.
 
 <details>
 <summary>🎬 Voyez-le en action !</summary>
@@ -218,6 +260,15 @@ Activez l'export OTel (étape ci-dessus), puis effectuez trois interactions diff
 1. Comparez la sortie de `git status` exécutée directement, puis via `rtk proxy git status` — notez la différence de volume
 2. Lancez `rtk gain` et vérifiez qu'il liste bien vos commandes récentes
 3. Lancez `npx tokscale@latest --light` et vérifiez qu'il affiche au moins une session Copilot CLI
+
+Consignez vos résultats mesurés dans un tableau comme celui-ci (remplacez les valeurs par les vôtres) :
+
+| Commande testée | Sans RTK (caractères) | Avec RTK (caractères) | Réduction mesurée |
+|---|---|---|---|
+| `git status` | _à compléter_ | _à compléter_ | _à compléter_ |
+| `git log -10` | _à compléter_ | _à compléter_ | _à compléter_ |
+
+> 💡 Utilisez `git status | wc -c` et `rtk proxy git status | wc -c` pour obtenir des valeurs exactes plutôt qu'une estimation visuelle.
 
 ---
 

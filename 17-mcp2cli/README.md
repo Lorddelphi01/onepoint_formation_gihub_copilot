@@ -98,64 +98,81 @@ Une fois installé, mcp2cli peut se connecter à un serveur MCP de deux façons 
 
 <img src="../assets/practice.png" alt="Warm desk setup with monitor showing code, lamp, coffee cup, and headphones ready for hands-on practice" width="800"/>
 
-Rappelez-vous la configuration du serveur Context7 vue au Chapitre 07 :
+![Parcours reproductible : le modèle lit les schémas et résultats MCP, tandis que la CLI générée appelle Context7 directement](assets/mcp-cost-comparison.svg)
 
-```json
-{
-  "mcpServers": {
-    "context7": {
-      "type": "local",
-      "command": "npx",
-      "args": ["-y", "@upstash/context7-mcp"],
-      "tools": ["*"]
-    }
-  }
-}
-```
+### Un parcours exactement reproductible
 
-La commande qui démarre ce serveur est `npx -y @upstash/context7-mcp`. C'est exactement cette commande que vous allez donner à mcp2cli avec `--stdio`, pour qu'il lance le même serveur — mais en lui parlant directement, sans Copilot au milieu.
+Le GIF ci-dessous suit les quatre commandes de ce TP. Son fichier source [`mcp2cli-context7-demo.tape`](assets/mcp2cli-context7-demo.tape) permet de le régénérer avec [VHS](https://github.com/charmbracelet/vhs).
 
-### Étape 1 : découvrir les outils exposés
+![Démonstration : découverte, signature, appel Context7 et comparaison avec Copilot CLI](assets/mcp2cli-context7-demo.gif)
+
+Les commandes ont été vérifiées avec **mcp2cli 3.7.0**. Elles utilisent le profil public `context7` fourni par mcp2cli : il appelle `https://mcp.context7.com/mcp`, sans clé API. Installez d'abord ce profil :
 
 ```bash
-mcp2cli --stdio "npx -y @upstash/context7-mcp" ls
+curl -fsSL https://mcp2cli.dev/install.sh | sh
+mcp2cli bake install context7
 ```
 
-Cette commande se connecte au serveur Context7, effectue la découverte MCP, et affiche la liste de ses outils. C'est l'équivalent de ce que Copilot fait silencieusement à chaque démarrage de session — sauf que là, vous le voyez.
-
-> 💡 **Ce que vous devriez voir** : une courte liste d'outils avec leur nom et leur description (généralement un outil pour résoudre le nom d'une bibliothèque vers un identifiant Context7, et un outil pour récupérer sa documentation). Les noms exacts et leur libellé peuvent varier selon la version du serveur — fiez-vous à la sortie de `ls`, pas à ce paragraphe.
-
-### Étape 2 : inspecter un outil
-
-Choisissez un des outils listés à l'étape 1, et inspectez son schéma complet :
+Fermez et rouvrez le terminal si `mcp2cli-context7` n'est pas encore trouvé. Vous pouvez contrôler la version et la configuration effectivement utilisées :
 
 ```bash
-mcp2cli --stdio "npx -y @upstash/context7-mcp" inspect <nom-outil>
+mcp2cli --version
+mcp2cli bake show context7
 ```
 
-**Résultat attendu** : le schéma JSON complet de l'outil — ses paramètres, lesquels sont obligatoires, leur type. C'est l'information que mcp2cli utilise pour générer les flags de la commande d'invocation à l'étape suivante, et c'est exactement l'information que Copilot lit pour chaque outil de chaque serveur activé, à chaque session.
+> ⚠️ **Limite importante** : `mcp2cli` génère ses commandes à partir du schéma publié par le serveur. Une mise à jour de Context7 peut donc faire évoluer un nom ou un flag. Exécutez toujours les étapes 1 et 2 avant d'automatiser le flux.
 
-### Étape 3 : invoquer l'outil
-
-En vous basant sur le schéma obtenu à l'étape 2, invoquez l'outil avec un argument réel (par exemple, le nom d'une bibliothèque que vous utilisez dans l'application de gestion de livres, comme `pytest`) :
+### Étape 1 : découvrir le même outil Context7
 
 ```bash
-mcp2cli --stdio "npx -y @upstash/context7-mcp" <nom-outil> --<argument> "pytest" --json
+mcp2cli-context7 --list --verbose
 ```
 
-**Résultat attendu** : une réponse JSON brute du serveur Context7, affichée directement dans votre terminal — sans qu'aucun modèle d'IA n'ait rien lu ni reformulé.
+Vous devez voir notamment `resolve-library-id` et `query-docs`. Le premier transforme le nom d'une bibliothèque en identifiant Context7 ; le second recherche dans sa documentation.
 
-### Étape 4 : comparer avec l'approche Copilot
+### Étape 2 : inspecter sa signature générée
 
-Relancez la même recherche, mais cette fois via Copilot, comme au Chapitre 07 :
+```bash
+mcp2cli-context7 resolve-library-id --help
+```
+
+La signature affiche les deux flags obligatoires : `--library-name` et `--query`. C'est la version directement lisible de la signature MCP que Copilot reçoit lorsqu'il découvre l'outil.
+
+### Étape 3 : invoquer l'outil avec une requête fixe
+
+```bash
+mcp2cli-context7 --json resolve-library-id --library-name=pytest --query="pytest fixture scopes"
+```
+
+**Résultat attendu** : la réponse JSON contient l'identifiant Context7 **`/pytest-dev/pytest`**. Conservez-le pour l'appel suivant :
+
+```bash
+mcp2cli-context7 --json query-docs --library-id=/pytest-dev/pytest --query="pytest fixture scopes"
+```
+
+Cette seconde réponse contient de la documentation sur les portées de fixtures pytest. Aucun token de **modèle** n'est consommé : vous appelez le serveur et lisez sa réponse directement. Le réseau, le terminal et Context7 continuent bien sûr de traiter la requête.
+
+### Étape 4 : comparer le même outil, la même requête et le même résultat
+
+Ouvrez Copilot avec le serveur Context7 configuré au Chapitre 07, puis envoyez ce prompt :
 
 ```bash
 copilot
 
-> What are the best practices for using pytest fixtures?
+> Use the Context7 resolve-library-id tool with library name "pytest" and query "pytest fixture scopes". Return the selected Context7 library ID only.
 ```
 
-**Auto-vérification** : vous comprenez la différence quand vous pouvez expliquer pourquoi la réponse de Copilot est plus lisible et contextualisée, mais que l'obtenir a coûté des tokens (schéma de l'outil + résultat complet lus par le modèle), alors que la commande mcp2cli de l'étape 3 n'en a coûté aucun — au prix de devoir lire une réponse brute vous-même.
+**Même entrée** : `pytest` et `pytest fixture scopes`. **Même outil** : `resolve-library-id` de Context7. **Même résultat à vérifier** : `/pytest-dev/pytest`. La différence est le chemin : mcp2cli affiche la réponse brute dans le terminal ; Copilot reçoit le schéma de l'outil et sa réponse, puis vous la présente. La formulation de Copilot peut varier, mais l'identifiant retourné doit être le même.
+
+### Alternative manuelle sans mcp2cli
+
+Si l'installation de mcp2cli est bloquée, le [MCP Inspector](https://github.com/modelcontextprotocol/inspector) permet de faire le même contrôle manuellement :
+
+```bash
+npx -y @modelcontextprotocol/inspector npx -y @upstash/context7-mcp
+```
+
+Ouvrez l'adresse locale affichée, sélectionnez `resolve-library-id`, puis saisissez `pytest` pour `libraryName` et `pytest fixture scopes` pour `query`. Vérifiez `/pytest-dev/pytest`, puis appelez `query-docs` avec cet identifiant et la même requête. Cette alternative montre les mêmes outils et données, mais nécessite un navigateur et ne fournit pas une commande facilement scriptable.
 
 ---
 
@@ -168,37 +185,50 @@ copilot
 ### Exercice 1 : Vérifier l'installation
 
 ```bash
-mcp2cli --stdio "npx -y @upstash/context7-mcp" ls
+mcp2cli --version
+mcp2cli bake show context7
+mcp2cli-context7 --list --verbose
 ```
 
-**Résultat attendu** : la commande se connecte au serveur et affiche sa liste d'outils, sans erreur.
+**Résultat attendu** : la version de mcp2cli, la configuration du profil et les outils `resolve-library-id` et `query-docs` s'affichent sans erreur.
 
-> 💡 **Ça échoue ?** Vérifiez que le serveur Context7 fonctionne déjà avec Copilot (`/mcp show` au Chapitre 07) avant d'accuser mcp2cli — si Copilot n'arrive pas à parler à `npx -y @upstash/context7-mcp` non plus, le problème est ailleurs.
+> 💡 **Ça échoue ?** Réinstallez le profil avec `mcp2cli bake install context7`. Vérifiez aussi que Context7 fonctionne avec Copilot (`/mcp show` au Chapitre 07) : si les deux clients ne le joignent pas, le problème est ailleurs.
 
 ---
 
-### Exercice 2 : Inspecter chaque outil disponible
+### Exercice 2 : Inspecter les signatures générées
 
-Pour chaque outil listé à l'exercice 1, exécutez `mcp2cli --stdio "npx -y @upstash/context7-mcp" inspect <nom-outil>` et notez ses paramètres obligatoires.
+Inspectez les paramètres du premier outil, puis ceux du second :
 
-**Résultat attendu** : vous savez, pour chaque outil, quels arguments lui passer sans avoir eu besoin de lire une seule ligne de documentation Context7.
+```bash
+mcp2cli-context7 resolve-library-id --help
+mcp2cli-context7 query-docs --help
+```
+
+**Résultat attendu** : vous identifiez `--library-name` et `--query` pour la résolution, puis `--library-id` et `--query` pour la recherche documentaire.
 
 ---
 
 ### Exercice 3 : Récupérer de la documentation pour l'application de gestion de livres
 
-Utilisez mcp2cli pour rechercher de la documentation sur une bibliothèque utilisée par `samples/book-app-project/` (par exemple `pytest` ou `json`), en enchaînant les outils inspectés à l'exercice 2 si plusieurs étapes sont nécessaires (résolution du nom, puis récupération de la doc).
+Utilisez la même requête que dans le TP, en sauvegardant les deux réponses JSON :
 
-**Résultat attendu** : une réponse JSON exploitable, obtenue sans passer par une session Copilot.
+```bash
+mcp2cli-context7 --json resolve-library-id --library-name=pytest --query="pytest fixture scopes" > resolve-pytest.json
+mcp2cli-context7 --json query-docs --library-id=/pytest-dev/pytest --query="pytest fixture scopes" > pytest-fixture-scopes.json
+```
+
+**Résultat attendu** : `resolve-pytest.json` contient `/pytest-dev/pytest` et `pytest-fixture-scopes.json` contient une documentation exploitable sur les portées de fixtures, sans démarrer une session Copilot.
 
 ---
 
-### Exercice 4 : Mesurer la différence par vous-même
+### Exercice 4 : Comparer la même requête par vous-même
 
-Posez la même question à Copilot (Chapitre 07, section Context7) et comparez :
+Dans Copilot configuré avec Context7, réutilisez précisément `library name = pytest` et `query = pytest fixture scopes`. Comparez :
 
+- L'identifiant renvoyé : `/pytest-dev/pytest` dans les deux cas
 - La longueur et la lisibilité de chaque réponse
-- Ce qu'il vous reste à faire dans chaque cas (copier-coller un résultat brut vs. une réponse déjà synthétisée)
+- Ce qu'il vous reste à faire dans chaque cas (lire le JSON brut ou lire une réponse déjà synthétisée)
 
 **Résultat attendu** : vous pouvez formuler, dans vos propres mots, un critère pour choisir entre les deux approches selon la tâche.
 
@@ -210,10 +240,10 @@ Posez la même question à Copilot (Chapitre 07, section Context7) et comparez :
 
 Utilisez mcp2cli pour construire, en une suite de commandes, un flux complet de recherche de documentation :
 
-1. **Découvrez** les outils du serveur Context7 avec `ls`
-2. **Inspectez** chaque outil pour connaître ses paramètres
-3. **Enchaînez** les outils nécessaires pour aller d'un nom de bibliothèque à sa documentation (par exemple, si un outil résout un identifiant et qu'un autre récupère la doc, utilisez la sortie du premier comme entrée du second)
-4. **Sauvegardez** le résultat JSON final dans un fichier (`> resultat.json`)
+1. **Découvrez** les outils du profil Context7 avec `mcp2cli-context7 --list --verbose`
+2. **Inspectez** les deux signatures avec `--help`
+3. **Enchaînez** `resolve-library-id`, puis `query-docs` avec l'identifiant retourné
+4. **Sauvegardez** les résultats JSON dans deux fichiers
 5. **Comparez** avec le même besoin résolu via Copilot, et notez par écrit (2-3 phrases) quand vous choisiriez l'une ou l'autre approche dans votre travail quotidien
 
 **Critères de réussite** : vous obtenez une réponse JSON exploitable en local sans jamais démarrer `copilot`, et vous pouvez justifier votre choix d'approche pour une tâche donnée en termes de coût (tokens, temps) et de bénéfice (interprétation, synthèse).
@@ -223,20 +253,22 @@ Utilisez mcp2cli pour construire, en une suite de commandes, un flux complet de 
 
 **Étape 1-2 : Découverte et inspection**
 ```bash
-mcp2cli --stdio "npx -y @upstash/context7-mcp" ls
-mcp2cli --stdio "npx -y @upstash/context7-mcp" inspect <nom-outil>
+mcp2cli-context7 --list --verbose
+mcp2cli-context7 resolve-library-id --help
+mcp2cli-context7 query-docs --help
 ```
 
 **Étape 3 : Enchaîner les outils**
 
-Si le premier outil renvoie un identifiant de bibliothèque, réutilisez cet identifiant comme argument du second appel — le même principe que la synthèse manuelle que Copilot ferait pour vous automatiquement.
+Le premier outil renvoie un identifiant de bibliothèque. Réutilisez-le avec `--library-id` dans le second appel — le même principe que la synthèse manuelle que Copilot ferait pour vous automatiquement.
 
 **Étape 4 : Sauvegarder la sortie**
 ```bash
-mcp2cli --stdio "npx -y @upstash/context7-mcp" <nom-outil> --json > resultat.json
+mcp2cli-context7 --json resolve-library-id --library-name=pytest --query="pytest fixture scopes" > resolve-pytest.json
+mcp2cli-context7 --json query-docs --library-id=/pytest-dev/pytest --query="pytest fixture scopes" > pytest-fixture-scopes.json
 ```
 
-**Si mcp2cli ne se connecte pas :** vérifiez que `npx -y @upstash/context7-mcp` fonctionne seul dans votre terminal (sans mcp2cli) — un problème de connexion au serveur touche les deux outils de la même façon.
+**Si mcp2cli ne se connecte pas :** utilisez l'alternative MCP Inspector documentée dans le TP, puis vérifiez que Context7 fonctionne dans Copilot avec `/mcp show`.
 
 </details>
 
@@ -261,18 +293,18 @@ Comparez la liste d'outils obtenue avec celle de Context7 — chaque serveur MCP
 |---------|--------------|-----|
 | Script d'installation bloqué par une politique de sécurité | `curl \| sh` échoue ou est refusé silencieusement | Téléchargez le script (`curl -fsSL https://mcp2cli.dev/install.sh -o install.sh`), inspectez-le, puis exécutez-le manuellement (`sh install.sh`) |
 | Premier démarrage lent ou en timeout | `npx` télécharge le paquet `@upstash/context7-mcp` à la première exécution | Relancez la commande ; les exécutions suivantes seront plus rapides grâce au cache npm |
-| Nom d'outil incorrect dans la commande | mcp2cli renvoie une erreur du type « commande inconnue » | Relancez `mcp2cli --stdio "..." ls` pour obtenir le nom exact avant d'inspecter ou d'invoquer un outil |
-| Argument obligatoire manquant | mcp2cli refuse la commande avant même de contacter le serveur | Relancez `mcp2cli --stdio "..." inspect <nom-outil>` pour voir quels flags sont obligatoires |
+| Nom d'outil incorrect dans la commande | mcp2cli renvoie une erreur du type « commande inconnue » | Relancez `mcp2cli-context7 --list --verbose` pour obtenir le nom exact |
+| Argument obligatoire manquant | mcp2cli refuse la commande avant même de contacter le serveur | Relancez `mcp2cli-context7 resolve-library-id --help` ou `mcp2cli-context7 query-docs --help` |
 
 ### Dépannage
 
 **« La commande mcp2cli est introuvable »** - Vérifiez que le script d'installation a bien ajouté mcp2cli à votre `PATH`, puis ouvrez un nouveau terminal.
 
-**« Le serveur ne répond pas »** - Testez la commande du serveur seule, sans mcp2cli :
+**« Le serveur ne répond pas »** - Vérifiez la configuration publique du profil :
 ```bash
-npx -y @upstash/context7-mcp
+mcp2cli bake show context7
 ```
-Si elle échoue déjà à ce niveau, le problème vient de la configuration du serveur (revoyez le [Chapitre 07](../07-mcp-servers/README.md)), pas de mcp2cli.
+Puis testez Context7 dans Copilot avec `/mcp show`. Si les deux clients échouent, revoyez le [Chapitre 07](../07-mcp-servers/README.md).
 
 **« Un serveur MCP distant demande une authentification »** - mcp2cli propose une sous-commande `auth` dédiée pour ce cas ; consultez `mcp2cli --stdio "..." auth --help` (Context7 n'en a pas besoin).
 

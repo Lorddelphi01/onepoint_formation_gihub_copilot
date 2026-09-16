@@ -78,6 +78,10 @@ copilot
 > copilot
 > > What does @test.py do?
 > ```
+>
+> **Nettoyage** : ce fichier ne sert qu'à cette démonstration. Supprimez-le
+> ensuite avec `rm test.py` sur macOS/Linux, ou `del test.py` dans l'invite de
+> commandes Windows.
 
 ### Motifs @ de base
 
@@ -96,6 +100,26 @@ copilot
 ```
 
 ---
+
+### Quel niveau de contexte choisir ?
+
+Ces mécanismes ne donnent pas tous le même type d'accès. Commencez par le
+contexte le plus ciblé, puis élargissez seulement si la question le nécessite :
+
+| Niveau | Quand l'utiliser | Exemple | Limite à connaître |
+|---|---|---|---|
+| Répertoire courant | Travailler dans le projet depuis lequel vous lancez `copilot` | `copilot` puis `Review @samples/book-app-project/books.py` | Changer de répertoire change les chemins relatifs disponibles |
+| `@fichier` | Poser une question précise sur un fichier | `Explain @samples/book-app-project/books.py` | Les dépendances et appels situés ailleurs peuvent manquer |
+| `@répertoire/` | Explorer une petite base de code ou repérer des motifs entre fichiers | `Review @samples/book-app-project/` | Charge davantage de contenu et remplit plus vite la fenêtre de contexte |
+| `@fichier1 @fichier2` | Suivre un flux ou comparer des modules liés | `Compare @samples/book-app-project/book_app.py @samples/book-app-project/books.py` | Il faut ajouter les dépendances réellement utiles |
+| `--add-dir` | Autoriser un répertoire situé en dehors du projet courant | `copilot --add-dir=../shared-notes` puis `@../shared-notes/` | Autorise l'accès, mais ne charge pas automatiquement les fichiers |
+| Session (`--continue`/`--resume`) | Retrouver l'historique, les décisions et les fichiers évoqués | `copilot --resume=book-app-review` | L'historique ne remplace pas une référence `@` quand le contenu actuel est nécessaire |
+
+> 🔎 **À retenir** : le répertoire courant définit le point de départ, `@`
+> choisit précisément le contenu fourni à Copilot CLI, et `--add-dir` élargit
+> les répertoires auxquels Copilot CLI est autorisé à accéder. Autoriser un
+> dossier ne signifie donc pas que tous ses fichiers sont automatiquement
+> chargés.
 
 <details>
 <summary>🎬 Voyez-le en action !</summary>
@@ -354,6 +378,15 @@ Une fois qu'une session est nommée, vous pouvez la reprendre directement par so
 ```bash
 copilot --resume=book-app-review
 ```
+
+<details>
+<summary>🎬 Voyez le nommage et la reprise en action !</summary>
+
+![Démo du nommage et de la reprise d'une session](assets/session-resume-demo.gif)
+
+*Le résultat de la démo peut varier. Votre modèle, vos outils et les réponses obtenues seront différents de ce qui est montré ici.*
+
+</details>
 
 Pour nettoyer les sessions dont vous n'avez plus besoin, utilisez `/session delete` depuis l'intérieur d'une session :
 
@@ -825,6 +858,10 @@ Après avoir terminé les démos, essayez ces variantes :
 
 **Auto-vérification** : Vous comprenez le contexte lorsque vous pouvez expliquer pourquoi `@folder/` est plus puissant que d'ouvrir chaque fichier individuellement.
 
+**Nettoyage** : si vous avez créé `test.py` dans la démonstration « sans
+configuration requise », supprimez-le avant de quitter l'exercice : `rm test.py`
+sur macOS/Linux ou `del test.py` sous Windows.
+
 ---
 
 ## 📝 Devoir
@@ -912,6 +949,15 @@ copilot --add-dir /path/to/directory
 # Ou dans une session :
 > /add-dir /path/to/directory
 ```
+
+<details>
+<summary>🎬 Voyez l'accès à un autre répertoire en action !</summary>
+
+![Démo de l'accès à un autre répertoire](assets/add-dir-context-demo.gif)
+
+*Le résultat de la démo peut varier. Votre modèle, vos outils et les réponses obtenues seront différents de ce qui est montré ici.*
+
+</details>
 
 **Le contexte se remplit trop vite** :
 - Soyez plus précis avec les références de fichiers

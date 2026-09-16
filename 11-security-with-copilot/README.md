@@ -34,7 +34,7 @@ Depuis le Chapitre 04, vous avez déjà croisé la sécurité à plusieurs repri
 
 - Avoir terminé le [Chapitre 04 : Flux de travail de développement](../04-development-workflows/README.md) — ce chapitre réutilise le réflexe de revue de code établi là-bas
 - Avoir terminé le [Chapitre 06 : Automatiser les tâches répétitives](../06-skills/README.md) — pour comparer la commande native `/security-review` à un skill `security-audit` personnalisé
-- ⚠️ **Copilot CLI dans une version récente, avec le mode expérimental activé** — `/security-review` est une fonctionnalité en préversion publique (voir la section [Comprendre les limites et les risques](#comprendre-les-limites-et-les-risques)) ; si la commande n'apparaît pas, mettez à jour Copilot CLI et consultez `copilot --help` ou la documentation officielle pour la syntaxe d'activation propre à votre version
+- ⚠️ **Copilot CLI dans une version qui propose `/security-review`, avec le mode expérimental activé** — cette fonctionnalité est en préversion publique. Vérifiez votre version avec `copilot --version`, puis lancez `copilot` et utilisez `/experimental` pour activer le mode expérimental. Si `/security-review` ne figure toujours pas dans `/help`, mettez à jour Copilot CLI avec `/update` ou suivez les instructions d'installation officielles.
 - Un dépôt avec des changements locaux (fichiers modifiés ou stagés) à scanner — un diff vide n'a rien à analyser
 
 ---
@@ -69,7 +69,7 @@ Pensez à `/security-review` comme au vigile qui contrôle rapidement votre sac 
 
 <a id="lancer-une-revue-avec-security-review"></a>
 
-Une fois le mode expérimental activé, lancez la commande depuis n'importe quel projet contenant des changements locaux :
+Une fois le mode expérimental activé, lancez la commande depuis un projet de confiance contenant des changements locaux :
 
 ```bash
 copilot
@@ -77,7 +77,7 @@ copilot
 > /security-review
 ```
 
-Copilot CLI analyse alors le même diff que celui que vous vous apprêteriez à committer, et renvoie une liste de failles classées par **sévérité** (Critique/Élevée/Moyenne/Faible) et par **niveau de confiance**, chacune accompagnée d'une explication et d'une correction suggérée que vous pouvez appliquer sans quitter le terminal.
+Copilot CLI analyse alors les changements stagés et non stagés que vous vous apprêtez à committer, et renvoie des failles à forte confiance classées par **sévérité** (Critique/Élevée/Moyenne/Faible). Chaque résultat peut inclure une explication et une correction suggérée à examiner avant application.
 
 Les catégories couvertes sont larges :
 
@@ -130,6 +130,18 @@ La règle qui en découle est simple et ne dépend d'aucun réglage : **ne laiss
 - Ne collez jamais une vraie clé d'API dans un prompt, même pour « juste tester »
 - Si vous devez partager un fichier de configuration en exemple, remplacez chaque valeur sensible par un placeholder explicite (`YOUR_API_KEY_HERE`)
 
+### Checklist secrets : à faire avant toute exécution automatisée
+
+Avant de lancer Copilot CLI, et en particulier avant d'autoriser des outils ou un mode automatisé, vérifiez ces points :
+
+- [ ] Le dossier ouvert est un dépôt que vous connaissez et auquel vous faites confiance.
+- [ ] Aucun fichier accessible ne contient de clé API, mot de passe, jeton, certificat ou fichier `.env` réel.
+- [ ] Les valeurs de démonstration sont des placeholders ou des clés explicitement factices, jamais des secrets de test encore valides.
+- [ ] Vous n'activez pas `--allow-all` pour un dépôt inconnu ; si l'automatisation est indispensable, utilisez d'abord l'environnement isolé du [Chapitre 09](../09-isolated-environments/README.md).
+- [ ] Vous relirez chaque commande et chaque modification proposée avant de l'approuver.
+
+Cette checklist précède volontairement l'exercice : une revue de sécurité peut lire le diff et les fichiers nécessaires à son analyse. Les fichiers de `samples/buggy-code/` contiennent uniquement des secrets factices destinés à être détectés.
+
 ---
 
 ## Comprendre les limites et les risques
@@ -137,6 +149,8 @@ La règle qui en découle est simple et ne dépend d'aucun réglage : **ne laiss
 <a id="comprendre-les-limites-et-les-risques"></a>
 
 `/security-review` est une fonctionnalité **expérimentale, en préversion publique** : le nombre de failles détectées, leur formulation ou leur sévérité peuvent évoluer d'une version à l'autre de Copilot CLI. Elle ne fait ni correspondance avec des CVE connues, ni analyse de dépendances, ni analyse de flux de données inter-fichiers approfondie — c'est le rôle de GitHub Code Scanning (CodeQL), Dependabot et d'outils tiers comme Snyk, en complément et non en remplacement.
+
+> ⚠️ **Une revue sans résultat n'est pas une preuve d'absence de vulnérabilité.** Elle peut manquer une faille, mal interpréter le contexte ou ne pas couvrir une dépendance. Conservez les revues humaines, les tests, la gestion des dépendances et le scanner de secrets dans votre processus.
 
 > ⚠️ **Gardez aussi un œil sur ce que Copilot CLI *exécute*, pas seulement sur ce qu'il *écrit*.** Des chercheurs en sécurité ont documenté des cas où une entrée conçue pour l'occasion contournait la liste de commandes en lecture seule normalement approuvées sans confirmation, jusqu'à faire exécuter une commande réseau (téléchargement puis exécution d'un script) sans validation explicite. GitHub a qualifié ce cas de risque faible et n'a pas annoncé de correctif immédiat au moment de la rédaction. La bonne pratique reste la même que celle déjà rencontrée dans les chapitres précédents : **relisez toujours une commande proposée avant de l'approuver**, et évitez de faire tourner un dépôt non fiable en mode entièrement autonome (autopilot) sans supervision. Si vous avez besoin de ce mode entièrement autonome (`--allow-all`), construisez d'abord l'environnement sûr qui le rend acceptable : voir le [Chapitre 09 : Environnements isolés](../09-isolated-environments/README.md).
 
@@ -151,30 +165,76 @@ La règle qui en découle est simple et ne dépend d'aucun réglage : **ne laiss
 
 ---
 
-## Pratique
+## Pratique : un scénario de revue complet
 
-Le dossier [`samples/buggy-code/`](../samples/buggy-code/README.md) contient du code volontairement vulnérable (injection SQL, secrets en dur, désérialisation dangereuse, etc.) — le même terrain d'exercice utilisé au Chapitre 04. Utilisez-le ici pour comparer la revue native à celle de votre skill `security-audit` du Chapitre 06 :
+Le dossier [`samples/buggy-code/`](../samples/buggy-code/README.md) contient du code volontairement vulnérable (injection SQL, secrets en dur, désérialisation dangereuse, etc.). **Ne corrigez jamais ces fichiers dans le dépôt du cours.** Le laboratoire ci-dessous copie `user_service.py` dans un dossier temporaire et le stage comme un nouveau fichier : la revue reçoit ainsi le fichier entier dans son diff, sans modifier l'exemple pédagogique.
+
+### 1. Détecter les problèmes
+
+Après avoir effectué la [checklist secrets](#checklist-secrets--à-faire-avant-toute-exécution-automatisée), exécutez ces commandes depuis la racine du dépôt :
 
 ```bash
-cd samples/buggy-code
-git add python/user_service.py
+LAB_DIR="$(mktemp -d)"
+git init "$LAB_DIR"
+cp samples/buggy-code/python/user_service.py "$LAB_DIR/user_service.py"
+cd "$LAB_DIR"
+git add user_service.py
 
 copilot
 
 > /security-review
 ```
 
-### ▶️ À vous de jouer
+**Résultats attendus :** la formulation et la sévérité peuvent varier, mais la revue doit notamment attirer l'attention sur la requête SQL construite avec `user_id` (environ ligne 15), la journalisation du mot de passe, le secret JWT en dur, le hachage MD5 et `pickle.loads()` sur des données non fiables. Notez les résultats, leur sévérité et leur niveau de confiance : un résultat est une hypothèse à examiner, pas une correction automatique.
 
-1. Lancez `/security-review` sur `python/payment_processor.py` et notez le nombre de failles détectées par niveau de sévérité
-2. Comparez ce résultat avec celui de votre skill `security-audit` (Chapitre 06) sur le même fichier : quelles failles chacun trouve-t-il, et lesquelles seulement l'un des deux repère-t-il ?
-3. Choisissez une faille « Critique » ou « Élevée » et demandez à Copilot CLI d'expliquer, ligne par ligne, pourquoi elle est dangereuse
+Si votre version ne propose pas `/security-review`, utilisez ce repli manuel dans la même session Copilot :
+
+```text
+Examine @user_service.py pour les vulnérabilités de sécurité. Liste chaque problème avec sa ligne, son impact, son niveau de sévérité et une correction sûre. Ne modifie aucun fichier.
+```
+
+### 2. Valider manuellement un résultat
+
+Choisissez l'injection SQL de `get_user`. Lisez la ligne signalée : `user_id` est inséré directement dans la requête SQL. Expliquez ensuite à Copilot pourquoi une valeur telle que `1 OR 1=1` peut modifier le sens de la requête. Ne lancez pas cet exemple contre une base contenant des données réelles.
+
+Pour chaque résultat, vérifiez vous-même :
+
+1. La donnée est-elle réellement contrôlée par un utilisateur ou une source non fiable ?
+2. La ligne signalée atteint-elle une opération sensible (requête SQL, journal, désérialisation, etc.) ?
+3. La correction suggérée préserve-t-elle le comportement attendu et n'introduit-elle pas de secret dans le code ?
+
+### 3. Corriger uniquement dans le laboratoire
+
+Le fichier du laboratoire est une copie : vous pouvez y tester une correction sans changer `samples/buggy-code/`. Demandez une correction ciblée et relisez le diff :
+
+```text
+Dans @user_service.py, corrige uniquement l'injection SQL de get_user avec une requête paramétrée. N'applique aucune autre correction et n'ajoute aucun secret.
+```
+
+La correction attendue transmet `user_id` comme paramètre séparé à `cursor.execute`, au lieu de le concaténer dans la chaîne SQL. Vérifiez le diff proposé, puis stagez seulement cette correction :
+
+```bash
+git diff -- user_service.py
+git add user_service.py
+```
+
+### 4. Relire après la correction
+
+Dans la même session, relancez :
+
+```text
+/security-review
+```
+
+**Résultat attendu :** le signalement concernant la concaténation SQL dans `get_user` disparaît ou est résolu. Les autres problèmes intentionnels du fichier, comme le secret JWT, MD5 ou `pickle.loads()`, restent signalables tant que vous ne les avez pas corrigés dans le laboratoire. Cette dernière revue confirme seulement le changement examiné ; elle ne certifie pas que le fichier est sûr.
+
+Lorsque vous avez terminé, fermez la session et supprimez le dossier temporaire créé par `mktemp` à l'aide du chemin exact affiché par votre terminal. Ne copiez pas la correction vers `samples/buggy-code/`.
 
 ---
 
 ## 📝 Devoir
 
-**Défi principal** : appliquez la correction proposée par `/security-review` pour une faille critique de `samples/buggy-code`, puis relancez la commande pour confirmer qu'elle a disparu. Ne committez pas cette correction dans le vrai dépôt du cours : ce dossier est un terrain d'exercice intentionnellement bugué, gardez votre correction en local.
+**Défi principal** : reprenez le scénario avec `samples/buggy-code/python/payment_processor.py` dans un nouveau laboratoire temporaire. Détectez une faille, validez-la manuellement, corrigez-la uniquement dans la copie, puis relancez `/security-review`. Ne committez pas cette correction dans le vrai dépôt du cours : ce dossier est un terrain d'exercice intentionnellement bugué.
 
 **Défi bonus** : sur un projet personnel, ajoutez une section « Sécurité » à votre propre `.github/copilot-instructions.md`, puis vérifiez avec un prompt neutre (« écris-moi une fonction qui stocke un mot de passe ») que Copilot applique désormais ces règles par défaut.
 

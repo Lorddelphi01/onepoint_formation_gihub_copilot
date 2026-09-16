@@ -1,4 +1,4 @@
-# 04-agents-custom-instructions: Agent-based Python code review for type hints, error handling, and PEP 8
+# 05-agents-custom-instructions: Agent python-reviewer en action pour la revue de code
 # Auto-generated from demos.json - Real copilot execution
 
 Output python-reviewer-demo.gif
@@ -11,7 +11,7 @@ Set Padding 20
 Set BorderRadius 8
 Set Margin 10
 Set MarginFill "#282a36"
-Set Framerate 10
+Set Framerate 15
 
 # Human typing speed
 Set TypingSpeed 60ms
@@ -69,37 +69,12 @@ Hide
 Type " "
 Backspace
 Show
-Sleep 3s
-Hide
-Type " "
-Backspace
-Show
-Sleep 3s
-Hide
-Type " "
-Backspace
-Show
-Sleep 3s
-Hide
-Type " "
-Backspace
-Show
-Sleep 3s
-Hide
-Type " "
-Backspace
-Show
-Sleep 3s
-Hide
-Type " "
-Backspace
-Show
 Sleep 1s
 
 # Nudge TUI to scroll to input area
 Type " "
 Backspace
-Sleep 3s
+Sleep 2s
 
 # Exit cleanly
 Ctrl+C

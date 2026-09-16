@@ -1,5 +1,6 @@
-# Assets attendus — Chapitre 12
+# Assets — Chapitre 12
 
-Ce dossier est un point d'ancrage documenté pour les images de ce chapitre. `chapter-header.png` est généré automatiquement par `npm run generate:headers`. Reste à produire séparément :
+Ce dossier contient les images utilisées par le chapitre 12.
 
-- `adoption-analogy.png` — illustration de l'analogie du monde réel (frise chronologique manuels papier → recherche en ligne → assistance IA)
+- `chapter-header.png` — généré automatiquement par `npm run generate:headers`.
+- `adoption-analogy.png` — illustration de l'analogie du monde réel (frise chronologique manuels papier → recherche en ligne → assistance IA), référencée dans le `README.md` du chapitre.

@@ -21,3 +21,19 @@ Contraintes :
 Format de sortie attendu :
 
 Le code de la fonctionnalité, un test correspondant dans tests/, et une ligne d'exemple d'utilisation en commentaire.
+
+---
+
+## Exemple réussi
+
+**Prompt rempli :**
+
+> Ajoute `find_books_by_year(year)` à `samples/book-app-project/books.py`. La méthode doit retourner les livres du catalogue dont le champ `year` correspond à l'année demandée, avec la même structure de retour que `list_books()`. Utilise le vocabulaire « livre » et « catalogue », conserve le style `snake_case`, ne modifie pas `data.json` et ajoute des tests pytest pour une année présente et une année absente. Retourne le code, les tests et un exemple d'utilisation en commentaire.
+
+**Sortie attendue :** une méthode ciblée sur `BookCollection`, une liste de `Book` cohérente avec `list_books()`, deux tests pytest (résultat trouvé et liste vide) et aucun changement de format dans `data.json`.
+
+## Contre-exemple
+
+> Ajoute une recherche dans l'application.
+
+Ce prompt échoue car « recherche » ne dit pas quel champ du catalogue utiliser, quel type de résultat retourner ni quels cas tester. Copilot CLI peut créer une recherche par titre, une interface différente ou une fonctionnalité sans tests.

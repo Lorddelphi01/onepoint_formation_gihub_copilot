@@ -4,7 +4,7 @@
       "type": "http",
       "url": "http://127.0.0.1:27123/mcp/",
       "headers": {
-        "Authorization": "Bearer <votre-clé-api-local-rest-api>"
+        "Authorization": "Bearer ${OBSIDIAN_API_KEY}"
       }
     },
     "smart-connections": {

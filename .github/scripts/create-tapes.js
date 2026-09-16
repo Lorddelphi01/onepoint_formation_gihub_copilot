@@ -6,6 +6,7 @@
  *   - "prompt": "text"              → single prompt
  *   - "prompts": ["a", "b"]         → multi-prompt (default responseWait each)
  *   - "prompts": [{ "text": "a", "responseWait": 10 }, "b"]  → mixed with overrides
+ *   - "launchCommand": "copilot --no-custom-instructions" → override the launch line (defaults to "copilot")
  *
  * Usage: npm run create:tapes
  */
@@ -111,7 +112,7 @@ Set Framerate ${s.framerate}
 Set TypingSpeed ${s.typingSpeed}
 
 # Launch copilot
-Type "copilot"
+Type "${demo.launchCommand || 'copilot'}"
 Enter
 
 # Wait for copilot to start

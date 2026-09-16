@@ -25,7 +25,9 @@ C'est exactement ce que fait MCP (Model Context Protocol). C'est un moyen de con
 
 - Comprendre ce qu'est MCP et pourquoi c'est important
 - Gérer les serveurs MCP avec les commandes `/mcp`
+- Distinguer un serveur intégré, un serveur local `stdio` et un serveur distant HTTP
 - Configurer des serveurs MCP pour GitHub, le système de fichiers et la documentation
+- Diagnostiquer un serveur de la configuration jusqu'au premier appel d'outil
 - Utiliser des workflows alimentés par MCP avec le projet d'application de gestion de livres
 - Savoir quand et comment construire un serveur MCP personnalisé (facultatif)
 
@@ -106,6 +108,73 @@ Pour ajouter, modifier ou authentifier un serveur, utilisez `/mcp config` *(depu
 *Le résultat de la démo peut varier. Votre modèle, vos outils et vos réponses différeront de ce qui est montré ici.*
 
 </details>
+
+---
+
+## 🎬 Démonstrations et diagnostic MCP
+
+Les démonstrations ci-dessous montrent les étapes importantes sans supposer que
+tous les serveurs sont disponibles sur votre machine :
+
+| Démonstration | Ce que vous verrez |
+|---|---|
+| [`/mcp show`](assets/mcp-show-demo.gif) | Les serveurs détectés et leur statut |
+| [`/mcp config`](assets/mcp-config-demo.gif) | L'assistant pour ajouter, modifier ou authentifier un serveur |
+| [Serveur local `stdio`](assets/mcp-local-stdio-demo.gif) | Le processus local, ses outils et son périmètre de fichiers |
+| [Serveur distant OAuth](assets/mcp-oauth-demo.gif) | Le principe de l'authentification sans placer de jeton dans Git |
+| [Combinaison de serveurs](assets/mcp-multi-server-demo.gif) | Une session qui utilise filesystem et GitHub ensemble |
+
+Les GIF sont illustratifs : le nom des outils et les réponses peuvent varier
+selon la version de Copilot CLI et la configuration de votre machine. Les
+fichiers `.tape` associés sont conservés dans `07-mcp-servers/assets/` pour
+rejouer ou régénérer les démonstrations.
+
+### Trois types de serveurs à ne pas confondre
+
+| Type | Où le serveur s'exécute | Configuration et données accessibles | Permissions et solution de repli |
+|---|---|---|---|
+| **Intégré** (GitHub) | Dans l'intégration Copilot/GitHub | Aucune entrée dans `mcp-config.json`. Après `/login`, Copilot peut consulter les dépôts, issues, PR et actions accessibles à votre compte. | Les permissions GitHub de votre compte s'appliquent. Si le serveur n'apparaît pas, exécutez `/login`, puis utilisez `gh` ou copiez les informations nécessaires manuellement. |
+| **Local `stdio`** | Sur votre machine, comme un processus lancé par `command` | [`local-stdio-mcp-config.json`](../samples/mcp-configs/local-stdio-mcp-config.json) lance Filesystem MCP avec un périmètre `.`. Les outils listés peuvent lire et rechercher les fichiers de ce répertoire. | Limitez `tools` aux outils nécessaires et ne lancez Copilot que dans un dossier de confiance. Si `npx` ou le paquet ne fonctionne pas, utilisez `@fichier` pour fournir les fichiers utiles ou exécutez les commandes locales vous-même. |
+| **Distant HTTP** | Sur un service accessible par URL | [`remote-http-mcp-config.json`](../samples/mcp-configs/remote-http-mcp-config.json) pointe vers un serveur n8n local via HTTP. Le serveur distant reçoit les appels d'outils autorisés et les données qu'ils demandent. | N'autorisez que les outils nécessaires et protégez l'URL derrière votre réseau ou votre authentification. Si le service est arrêté, utilisez son interface web ou exportez les données dans un fichier local. |
+
+Un serveur HTTP peut aussi proposer OAuth. Dans ce cas, copiez
+[`remote-oauth-mcp-config.json`](../samples/mcp-configs/remote-oauth-mcp-config.json),
+remplacez l'URL d'exemple par celle du fournisseur, puis exécutez
+`/mcp auth remote-oauth`. Le jeton est géré par la CLI : il ne doit pas être
+écrit dans un fichier versionné. Les permissions et les données accessibles
+dépendent toujours du compte autorisé par le fournisseur.
+
+### Diagnostic minimal : configuration → démarrage → outils → appel
+
+Suivez toujours ces quatre étapes dans l'ordre. La première étape qui échoue
+identifie généralement le problème :
+
+```bash
+# 1. Configuration : le serveur est-il connu de la CLI ?
+copilot mcp list
+
+# 2. Démarrage : inspecter le statut depuis une session Copilot
+copilot
+> /mcp show
+
+# 3. Outils : demander la liste des outils effectivement exposés
+> List the tools available from the filesystem MCP server.
+
+# 4. Appel : effectuer un appel sans ambiguïté
+> Use filesystem MCP to list samples/book-app-project/ only.
+```
+
+| Étape en échec | Indice courant | Action corrective |
+|---|---|---|
+| Configuration | Le serveur n'est pas listé | Vérifiez le JSON, le nom, `type`, `command`/`url`, puis relancez `copilot mcp list`. |
+| Démarrage | Le serveur est listé mais `disabled` ou `failed` | Utilisez `/mcp enable <server-name>`, vérifiez la commande manuellement et consultez les messages de démarrage. |
+| Outils | Le serveur démarre mais n'expose aucun outil attendu | Réduisez `tools` à des noms réellement fournis par le serveur ou utilisez `tools: ["*"]` temporairement pour diagnostiquer. |
+| Appel | L'outil existe mais l'appel est refusé ou vide | Vérifiez le chemin autorisé, l'authentification et les droits du compte. En repli, utilisez `@fichier`, `gh` ou la commande native du service. |
+
+> ⚠️ **Principe de moindre privilège** : `tools: ["*"]` autorise tous les
+> outils exposés par le serveur. Pour un dépôt partagé, préférez une liste
+> explicite d'outils en lecture seule et n'accordez l'accès qu'aux données
+> nécessaires à l'exercice.
 
 ---
 

@@ -121,6 +121,28 @@ La **[référence des commandes GitHub Copilot CLI](https://docs.github.com/en/c
 3. Effectue tes modifications
 4. Soumets une pull request
 
+### Vérifier les références et les démos
+
+Avant de soumettre une modification de chapitre, lance :
+
+```bash
+npm run audit
+```
+
+Cette commande vérifie les liens et images locaux dans les fichiers Markdown,
+la présence des GIF et tapes déclarés dans `.github/scripts/demos.json`, puis
+signale les GIF orphelins et les chapitres dont les commandes Copilot ne sont
+pas encore couverts. Les références cassées font échouer la commande ; les
+écarts de génération ou de couverture sont détaillés dans le rapport. Pour
+enregistrer celui-ci dans un fichier :
+
+```bash
+npm run audit -- --report=./audit-report.md
+```
+
+Les nouveaux assets suivent la convention `<concept>-demo.gif` pour une
+démonstration animée et `<concept>-analogy.png` pour une illustration statique.
+
 ## Licence
 
 Ce projet est distribué sous les termes de la licence open source MIT. Consulte le fichier [LICENSE](./LICENSE) pour les termes complets.

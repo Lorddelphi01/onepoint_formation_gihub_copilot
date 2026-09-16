@@ -79,9 +79,24 @@ Dans Obsidian, ouvrez **Settings → Community plugins → Browse**, cherchez pu
 
 > ⚠️ **Laissez Smart Connections terminer son indexation avant de continuer.** À la première activation, il génère les embeddings de toutes vos notes en arrière-plan — une barre de progression s'affiche dans les réglages du plugin. Sur un vault de quelques centaines de notes, comptez quelques minutes.
 
-### Récupérer votre clé API
+### Comprendre ce qui reste local et ce qui est envoyé au modèle
 
-Ouvrez **Settings → Local REST API** : votre clé API s'affiche en haut de ce panneau, avec un bouton de copie à côté. Notez également le port utilisé — par défaut `27123` en HTTP ou `27124` en HTTPS (certificat auto-signé). Pour ce chapitre, activez l'option HTTP dans les réglages du plugin : cela évite d'avoir à faire confiance manuellement à un certificat auto-signé pour un usage local.
+Avant de connecter un serveur MCP, décidez quelles notes vous acceptez de partager avec Copilot :
+
+| Donnée | Où elle est traitée |
+|---|---|
+| Les embeddings et l'index de Smart Connections | Localement dans votre vault |
+| Votre question et les résultats d'outils MCP | Par Copilot CLI et le modèle qui répond à votre question |
+| Le texte complet d'une note | Envoyé au modèle **uniquement** si Copilot appelle l'outil de lecture du vault pour cette note |
+| La clé Local REST API | Conservée dans votre variable d'environnement et transmise seulement à `127.0.0.1`, jamais dans votre prompt ni dans Git |
+
+La recherche sémantique ne téléverse pas votre vault pour construire son index. En revanche, une fois que vous demandez à Copilot de lire une note, son contenu devient du contexte de votre conversation. N'activez donc ce flux que pour des notes que vous êtes autorisé à partager avec le service Copilot, et demandez une lecture ciblée plutôt qu'une lecture de tout le vault.
+
+### Récupérer votre clé API et choisir le port
+
+Ouvrez **Settings → Local REST API** : votre clé API s'affiche en haut de ce panneau, avec un bouton de copie à côté. Le plugin utilise HTTPS sur le port `27124` par défaut et son certificat est auto-signé ; activez explicitement le serveur HTTP local sur le port `27123` pour suivre l'exemple ci-dessous.
+
+> ⚠️ HTTP est acceptable ici uniquement parce que l'URL vise `127.0.0.1`, c'est-à-dire votre propre machine. Ne rendez jamais ce serveur accessible depuis votre réseau ou Internet. Si vous préférez HTTPS, conservez `https://127.0.0.1:27124/mcp/` et installez d'abord le certificat auto-signé du plugin dans le magasin de certificats de votre système.
 
 ---
 
@@ -89,7 +104,15 @@ Ouvrez **Settings → Local REST API** : votre clé API s'affiche en haut de ce 
 
 <a id="connecter-copilot-cli-aux-deux-serveurs-mcp"></a>
 
-Comme vu au Chapitre 07, un serveur MCP distant se configure avec une URL, et un serveur MCP local se lance via une commande. Ici, vous avez besoin des deux à la fois. Ajoutez ceci à votre `.mcp.json` (à la racine du projet) ou à votre `~/.copilot/mcp-config.json` :
+Comme vu au Chapitre 07, un serveur MCP distant se configure avec une URL, et un serveur MCP local se lance via une commande. Ici, vous avez besoin des deux à la fois.
+
+Commencez par stocker la clé dans la variable d'environnement de votre terminal, sans la coller dans le fichier de configuration :
+
+```bash
+export OBSIDIAN_API_KEY='collez-ici-votre-cle-local-rest-api'
+```
+
+Ajoutez ensuite ceci à votre `.mcp.json` (à la racine du projet) ou à votre `~/.copilot/mcp-config.json` :
 
 ```json
 {
@@ -98,7 +121,7 @@ Comme vu au Chapitre 07, un serveur MCP distant se configure avec une URL, et un
       "type": "http",
       "url": "http://127.0.0.1:27123/mcp/",
       "headers": {
-        "Authorization": "Bearer <votre-clé-api-local-rest-api>"
+        "Authorization": "Bearer ${OBSIDIAN_API_KEY}"
       }
     },
     "smart-connections": {
@@ -113,7 +136,7 @@ Comme vu au Chapitre 07, un serveur MCP distant se configure avec une URL, et un
 }
 ```
 
-Remplacez `<votre-clé-api-local-rest-api>` par la clé copiée à l'étape précédente, et `/chemin/absolu/vers/votre/vault` par le chemin réel de votre vault sur disque (plusieurs vaults peuvent être séparés par des virgules).
+Remplacez uniquement `/chemin/absolu/vers/votre/vault` par le chemin réel de votre vault sur disque. N'ajoutez pas votre clé dans ce JSON et ne versionnez pas un fichier qui la contient. Plusieurs vaults peuvent être séparés par des virgules dans `SMART_VAULT_PATH`.
 
 Vérifiez ensuite la connexion :
 
@@ -138,13 +161,21 @@ Posez une question dont la réponse est dispersée entre plusieurs notes de votr
 ```bash
 copilot
 
-> D'après mes notes, fais-moi une synthèse de ce que je sais sur <un sujet
-> présent dans plusieurs de vos notes>. Utilise la recherche sémantique pour
-> trouver les notes pertinentes, lis leur contenu complet, puis cite le titre
-> de chaque note que tu as utilisée dans ta réponse.
+> D'après mes notes, fais-moi une synthèse de ce que je sais sur <un-sujet-present-dans-plusieurs-notes>. Utilise d'abord la recherche sémantique, puis lis uniquement les notes pertinentes. Pour chaque affirmation, indique une source au format [[titre-de-la-note]].
 ```
 
-Copilot CLI va typiquement : appeler `search_notes` (serveur `smart-connections`) pour retrouver les notes pertinentes par similarité de sens, puis `vault_read` (serveur `obsidian`) pour en lire le contenu complet, avant de rédiger une réponse qui cite ses sources.
+Le pipeline attendu est visible dans la chronologie de Copilot :
+
+1. **Question** : vous formulez un besoin de synthèse.
+2. **Recherche sémantique** : Smart Connections retrouve les titres les plus proches par sens. Les noms exacts de ses outils peuvent varier selon la version du serveur.
+3. **Lecture ciblée du vault** : Local REST API fournit le contenu complet des seules notes retenues.
+4. **Réponse citée** : Copilot synthétise et rattache chaque affirmation à un lien `[[titre-de-la-note]]`.
+
+Par exemple, si votre vault contient les notes `Projet Alpha`, `Retro 2025-01` et `Standup API`, une réponse vérifiable peut ressembler à ceci :
+
+> Le retard du projet vient surtout de la dépendance à l'API partenaire, confirmée lors de la rétrospective. La solution retenue est de livrer l'interface avec des données de démonstration, puis de brancher l'API dès qu'elle est disponible. **Sources :** [[Projet Alpha]], [[Retro 2025-01]], [[Standup API]].
+
+Les titres et le contenu seront différents dans votre vault ; ce qui compte est que chaque `[[titre-de-la-note]]` corresponde au nom d'une note réellement lue.
 
 <details>
 <summary>🎬 Voyez-le en action !</summary>
@@ -155,7 +186,7 @@ Copilot CLI va typiquement : appeler `search_notes` (serveur `smart-connections`
 
 </details>
 
-Ouvrez ensuite les notes citées dans Obsidian : vérifiez qu'elles contiennent bien l'information utilisée dans la réponse. C'est le même réflexe de relecture qu'avec du code généré par IA — ne faites jamais confiance à une citation sans la vérifier au moins une fois.
+Ouvrez ensuite une note citée dans Obsidian, par exemple en cliquant sur `[[Projet Alpha]]` dans votre propre réponse, et vérifiez qu'elle contient bien l'information utilisée. **Critère de réussite :** vous pouvez ouvrir au moins une citation, retrouver dans cette note le fait qu'elle soutient, et expliquer pourquoi Copilot ne l'a pas inventé. C'est le même réflexe de relecture qu'avec du code généré par IA — ne faites jamais confiance à une citation sans la vérifier au moins une fois.
 
 ---
 
@@ -193,8 +224,8 @@ Ouvrez ensuite les notes citées dans Obsidian : vérifiez qu'elles contiennent 
 | Erreur | Ce qui se passe | Solution |
 |---|---|---|
 | `obsidian` absent de `/mcp show` | Le plugin Local REST API n'est pas activé, ou l'URL/le port est incorrect | Vérifiez Settings → Local REST API dans Obsidian, confirmez le port (27123 en HTTP), redémarrez Copilot CLI |
-| Erreur `401 Unauthorized` sur le serveur `obsidian` | La clé API est absente ou incorrecte dans le header `Authorization` | Recopiez la clé depuis Settings → Local REST API, sans espace superflu |
-| Erreur de certificat sur le port 27124 | Vous utilisez l'URL HTTPS, qui repose sur un certificat auto-signé | Passez à l'URL HTTP sur le port 27123 (à activer dans les réglages du plugin), ou acceptez explicitement le certificat |
+| Erreur `401 Unauthorized` sur le serveur `obsidian` | La clé API est absente, ou `OBSIDIAN_API_KEY` n'est pas définie dans le terminal qui lance Copilot | Exécutez à nouveau `export OBSIDIAN_API_KEY='...'`, puis relancez Copilot ; le header doit commencer par `Bearer ` |
+| Erreur de certificat sur le port 27124 | Vous utilisez l'URL HTTPS, qui repose sur un certificat auto-signé | Préférez HTTP sur `127.0.0.1:27123` pour ce TP, ou installez le certificat du plugin dans votre système avant de conserver HTTPS |
 | `smart-connections` absent de `/mcp show` ou plante au démarrage | `SMART_VAULT_PATH` pointe vers un chemin incorrect | Vérifiez que le chemin est absolu et pointe vers le dossier qui contient `.obsidian` |
 | La recherche renvoie `"mode": "keyword"` au lieu de `"mode": "semantic"` | Smart Connections n'a pas encore terminé (ou pas commencé) l'indexation de vos notes | Ouvrez Obsidian, attendez la fin de la barre de progression d'indexation dans les réglages du plugin, puis réessayez |
 | Une note récente n'apparaît jamais dans les réponses | Elle n'a pas encore été indexée par Smart Connections | Attendez la réindexation automatique, ou déclenchez-en une manuellement depuis les réglages du plugin |

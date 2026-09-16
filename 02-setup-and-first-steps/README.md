@@ -67,7 +67,13 @@ Remarquez à quel point cela semble naturel. Posez vos questions comme vous le f
 
 Voyons maintenant pourquoi les développeurs parlent d'un « ingénieur senior disponible en permanence ».
 
-> 📖 **Lecture des exemples** : Les lignes commençant par `>` sont des prompts que vous saisissez à l'intérieur d'une session interactive Copilot CLI. Les lignes sans préfixe `>` sont des commandes shell que vous exécutez dans votre terminal.
+> 📖 **Lecture des exemples** : Trois types de blocs de code apparaissent dans ce chapitre, ne les confondez pas :
+>
+> | Type de bloc | Format | Exemple |
+> |---|---|---|
+> | Commande shell (à exécuter dans votre terminal) | ```` ```bash ```` | `copilot` |
+> | Prompt (à saisir à l'intérieur d'une session interactive) | ```` ``` ```` avec une ligne commençant par `>` | `> /help` |
+> | Sortie attendue (affichée par Copilot CLI, **jamais à saisir**) | ```` ```text ````, précédé d'un libellé en gras comme **Sortie :** ou **Ce qui se passe :** | voir ci-dessous |
 
 > 💡 **À propos des exemples de sorties** : Les exemples de sorties présentés tout au long de ce cours sont donnés à titre illustratif. Comme les réponses de Copilot CLI varient à chaque fois, vos résultats différeront en termes de formulation, de mise en forme et de détail. Concentrez-vous sur le *type* d'information renvoyée, pas sur le texte exact.
 
@@ -132,7 +138,7 @@ Vous êtes déjà resté bloqué devant du code en vous demandant ce qu'il fait 
 
 **Ce qui se passe** : (votre résultat sera différent) Copilot CLI lit le fichier, comprend le code, et l'explique en français clair.
 
-```
+```text
 This is a book collection management module using Python dataclasses.
 
 Think of it like a digital bookshelf:
@@ -301,7 +307,7 @@ copilot --plan
 
 **Sortie du mode Plan :** (votre résultat peut différer)
 
-```
+```text
 📋 Implementation Plan
 
 Step 1: Update the command handler in book_app.py
@@ -648,14 +654,40 @@ Les exemples pratiques se sont concentrés sur la revue et le refactoring de `bo
 5. Demandez une docstring : « Add a comprehensive docstring to `get_book_details()` with parameter descriptions and return values »
 6. Observez comment le contexte se transmet entre les prompts. Chaque amélioration s'appuie sur la précédente
 7. Quittez avec `/exit`
+8. De retour dans votre terminal (pas dans Copilot), vérifiez que le fichier a bien été modifié :
 
-**Critères de réussite** : Vous devriez obtenir un `utils.py` amélioré avec validation des entrées, gestion des erreurs, et une docstring, le tout construit à travers une conversation à plusieurs échanges.
+   ```bash
+   git status
+   ```
+
+   Vous devriez voir `samples/book-app-project/utils.py` listé comme modifié.
+
+9. Exécutez la suite de tests du projet pour vérifier que vos changements n'ont rien cassé :
+
+   ```bash
+   cd samples/book-app-project && python -m pytest tests/ -v
+   ```
+
+**Critères de réussite** (les trois doivent être vrais) :
+
+- ✅ `git status` (étape 8) liste bien `samples/book-app-project/utils.py` comme fichier modifié.
+- ✅ Vous avez exécuté `python -m pytest tests/ -v` (étape 9) depuis `samples/book-app-project/`.
+- ✅ La sortie du test se termine par une ligne du type `N passed in Xs`, **sans aucune mention de `failed` ou `error`**, confirmant que vos modifications de `utils.py` n'ont pas cassé les tests existants. Exemple de sortie attendue :
+
+  ```text
+  tests/test_books.py::test_add_book PASSED
+  tests/test_books.py::test_mark_book_as_read PASSED
+  tests/test_books.py::test_remove_book PASSED
+  ...
+  ============================== 5 passed in 0.39s ==============================
+  ```
 
 <details>
 <summary>💡 Indices (cliquez pour développer)</summary>
 
 **Exemples de prompts à essayer :**
-```bash
+
+```text
 > @samples/book-app-project/utils.py What does each function in this file do?
 > Add validation to get_user_choice() so it handles empty input and non-numeric entries
 > What happens if get_book_details() receives an empty string for the title? Add guards for that.

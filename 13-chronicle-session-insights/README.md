@@ -33,7 +33,7 @@ Au [Chapitre 03](../03-context-conversations/README.md), vous avez appris à pil
 
 - Avoir terminé le [Chapitre 03 : Contexte et conversations](../03-context-conversations/README.md) — ce chapitre réutilise `/context`, `/rewind` et `/compact` sans les réexpliquer
 - Avoir déjà travaillé avec Copilot CLI sur quelques sessions (idéalement en ayant fait les exercices des chapitres précédents) : `/chronicle` a besoin d'un minimum d'historique local pour produire des résultats utiles
-- ⚠️ `/chronicle` est une fonctionnalité relativement récente de Copilot CLI. Son comportement exact peut évoluer d'une version à l'autre : si une sous-commande se comporte différemment de ce qui est décrit ici, vérifiez votre version avec `copilot --version` et consultez la [documentation officielle](https://docs.github.com/en/copilot/how-tos/copilot-cli/use-copilot-cli/chronicle)
+- ⚠️ La disponibilité et le détail des sous-commandes dépendent de la version de Copilot CLI. Vérifiez votre version avec `copilot --version`, puis consultez la [documentation officielle](https://docs.github.com/en/copilot/how-tos/copilot-cli/use-copilot-cli/chronicle). Si `/chronicle` n'est pas disponible, utilisez `/resume` pour retrouver une session et posez directement une question sur son contenu.
 
 ---
 
@@ -70,7 +70,7 @@ Pensez à `/rewind` comme à la touche « annuler » d'un éditeur de texte : el
 
 <a id="comprendre-chronicle"></a>
 
-`/chronicle` analyse les données de session stockées **localement sur votre machine** et en tire des informations exploitables. Contrairement à une question libre posée à Copilot (« résume ce que j'ai fait cette semaine »), ses sous-commandes sont des raccourcis pensés pour des besoins précis et récurrents.
+`/chronicle` analyse les données de session stockées **localement sur votre machine** et en tire des informations exploitables. Ces données sont synchronisées par défaut avec votre compte GitHub afin de pouvoir les interroger depuis plusieurs surfaces Copilot. Contrairement à une question libre posée à Copilot (« résume ce que j'ai fait cette semaine »), ses sous-commandes sont des raccourcis pensés pour des besoins précis et récurrents.
 
 | Sous-commande | Ce qu'elle fait |
 |---|---|
@@ -81,7 +81,9 @@ Pensez à `/rewind` comme à la touche « annuler » d'un éditeur de texte : el
 | `improve` | Examine les points de friction rencontrés et propose des améliorations pour votre fichier `.github/copilot-instructions.md` |
 | `reindex` | Reconstruit l'index local de vos sessions et le resynchronise avec votre compte |
 
-Par défaut, ces sous-commandes s'appuient sur **toutes vos sessions enregistrées**, sans distinction de dépôt ou de branche. Seule exception : `improve`, qui se limite aux données du dépôt ou répertoire de travail courant, puisque son résultat est écrit dans ce même dépôt.
+Par défaut, ces sous-commandes s'appuient sur **toutes vos sessions enregistrées**, sans distinction de dépôt ou de branche. Seule exception : `improve`, qui se limite aux données du dépôt ou répertoire de travail courant, puisque ses recommandations concernent les instructions de ce projet. Le périmètre dépend toutefois de vos réglages de synchronisation : avec `"remoteExport": false`, les données restent sur votre machine.
+
+> 🔒 **Confidentialité** : l'historique peut contenir vos prompts, les réponses de Copilot, les outils utilisés et des informations sur les fichiers modifiés. N'y placez pas de secrets, mots de passe, jetons ou données personnelles. Les données de session peuvent être envoyées au modèle lorsque vous utilisez `/chronicle`, comme pour toute interaction Copilot. Les exemples et la démonstration de ce chapitre sont fictifs et anonymisés.
 
 ```bash
 copilot
@@ -100,21 +102,29 @@ copilot
 
 <a id="générer-un-rapport-dactivité-avec-standup"></a>
 
-`/chronicle standup` parcourt vos sessions récentes et en tire un résumé structuré — utile pour un point d'équipe, ou simplement pour se souvenir de ce qui a été fait avant une pause.
+`/chronicle standup` parcourt par défaut les sessions des **24 dernières heures** et en tire un résumé structuré — utile pour un point d'équipe, ou simplement pour se souvenir de ce qui a été fait avant une pause.
 
 ```bash
 copilot
 
 > /chronicle standup for the last 3 days
 
-Standup Summary — last 3 days
-- book-app-review: correction du bug de duplication de fonctions (books.py / utils.py),
-  ajout de type hints sur 4 fonctions
-- feature/input-validation: ajout de la validation des titres vides, tests associés
-- 2 pull requests référencées : #12 (mergée), #14 (en revue)
+Standup for 3 days:
+
+✅ Done
+
+book-app-review (main branch)
+ - Correction de la duplication dans books.py
+ - Session : exemple-anonymise-001
+
+🚧 In Progress
+
+feature/input-validation (feature/input-validation branch)
+ - Validation des titres vides et tests associés
+ - Session : exemple-anonymise-002
 ```
 
-> 💡 **Précisez la période** si le résultat par défaut ne correspond pas à ce que vous cherchez : `/chronicle standup for the last week`, `/chronicle standup since monday`, etc.
+> 💡 **Précisez la période** si le résultat par défaut ne correspond pas à ce que vous cherchez : `/chronicle standup for the last 3 days`. Le contenu, les branches et les statuts varient selon votre historique.
 
 ---
 
@@ -129,14 +139,14 @@ copilot
 
 > /chronicle tips for better prompting
 
-Personalized tips:
-1. Vous référencez souvent des dossiers entiers (@samples/book-app-project/) :
-   essayez de cibler un fichier précis pour des réponses plus rapides
-2. Vous n'avez pas encore utilisé /compact focus on <topic> : utile sur vos
-   sessions longues pour garder les bonnes parties du résumé
-3. Vos sessions de débogage gagneraient à être nommées (--name) pour les
-   retrouver plus facilement avec --resume
+1. Use @ to mention files instead of pasting content
+2. Iterate within a session instead of starting over
+3. Try /research for exploration work
+4. Turn recurring prompts into a custom agent
+5. Use plan mode for multi-step work
 ```
+
+La sortie réelle est personnalisée à partir de vos prompts, des outils utilisés et des fonctionnalités disponibles. Vous pouvez cibler un sujet, par exemple `/chronicle tips for better prompting`.
 
 `cost-tips` va plus loin en se concentrant sur votre **consommation de tokens** :
 
@@ -167,13 +177,12 @@ copilot
 
 > /chronicle search authentication
 
-Found 2 matching sessions:
-1. "book-app-review" (il y a 4 jours) — discussion sur l'ajout d'un flux
-   d'authentification pour l'API de l'application de livres
-2. "mcp-setup" (il y a 9 jours) — configuration OAuth d'un serveur MCP distant
+Found matching sessions:
+1. "book-app-review" — occurrence de `authentication` dans un prompt
+2. "mcp-setup" — occurrence de `authentication` dans la réponse de Copilot
 ```
 
-C'est la commande à réflexe quand vous vous souvenez *avoir déjà résolu ce problème*, sans vous souvenir *où* ni *quand*.
+C'est une recherche directe dans le contenu des sessions, et non une recherche sémantique : utilisez un terme précis quand vous vous souvenez *avoir déjà résolu ce problème*, sans vous souvenir *où* ni *quand*.
 
 ---
 
@@ -188,20 +197,25 @@ copilot
 
 > /chronicle improve
 
-Suggested additions to .github/copilot-instructions.md:
-- "Toujours utiliser des type hints Python complets, y compris sur les
-  méthodes privées" (répété manuellement dans 3 sessions récentes)
-- "Préférer pytest à unittest pour tout nouveau test" (précisé 2 fois)
+Suggested improvements:
+1. Préférer pytest à unittest pour les nouveaux tests
+   Signal : plusieurs corrections dans les sessions de test
+2. Utiliser des type hints complets dans les modules Python
+   Signal : consigne répétée dans plusieurs prompts
+
+Apply selected suggestions to .github/copilot-instructions.md? [y/N]
 ```
 
-> ⚠️ **Limite à connaître** : `improve` peut s'appuyer sur des gists GitHub pour certaines opérations, ce qui le rend indisponible pour les comptes Enterprise Managed Users, ou pour les organisations GitHub Enterprise Cloud avec résidence des données activée. Si la commande échoue silencieusement dans ce contexte, c'est probablement la cause.
+`improve` analyse les frictions (erreurs répétées, corrections et réorientations), puis vous laisse sélectionner les recommandations à appliquer. Sa portée reste limitée au dépôt ou répertoire courant.
+
+> ⚠️ **Limite à connaître** : certaines opérations de partage par gist ne sont pas disponibles pour les comptes Enterprise Managed Users ou les organisations GitHub Enterprise Cloud avec résidence des données activée. Si une étape de partage échoue dans ce contexte, utilisez une exportation locale avec `/share file`.
 
 <details>
 <summary>🎬 Voyez-le en action !</summary>
 
-![Démo : génération d'un rapport d'activité avec /chronicle standup](assets/chronicle-standup-demo.gif)
+![Démo : quatre sous-commandes /chronicle et leurs sorties](assets/chronicle-standup-demo.gif)
 
-*Le résultat peut varier selon votre modèle, vos outils et votre contexte : ne soyez pas surpris si votre sortie diffère de celle présentée ici — le format exact du rapport, les sessions retenues ou le nombre de conseils proposés peuvent changer d'une exécution à l'autre.*
+*Démonstration illustrative et anonymisée : le résultat peut varier selon votre version du CLI, votre modèle et votre historique. Les quatre écrans montrent respectivement `standup`, `tips`, `search` et `improve`.*
 
 </details>
 
@@ -213,9 +227,10 @@ Ouvrez une session Copilot CLI dans le projet du cours et essayez les quatre sou
 
 ### ▶️ À vous de jouer
 
-1. Lancez `/chronicle standup` et vérifiez qu'il retrouve bien une activité récente sur `samples/book-app-project/`
+1. Lancez `/chronicle standup` et vérifiez qu'il retrouve bien une activité récente sur `samples/book-app-project/` (la période par défaut est de 24 heures)
 2. Lancez `/chronicle tips` : au moins un conseil vous concerne-t-il vraiment ?
 3. Choisissez un sujet traité il y a plusieurs sessions (par exemple un bug corrigé au Chapitre 04) et retrouvez-le avec `/chronicle search <mot-clé>`
+4. Lancez `/chronicle improve`, examinez les recommandations et ne validez que celles qui correspondent réellement à vos conventions
 
 ---
 
@@ -242,7 +257,7 @@ Ouvrez une session Copilot CLI dans le projet du cours et essayez les quatre sou
 
 | Erreur | Ce qui se passe | Solution |
 |---|---|---|
-| `/chronicle standup` renvoie un rapport vide | Aucune session enregistrée récemment, ou historique local encore trop jeune | Travaillez quelques sessions avec `--name` puis réessayez ; vérifiez aussi que vous n'avez pas systématiquement utilisé `/clear` (qui n'enregistre pas d'historique), plutôt que `/new` |
+| `/chronicle standup` renvoie un rapport vide | Aucune session enregistrée dans la période demandée, ou index local incomplet | Élargissez la période avec `/chronicle standup for the last 3 days`, puis essayez `/chronicle reindex` si des sessions locales manquent |
 | `/chronicle improve` ne produit aucune suggestion ou échoue silencieusement | Compte Enterprise Managed Users, ou organisation GitHub Enterprise Cloud avec résidence des données | Fonctionnement attendu dans ce contexte — utilisez `tips` ou `standup` à la place |
 | `/chronicle search <mot>` renvoie trop de résultats non pertinents | Mot-clé trop générique | Utilisez un terme plus spécifique : nom de fichier, nom de fonction, nom de branche |
 | `/chronicle` sans argument ne fait rien de visible | Le sélecteur interactif s'est ouvert mais aucune sous-commande n'a été sélectionnée | Utilisez les flèches puis Entrée pour choisir une sous-commande, ou tapez directement `/chronicle <sous-commande>` |
@@ -257,7 +272,7 @@ Vous savez maintenant transformer votre historique Copilot CLI en informations e
 
 ### 🔑 Points clés à retenir
 
-1. `/chronicle` analyse **l'ensemble de votre historique local**, contrairement à `/rewind` qui n'agit que sur la session en cours
+1. `/chronicle` analyse **l'ensemble de votre historique enregistré**, contrairement à `/rewind` qui n'agit que sur la session en cours
 2. Ses sous-commandes (`standup`, `tips`, `cost-tips`, `search`, `improve`, `reindex`) répondent chacune à un besoin précis — pas besoin de les mémoriser toutes, `/chronicle` seul ouvre un sélecteur
 3. `improve` est la seule sous-commande limitée au dépôt courant, puisqu'elle écrit dans `.github/copilot-instructions.md`
 4. `cost-tips` fait le pont avec l'analyse de consommation de tokens, approfondie au [Chapitre 14](../14-token-consumption-analysis/README.md)

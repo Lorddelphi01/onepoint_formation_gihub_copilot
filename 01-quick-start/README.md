@@ -43,6 +43,8 @@ Et si vous complétez la section optionnelle « Pour aller plus loin », vous au
 
 > ⚠️ **Version recommandée** : Copilot CLI v1.0.81 ou plus récent. L'outil est en disponibilité générale (GA) depuis février 2026 et évolue vite — pensez à le mettre à jour régulièrement (`npm update -g @github/copilot`, `brew upgrade copilot-cli`, etc.).
 
+> 🏷️ **Tags de disponibilité** : comme au Chapitre 00, 🐧 **Linux**, 🍎 **macOS** et 🪟 **PowerShell** (Windows natif) marquent la disponibilité de chaque commande. Copilot CLI lui-même fonctionne sur les trois ; certaines commandes annexes (complétion shell, scripts d'exemple) ne sont pas disponibles partout.
+
 ### Ce que signifie « avoir accès à Copilot »
 
 GitHub Copilot CLI nécessite un abonnement Copilot actif. Vous pouvez vérifier votre statut sur [github.com/settings/copilot](https://github.com/settings/copilot). Vous devriez voir l'une des mentions suivantes :
@@ -75,6 +77,17 @@ Si vous ne voulez installer aucun des prérequis, vous pouvez utiliser GitHub Co
 
 Suivez ces étapes si vous souhaitez exécuter Copilot CLI sur votre machine locale avec les exemples du cours.
 
+### Choisir une méthode d'installation
+
+Choisissez **une seule** méthode dans la matrice. Elles installent le même programme `copilot` ; ne les cumulez pas. Après chaque installation, exécutez `copilot --version` : c'est la vérification commune à tous les systèmes.
+
+| Système | Méthode conseillée | Prérequis | Solution de repli |
+|---|---|---|---|
+| 🐧 Linux | Script d'installation | `curl` et Bash | `npm` avec Node.js |
+| 🍎 macOS | Homebrew | Homebrew installé | Script d'installation, puis `npm` |
+| 🪟 Windows | WinGet dans PowerShell | Windows avec WinGet | `npm` avec Node.js |
+| 🐧 🍎 🪟 Tous | `npm` | Node.js LTS et npm | Utilisez la méthode propre à votre système ci-dessus |
+
 1. Clonez le dépôt pour récupérer les exemples du cours sur votre machine :
 
     ```bash
@@ -86,37 +99,45 @@ Suivez ces étapes si vous souhaitez exécuter Copilot CLI sur votre machine loc
 
     > 💡 **Vous ne savez pas laquelle choisir ?** Utilisez `npm` si vous avez Node.js installé. Sinon, choisissez l'option qui correspond à votre système.
 
-    ### Toutes plateformes (npm)
+    ### 🐧 Linux · 🍎 macOS · 🪟 PowerShell (npm, toutes plateformes)
 
     ```bash
     # Si vous avez Node.js installé, c'est un moyen rapide d'obtenir le CLI
     npm install -g @github/copilot
     ```
 
-    ### macOS/Linux (Homebrew)
+    ### 🐧 Linux · 🍎 macOS (Homebrew)
 
     ```bash
     brew install copilot-cli
     ```
 
-    ### Windows (WinGet)
+    ### 🪟 PowerShell (WinGet)
 
-    ```bash
+    ```powershell
     winget install GitHub.Copilot
     ```
 
-    ### macOS/Linux (script d'installation)
+    ### 🐧 Linux · 🍎 macOS (script d'installation)
 
     ```bash
     curl -fsSL https://gh.io/copilot-install | bash
     ```
+
+3. Vérifiez la version installée avant de vous connecter :
+
+    ```bash
+    copilot --version
+    ```
+
+    **Résultat attendu** : le terminal affiche un numéro de version. S'il affiche `command not found` ou une commande inconnue, fermez et rouvrez le terminal, puis utilisez la solution de repli de la matrice correspondant à votre système.
 
 <details>
 <summary>Optionnel : activer l'autocomplétion du shell</summary>
 
 L'autocomplétion du shell vous permet d'appuyer sur **Tab** pour compléter les sous-commandes `copilot`, les options de commande, et certaines valeurs d'options. C'est optionnel, mais cela peut être pratique une fois que vous êtes à l'aise avec le CLI.
 
-Copilot CLI prend actuellement en charge les scripts de complétion pour Bash, Zsh, et Fish :
+Copilot CLI prend actuellement en charge les scripts de complétion pour Bash, Zsh, et Fish — **🐧 Linux · 🍎 macOS uniquement** :
 
 ```shell
 # Bash, session en cours uniquement
@@ -132,7 +153,7 @@ copilot completion zsh > "${fpath[1]}/_copilot"
 copilot completion fish > ~/.config/fish/completions/copilot.fish
 ```
 
-Redémarrez votre shell après avoir ajouté la complétion persistante. PowerShell est pris en charge pour exécuter Copilot CLI sur Windows, mais `copilot completion` ne prend actuellement en charge que Bash, Zsh, et Fish.
+Redémarrez votre shell après avoir ajouté la complétion persistante. 🪟 **PowerShell** est pris en charge pour **exécuter** Copilot CLI sur Windows, mais `copilot completion` ne prend actuellement en charge que Bash, Zsh, et Fish — pas de complétion Tab native sous PowerShell à ce jour.
 
 </details>
 
@@ -181,11 +202,36 @@ Depuis Copilot CLI v1.0.77, le **flux par navigateur est le flux par défaut** l
 
 ## Vérifier que tout fonctionne
 
+### 🎬 Les quatre gestes du démarrage rapide
+
+Les démonstrations ci-dessous illustrent les quatre parcours à retenir. Elles montrent le principe ; les écrans et le texte exact peuvent changer avec votre système ou la version du CLI.
+
+| Geste | Démonstration | Si votre écran diffère |
+|---|---|---|
+| Installer puis vérifier | `quick-start-install-demo.gif` | Suivez la matrice ci-dessus et vérifiez avec `copilot --version`. |
+| Se connecter | `quick-start-authentication-demo.gif` | Sur un terminal sans navigateur, utilisez le code d'appareil montré dans la démonstration de dépannage. |
+| Poser la première question | `quick-start-first-command-demo.gif` | La réponse peut être différente : cela confirme néanmoins que le CLI fonctionne. |
+| Dépanner l'authentification | `quick-start-authentication-help-demo.gif` | Ouvrez [le dépannage](#dépannage) si le code ou le navigateur ne résout pas le problème. |
+
+<details>
+<summary>Voir les quatre exemples d'écran</summary>
+
+![Installer Copilot CLI et vérifier sa version](assets/quick-start-install-demo.gif)
+
+![Se connecter à GitHub Copilot CLI](assets/quick-start-authentication-demo.gif)
+
+![Poser sa première question à GitHub Copilot CLI](assets/quick-start-first-command-demo.gif)
+
+![Utiliser le code d'appareil pour dépanner l'authentification](assets/quick-start-authentication-help-demo.gif)
+
+</details>
+
 ### Étape 1 : Tester Copilot CLI
 
-Maintenant que vous êtes connecté, vérifions que Copilot CLI fonctionne pour vous. Dans le terminal, démarrez le CLI si ce n'est pas déjà fait :
+Maintenant que vous êtes connecté, vérifions que Copilot CLI fonctionne pour vous. Dans le terminal, démarrez le CLI puis posez votre première question :
 
 ```bash
+copilot
 > Say hello and tell me what you can help with
 ```
 
@@ -200,7 +246,7 @@ Après avoir reçu une réponse, vous pouvez quitter le CLI :
 <details>
 <summary>🎬 Voir en action !</summary>
 
-![Hello Demo](assets/hello-demo.gif)
+![Première commande Copilot CLI](assets/quick-start-first-command-demo.gif)
 
 *Le résultat de la démonstration peut varier. Votre modèle, vos outils et vos réponses différeront de ce qui est montré ici.*
 
@@ -330,6 +376,7 @@ Copilot CLI peut choisir lui-même, à chaque requête, le modèle qu'il juge le
 
 > ⏱️ **Durée indicative** : ~15 minutes
 > ✅ **Prérequis** : un terminal Bash (le script de cet exercice utilise `jq` ; sous Windows, utilisez WSL ou adaptez-le en PowerShell).
+> 🏷️ **Disponibilité** : 🐧 Linux · 🍎 macOS (script bash+jq tel quel) · 🪟 PowerShell non fourni, à adapter (voir prérequis ci-dessus).
 
 > ⚠️ **Ne confondez pas** la Statusline de Copilot CLI avec celle d'autres outils en ligne de commande : ce sont des fonctionnalités distinctes, même si GitHub s'est ouvertement inspiré du concept (voir l'issue [`github/copilot-cli#2266`](https://github.com/github/copilot-cli/issues/2266)). Ce n'est pas non plus la barre d'état de VS Code.
 
@@ -450,6 +497,7 @@ Dépôt officiel : [`github.com/PeonPing/peon-ping`](https://github.com/PeonPing
 
 > ⏱️ **Durée indicative** : ~20 minutes
 > ✅ **Prérequis** : `jq` installé pour lire confortablement le fichier produit.
+> 🏷️ **Disponibilité** : 🐧 Linux · 🍎 macOS (`jq` s'installe via `apt`/`brew`) · 🪟 PowerShell — Copilot CLI et les variables `COPILOT_OTEL_*` fonctionnent, mais les commandes `jq` ci-dessous sont à adapter (`ConvertFrom-Json` par exemple) ou à exécuter depuis WSL.
 
 **Traces, métriques, logs — la différence** : une **trace** est l'arbre des étapes d'une interaction (l'agent invoqué → un appel modèle → l'exécution d'un outil...) ; une **métrique** est une valeur numérique agrégée dans le temps (durée moyenne, nombre de tokens...) ; un **log** est un message d'événement ponctuel. Copilot CLI exporte des traces et des métriques suivant les *OTel GenAI Semantic Conventions* — pas de logs applicatifs au sens strict dans cet export.
 
@@ -606,6 +654,8 @@ Commandes utiles : `/lsp` (ou `/lsp show`) dans une session pour voir l'état de
 
 #### F.1. Python — Pyright
 
+**Disponibilité** : 🐧 Linux · 🍎 macOS · 🪟 PowerShell (paquet npm, identique partout)
+
 **Prérequis** : Node.js (déjà nécessaire pour installer Copilot CLI lui-même) ou Python/pip.
 
 ```bash
@@ -628,6 +678,8 @@ npm install -g pyright
 
 #### F.2. Java — Eclipse JDT Language Server (jdtls)
 
+**Disponibilité** : 🍎 macOS (`brew install jdtls`, vérifié) · 🐧 Linux · 🪟 PowerShell — installation non documentée officiellement pour ces deux plateformes, téléchargement manuel requis (voir issue de suivi de ce chapitre).
+
 **Prérequis** : **Java 21 ou plus récent**. Installation : `brew install jdtls` (macOS), ou téléchargement manuel depuis le [dépôt Eclipse JDT LS](https://github.com/eclipse-jdtls/eclipse.jdt.ls).
 
 ```json
@@ -648,6 +700,8 @@ npm install -g pyright
 
 #### F.3. .NET/C# — serveur Roslyn (via `dnx`)
 
+**Disponibilité** : 🐧 Linux · 🍎 macOS · 🪟 PowerShell (le SDK .NET 10 et `dnx` sont multiplateformes)
+
 **Prérequis** : **.NET SDK 10 ou plus récent** (la sous-commande `dnx`, qui lance le serveur Roslyn à la volée, est une nouveauté du SDK 10 — sans elle, cette section n'est pas applicable ; passez-la et revenez-y après mise à jour de votre SDK).
 
 ```json
@@ -667,6 +721,8 @@ npm install -g pyright
 **Vérification** : `copilot lsp list` → `csharp (.cs)`.
 
 #### F.4. Terraform — terraform-ls (non confirmé officiellement)
+
+**Disponibilité** : terraform-ls est distribué pour 🐧 Linux, 🍎 macOS et 🪟 Windows par HashiCorp — mais son intégration avec Copilot CLI n'a été vérifiée sur aucune des trois plateformes (voir issue de suivi de ce chapitre).
 
 > ⚠️ **À la différence des trois langages précédents, cette intégration n'est confirmée par aucune documentation officielle GitHub Copilot CLI.** terraform-ls est bien le serveur de langage officiel de HashiCorp pour Terraform, activement maintenu — mais il n'apparaît ni dans la documentation Copilot CLI, ni dans la liste des langages du skill `lsp-setup`. La configuration ci-dessous suit le même schéma générique que les autres langages, par analogie, mais **n'a pas été validée par GitHub** : traitez-la comme une piste à tester vous-même, pas comme une fonctionnalité garantie.
 
@@ -737,6 +793,12 @@ npm install -g @github/copilot
 curl -fsSL https://gh.io/copilot-install | bash
 ```
 
+Vérifiez ensuite que le terminal voit bien la nouvelle installation :
+
+```bash
+copilot --version
+```
+
 ### « You don't have access to GitHub Copilot »
 
 1. Vérifiez que vous avez un abonnement Copilot sur [github.com/settings/copilot](https://github.com/settings/copilot)
@@ -750,6 +812,18 @@ Réauthentifiez-vous :
 copilot
 > /login
 ```
+
+Si l'erreur persiste, quittez le CLI, ouvrez un nouveau terminal et utilisez le flux adapté à votre environnement :
+
+```bash
+# Terminal local avec navigateur
+copilot login --web-flow
+
+# SSH, conteneur ou terminal sans interface graphique
+copilot login --device-code
+```
+
+Ne partagez jamais le code d'appareil affiché ni un jeton d'accès. Si votre compte professionnel est concerné, vérifiez aussi que votre organisation autorise Copilot CLI.
 
 ### Le navigateur ne s'ouvre pas automatiquement
 

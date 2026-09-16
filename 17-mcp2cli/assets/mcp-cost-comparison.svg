@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="500" viewBox="0 0 1200 500" role="img" aria-labelledby="title desc">
+  <title id="title">Comparaison du cout de contexte entre Copilot avec MCP et mcp2cli</title>
+  <desc id="desc">Copilot doit lire les schemas des outils et leurs resultats. mcp2cli appelle Context7 directement et affiche la reponse au terminal.</desc>
+  <rect width="1200" height="500" fill="#f6f8fa"/>
+  <text x="600" y="55" text-anchor="middle" font-family="Arial, sans-serif" font-size="30" font-weight="bold" fill="#24292f">Deux chemins vers le meme outil Context7</text>
+  <rect x="55" y="105" width="510" height="320" rx="18" fill="#fff" stroke="#8250df" stroke-width="3"/>
+  <text x="310" y="150" text-anchor="middle" font-family="Arial, sans-serif" font-size="25" font-weight="bold" fill="#8250df">Copilot + MCP</text>
+  <rect x="100" y="190" width="145" height="75" rx="10" fill="#ddf4ff"/><text x="172" y="233" text-anchor="middle" font-family="Arial, sans-serif" font-size="18">Votre prompt</text>
+  <path d="M250 227h62" stroke="#57606a" stroke-width="4"/><path d="M312 227l-13-9v18z" fill="#57606a"/>
+  <rect x="318" y="175" width="190" height="105" rx="10" fill="#fbefff"/><text x="413" y="215" text-anchor="middle" font-family="Arial, sans-serif" font-size="18">Copilot lit</text><text x="413" y="243" text-anchor="middle" font-family="Arial, sans-serif" font-size="16">schema + resultat</text>
+  <path d="M413 285v55" stroke="#57606a" stroke-width="4"/><path d="M413 340l-9-13h18z" fill="#57606a"/>
+  <rect x="300" y="345" width="225" height="55" rx="10" fill="#dafbe1"/><text x="413" y="378" text-anchor="middle" font-family="Arial, sans-serif" font-size="17">Reponse synthetisee</text>
+  <text x="310" y="465" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="#57606a">Tokens de modele pour schemas et resultats</text>
+  <rect x="635" y="105" width="510" height="320" rx="18" fill="#fff" stroke="#1a7f37" stroke-width="3"/>
+  <text x="890" y="150" text-anchor="middle" font-family="Arial, sans-serif" font-size="25" font-weight="bold" fill="#1a7f37">mcp2cli</text>
+  <rect x="680" y="190" width="145" height="75" rx="10" fill="#ddf4ff"/><text x="752" y="233" text-anchor="middle" font-family="Arial, sans-serif" font-size="18">Commande CLI</text>
+  <path d="M830 227h62" stroke="#57606a" stroke-width="4"/><path d="M892 227l-13-9v18z" fill="#57606a"/>
+  <rect x="898" y="190" width="190" height="75" rx="10" fill="#dafbe1"/><text x="993" y="233" text-anchor="middle" font-family="Arial, sans-serif" font-size="18">Outil Context7</text>
+  <path d="M993 270v70" stroke="#57606a" stroke-width="4"/><path d="M993 340l-9-13h18z" fill="#57606a"/>
+  <rect x="870" y="345" width="245" height="55" rx="10" fill="#ddf4ff"/><text x="992" y="378" text-anchor="middle" font-family="Arial, sans-serif" font-size="17">JSON brut au terminal</text>
+  <text x="890" y="465" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="#57606a">Aucun token de modele sur ce chemin</text>
+</svg>

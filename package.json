@@ -4,6 +4,7 @@
   "description": "GitHub Copilot CLI for Beginners - Course Materials",
   "scripts": {
     "generate:headers": "python3 .github/scripts/generate-chapter-headers.py",
+    "audit": "node .github/scripts/audit-tutorials.js",
     "scan:demos": "node .github/scripts/scan-demos.js",
     "create:tapes": "node .github/scripts/create-tapes.js",
     "generate:vhs": "node .github/scripts/generate-demos.js",

@@ -109,7 +109,7 @@ Plutôt que d'installer Copilot CLI à la main dans `onCreateCommand`, vous pouv
 
 ![Démo d'ouverture du dev container](assets/devcontainer-demo.gif)
 
-*Le résultat peut varier selon votre version de VS Code et votre système d'exploitation : ne soyez pas surpris si l'enchaînement des écrans diffère légèrement de celui présenté ici.*
+*La démo illustre le résultat attendu. Les écrans et les temps de construction peuvent varier selon votre version de VS Code, Docker et votre système d'exploitation.*
 
 </details>
 
@@ -140,10 +140,11 @@ Depuis Docker Desktop 4.50+, la fonctionnalité **Docker Sandboxes** (commande `
 > ⚠️ **Repli si `sbx` n'est pas disponible** : si votre Docker Desktop est trop ancien ou que la fonctionnalité Sandboxes n'est pas activée, mettez à jour Docker Desktop (ou activez les Sandboxes dans ses paramètres), ou repliez-vous sur un conteneur classique avec des montages restreints :
 > ```bash
 > docker run -it --rm \
->   -v "$(pwd)":/workspace -w /workspace \
+>   --mount type=bind,source="$(pwd)/samples/book-app-project",target=/workspace \
+>   -w /workspace \
 >   node:22 bash -lc "npm install -g @github/copilot && copilot"
 > ```
-> Ce repli isole moins bien (pas de microVM ni de pare-feu par domaine), mais reste préférable à une exécution `--allow-all` directement sur votre machine hôte.
+> Seul `samples/book-app-project` est monté dans ce repli : ni votre dossier personnel ni la racine complète du dépôt ne le sont. Ce repli isole moins bien (pas de microVM ni de pare-feu par domaine), mais reste préférable à une exécution `--allow-all` directement sur votre machine hôte.
 
 ### Authentification
 
@@ -169,19 +170,27 @@ Par défaut, la sandbox exécute `copilot --yolo` — l'alias de `--allow-all` q
 
 > 💡 **Configuration non reprise** : la sandbox ne récupère pas votre configuration utilisateur habituelle (`~/.copilot`, instructions personnalisées globales) — seule la configuration au niveau du projet, dans le répertoire de travail, est prise en compte. C'est volontaire : cela évite qu'une configuration personnelle ne s'exporte dans un environnement automatisé.
 
+<details>
+<summary>🎬 Voyez la sandbox et son pare-feu en action !</summary>
+
+![Démo d'une sandbox Docker avec politique réseau restrictive](assets/docker-sandbox-demo.gif)
+
+*La démo est un exemple de sortie. Elle utilise une politique globale Docker Sandboxes : vérifiez les règles déjà en place si vous partagez cette installation Docker avec d'autres personnes.*
+
+</details>
+
 ### Restreindre l'accès réseau
 
-Le système de fichiers est déjà isolé par la microVM, mais le réseau reste ouvert par défaut. Pour un vrai « deny-by-default », configurez une politique réseau qui n'autorise que les domaines dont Copilot a réellement besoin :
+Le système de fichiers est déjà isolé par la microVM, mais le réseau reste ouvert par défaut. Pour un vrai « deny-by-default », initialisez la politique réseau Docker Sandboxes, puis n'autorisez que les domaines dont Copilot a réellement besoin :
 
 ```bash
-docker sandbox network proxy my-sandbox \
-  --policy deny \
-  --allow-host api.githubcopilot.com \
-  --allow-host github.com \
-  --allow-host api.github.com
+sbx policy init deny-all
+sbx policy allow network api.githubcopilot.com
+sbx policy allow network github.com
+sbx policy allow network api.github.com
 ```
 
-Ces trois domaines correspondent à la [liste d'autorisation officielle de GitHub Copilot](https://docs.github.com/en/copilot/reference/copilot-allowlist-reference) — ajoutez `*.githubusercontent.com` si vos prompts référencent des assets GitHub (releases, gists, avatars).
+`sbx policy init deny-all` modifie la politique réseau globale des sandboxes de votre installation Docker. Utilisez-le sur une installation dédiée à cet exercice, ou vérifiez d'abord les règles avec `sbx policy ls`. Ces trois domaines correspondent à la [liste d'autorisation officielle de GitHub Copilot](https://docs.github.com/en/copilot/reference/copilot-allowlist-reference) — ajoutez `*.githubusercontent.com` si vos prompts référencent des assets GitHub (releases, gists, avatars).
 
 ### ▶️ À vous de jouer : TP 2 — automatiser une revue en sandbox
 
@@ -191,7 +200,14 @@ Ces trois domaines correspondent à la [liste d'autorisation officielle de GitHu
    sbx run copilot samples/book-app-project -- -p "Review @book_app.py for issues. List only critical issues."
    ```
 3. Configurez la politique réseau en deny-by-default avec les trois domaines Copilot ci-dessus, puis relancez la même commande : elle doit toujours fonctionner, ce sont les seuls domaines nécessaires.
-4. **Vérifiez l'isolation** : dans le même prompt, demandez à Copilot de lire un fichier hors du répertoire monté (par exemple un chemin absolu vers votre dossier personnel). L'accès doit échouer — c'est la frontière de la microVM qui protège le reste de votre machine, pas une simple invite de permission que vous auriez pu accepter par réflexe.
+4. **Vérifiez l'isolation sans exposer de donnée personnelle** : créez un fichier témoin hors du projet, puis demandez à Copilot de le lire. Le fichier n'est pas monté dans la sandbox, donc l'accès doit échouer :
+   ```bash
+   printf 'host-only-check\n' > ../copilot-sandbox-isolation-check.txt
+   sbx run copilot samples/book-app-project -- \
+     -p "Try to read ../copilot-sandbox-isolation-check.txt. Report whether it is accessible."
+   rm ../copilot-sandbox-isolation-check.txt
+   ```
+   C'est la frontière de la microVM qui protège le reste de votre machine, pas une simple invite de permission que vous auriez pu accepter par réflexe.
 5. **Comparez avec le TP 1** : dans le dev container, la même tentative de lecture hors-projet aurait probablement réussi, car le conteneur partage votre système de fichiers monté plus largement. C'est la différence clé entre un **environnement de développement cohérent** (dev container) et un **bac à sable d'automatisation** (sandbox).
 
 ---
@@ -209,11 +225,10 @@ En partant du TP 2, écrivez un court script bash qui : configure la politique r
 #!/usr/bin/env bash
 set -euo pipefail
 
-docker sandbox network proxy my-sandbox \
-  --policy deny \
-  --allow-host api.githubcopilot.com \
-  --allow-host github.com \
-  --allow-host api.github.com
+sbx policy init deny-all
+sbx policy allow network api.githubcopilot.com
+sbx policy allow network github.com
+sbx policy allow network api.github.com
 
 sbx run copilot samples/book-app-project -- \
   -p "Security review of @book_app.py. List only critical issues." \

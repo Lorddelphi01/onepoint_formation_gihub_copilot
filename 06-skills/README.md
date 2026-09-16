@@ -467,6 +467,27 @@ description: Use for security reviews, vulnerability scanning,
 
 > 💡 **Astuce** : incluez des mots-clés qui correspondent à la façon dont vous posez naturellement vos questions. Si vous dites « revue de sécurité », incluez « revue de sécurité » dans la description.
 
+### Description vague ou description exploitable ?
+
+La description sert de **signal de découverte**. Elle doit indiquer le domaine, l'action et les formulations auxquelles le skill répond :
+
+```yaml
+# Trop vague : Copilot ne sait pas quand le proposer
+description: Reviews code
+
+# Exploitable : le domaine et les mots-clés sont explicites
+description: Use for Python code reviews, code quality checks,
+  bug finding, security issues, and best-practice violations
+```
+
+Testez les deux formulations avec des prompts proches, puis demandez :
+
+```text
+What skills did you use for that response?
+```
+
+La correspondance n'est pas une garantie : un prompt ambigu, un skill désactivé ou des instructions concurrentes peuvent empêcher le chargement. Dans ce cas, utilisez l'invocation directe et vérifiez `/skills info <name>`.
+
 ### Combiner les skills avec les agents
 
 Les skills et les agents fonctionnent ensemble. L'agent apporte l'expertise, le skill apporte des instructions spécifiques :
@@ -487,6 +508,131 @@ copilot --agent code-reviewer
 Découvrez les skills installés, trouvez des skills communautaires, et partagez les vôtres.
 
 <img src="assets/managing-sharing-skills.png" alt="Gérer et partager les skills - illustrant le cycle découverte, utilisation, création et partage pour les skills CLI" width="800" />
+
+## Le cycle de vie d'un skill
+
+Un skill fiable n'est pas seulement un fichier créé une fois. Traitez-le comme une petite fonctionnalité d'équipe :
+
+1. **Créer** : choisissez un nom en kebab-case, écrivez un frontmatter valide et des instructions ciblées.
+2. **Tester** : testez le déclenchement automatique, puis le format de sortie et les cas limites.
+3. **Modifier** : améliorez la description ou les instructions à partir d'un résultat réel, puis rechargez le skill.
+4. **Partager** : copiez le skill dans `.github/skills/` pour l'équipe, documentez son objectif et relisez-le avant de le publier.
+5. **Maintenir** : vérifiez régulièrement les commandes, les permissions et les dépendances externes.
+
+### 1. Créer et tester localement
+
+```bash
+mkdir -p .github/skills/book-summary
+cat > .github/skills/book-summary/SKILL.md << 'EOF'
+---
+name: book-summary
+description: Generate a markdown summary of a book collection with title, author, year, and reading status
+---
+
+# Book Summary
+
+When the user asks for a book collection summary:
+
+- Read the supplied collection before writing the result.
+- Sort books by year, oldest first.
+- Use a Markdown table with title, author, year, and status columns.
+- Use ✅ for read books and ❌ for unread books.
+- Flag missing authors or invalid years instead of inventing values.
+EOF
+
+copilot
+> @samples/book-app-project/data.json Summarize this book collection
+> /skills reload
+> /skills info book-summary
+```
+
+Testez toujours les deux chemins : un prompt naturel pour le déclenchement automatique, puis `/book-summary ...` pour vérifier l'invocation explicite. Un résultat plausible ne suffit pas : vérifiez aussi que le format demandé et les cas limites apparaissent réellement.
+
+<details>
+<summary>🎬 Voir le cycle créer → tester</summary>
+
+![Démo de création et de test d'une skill](assets/skill-create-test-demo.gif)
+
+</details>
+
+### 2. Modifier sans perdre le contexte
+
+Après une première utilisation, modifiez `SKILL.md` pour corriger une ambiguïté ou ajouter un cas limite, puis rechargez-le :
+
+```bash
+vi .github/skills/book-summary/SKILL.md
+
+copilot
+> /skills reload
+> /skills info book-summary
+> @samples/book-app-project/data.json Summarize this collection and flag invalid years
+```
+
+Le rechargement relit les fichiers de skills ; il ne remplace pas un test fonctionnel. Conservez un exemple de prompt et un résultat attendu dans la documentation de votre équipe.
+
+<details>
+<summary>🎬 Voir une modification rechargée</summary>
+
+![Démo de modification et rechargement d'une skill](assets/skill-update-reload-demo.gif)
+
+</details>
+
+### 3. Partager avec une équipe
+
+Pour un skill interne, commitez le dossier dans `.github/skills/` et partagez-le avec le dépôt. Pour un skill réutilisable dans plusieurs projets, publiez son dossier dans un dépôt dédié et indiquez sa portée :
+
+```bash
+git add .github/skills/book-summary/SKILL.md
+git diff --staged --check
+git diff --staged -- .github/skills/book-summary/SKILL.md
+```
+
+Avant de partager, vérifiez que les deux copies pédagogiques restent identiques lorsqu'un exemple existe dans `samples/skills/` :
+
+```bash
+diff -u .github/skills/code-checklist/SKILL.md samples/skills/code-checklist/SKILL.md
+```
+
+Une différence non voulue entre ces fichiers enseigne deux comportements différents. Le dépôt source doit rester la référence ; copiez ensuite le fichier vers `samples/skills/` et contrôlez la différence.
+
+<details>
+<summary>🎬 Voir le partage et la vérification</summary>
+
+![Démo de partage et de vérification d'une skill](assets/skill-share-verify-demo.gif)
+
+</details>
+
+## Sécurité avant d'installer ou de partager
+
+Un skill contient des instructions que Copilot peut suivre. Il peut donc influencer les fichiers modifiés, les commandes proposées et les outils utilisés. Considérez tout skill externe comme du code à auditer :
+
+```text
+Checklist de sécurité d'un skill
+
+[ ] Source identifiée : dépôt, auteur, licence et date de mise à jour vérifiés
+[ ] SKILL.md lu intégralement avant l'installation
+[ ] Aucune commande destructive ou obfusquée (rm, curl | sh, téléchargement inattendu)
+[ ] Aucune demande de secret, token, mot de passe ou variable d'environnement sensible
+[ ] Aucune instruction demandant de contourner les confirmations ou les protections
+[ ] Permissions et chemins limités au besoin réel du skill
+[ ] Scripts et dépendances externes inspectés, pas seulement le frontmatter
+[ ] Test effectué dans une branche ou un répertoire isolé
+[ ] Résultat vérifié avec git diff et git status après le test
+[ ] Suppression possible avec copilot skill remove <name> si le skill n'est plus nécessaire
+```
+
+Préférez une source versionnée et relisez les changements avant toute mise à jour. Ne transmettez jamais de secret dans un prompt pour « tester » un skill. Si le contenu est ambigu, ne l'installez pas : demandez une version documentée à l'auteur ou écrivez votre propre skill minimal.
+
+Pour un skill local, commencez par l'inspecter sans l'exécuter :
+
+```bash
+sed -n '1,240p' .github/skills/book-summary/SKILL.md
+git diff --check
+```
+
+Pour un skill communautaire, vérifiez d'abord sa source puis installez-le dans la portée minimale avec `copilot skill add --project`. Si cette sous-commande n'est pas disponible, mettez Copilot CLI à jour avec `copilot update` ou téléchargez le dossier dans un répertoire temporaire, lisez `SKILL.md`, puis copiez uniquement le contenu audité vers `.github/skills/`.
+
+> ⚠️ **Règle pratique** : un skill ne doit pas demander à Copilot d'exécuter une commande que vous ne comprendriez pas ou que vous n'accepteriez pas d'exécuter vous-même. Les GIFs de ce chapitre illustrent le flux ; ils ne remplacent pas cette revue humaine.
 
 ---
 
@@ -646,22 +792,21 @@ Des skills prêts à l'emploi sont également disponibles auprès de dépôts co
 
 - **[Awesome Copilot](https://github.com/github/awesome-copilot)** - Ressources officielles GitHub Copilot incluant la documentation et des exemples de skills
 
-### Installer un skill communautaire avec GitHub CLI
+### Installer un skill communautaire avec Copilot CLI
 
-La façon la plus simple d'installer un skill depuis un dépôt GitHub est d'utiliser la commande `gh skill install` (nécessite [GitHub CLI v2.90.0+](https://github.blog/changelog/2026-04-16-manage-agent-skills-with-github-cli/)) :
+La commande `copilot skill add` accepte un fichier local, un dossier de skills ou une URL HTTPS :
 
 ```bash
-# Parcourir et sélectionner interactivement un skill depuis awesome-copilot
-gh skill install github/awesome-copilot
+# Installer dans votre espace personnel après avoir audité le fichier
+copilot skill add https://example.com/skills/security-audit/SKILL.md
 
-# Ou installer directement un skill spécifique
-gh skill install github/awesome-copilot ai-ready
-
-# Installer pour un usage personnel sur tous les projets (portée utilisateur)
-gh skill install github/awesome-copilot ai-ready --scope user
+# Enregistrer un skill dans le projet pour le partager avec l'équipe
+copilot skill add --project ./security-audit/SKILL.md
 ```
 
-Un skill installé de cette façon apparaît ensuite comme n'importe quel autre skill dans le tableau de bord `/skills` (ou via `/skills list`), aux côtés des skills intégrés, projet et utilisateur.
+Pour un skill hébergé dans un dépôt GitHub, clonez ou téléchargez d'abord le dépôt dans un répertoire temporaire, lisez `SKILL.md` et inspectez les scripts associés, puis utilisez `copilot skill add --project` sur le fichier validé. Si `copilot skill add` n'est pas disponible dans votre version, mettez Copilot CLI à jour avec `copilot update` ou copiez manuellement le dossier audité dans `.github/skills/`.
+
+Un skill ajouté de cette façon apparaît ensuite avec les autres skills dans `/skills` (ou `/skills list`).
 
 > ⚠️ **À vérifier avant l'installation** : lisez toujours le `SKILL.md` d'un skill avant de l'installer. Les skills contrôlent ce que fait Copilot, et un skill malveillant pourrait lui demander d'exécuter des commandes dangereuses ou de modifier du code de façon inattendue.
 

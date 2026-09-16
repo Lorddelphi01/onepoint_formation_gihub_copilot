@@ -45,6 +45,19 @@ De la même manière, les développeurs ont des flux de travail pour différente
 
 Chaque flux de travail ci-dessous est autonome. Choisissez ceux qui correspondent à vos besoins actuels, ou parcourez-les tous.
 
+### ✅ Pipeline vérifiable de chaque workflow
+
+Pour que le flux soit réellement vérifiable, suivez la même séquence à chaque fois :
+
+1. **Préparer** : choisissez le bon fichier et décrivez le symptôme ou l'objectif.
+2. **Demander** : donnez un prompt précis à Copilot CLI avec `@` ou `/review`.
+3. **Vérifier** : relisez la réponse et confirmez qu'elle correspond à la cible.
+4. **Tester** : exécutez la commande de validation ciblée (par exemple `python -m pytest tests/`).
+5. **Diff** : utilisez `git add` sur les fichiers modifiés, puis `git diff --staged` pour relire les changements.
+6. **Commit** : générez le message de commit et appliquez-le uniquement si le diff est propre.
+
+> 💡 **Critère de réussite pour chaque workflow** : le résultat doit être observable et reproductible : une checklist de revue, un diff de refactoring à l'œil, un bug reproduit, des tests qui passent, ou un message de commit généré à partir d'un diff indexé.
+
 ---
 
 ## Choisissez votre propre parcours
@@ -70,6 +83,8 @@ Ce chapitre couvre cinq flux de travail que les développeurs utilisent habituel
 <a id="workflow-1-code-review"></a>
 <details>
 <summary><strong>Flux 1 : Revue de code</strong> - Relire des fichiers, utiliser l'agent /review, créer des checklists de gravité</summary>
+
+✅ Résultat observable : Copilot produit une checklist triée par gravité, avec au moins un problème identifié et un plan d'action clair.
 
 <img src="assets/code-review-swimlane-single.png" alt="Code review workflow: review, identify issues, prioritize, generate checklist." width="800"/>
 
@@ -175,6 +190,8 @@ git diff --staged    # Affiche les changements indexés
 
 La commande `/review` invoque l'**agent de revue de code** intégré, optimisé pour analyser les changements indexés et non indexés avec une sortie à haut rapport signal/bruit. Utilisez une commande slash pour déclencher un agent intégré spécialisé plutôt que d'écrire un prompt libre.
 
+> ✅ **Résultat observable attendu** : `/review` retourne une revue structurée, priorisée par gravité, et vous pouvez facilement décider si le diff est prêt ou s'il faut corriger un problème avant le commit.
+
 ```bash
 copilot
 
@@ -195,6 +212,8 @@ copilot
 <a id="workflow-2-refactoring"></a>
 <details>
 <summary><strong>Flux 2 : Refactoring</strong> - Restructurer du code, séparer les responsabilités, améliorer la gestion des erreurs</summary>
+
+✅ Résultat observable : le refactoring réduit la duplication ou la complexité du code et la validation ciblée (tests ou lint) continue à passer.
 
 <img src="assets/refactoring-swimlane-single.png" alt="Refactoring workflow: assess code, plan changes, implement, verify behavior." width="800"/>
 
@@ -289,7 +308,11 @@ copilot
 <details>
 <summary><strong>Flux 3 : Débogage</strong> - Traquer des bugs, audits de sécurité, tracer des problèmes entre fichiers</summary>
 
+✅ Résultat observable : le symptôme est reproduit, la cause racine est expliquée avec un fichier et une ligne ou une fonction, et la correction proposée est testable.
+
 <img src="assets/debugging-swimlane-single.png" alt="Debugging workflow: understand error, locate root cause, fix, test." width="800"/>
+
+> ⚠️ **Attention :** les dossiers `samples/book-app-buggy/` et `samples/buggy-code/` sont volontairement bogués pour l'apprentissage. Ne corrigez pas ces fichiers dans le dépôt du cours pendant les exercices ; utilisez-les pour reproduire et diagnostiquer un bug, pas pour livrer une correction permanente.
 
 ### Débogage simple
 
@@ -430,6 +453,8 @@ copilot
 <a id="workflow-4-test-generation"></a>
 <details>
 <summary><strong>Flux 4 : Génération de tests</strong> - Générer automatiquement des tests complets et des cas limites</summary>
+
+✅ Résultat observable : les tests générés couvrent au moins le cas nominal et un ou deux cas limites, puis `python -m pytest tests/` se termine sans échec.
 
 <img src="assets/test-gen-swimlane-single.png" alt="Test Generation workflow: analyze function, generate tests, include edge cases, run." width="800"/>
 
@@ -584,22 +609,36 @@ copilot
 <details>
 <summary><strong>Flux 5 : Intégration Git</strong> - Messages de commit, descriptions de PR, /pr, /delegate, /diff et /branch</summary>
 
+✅ Résultat observable : après `git add`, `git diff --staged` montre un diff propre et Copilot génère un message de commit cohérent avec les changements indexés.
+
 <img src="assets/git-integration-swimlane-single.png" alt="Git Integration workflow: stage changes, generate message, commit, create PR." width="800"/>
 
 > 💡 **Ce flux de travail suppose une familiarité de base avec git** (indexation, commits, branches). Si git est nouveau pour vous, essayez d'abord les quatre autres flux de travail.
 
 ### Générer des messages de commit
 
-> **Essayez ceci en premier :** `copilot -p "Generate a conventional commit message for: $(git diff --staged)"` — indexez quelques changements, puis exécutez ceci pour voir Copilot CLI écrire votre message de commit.
+> **Essayez ceci en premier :** indexez quelques changements (`git add .`), puis exécutez :
+>
+> ```bash
+> git add .
+> git diff --staged
+> copilot -p "Generate a conventional commit message for: $(git diff --staged)"
+> ```
+>
+> Cela permet de vérifier que le diff indexé est bien le bon changement avant de laisser Copilot CLI écrire le message de commit.
 
 Cet exemple utilise l'option de prompt en ligne `-p` avec une substitution de commande shell pour transmettre directement la sortie de `git diff` à Copilot CLI pour un message de commit en une seule étape. La syntaxe `$(...)` exécute la commande entre parenthèses et insère sa sortie dans la commande englobante.
 
 ```bash
 
-# Voir ce qui a changé
+# 1. Indexer les changements avant de relire le diff
+# (sans git add, git diff --staged reste vide)
+git add .
+
+# 2. Voir ce qui a changé
 git diff --staged
 
-# Générer un message de commit au format [Conventional Commit](../GLOSSARY.md#conventional-commit)
+# 3. Générer un message de commit au format [Conventional Commit](../GLOSSARY.md#conventional-commit)
 # (messages structurés comme "feat(books): add search" ou "fix(data): handle empty input")
 copilot -p "Generate a conventional commit message for: $(git diff --staged)"
 
@@ -803,12 +842,15 @@ copilot
 # Indexer les changements pour que git diff --staged ait quelque chose à traiter
 git add .
 
-# 5. Générer le message de commit
+# 5. Vérifier le diff indexé avant de générer le message de commit
+git diff --staged
+
+# 6. Générer le message de commit
 copilot -p "Generate commit message for: $(git diff --staged)"
 
 # Exemple de résultat : "fix(books): support partial author name search"
 
-# 6. Committer les changements (optionnel)
+# 7. Committer les changements (optionnel)
 
 git commit -m "<coller le message généré>"
 ```
@@ -821,8 +863,9 @@ git commit -m "<coller le message généré>"
 | 2 | Analyse et correction | `> Show me the function and fix the issue` |
 | 3 | Générer des tests | `> Generate tests for [specific scenarios]` |
 | 4 | Indexer les changements | `git add .` |
-| 5 | Générer le message de commit | `copilot -p "Generate commit message for: $(git diff --staged)"` |
-| 6 | Committer les changements| `git commit -m "<coller le message généré>"` |
+| 5 | Vérifier le diff indexé | `git diff --staged` |
+| 6 | Générer le message de commit | `copilot -p "Generate commit message for: $(git diff --staged)"` |
+| 7 | Committer les changements | `git commit -m "<coller le message généré>"` |
 
 ---
 
@@ -844,9 +887,10 @@ Après avoir terminé les démonstrations, essayez ces variations :
 
 3. **Défi du message de commit** : Faites un petit changement dans un fichier de l'application de livres, indexez-le (`git add .`), puis exécutez :
    ```bash
+   git diff --staged
    copilot -p "Generate a conventional commit message for: $(git diff --staged)"
    ```
-   Le message est-il meilleur que ce que vous auriez écrit rapidement ?
+   Vérifiez que le diff indexé est bien le bon changement et que le message généré décrit précisément ce qui a été modifié. Le message est-il meilleur que ce que vous auriez écrit rapidement ?
 
 **Auto-vérification** : Vous comprenez les flux de travail de développement quand vous pouvez expliquer pourquoi « déboguer ce bug » est plus puissant que « trouver des bugs » (le contexte compte !).
 
@@ -867,8 +911,12 @@ Les exemples pratiques se sont concentrés sur `find_book_by_title` et les revue
    - Un livre qui n'existe pas retourne un retour approprié
    - Suppression depuis une collection vide
 4. **Revue** : Indexez vos changements et exécutez `/review` pour vérifier les problèmes restants
-5. **Commit** : Générez un message de commit conventionnel :
-   `copilot -p "Generate a conventional commit message for: $(git diff --staged)"`
+5. **Commit** : Générez un message de commit conventionnel après avoir indexé les changements :
+   ```bash
+   git add .
+   git diff --staged
+   copilot -p "Generate a conventional commit message for: $(git diff --staged)"
+   ```
 
 <details>
 <summary>💡 Indices (cliquer pour développer)</summary>

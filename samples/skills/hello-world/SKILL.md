@@ -1,6 +1,6 @@
 ---
 name: hello-world
-description: Un exemple de skill minimal - à utiliser pour apprendre le format des skills
+description: Un exemple minimal de skill - à utiliser pour apprendre le format des skills
 ---
 
 # Skill Hello World

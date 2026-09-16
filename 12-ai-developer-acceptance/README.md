@@ -56,11 +56,21 @@ L'IA de codage fait l'objet d'un discours à deux vitesses : d'un côté des ann
 
 ## Ce que montrent les études
 
+Avant d'entrer dans le détail, un repère utile : chaque étude ci-dessous repose sur un type de preuve différent, et ces trois types ne se valent pas de la même façon.
+
+- **Mesure expérimentale** : un groupe test et un groupe témoin sont comparés sur une tâche identique, avec un résultat chronométré ou objectivement vérifiable (ex. le temps mis pour écrire un serveur HTTP). C'est la preuve la plus solide, mais aussi la plus coûteuse à produire — d'où des échantillons souvent restreints.
+- **Corrélation observée** : deux phénomènes varient ensemble dans des données réelles (ex. « les équipes à architecture découplée gagnent plus avec l'IA ») sans qu'un groupe témoin randomisé isole la cause. Utile pour repérer des tendances, insuffisant pour prouver un lien de cause à effet.
+- **Perception / autodéclaration** : les personnes interrogées rapportent elles-mêmes leur ressenti (« je me sens plus productif·ve »), sans mesure indépendante. Précieux pour capter le vécu et la confiance, mais soumis aux biais de mémoire et de désirabilité sociale.
+
+Chaque étude ci-dessous précise son URL, sa date de publication, la population étudiée, le ou les types de preuve mobilisés, et ses limites méthodologiques.
+
 ### GitHub Research : une expérience contrôlée sur la vitesse de complétion
 
 En 2022 (mise à jour en 2024), la chercheuse Eirini Kalliamvakou et son équipe ont publié l'une des études les plus citées sur le sujet. Une expérience contrôlée a réparti 95 développeurs professionnels en deux groupes, avec pour tâche d'écrire un serveur HTTP en JavaScript : le groupe utilisant GitHub Copilot a terminé **55 % plus vite** (1 h 11 en moyenne, contre 2 h 41 pour le groupe témoin), avec un taux de réussite de 78 % contre 70 %. Le résultat est statistiquement significatif (P = .0017).
 
 Une enquête complémentaire menée auprès de plus de 2 000 développeurs a mesuré des effets moins chronométrables mais tout aussi concrets : 73 % déclarent rester plus facilement « en flow », 87 % économisent de l'effort mental sur les tâches répétitives, et entre 60 et 75 % se sentent plus épanouis et moins frustrés dans leur travail. Un ingénieur senior interrogé résume ainsi son expérience : *« I have to think less, and when I have to think it's the fun stuff. »*
+
+> 📎 **Source :** [GitHub Blog — Research: quantifying GitHub Copilot's impact](https://github.blog/news-insights/research/research-quantifying-github-copilots-impact-on-developer-productivity-and-happiness/) · **Date :** 2022, mise à jour 2024 · **Population :** 95 développeurs professionnels (expérience contrôlée) + 2 000+ développeurs (enquête complémentaire) · **Type de preuve :** mesure expérimentale (temps chronométré, groupe témoin) pour le chiffre de 55 %, perception autodéclarée (enquête) pour le flow et l'effort mental · **Limites méthodologiques :** une seule tâche testée (serveur HTTP en JavaScript) sur un échantillon restreint de volontaires ; l'enquête complémentaire est déclarative et peut surreprésenter les utilisateurs déjà convaincus par l'outil ; étude financée et publiée par l'éditeur de l'outil évalué.
 
 ### McKinsey : des gains qui dépendent du type de tâche
 
@@ -68,17 +78,23 @@ L'étude McKinsey *« Unleashing developer productivity with generative AI »* (
 
 Le même rapport apporte une nuance importante : sur des tâches complexes ou faisant appel à un framework peu familier au développeur, le gain de temps tombe sous les 10 %. Les auteurs recommandent un accompagnement structuré (formation, sélection des cas d'usage) plutôt qu'un déploiement sans préparation.
 
+> 📎 **Source :** [McKinsey — Unleashing developer productivity with generative AI](https://www.mckinsey.com/capabilities/tech-and-ai/our-insights/unleashing-developer-productivity-with-generative-ai) · **Date :** 2023 · **Population :** panel de développeurs en entreprise observés sur des tâches réelles (documentation, génération de code, refactoring) · **Type de preuve :** corrélation observée entre usage de l'IA et temps de complétion sur des tâches en contexte réel, sans groupe témoin randomisé comme dans l'étude GitHub Research · **Limites méthodologiques :** l'absence de randomisation empêche d'exclure d'autres facteurs (expérience du développeur, complexité réelle de la tâche) ; les gains rapportés varient énormément selon la familiarité avec le framework utilisé, ce qui limite la généralisation d'un chiffre unique.
+
 ### DORA : l'IA comme « amplificateur », pas comme solution magique
 
 Le rapport 2025 de DORA (DevOps Research and Assessment, adossé à Google Cloud), *« State of AI-Assisted Software Development »*, indique que 90 % des répondants utilisent déjà l'IA dans leur travail, et plus de 80 % déclarent une productivité accrue. Sa thèse centrale est plus nuancée que ce seul chiffre : l'IA agirait comme un **amplificateur** des pratiques déjà en place, plutôt que comme un facteur de progrès universel.
 
 Deux études de cas l'illustrent. Chez Adidas, les équipes travaillant sur une architecture faiblement couplée ont vu leur productivité progresser de 20 à 30 %, avec une hausse de 50 % du « Happy Time » (le temps réellement passé à coder plutôt qu'en tâches administratives) — tandis que les équipes dépendantes d'un ERP historique fortement couplé n'en ont tiré presque aucun bénéfice. Chez Booking.com, une formation ciblée des équipes a permis jusqu'à 30 % de merge requests supplémentaires, accompagnée d'une amélioration notable de la satisfaction au travail.
 
+> 📎 **Source :** [DORA — State of AI-Assisted Software Development 2025](https://dora.dev/dora-report-2025/) · **Date :** 2025 · **Population :** enquête à grande échelle auprès de praticiens DevOps, complétée par deux études de cas en entreprise (Adidas, Booking.com) · **Type de preuve :** perception autodéclarée (productivité accrue déclarée par plus de 80 % des répondants) combinée à une analyse corrélationnelle entre pratiques d'ingénierie existantes et gains observés — pas d'expérience contrôlée · **Limites méthodologiques :** les études de cas sont choisies pour illustrer un potentiel et ne constituent pas un échantillon représentatif ; la thèse « amplificateur » repose sur une corrélation (architecture découplée ↔ gains plus élevés), pas sur un lien de causalité démontré expérimentalement.
+
 ### Stack Overflow : une adoption qui grimpe, une confiance qui recule
 
 L'enquête *Stack Overflow Developer Survey 2025* documente un paradoxe intéressant. L'adoption continue de progresser : 84 % des développeurs utilisent ou prévoient d'utiliser des outils IA, contre 76 % en 2024, et 52 % constatent un effet positif sur leur productivité.
 
 Mais la confiance, elle, recule : le sentiment positif global vis-à-vis de l'IA est passé de plus de 70 % en 2023-2024 à 60 % en 2025, et 46 % des développeurs se méfient désormais de l'exactitude des réponses de l'IA, contre 33 % qui lui font confiance. La frustration la plus citée (66 % des répondants) : des réponses IA « presque justes, mais pas tout à fait ».
+
+> 📎 **Source :** [Stack Overflow Developer Survey 2025 — section IA](https://survey.stackoverflow.co/2025/ai) · **Date :** 2025 · **Population :** communauté mondiale de développeurs répondant volontairement à l'enquête annuelle Stack Overflow · **Type de preuve :** perception et autodéclaration pures (aucune mesure chronométrée ni expérience contrôlée) · **Limites méthodologiques :** échantillon auto-sélectionné (les répondants sont des utilisateurs actifs de Stack Overflow, pas un panel représentatif de tous les développeurs) ; les variations d'une année sur l'autre peuvent refléter des changements de composition du panel autant qu'une évolution réelle des opinions.
 
 ### Synthèse
 
@@ -130,6 +146,19 @@ Reprenez vos notes (ou votre mémoire) des chapitres précédents : les tâches 
 1. Listez trois tâches où Copilot CLI vous a fait gagner du temps depuis le début de ce cours
 2. Pour chacune, estimez le temps gagné en pourcentage, comme le font les études de ce chapitre
 3. Identifiez laquelle des quatre études présentées correspond le mieux à votre propre expérience, et expliquez pourquoi
+
+### 🧪 Activité avant/après : mesurez votre propre expérience
+
+Choisissez une tâche de code courte et bien cadrée (par exemple : écrire une fonction utilitaire avec son test, ou corriger un bug simple dans `samples/book-app-project/`). Réalisez-la deux fois sur deux variantes comparables de cette tâche — une fois sans l'aide de Copilot CLI, une fois avec — puis consignez ces quatre métriques comparables, à la manière des études de ce chapitre :
+
+| Métrique | Sans IA | Avec Copilot CLI |
+|---|---|---|
+| Temps passé (en minutes, du début à un code qui fonctionne) | | |
+| Nombre de reprises (relances ou corrections après une première tentative jugée insuffisante) | | |
+| Nombre d'erreurs repérées à la relecture finale | | |
+| Niveau de confiance dans le résultat (échelle de 1 = faible à 5 = élevé) | | |
+
+Comparez ensuite vos deux colonnes : sur quelle métrique l'écart est-il le plus marqué ? Rapprochez ce constat d'une étude précise du chapitre — par exemple le temps gagné (GitHub Research), ou la confiance et la charge mentale (DORA, Stack Overflow) — plutôt que d'une impression générale.
 
 ---
 

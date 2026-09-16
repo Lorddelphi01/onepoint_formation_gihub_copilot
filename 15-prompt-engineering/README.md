@@ -31,7 +31,7 @@ Depuis le début de ce cours, vous avez appris à configurer Copilot CLI : des i
 ## ✅ Prérequis
 
 - Avoir terminé le [Chapitre 05 : Créer des assistants IA spécialisés](../05-agents-custom-instructions/README.md) — ce chapitre part du principe que vous savez déjà écrire des instructions personnalisées de base
-- ⚠️ Pour la section optionnelle sur `mcp2cli`, avoir terminé le [Chapitre 07 : Serveurs MCP](../07-mcp-servers/README.md) et, idéalement, le [Chapitre 09 : n8n](../09-n8n-workflows/README.md) — le serveur MCP n8n déjà configuré y sert d'exemple
+- ⚠️ Pour la section optionnelle sur `mcp2cli`, avoir terminé le [Chapitre 07 : Serveurs MCP](../07-mcp-servers/README.md) et, idéalement, le [Chapitre 18 : n8n](../18-n8n-workflows/README.md) — le serveur MCP n8n déjà configuré y sert d'exemple
 - Un terminal avec Copilot CLI installé et fonctionnel (Chapitre 01)
 
 ---
@@ -50,8 +50,6 @@ Depuis le début de ce cours, vous avez appris à configurer Copilot CLI : des i
 Donner une instruction floue à Copilot CLI, c'est un peu comme confier une tâche à un nouveau collègue avec un post-it griffonné : il va probablement produire *quelque chose*, mais rarement ce que vous aviez en tête. Un cahier des charges court mais structuré change complètement la donne — sans pour autant devenir un roman.
 
 ---
-
-## Je veux... | Aller à
 
 | Je veux... | Aller à |
 |---|---|
@@ -151,18 +149,51 @@ copilot
 
 ---
 
+## Choisir le bon support pour son prompt
+
+Un prompt peut être utilisé de trois façons complémentaires. Le **prompt interactif** est le texte que vous écrivez directement dans une conversation `copilot` : choisissez-le pour explorer une idée, demander une précision ou ajuster votre demande après une première réponse.
+
+```bash
+copilot
+
+> Explique la différence entre find_book_by_title() et find_by_author()
+> dans samples/book-app-project/books.py, sans modifier de fichier.
+```
+
+Un **fichier Markdown** est un support de préparation et de partage, pas une commande exécutée automatiquement. Il est idéal pour un template réutilisable : complétez-le, relisez-le, puis copiez son contenu dans une session interactive.
+
+```bash
+cat samples/prompt-templates/code-review-prompt.md
+# Complétez les emplacements <...> dans votre éditeur, puis copiez le texte
+# rempli dans une session copilot.
+```
+
+Un **appel programmatique** lance Copilot CLI depuis un script ou une automatisation avec l'option `--prompt`. Utilisez-le seulement pour une tâche cadrée et répétable. `--allow-all-tools` autorise Copilot CLI à utiliser automatiquement ses outils : n'employez cette option que dans un dépôt et un environnement auxquels vous faites confiance.
+
+```bash
+copilot --prompt "Liste les fonctions publiques de samples/book-app-project/books.py, sans modifier de fichier." --allow-all-tools
+```
+
+| Besoin | Support adapté | Exemple |
+|---|---|---|
+| Explorer et affiner une demande | Prompt interactif | Poser une question, puis préciser la réponse |
+| Réutiliser une formulation validée avec l'équipe | Fichier Markdown | Remplir `code-review-prompt.md` |
+| Automatiser une tâche précise | Appel programmatique | Lancer `copilot --prompt "..." --allow-all-tools` depuis un script |
+
+---
+
 <details>
 <summary>🔬 Pour aller plus loin : une CLI générée depuis un serveur MCP</summary>
 
 <a id="pour-aller-plus-loin-une-cli-générée-depuis-un-serveur-mcp"></a>
 
-Au [Chapitre 07](../07-mcp-servers/README.md) et au [Chapitre 09](../09-n8n-workflows/README.md), vous avez connecté Copilot CLI à des serveurs MCP (GitHub, n8n) via le protocole MCP lui-même : découverte des outils, puis appel via le protocole à chaque interaction. C'est flexible, mais chaque appel consomme du contexte pour décrire les outils disponibles.
+Au [Chapitre 07](../07-mcp-servers/README.md) et au [Chapitre 18](../18-n8n-workflows/README.md), vous avez connecté Copilot CLI à des serveurs MCP (GitHub, n8n) via le protocole MCP lui-même : découverte des outils, puis appel via le protocole à chaque interaction. C'est flexible, mais chaque appel consomme du contexte pour décrire les outils disponibles.
 
 Une famille d'outils portant le nom `mcp2cli` explore une autre approche : générer, à partir des outils exposés par un serveur MCP, une **CLI typée classique** (une sous-commande par outil, un flag par paramètre). Le principe : au lieu que Copilot CLI dialogue avec le serveur MCP via le protocole complet à chaque appel, il exécute une commande shell simple et déjà documentée par son `--help` — ce qui réduit nettement le nombre de tokens consommés par interaction.
 
-> ⚠️ `mcp2cli` n'est pas un outil officiel unique : plusieurs implémentations open source indépendantes portent ce nom, avec des périmètres différents (générique multi-protocoles, plugin spécifique à un agent, pont léger en bash). Considérez-le comme un **principe** à évaluer avec l'implémentation de votre choix, pas comme une dépendance à installer les yeux fermés.
+> ⚠️ `mcp2cli` n'est pas un outil officiel unique : plusieurs implémentations open source indépendantes portent ce nom, avec des périmètres différents (générique multi-protocoles, plugin spécifique à un agent, pont léger en bash). Considérez-le comme un **principe** à évaluer avec l'implémentation de votre choix, pas comme une dépendance à installer les yeux fermés. **Statut vérifié le 16 septembre 2026.**
 
-Le serveur MCP n8n que vous avez configuré au Chapitre 09 est un bon candidat pour expérimenter ce principe : au lieu que Copilot CLI négocie le protocole MCP à chaque instruction, une CLI générée exposerait directement des sous-commandes comme `n8n-cli create-workflow` ou `n8n-cli list-workflows`. C'est ce que propose le défi bonus de ce chapitre.
+Le serveur MCP n8n que vous avez configuré au Chapitre 18 est un bon candidat pour expérimenter ce principe : au lieu que Copilot CLI négocie le protocole MCP à chaque instruction, une CLI générée exposerait directement des sous-commandes comme `n8n-cli create-workflow` ou `n8n-cli list-workflows`. C'est ce que propose le défi bonus de ce chapitre.
 
 </details>
 
@@ -184,7 +215,7 @@ Ouvrez `samples/prompt-templates/code-review-prompt.md`, remplissez ses emplacem
 
 **Défi principal** : créez un quatrième template de prompt (par exemple `refactor-prompt.md`) dans `samples/prompt-templates/`, adapté à une tâche que vous répétez régulièrement avec Copilot CLI, en suivant la même structure (objectif / contraintes / format de sortie attendu).
 
-**Défi bonus** : si vous avez terminé le Chapitre 09, recherchez une implémentation de `mcp2cli` (par exemple sur GitHub) et testez-la sur le serveur MCP n8n déjà configuré. Comparez le nombre d'échanges nécessaires pour créer un workflow simple via la CLI générée par rapport à un appel MCP classique.
+**Défi bonus** : si vous avez terminé le Chapitre 18, recherchez une implémentation de `mcp2cli` (par exemple sur GitHub) et testez-la sur le serveur MCP n8n déjà configuré. Comparez le nombre d'échanges nécessaires pour créer un workflow simple via la CLI générée par rapport à un appel MCP classique.
 
 <details>
 <summary>💡 Indices</summary>

@@ -65,6 +65,18 @@ Les worktrees suppriment cette contrainte : chaque tâche obtient son propre dos
 
 Un worktree se manipule avec quatre commandes Git natives — disponibles depuis Git 2.5 (2015), aucune installation supplémentaire requise.
 
+### 🛡️ Règles de sécurité avant de commencer
+
+Avant toute commande, vérifiez que vous êtes bien dans le dépôt attendu et que votre travail est protégé :
+
+```bash
+git rev-parse --show-toplevel
+git status --short
+git branch --show-current
+```
+
+Ne lancez pas la démonstration avec des modifications non committées que vous voulez conserver : un nouveau worktree part du commit de référence, pas de votre état de fichiers local. Chaque worktree doit utiliser **une branche différente** ; une même branche ne peut pas être extraite simultanément dans deux dossiers. Enfin, ne supprimez jamais un dossier de worktree avec une commande récursive : utilisez `git worktree remove` afin que Git mette aussi à jour ses métadonnées.
+
 ### Créer un worktree
 
 ```bash
@@ -102,6 +114,85 @@ git worktree prune
 Utile si vous avez supprimé un dossier de worktree directement (`rm -rf`) sans passer par `git worktree remove` — Git garde sinon une référence à un dossier qui n'existe plus.
 
 > ⚠️ **Limitation importante** : vous ne pouvez pas extraire la même branche dans deux worktrees en même temps. Chaque worktree a besoin de sa propre branche — c'est justement ce qui garantit qu'aucune session Copilot CLI ne peut écraser le travail d'une autre par accident.
+
+## Le cycle de vie complet : créer, travailler, fusionner, nettoyer
+
+Le schéma suivant est volontairement explicite. Exécutez les commandes depuis la racine du dépôt principal, sauf lorsqu'un bloc indique un changement de dossier.
+
+### 1. Créer et vérifier
+
+```bash
+git status --short
+git worktree add -b feature/book-search ../book-app-search
+git worktree list
+```
+
+La dernière commande doit afficher le dépôt principal et `../book-app-search`, chacun avec une branche différente. Ne lancez pas une deuxième session sur le même worktree : une session Copilot CLI par dossier évite les écritures concurrentes.
+
+### 2. Travailler dans le worktree
+
+```bash
+cd ../book-app-search
+copilot -p "Ajoute une recherche par auteur dans samples/book-app-project/ et ses tests pytest. Ne modifie pas les autres fonctionnalités."
+git diff --check
+python -m pytest samples/book-app-project/tests/
+git add samples/book-app-project/
+git commit -m "feat: add author search"
+```
+
+Le commit est créé dans la branche du worktree. Revenez ensuite au dépôt principal avant de fusionner :
+
+```bash
+cd -
+git status --short
+git branch --show-current
+```
+
+### 3. Fusionner et traiter un conflit
+
+```bash
+git merge --no-ff feature/book-search
+```
+
+Si Git signale un conflit, ne supprimez pas arbitrairement les marqueurs `<<<<<<<`, `=======` et `>>>>>>>`. Ouvrez chaque fichier concerné, choisissez ou combinez les deux versions, puis vérifiez le résultat :
+
+```bash
+git status
+git diff --check
+python -m pytest samples/book-app-project/tests/
+git add <fichier-résolu>
+git commit
+```
+
+Un worktree reste indépendant jusqu'au commit ; la fusion se fait depuis le dépôt principal, jamais depuis le dossier que vous êtes en train de supprimer.
+
+### 4. Nettoyer et prouver que le nettoyage est terminé
+
+Après une fusion réussie (ou après avoir décidé d'abandonner le travail), supprimez le dossier géré par Git, puis sa branche devenue inutile :
+
+```bash
+git worktree remove ../book-app-search
+git worktree prune
+git branch -d feature/book-search
+git worktree list
+```
+
+Le dernier `git worktree list` ne doit plus afficher `../book-app-search` : dans un dépôt qui ne comportait pas d'autres worktrees, il ne reste alors que le dépôt principal. Cette vérification fait partie du résultat attendu, pas d'une étape facultative.
+
+### Si une session est interrompue
+
+Une coupure réseau, un terminal fermé ou une session Copilot CLI arrêtée ne supprime pas automatiquement le worktree. Reprenez depuis le dépôt principal et inspectez d'abord :
+
+```bash
+git worktree list
+git -C ../book-app-search status --short
+```
+
+- **Travail à conserver** : revenez dans le worktree, faites les vérifications, puis `git add` et `git commit` avant de fusionner.
+- **Travail à abandonner** : vérifiez deux fois le chemin affiché par `git worktree list`, puis utilisez `git worktree remove -f ../book-app-search`. L'option `-f` détruit les modifications non committées de ce worktree.
+- **Dossier supprimé manuellement** : exécutez `git worktree prune`, puis relancez `git worktree list` pour confirmer que la référence orpheline a disparu.
+
+Ne forcez jamais la suppression sans avoir identifié précisément le worktree et accepté la perte de ses changements.
 
 ---
 
@@ -163,7 +254,7 @@ Les deux sessions Copilot CLI travaillent sur le même historique Git, dans deux
 Une fois le travail d'un worktree terminé et validé, revenez au dépôt principal pour l'intégrer :
 
 ```bash
-# Depuis le dépôt principal
+# Depuis le dépôt principal, après avoir committé dans chaque worktree
 git push -u origin fix/isbn-validation
 git push -u origin feature/find-by-year
 
@@ -177,6 +268,8 @@ Puis nettoyez les worktrees devenus inutiles :
 git worktree remove ../book-app-hotfix
 git worktree remove ../book-app-feature
 git worktree prune
+git worktree list
+# Vérifiez ici qu'il ne reste aucun worktree de démonstration.
 
 git branch -d fix/isbn-validation feature/find-by-year
 ```
@@ -193,7 +286,9 @@ Vous allez créer deux worktrees, y lancer deux sessions Copilot CLI en parallè
 2. Créez un second worktree : `git worktree add -b tp/worktree-deux ../tp-worktree-deux`
 3. Vérifiez que les deux apparaissent avec `git worktree list`
 4. Dans deux fenêtres de terminal séparées, `cd` dans chaque worktree et lancez une session Copilot CLI (interactive ou avec `-p`) sur une tâche différente et courte dans `samples/book-app-project/`
-5. Une fois les deux tâches terminées, revenez au dépôt principal, fusionnez chaque branche, puis supprimez les deux worktrees avec `git worktree remove`
+5. Dans chaque worktree, vérifiez, testez, `git add`ez puis commitez le travail
+6. Revenez au dépôt principal, fusionnez chaque branche, puis supprimez les deux worktrees avec `git worktree remove`
+7. Exécutez `git worktree list` et confirmez qu'aucun des deux worktrees de TP ne figure encore dans la liste
 
 ---
 

@@ -49,6 +49,163 @@ Commençons par parcourir un scénario qui modifie du code, génère des tests, 
 
 ---
 
+## 🧭 Parcours guidé : de l'idée à la PR
+
+Ce parcours reprend les fondamentaux des Chapitres 00 à 04. Il produit un résultat
+observable à chaque étape et ne dépend ni d'un agent personnalisé, ni d'un skill,
+ni d'un serveur MCP. Utilisez une branche dédiée afin de pouvoir abandonner
+l'exercice sans toucher à votre branche principale.
+
+> **Scénario** : ajouter une commande `search by year` à
+> `samples/book-app-project/`, qui recherche les livres publiés entre deux années incluses.
+
+| Jalon | Action | Résultat attendu |
+|---|---|---|
+| 1. Idée | Décrire le besoin et créer la branche | Une branche `feature/search-by-year` |
+| 2. Plan | Utiliser `/plan` avec le contexte du projet | Un plan listant fichiers, règles métier et tests |
+| 3. Implémentation | Modifier `books.py` et `book_app.py` | La recherche est accessible depuis la CLI |
+| 4. Tests | Générer puis exécuter les tests pytest | Les cas nominal, vide, invalide et inversé sont couverts |
+| 5. Diff | Relire avec `/review` et Git | Une revue et un diff staged compréhensibles |
+| 6. PR | Préparer le commit puis créer la PR | Une PR avec résumé et tests exécutés |
+
+### 1. Partir de l'idée
+
+```bash
+git switch -c feature/search-by-year
+copilot
+
+> Je veux ajouter une commande "search by year" à samples/book-app-project/.
+> Elle doit trouver les livres publiés entre deux années incluses. Commence par
+> reformuler le besoin et indique les questions qui restent ouvertes ; ne modifie
+> encore aucun fichier.
+```
+
+**Jalon vérifiable** : Copilot reformule le besoin sans changement dans Git.
+Vérifiez-le avec `git status`.
+
+### 2. Planifier avec le contexte du projet
+
+Dans la même session, donnez à Copilot le répertoire de l'exemple et demandez
+un plan explicite :
+
+```text
+> @samples/book-app-project/ Utilise /plan pour proposer une implémentation de
+> "search by year". Indique les fichiers à modifier, le format de la commande,
+> la validation des années et les tests à ajouter. Ne modifie aucun fichier.
+```
+
+**Jalon vérifiable** : le plan mentionne au minimum `books.py`,
+`book_app.py` et `tests/test_books.py`, ainsi que les plages vides ou inversées.
+
+### 3. Implémenter la fonctionnalité
+
+Après avoir relu le plan, demandez une implémentation limitée au scénario :
+
+```text
+> Implémente le plan validé. Ajoute find_by_year_range(start_year, end_year)
+> dans BookCollection, branche la commande dans book_app.py et conserve le
+> comportement des autres commandes. N'ajoute aucune dépendance.
+```
+
+**Jalon vérifiable** : `git diff --stat` ne liste que les fichiers prévus et
+la commande suivante affiche la nouvelle commande :
+
+```bash
+cd samples/book-app-project
+python book_app.py help
+cd ../..
+```
+
+### 4. Générer et exécuter les tests
+
+```text
+> @samples/book-app-project/tests/test_books.py Ajoute des tests pytest pour
+> find_by_year_range : bornes inclusives, aucun résultat, collection vide,
+> année non numérique et plage inversée. Ne modifie pas les tests existants.
+```
+
+Puis exécutez les tests depuis le répertoire de l'exemple :
+
+```bash
+cd samples/book-app-project
+python -m pytest tests/
+cd ../..
+```
+
+**Jalon vérifiable** : pytest affiche une suite terminée sans échec. Si un test
+échoue, corrigez le code ou le test avec Copilot avant de poursuivre ; ne masquez
+pas l'échec.
+
+### 5. Relire le diff avant de livrer
+
+```text
+> /review
+```
+
+```bash
+git status
+git diff
+git add samples/book-app-project/books.py \
+  samples/book-app-project/book_app.py \
+  samples/book-app-project/tests/test_books.py
+git diff --staged
+```
+
+**Jalon vérifiable** : la revue ne signale pas de problème bloquant, le diff
+staged correspond au plan et aucun fichier de `samples/book-app-buggy/` ou
+`samples/buggy-code/` n'est concerné.
+
+### 6. Préparer la PR
+
+```text
+> Rédige un message de commit conventionnel et une description de PR pour
+> l'ajout de "search by year". Inclus le résumé, les fichiers modifiés, les
+> tests exécutés et les limites connues. Ne crée pas encore la PR.
+```
+
+Après vérification humaine du message et des tests :
+
+```bash
+git commit -m "feat: add book search by year"
+```
+
+Puis, dans Copilot CLI :
+
+```text
+> /pr create
+```
+
+**Jalon vérifiable** : la PR contient le résumé de la fonctionnalité et la
+commande exacte `python -m pytest tests/` dans la section des tests.
+
+### Variante avec un agent spécialisé (facultative)
+
+Les étapes précédentes restent suffisantes après les Chapitres 00 à 04. Si vous
+avez suivi le Chapitre 05, vous pouvez renforcer les étapes 3 à 5 sans changer
+le scénario :
+
+```text
+> /agent
+# Sélectionner "python-reviewer"
+> @samples/book-app-project/books.py Vérifie la conception de
+> find_by_year_range et signale les validations ou cas limites manquants.
+
+> /agent
+# Sélectionner "pytest-helper"
+> @samples/book-app-project/tests/test_books.py Complète les tests de la
+> recherche par année et explique chaque cas limite ajouté.
+```
+
+Les agents donnent une seconde lecture spécialisée ; ils ne remplacent ni la
+lecture du diff, ni l'exécution locale des tests.
+
+> 🎬 **Démo** : le script reproductible qui suit les étapes idée → plan →
+> agent spécialisé → tests → diff → PR est disponible dans
+> [`assets/putting-it-together-demo.tape`](assets/putting-it-together-demo.tape).
+> Le rendu GIF peut être régénéré avec l'outillage du dépôt lorsque VHS est
+> installé (`npm run generate:vhs -- --file
+> 08-putting-it-together/assets/putting-it-together-demo.tape`).
+
 ## De l'idée à la PR fusionnée en une seule session
 
 Au lieu de basculer entre votre éditeur, votre terminal, votre lanceur de tests, et l'interface GitHub en perdant le contexte à chaque fois, vous pouvez combiner tous vos outils dans une seule session de terminal. Nous détaillerons ce modèle dans la section [Modèle d'intégration](#le-modèle-dintégration-pour-utilisateurs-avancés) ci-dessous.
@@ -133,6 +290,11 @@ Pour les utilisateurs avancés ayant terminé les Chapitres 04 à 06, ces workfl
 Voici le modèle mental pour tout combiner :
 
 <img src="assets/integration-pattern.png" alt="The Integration Pattern - A 4-phase workflow: Gather Context (MCP), Analyze and Plan (Agents), Execute (Skills + Manual), Complete (MCP)" width="800"/>
+
+*Légende : le contexte rassemble les informations, le plan choisit l'approche,
+l'exécution applique les changements, puis la phase de clôture vérifie et livre
+le résultat. Les étapes 1 à 6 du parcours guidé détaillent ce même modèle sans
+exiger les outils avancés.*
 
 ---
 

@@ -101,6 +101,15 @@ copilot
 > Explore how book data is loaded    # Utilise l'agent Explore
 ```
 
+<details>
+<summary>🎬 Voyez l'agent Plan en action !</summary>
+
+![Built-in Agent Demo](assets/builtin-agent-demo.gif)
+
+*La sortie de la démo peut varier - votre modèle, vos outils et vos réponses différeront de ce qui est présenté ici.*
+
+</details>
+
 Et l'agent Task ? Il travaille en coulisses pour gérer et suivre ce qui se passe et rendre compte dans un format clair et net :
 
 | Résultat | Ce que vous voyez |
@@ -140,6 +149,7 @@ Vous pouvez tout simplement définir vos propres agents pour qu'ils fassent part
 
 <img src="assets/using-agents.png" alt="Four colorful AI robots standing together, each with different tools representing specialized agent capabilities" width="800"/>
 
+<a id="-add-your-agents"></a>
 ## 🗂️ Ajoutez vos agents
 
 Les fichiers agent sont des fichiers markdown avec une extension `.agent.md`. Ils comportent deux parties : un frontmatter YAML (métadonnées) et des instructions markdown.
@@ -150,7 +160,7 @@ Voici un agent minimal :
 
 ```markdown
 ---
-name: my-reviewer
+name: code-reviewer
 description: Code reviewer focused on bugs and security issues
 ---
 
@@ -166,6 +176,7 @@ When reviewing code, always check for:
 
 > 💡 **Requis vs optionnel** : Le champ `description` est obligatoire. Les autres champs comme `name`, `tools`, et `model` sont facultatifs.
 
+<a id="where-to-put-agent-files"></a>
 ## Où placer les fichiers agent
 
 | Emplacement | Portée | Idéal pour |
@@ -173,7 +184,22 @@ When reviewing code, always check for:
 | `.github/agents/` | Spécifique au projet | Agents partagés en équipe suivant les conventions du projet |
 | `~/.copilot/agents/` | Global (tous les projets) | Agents personnels que vous utilisez partout |
 
+**Chemins de recherche** : à chaque lancement de `/agent` ou `--agent <nom>`, Copilot CLI recherche un fichier `<nom>.agent.md` dans ces deux emplacements (ce cours n'utilise que les niveaux personnel et projet ; des niveaux organisation et entreprise existent aussi pour les comptes GitHub Enterprise, voir la documentation officielle citée plus haut). En cas de conflit de nom entre les deux, l'agent **personnel** (`~/.copilot/agents/`) prend le pas sur l'agent **projet** (`.github/agents/`) qui prend lui-même le pas sur les niveaux organisation/entreprise.
+
+> 🔎 **Agent introuvable ?** Vérifiez d'abord que le fichier se termine bien par `.agent.md` (et non `.md`) et qu'il se trouve dans l'un des deux dossiers ci-dessus. Lancez `/agent` pour voir la liste à jour de ce que Copilot CLI détecte réellement. Le [Dépannage](#agent-introuvable) plus bas détaille la procédure complète.
+
 **Ce projet inclut des exemples de fichiers agent dans le dossier [.github/agents/](../.github/agents/)**. Vous pouvez écrire les vôtres, ou personnaliser ceux déjà fournis.
+
+### Agent intégré, agent de projet, agent personnel, ou skill : lequel choisir ?
+
+| Type | Où il vit | Qui le voit | Comment l'invoquer |
+|------|-----------|-------------|---------------------|
+| **Agent intégré** | Fourni avec Copilot CLI (aucun fichier) | Tout le monde, dans tous les projets | `/plan`, `/review`, ou automatiquement (Explore, Task) |
+| **Agent de projet** | `.github/agents/*.agent.md` | Toute l'équipe, via le dépôt versionné | `/agent` ou `--agent <nom>` |
+| **Agent personnel** | `~/.copilot/agents/*.agent.md` | Vous uniquement, dans tous vos projets | `/agent` ou `--agent <nom>` |
+| **Skill** (`SKILL.md`) | `.github/skills/` ou `~/.copilot/skills/` | Équipe ou vous, selon l'emplacement | **Automatique** - se déclenche depuis votre prompt, sans commande |
+
+> 💡 **Agent vs skill, en une phrase** : un agent change *qui* répond (une personnalité avec ses propres standards, que vous sélectionnez explicitement) ; une skill change *quelles étapes* Copilot suit pour une tâche donnée, et se déclenche toute seule. Le [Chapitre 06 : Système de skills](../06-skills/README.md) couvre les skills en détail.
 
 <details>
 <summary>📂 Voir les agents d'exemple de ce cours</summary>
@@ -534,7 +560,17 @@ Si vous avez besoin que Copilot ignore toutes les configurations spécifiques au
 
 ```bash
 copilot --no-custom-instructions
+# Une fois lancé, /instructions doit alors indiquer qu'aucun fichier d'instructions n'est chargé
 ```
+
+<details>
+<summary>🎬 Voyez la différence avec et sans <code>--no-custom-instructions</code> !</summary>
+
+![No Custom Instructions Demo](assets/no-custom-instructions-demo.gif)
+
+*La sortie de la démo peut varier - votre modèle, vos outils et vos réponses différeront de ce qui est présenté ici.*
+
+</details>
 
 </details>
 
@@ -646,9 +682,9 @@ Créez vos propres agents et voyez-les en action.
 mkdir -p .github/agents
 
 # Créer un agent de revue de code
-cat > .github/agents/reviewer.agent.md << 'EOF'
+cat > .github/agents/code-reviewer.agent.md << 'EOF'
 ---
-name: reviewer
+name: code-reviewer
 description: Senior code reviewer focused on security and best practices
 ---
 
@@ -668,9 +704,9 @@ Provide issues as a numbered list with severity tags:
 EOF
 
 # Créer un agent de documentation
-cat > .github/agents/documentor.agent.md << 'EOF'
+cat > .github/agents/doc-writer.agent.md << 'EOF'
 ---
-name: documentor
+name: doc-writer
 description: Technical writer for clear and complete documentation
 ---
 
@@ -686,15 +722,24 @@ You are a technical writer who creates clear documentation.
 EOF
 
 # Utilisez-les maintenant
-copilot --agent reviewer
+copilot --agent code-reviewer
 > Review @samples/book-app-project/books.py
 
 # Ou changez d'agent
 copilot
 > /agent
-# Select "documentor"
+# Select "doc-writer"
 > Document @samples/book-app-project/books.py
 ```
+
+<details>
+<summary>🎬 Voyez la création d'un agent en action !</summary>
+
+![Agent Creation Demo](assets/agent-creation-demo.gif)
+
+*La sortie de la démo peut varier - votre modèle, vos outils et vos réponses différeront de ce qui est présenté ici.*
+
+</details>
 
 ---
 
@@ -702,7 +747,7 @@ copilot
 
 ### Défi principal : Constituer une équipe d'agents spécialisés
 
-L'exemple pratique a créé les agents `reviewer` et `documentor`. Entraînez-vous maintenant à créer et utiliser des agents pour une tâche différente : améliorer la validation des données dans l'application de livres :
+L'exemple pratique a créé les agents `code-reviewer` et `doc-writer`. Entraînez-vous maintenant à créer et utiliser des agents pour une tâche différente : améliorer la validation des données dans l'application de livres :
 
 1. Créez 3 fichiers agent (`.agent.md`) adaptés à l'application de livres, un par agent, placés dans `.github/agents/`
 2. Vos agents :
@@ -714,8 +759,14 @@ L'exemple pratique a créé les agents `reviewer` et `documentor`. Entraînez-vo
    - `error-handler` → passer en revue `@samples/book-app-project/books.py` et `@samples/book-app-project/utils.py`
    - `doc-writer` → ajouter des docstrings à `@samples/book-app-project/books.py`
 4. Collaborez : utilisez `error-handler` pour identifier les lacunes de gestion des erreurs, puis `doc-writer` pour documenter l'approche améliorée
+5. **Validez un résultat concret** : lancez la suite de tests existante *avant* toute modification, pour obtenir une référence :
+   ```bash
+   cd samples/book-app-project
+   python -m pytest tests/ -v
+   ```
+   Notez le nombre de tests qui passent (`5 passed` dans une copie non modifiée du cours). Si vous appliquez une correction suggérée par `error-handler` dans `utils.py` ou `books.py`, relancez la même commande : le nombre de tests qui passent doit rester identique (ou augmenter si vous avez ajouté un test). C'est votre résultat vérifiable — pas une impression subjective sur la qualité de la sortie.
 
-**Critères de réussite** : Vous avez 3 agents fonctionnels qui produisent une sortie cohérente et de haute qualité, et vous pouvez basculer entre eux avec `/agent`.
+**Critères de réussite** : Vous avez 3 agents fonctionnels qui produisent une sortie cohérente et de haute qualité, vous pouvez basculer entre eux avec `/agent`, et `python -m pytest tests/` dans `samples/book-app-project/` passe toujours après vos changements.
 
 <details>
 <summary>💡 Indices (cliquez pour développer)</summary>
@@ -810,17 +861,25 @@ Testez chaque fichier d'instructions sur le code de l'application de livres.
 
 ### Dépannage
 
-**Agent introuvable** - Vérifiez que le fichier agent existe dans l'un de ces emplacements :
-- `~/.copilot/agents/`
-- `.github/agents/`
+<a id="agent-introuvable"></a>
+**Agent introuvable** - Si `/agent` ou `--agent <nom>` ne trouve pas votre agent, vérifiez dans l'ordre :
 
-Lister les agents disponibles :
+1. **L'emplacement du fichier** - il doit se trouver dans l'un de ces deux dossiers :
+   - `.github/agents/` (projet, partagé avec l'équipe)
+   - `~/.copilot/agents/` (personnel, tous les projets)
+2. **L'extension du fichier** - `mon-agent.agent.md`, pas seulement `.md`
+3. **Le frontmatter YAML** - le champ `description` doit être présent, sinon le fichier n'est pas reconnu comme un agent
+4. **Le nom utilisé** - le nom que vous tapez après `/agent` ou `--agent` doit correspondre au champ `name` du frontmatter (ou, à défaut, au nom du fichier sans l'extension `.agent.md`)
+
+Utilisez `/agent` pour confirmer la liste réelle des agents détectés, plutôt que de vous fier uniquement au nom que vous avez tapé :
 
 ```bash
 copilot
 > /agent
-# Shows all available agents
+# Affiche la liste à jour de tous les agents détectés dans les deux emplacements
 ```
+
+Si l'agent attendu n'apparaît toujours pas dans cette liste, revérifiez les points 1 à 3 ci-dessus - c'est presque toujours l'un d'entre eux.
 
 **L'agent ne suit pas les instructions** - Soyez explicite dans vos prompts et ajoutez plus de détails aux définitions d'agent :
 - Frameworks/bibliothèques spécifiques avec leurs versions

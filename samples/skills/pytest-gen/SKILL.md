@@ -1,24 +1,24 @@
 ---
 name: pytest-gen
-description: Génère des tests pytest complets - à utiliser pour générer des tests, créer des suites de tests, ou tester du code Python
+description: Génère des tests pytest complets - à utiliser lors de la génération de tests, de la création de suites de tests, ou du test de code Python
 ---
 
-# Skill Génération pytest
+# Compétence de génération Pytest
 
-Lors de la génération de tests, suivez cette structure.
+Lors de la génération de tests, suis cette structure.
 
 ## Organisation des tests
 
-- Regroupez les tests par fonction testée
-- Utilisez `@pytest.mark.parametrize` pour plusieurs entrées
-- Utilisez des fixtures pour la configuration partagée
-- Suivez le modèle arrange/act/assert
+- Regroupe les tests par fonction testée
+- Utilise `@pytest.mark.parametrize` pour les entrées multiples
+- Utilise des fixtures pour la configuration partagée
+- Suis le modèle arrange/act/assert (préparer/agir/vérifier)
 
 ## Exigences de couverture
 
 - Cas nominal (utilisation attendue)
-- Cas limites (chaînes vides, None, valeurs aux bornes)
-- Cas d'erreur (entrée invalide, fichier introuvable, mauvais types)
+- Cas limites (chaînes vides, None, valeurs limites)
+- Cas d'erreur (entrée invalide, fichier introuvable, types incorrects)
 - Intégration (fonctions fonctionnant ensemble)
 
 ## Modèle

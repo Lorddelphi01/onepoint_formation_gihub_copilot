@@ -47,5 +47,12 @@ Cours pour débutants enseignant GitHub Copilot CLI. Contenu pédagogique, pas u
 
 ```bash
 npm install && npm run release
+npm run audit
 ```
+
+`npm run audit` vérifie les références locales Markdown/HTML et la cohérence des
+GIF/tapes avec `.github/scripts/demos.json`. Il signale aussi les GIF orphelins
+et les chapitres contenant des commandes Copilot qui ne sont pas encore couverts.
+Les nouveaux assets utilisent les noms `<concept>-demo.gif` et
+`<concept>-analogy.png`.
 </content>
