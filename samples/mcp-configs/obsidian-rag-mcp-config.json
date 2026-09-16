@@ -1,0 +1,19 @@
+{
+  "mcpServers": {
+    "obsidian": {
+      "type": "http",
+      "url": "http://127.0.0.1:27123/mcp/",
+      "headers": {
+        "Authorization": "Bearer <votre-clé-api-local-rest-api>"
+      }
+    },
+    "smart-connections": {
+      "type": "local",
+      "command": "npx",
+      "args": ["-y", "smart-connections-mcp"],
+      "env": {
+        "SMART_VAULT_PATH": "/chemin/absolu/vers/votre/vault"
+      }
+    }
+  }
+}

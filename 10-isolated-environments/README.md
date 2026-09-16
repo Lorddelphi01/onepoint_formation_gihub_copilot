@@ -268,4 +268,6 @@ Vous savez maintenant faire tourner Copilot CLI aussi bien dans un environnement
 
 Vous avez maintenant vu Copilot CLI dans trois contextes d'exécution différents à travers ce cours : votre machine locale, un dev container cohérent, et une sandbox strictement isolée. Le principe reste le même partout — plus vous automatisez, plus l'environnement qui vous entoure doit inspirer confiance.
 
-**[← Chapitre précédent : n8n](../09-n8n-workflows/README.md)** | **[Retour à l'accueil du cours →](../README.md)**
+> 🎁 **Envie d'aller plus loin ?** Le [Chapitre 11 (bonus) : RAG Obsidian](../11-obsidian-rag/README.md) vous montre comment connecter Copilot CLI à votre vault Obsidian pour qu'il réponde en s'appuyant sur vos propres notes, citations à l'appui.
+
+**[← Chapitre précédent : n8n](../09-n8n-workflows/README.md)** | **[Retour à l'accueil du cours](../README.md)** | **[Chapitre bonus : RAG Obsidian →](../11-obsidian-rag/README.md)**
