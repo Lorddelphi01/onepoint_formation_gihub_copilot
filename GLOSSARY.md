@@ -338,7 +338,7 @@ Web Content Accessibility Guidelines (règles pour l'accessibilité des contenus
 
 ### Worktree
 
-Une copie de travail git additionnelle, associée à sa propre branche et disposant de son propre dossier sur disque, qui permet d'isoler une session Copilot CLI (via `/worktree new` ou `--worktree`) sans changer de branche dans le répertoire de travail principal. Présenté aux Chapitres 02, 04 et 08.
+Une copie de travail git additionnelle, associée à sa propre branche et disposant de son propre dossier sur disque, qui permet d'isoler une session Copilot CLI (via `/worktree new` ou `--worktree`) sans changer de branche dans le répertoire de travail principal. Présenté aux Chapitres 02, 04, 08 et 16.
 
 ---
 
