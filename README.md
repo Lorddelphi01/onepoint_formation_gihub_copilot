@@ -82,6 +82,7 @@ Ce cours se concentre sur **GitHub Copilot CLI**, qui apporte l'assistance de l'
 | 12 | 🔍 [Comprendre l'acceptation de l'IA par les développeurs](./12-ai-developer-acceptance/README.md) *(bonus)* | Une auto-évaluation personnelle confrontée aux études GitHub, McKinsey, DORA et Stack Overflow |
 | 13 | 🕰️ [Explorer l'historique de vos sessions avec /chronicle](./13-chronicle-session-insights/README.md) | Des rapports d'activité, conseils et recherches générés à partir de votre historique Copilot CLI |
 | 14 | 📊 [Analyser sa consommation de tokens avec RTK et Tokscale](./14-token-consumption-analysis/README.md) *(bonus)* | Une sortie de commandes compressée avec RTK, et un tableau de bord de consommation avec Tokscale |
+| 15 | 🧠 [Rédiger des instructions IA efficaces et réutilisables](./15-prompt-engineering/README.md) *(bonus)* | Des templates de prompts réutilisables et le principe d'une CLI générée depuis un serveur MCP |
 | 11 | 🔒 [Sécuriser votre code avec Copilot CLI](./11-security-with-copilot/README.md) | Une revue de sécurité de bout en bout : commande `/security-review`, instructions sécurisées par défaut, protection des secrets |
 | 10 | 🧠 [RAG sur votre vault Obsidian](./10-obsidian-rag/README.md) *(bonus, nécessite Obsidian)* | Un pipeline RAG local (recherche sémantique + citations) sur vos propres notes, via deux serveurs MCP |
 

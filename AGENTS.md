@@ -13,13 +13,15 @@ Cours pour débutants enseignant GitHub Copilot CLI. Contenu pédagogique, pas u
 | `12-ai-developer-acceptance/` | Chapitre bonus : études (GitHub, McKinsey, DORA, Stack Overflow) sur les impacts positifs de l'IA sur les développeurs, avec auto-évaluation personnelle |
 | `13-chronicle-session-insights/` | Chapitre sur la commande native `/chronicle` : rapports d'activité, conseils personnalisés, recherche et amélioration des instructions à partir de l'historique de sessions |
 | `14-token-consumption-analysis/` | Chapitre bonus (outils tiers) : réduire la sortie de commandes avec RTK et mesurer la consommation de tokens avec Tokscale |
-| `samples/book-app-project/` | **Exemple principal** : application CLI Python de gestion de collection de livres utilisée tout au long des chapitres |
+| `samples/book-app-project/` || `15-prompt-engineering/` | Chapitre bonus : rédiger des instructions claires et ancrées dans le vocabulaire métier, construire des templates de prompts réutilisables, et le principe d'une CLI générée depuis un serveur MCP |
+ **Exemple principal** : application CLI Python de gestion de collection de livres utilisée tout au long des chapitres |
 | `samples/book-app-project-cs/` | Version C# de l'application de collection de livres |
 | `samples/book-app-project-js/` | Version JavaScript de l'application de collection de livres |
 | `samples/book-app-buggy/` | **Bugs intentionnels** pour les exercices de débogage (Ch 03) |
 | `samples/agents/` | Exemples de modèles d'agents (python-reviewer, pytest-helper, hello-world) |
 | `samples/skills/` | Exemples de modèles de skills (code-checklist, pytest-gen, commit-message, hello-world) |
-| `samples/mcp-configs/` | Exemples de configuration de serveurs MCP |
+| `samples/mcp-configs/` || `samples/prompt-templates/` | Templates de prompts réutilisables (revue de code, correction de bug, nouvelle fonctionnalité) utilisés au Chapitre 15 |
+ Exemples de configuration de serveurs MCP |
 | `samples/buggy-code/` | **Extra optionnel** : code bogué axé sécurité (JS et Python) |
 | `samples/src/` | **Extra optionnel** : anciens exemples JS/React d'une version précédente du cours |
 | `appendices/` | Documentation de référence complémentaire |

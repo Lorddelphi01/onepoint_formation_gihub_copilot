@@ -25,6 +25,7 @@ CHAPTERS = {
     "12-ai-developer-acceptance": "Chapitre 12 : Acceptation de l'IA",
     "13-chronicle-session-insights": "Chapitre 13 : /chronicle",
     "14-token-consumption-analysis": "Chapitre 14 : Consommation de tokens",
+    "15-prompt-engineering": "Chapitre 15 : Instructions IA efficaces",
 }
 
 # Get project root (parent of scripts folder)
