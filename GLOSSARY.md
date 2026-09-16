@@ -64,6 +64,14 @@ Un décorateur Python (`@dataclass`) qui génère automatiquement `__init__`, `_
 
 ---
 
+## D
+
+### Dev Container (conteneur de développement)
+
+Un environnement de développement décrit par un fichier `devcontainer.json` : image Docker, outils préinstallés, extensions VS Code. Garantit que toute l'équipe travaille dans un environnement identique, utilisé par GitHub Codespaces et l'extension VS Code Dev Containers. Présenté au Chapitre 10.
+
+---
+
 ## E
 
 ### Eza
@@ -120,6 +128,14 @@ Un champ optionnel (`model-policy`) du frontmatter d'un agent personnalisé (`.a
 
 ## N
 
+### n8n
+
+Un outil open source d'automatisation de workflows par blocs visuels (« nœuds ») reliés entre eux, plutôt que par du code écrit ligne par ligne. Peut être connecté à Copilot CLI via son propre serveur MCP intégré. Présenté au Chapitre 09.
+
+### Nœud (node, n8n)
+
+Le bloc de base d'un workflow n8n : une étape unique (déclencheur, appel d'API, filtre, mise en forme de données...) que l'on relie à d'autres nœuds pour former un workflow complet. Présenté au Chapitre 09.
+
 ### npx
 
 Un outil Node.js qui exécute des paquets npm sans les installer globalement. Utilisé dans les configurations de serveurs MCP pour lancer des serveurs (par exemple, `npx @modelcontextprotocol/server-filesystem`).
@@ -172,6 +188,10 @@ La commande `/rewind` de Copilot CLI, qui annule une ou plusieurs étapes d'une 
 
 ## S
 
+### Sandbox
+
+Un environnement d'exécution isolé (conteneur ou microVM) qui restreint l'accès de Copilot CLI au système de fichiers et au réseau, permettant d'utiliser `--allow-all`/`--yolo` sans surveillance humaine constante. Présenté au Chapitre 10 via Docker Sandboxes (`sbx run copilot`).
+
 ### Session
 
 Une conversation avec Copilot qui maintient le contexte et peut être reprise plus tard.
@@ -211,6 +231,10 @@ Annotations Python qui indiquent les types attendus des paramètres de fonction 
 ---
 
 ## W
+
+### Webhook
+
+Une URL générée par un service (ici, un nœud Déclencheur n8n) qui écoute les requêtes HTTP entrantes et déclenche une action dès qu'elle en reçoit une, plutôt que d'être interrogée activement. Présenté au Chapitre 09.
 
 ### WCAG
 
