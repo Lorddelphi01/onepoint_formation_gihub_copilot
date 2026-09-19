@@ -90,6 +90,10 @@ Un décorateur Python (`@dataclass`) qui génère automatiquement `__init__`, `_
 
 Un environnement de développement décrit par un fichier `devcontainer.json` : image Docker, outils préinstallés, extensions VS Code. Garantit que toute l'équipe travaille dans un environnement identique, utilisé par GitHub Codespaces et l'extension VS Code Dev Containers. Présenté au Chapitre 09.
 
+### Dockerfile
+
+Un fichier texte qui décrit, instruction par instruction (`FROM`, `RUN`, `COPY`, `CMD`...), comment construire une image Docker de façon reproductible. Permet d'embarquer des outils (comme GitHub CLI ou une stack terminal complète) dans une image réutilisable comme base de dev container, de sandbox, ou en CI. Présenté au Chapitre 09.
+
 ### DORA (DevOps Research and Assessment)
 
 Un référentiel de recherche indépendant (adossé à Google Cloud) qui publie chaque année un état des lieux des pratiques DevOps et, depuis 2024, de l'impact de l'IA sur le développement logiciel. Sa thèse centrale sur l'IA : elle agit comme un amplificateur des pratiques d'ingénierie déjà en place, pas comme un facteur de progrès universel. Présenté au Chapitre 12.
@@ -125,6 +129,10 @@ Un outil de recherche floue (« fuzzy finder ») qui s'intègre au shell pour fi
 ---
 
 ## G
+
+### GitHub CLI (gh)
+
+L'outil en ligne de commande officiel de GitHub (`gh`) pour interagir avec les dépôts, issues, pull requests et l'authentification GitHub sans passer par le navigateur. GitHub Copilot CLI s'appuie sur son authentification (`gh auth login`, `gh auth token`) et peut être installé aux côtés de Copilot CLI dans un dev container ou une image Docker sur mesure. Présenté au Chapitre 09.
 
 ### Glob Pattern (motif glob)
 
