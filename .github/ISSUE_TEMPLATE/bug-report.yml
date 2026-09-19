@@ -1,65 +1,76 @@
-name: 🐛 Bug Report
-description: Report an issue with course content, broken examples, or incorrect instructions
+name: 🐛 Signalement de bug
+description: Signaler un problème avec le contenu du cours, des exemples cassés, ou des instructions incorrectes
 labels: [bug]
 body:
   - type: markdown
     attributes:
       value: |
-        Thanks for helping improve this course! Please fill out the details below so we can fix the issue quickly.
+        Merci d'aider à améliorer ce cours ! Merci de remplir les détails ci-dessous pour que nous puissions corriger le problème rapidement.
 
   - type: dropdown
     id: chapter
     attributes:
-      label: Which chapter is affected?
+      label: Quel chapitre est concerné ?
       options:
-        - "00 - Quick Start"
-        - "01 - First Steps"
-        - "02 - Context and Conversations"
-        - "03 - Development Workflows"
-        - "04 - Create Specialized AI Assistants"
-        - "05 - Automate Repetitive Tasks"
-        - "06 - Connect to GitHub, Databases & APIs"
-        - "07 - Putting It All Together"
-        - "Sample code (samples/)"
-        - "Appendices"
-        - "Other"
+        - "00 - Équipez votre terminal"
+        - "01 - Démarrage rapide"
+        - "02 - Premiers pas"
+        - "03 - Contexte et conversations"
+        - "04 - Flux de travail de développement"
+        - "05 - Créer des assistants IA spécialisés"
+        - "06 - Automatiser les tâches répétitives"
+        - "07 - Se connecter à GitHub, aux bases de données et aux API"
+        - "08 - Assembler le tout"
+        - "09 - Environnements isolés"
+        - "10 - RAG sur votre vault Obsidian"
+        - "11 - Sécuriser votre code avec Copilot CLI"
+        - "12 - Comprendre l'acceptation de l'IA par les développeurs"
+        - "13 - Explorer l'historique de vos sessions avec /chronicle"
+        - "14 - Analyser sa consommation de tokens avec RTK et Tokscale"
+        - "15 - Rédiger des instructions IA efficaces et réutilisables"
+        - "16 - Sessions parallèles avec les worktrees Git"
+        - "17 - mcp2cli et le coût en tokens"
+        - "18 - Automatiser un workflow visuel avec n8n"
+        - "Code d'exemple (samples/)"
+        - "Annexes"
+        - "Autre"
     validations:
       required: true
 
   - type: textarea
     id: description
     attributes:
-      label: What happened?
-      description: Describe the issue clearly. If a command or code example didn't work, include the exact text you copied.
-      placeholder: "When I ran the command from the 'Code Review' section, I got an error..."
+      label: Que s'est-il passé ?
+      description: Décris le problème clairement. Si une commande ou un exemple de code n'a pas fonctionné, inclus le texte exact que tu as copié.
+      placeholder: "Quand j'ai exécuté la commande de la section 'Revue de code', j'ai obtenu une erreur..."
     validations:
       required: true
 
   - type: textarea
     id: expected
     attributes:
-      label: What did you expect to happen?
-      placeholder: "I expected to see the code review output shown in the example..."
+      label: Qu'attendais-tu comme résultat ?
+      placeholder: "Je m'attendais à voir le résultat de la revue de code montré dans l'exemple..."
     validations:
       required: true
 
   - type: textarea
     id: environment
     attributes:
-      label: Environment
-      description: Your OS, terminal, Copilot CLI version, and Python version
+      label: Environnement
+      description: Ton OS, terminal, version de Copilot CLI, et version de Python
       placeholder: |
-        - OS: macOS 15 / Windows 11 / Ubuntu 24.04
-        - Terminal: iTerm2 / Windows Terminal / default
-        - Copilot CLI version: (run `copilot --version`)
-        - Python version: (run `python3 --version`)
+        - OS : macOS 15 / Windows 11 / Ubuntu 24.04
+        - Terminal : iTerm2 / Windows Terminal / par défaut
+        - Version de Copilot CLI : (exécute `copilot --version`)
+        - Version de Python : (exécute `python3 --version`)
     validations:
       required: false
 
   - type: textarea
     id: screenshots
     attributes:
-      label: Screenshots or terminal output
-      description: If applicable, paste terminal output or attach screenshots
+      label: Captures d'écran ou sortie terminal
+      description: Si applicable, colle la sortie du terminal ou joins des captures d'écran
     validations:
       required: false
