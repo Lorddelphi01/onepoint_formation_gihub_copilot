@@ -821,7 +821,7 @@ You are a technical writer who creates clear Python documentation.
 **Tester vos agents :**
 
 > 💡 **Remarque :** Vous devriez déjà avoir `samples/book-app-project/data.json` dans votre copie locale de ce dépôt. S'il est manquant, téléchargez la version originale depuis le dépôt source :
-> [data.json](https://github.com/github/copilot-cli-for-beginners/blob/main/samples/book-app-project/data.json)
+> [data.json](https://github.com/Lorddelphi01/onepoint_formation_gihub_copilot/blob/main/samples/book-app-project/data.json)
 
 ```bash
 copilot

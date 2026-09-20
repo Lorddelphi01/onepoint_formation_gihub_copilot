@@ -66,7 +66,7 @@ Ce dépôt en a déjà un, à sa racine :
 ```json
 // .devcontainer/devcontainer.json
 {
-  "name": "GitHub Copilot CLI for Beginners",
+  "name": "Onepoint - Formation GitHub Copilot CLI",
   "image": "mcr.microsoft.com/devcontainers/python:2-3.13-bullseye",
   "features": {
     "ghcr.io/devcontainers/features/github-cli:1": {},
@@ -90,7 +90,7 @@ Plutôt que d'installer Copilot CLI à la main dans `onCreateCommand`, vous pouv
 
 ```json
 {
-  "name": "GitHub Copilot CLI for Beginners",
+  "name": "Onepoint - Formation GitHub Copilot CLI",
   "image": "mcr.microsoft.com/devcontainers/python:2-3.13-bullseye",
   "features": {
     "ghcr.io/devcontainers/features/github-cli:1": {},

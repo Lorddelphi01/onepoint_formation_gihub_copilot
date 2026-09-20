@@ -1,7 +1,7 @@
 {
   "name": "github-copilot-cli-course",
   "version": "1.0.0",
-  "description": "GitHub Copilot CLI for Beginners - Course Materials",
+  "description": "Onepoint - Formation GitHub Copilot CLI - Course Materials",
   "scripts": {
     "generate:headers": "python3 .github/scripts/generate-chapter-headers.py",
     "audit": "node .github/scripts/audit-tutorials.js",

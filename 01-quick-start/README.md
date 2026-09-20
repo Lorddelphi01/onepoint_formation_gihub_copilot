@@ -66,7 +66,7 @@ Si vous voyez « You don't have access to GitHub Copilot », vous devrez utilise
 
 Si vous ne voulez installer aucun des prérequis, vous pouvez utiliser GitHub Codespaces, qui a GitHub Copilot CLI prêt à l'emploi (vous devrez vous connecter), et préinstalle Python et pytest.
 
-1. [Forkez ce dépôt](https://github.com/github/copilot-cli-for-beginners/fork) sur votre compte GitHub
+1. [Forkez ce dépôt](https://github.com/Lorddelphi01/onepoint_formation_gihub_copilot/fork) sur votre compte GitHub
 2. Sélectionnez **Code** > **Codespaces** > **Create codespace on main**
 3. Attendez quelques minutes que le conteneur se construise
 4. Vous êtes prêt ! Le terminal s'ouvrira automatiquement dans l'environnement Codespace.
@@ -91,8 +91,8 @@ Choisissez **une seule** méthode dans la matrice. Elles installent le même pro
 1. Clonez le dépôt pour récupérer les exemples du cours sur votre machine :
 
     ```bash
-    git clone https://github.com/github/copilot-cli-for-beginners
-    cd copilot-cli-for-beginners
+    git clone https://github.com/Lorddelphi01/onepoint_formation_gihub_copilot
+    cd onepoint_formation_gihub_copilot
     ```
 
 2. Installez Copilot CLI en utilisant l'une des options suivantes.
@@ -161,7 +161,7 @@ Redémarrez votre shell après avoir ajouté la complétion persistante. 🪟 **
 
 ## Authentification
 
-Ouvrez une fenêtre de terminal à la racine du dépôt `copilot-cli-for-beginners`, démarrez le CLI et autorisez l'accès au dossier.
+Ouvrez une fenêtre de terminal à la racine du dépôt `onepoint_formation_gihub_copilot`, démarrez le CLI et autorisez l'accès au dossier.
 
 ```bash
 copilot
