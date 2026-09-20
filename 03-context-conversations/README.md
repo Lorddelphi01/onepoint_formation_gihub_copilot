@@ -887,7 +887,7 @@ Les exemples pratiques se sont concentrés sur les revues de qualité de code et
 
 **Pour commencer :**
 ```bash
-cd /path/to/copilot-cli-for-beginners
+cd /path/to/onepoint_formation_gihub_copilot
 copilot
 > @samples/book-app-project/books.py @samples/book-app-project/book_app.py Trace how a book goes from user input to being saved in data.json.
 > @samples/book-app-project/data.json What happens if this file is missing or corrupted?

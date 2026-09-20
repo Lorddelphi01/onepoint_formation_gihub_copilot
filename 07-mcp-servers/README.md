@@ -302,7 +302,7 @@ Le serveur GitHub MCP est intégré et ne nécessite aucune configuration. Voici
 }
 ```
 
-> 💡 **Le chemin `.`** : Le `.` signifie « répertoire courant ». Copilot peut accéder aux fichiers par rapport à l'endroit où vous l'avez lancé. Dans un Codespace, il s'agit de la racine de votre espace de travail. Vous pouvez aussi utiliser un chemin absolu comme `/workspaces/copilot-cli-for-beginners` si vous préférez.
+> 💡 **Le chemin `.`** : Le `.` signifie « répertoire courant ». Copilot peut accéder aux fichiers par rapport à l'endroit où vous l'avez lancé. Dans un Codespace, il s'agit de la racine de votre espace de travail. Vous pouvez aussi utiliser un chemin absolu comme `/workspaces/onepoint_formation_gihub_copilot` si vous préférez.
 
 Ajoutez ceci à votre `~/.copilot/mcp-config.json` et redémarrez Copilot.
 

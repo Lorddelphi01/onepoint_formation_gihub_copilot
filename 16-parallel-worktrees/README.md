@@ -93,7 +93,7 @@ git worktree list
 ```
 
 ```
-/path/to/copilot-cli-for-beginners            a1b2c3d [main]
+/path/to/onepoint_formation_gihub_copilot     a1b2c3d [main]
 /path/to/book-app-hotfix                      a1b2c3d [fix/isbn-validation]
 ```
 

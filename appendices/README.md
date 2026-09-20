@@ -2,7 +2,7 @@
 ---
 id: CopilotCLI-Appendices
 title: !translate Annexes
-description: !translate Explorez du contenu de référence optionnel qui complète le cours GitHub Copilot CLI for Beginners.
+description: !translate Explorez du contenu de référence optionnel qui complète le cours Onepoint - Formation GitHub Copilot CLI.
 audience: Développeurs / Étudiants / Utilisateurs du terminal
 slug: appendices
 weight: 10
