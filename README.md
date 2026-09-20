@@ -146,51 +146,263 @@ Ce cours se concentre sur **GitHub Copilot CLI**, qui apporte l'assistance de l'
 
 Le parcours est organisé en modules progressifs, du démarrage aux automatisations avancées, plus une série de modules bonus optionnels à picorer selon tes besoins.
 
-![Niveau Débutant](https://img.shields.io/badge/Niveau-D%C3%A9butant-2ea44f?style=flat-square) ![Niveau Intermédiaire](https://img.shields.io/badge/Niveau-Interm%C3%A9diaire-0969da?style=flat-square) ![Niveau Avancé](https://img.shields.io/badge/Niveau-Avanc%C3%A9-8957e5?style=flat-square) ![Bonus](https://img.shields.io/badge/Module-Bonus-6e7681?style=flat-square)
+**[Tout](#-catalogue-de-formation)** · [Fondamentaux](#-fondamentaux) · [Flux de travail quotidiens](#-flux-de-travail-quotidiens) · [Automatisation & agents IA](#-automatisation--agents-ia) · [Sécurité & maîtrise avancée](#-sécurité--maîtrise-avancée) · [Modules bonus](#-modules-bonus-optionnels)
+&emsp;·&emsp;**19 chapitres**, dont **8 modules bonus** optionnels
 
 ### 🧭 Fondamentaux
 
-| Ch | Niveau | Cours | Ce que tu vas construire |
-|:--:|--------|-------|-------------------|
-| 00 | ![Débutant](https://img.shields.io/badge/-D%C3%A9butant-2ea44f?style=flat-square) | 🧰 [Équipez votre terminal](./00-modern-terminal-stack/README.md) | Une stack terminal moderne (zsh, Starship, tmux, Atuin, Zoxide, fzf, eza, bat) |
-| 01 | ![Débutant](https://img.shields.io/badge/-D%C3%A9butant-2ea44f?style=flat-square) | 🚀 [Démarrage rapide](./01-quick-start/README.md) | Installation et vérification |
-| 02 | ![Débutant](https://img.shields.io/badge/-D%C3%A9butant-2ea44f?style=flat-square) | 👋 [Premiers pas](./02-setup-and-first-steps/README.md) | Démonstrations en direct + trois modes d'interaction |
+<table>
+<tr>
+<td width="50%" valign="top">
+
+<img src="assets/tracks/fondamentaux-cover.png" width="100%" alt="">
+
+**🧰 [Équipez votre terminal](./00-modern-terminal-stack/README.md)**
+
+Une stack terminal moderne (zsh, Starship, tmux, Atuin, Zoxide, fzf, eza, bat).
+
+<sub>Chapitre 00 · Niveau Débutant</sub>
+
+</td>
+<td width="50%" valign="top">
+
+<img src="assets/tracks/fondamentaux-cover.png" width="100%" alt="">
+
+**🚀 [Démarrage rapide](./01-quick-start/README.md)**
+
+Installation et vérification.
+
+<sub>Chapitre 01 · Niveau Débutant</sub>
+
+</td>
+</tr>
+<tr>
+<td width="50%" valign="top">
+
+<img src="assets/tracks/fondamentaux-cover.png" width="100%" alt="">
+
+**👋 [Premiers pas](./02-setup-and-first-steps/README.md)**
+
+Démonstrations en direct + trois modes d'interaction.
+
+<sub>Chapitre 02 · Niveau Débutant</sub>
+
+</td>
+<td width="50%" valign="top"></td>
+</tr>
+</table>
 
 ### ⚡ Flux de travail quotidiens
 
-| Ch | Niveau | Cours | Ce que tu vas construire |
-|:--:|--------|-------|-------------------|
-| 03 | ![Débutant](https://img.shields.io/badge/-D%C3%A9butant-2ea44f?style=flat-square) | 🔍 [Contexte et conversations](./03-context-conversations/README.md) | Analyse de projet multi-fichiers |
-| 04 | ![Intermédiaire](https://img.shields.io/badge/-Interm%C3%A9diaire-0969da?style=flat-square) | ⚡ [Flux de travail de développement](./04-development-workflows/README.md) | Revue de code, débogage, génération de tests |
+<table>
+<tr>
+<td width="50%" valign="top">
+
+<img src="assets/tracks/workflows-cover.png" width="100%" alt="">
+
+**🔍 [Contexte et conversations](./03-context-conversations/README.md)**
+
+Analyse de projet multi-fichiers.
+
+<sub>Chapitre 03 · Niveau Débutant</sub>
+
+</td>
+<td width="50%" valign="top">
+
+<img src="assets/tracks/workflows-cover.png" width="100%" alt="">
+
+**⚡ [Flux de travail de développement](./04-development-workflows/README.md)**
+
+Revue de code, débogage, génération de tests.
+
+<sub>Chapitre 04 · Niveau Intermédiaire</sub>
+
+</td>
+</tr>
+</table>
 
 ### 🤖 Automatisation & agents IA
 
-| Ch | Niveau | Cours | Ce que tu vas construire |
-|:--:|--------|-------|-------------------|
-| 05 | ![Intermédiaire](https://img.shields.io/badge/-Interm%C3%A9diaire-0969da?style=flat-square) | 🤖 [Créer des assistants IA spécialisés](./05-agents-custom-instructions/README.md) | Agents personnalisés pour ton flux de travail |
-| 06 | ![Intermédiaire](https://img.shields.io/badge/-Interm%C3%A9diaire-0969da?style=flat-square) | 🛠️ [Automatiser les tâches répétitives](./06-skills/README.md) | Compétences (skills) qui se chargent automatiquement |
-| 07 | ![Intermédiaire](https://img.shields.io/badge/-Interm%C3%A9diaire-0969da?style=flat-square) | 🔌 [Se connecter à GitHub, aux bases de données et aux API](./07-mcp-servers/README.md) | Intégration de serveurs MCP |
-| 08 | ![Intermédiaire](https://img.shields.io/badge/-Interm%C3%A9diaire-0969da?style=flat-square) | 🎯 [Assembler le tout](./08-putting-it-together/README.md) | Flux de travail complets |
+<table>
+<tr>
+<td width="50%" valign="top">
+
+<img src="assets/tracks/automatisation-cover.png" width="100%" alt="">
+
+**🤖 [Créer des assistants IA spécialisés](./05-agents-custom-instructions/README.md)**
+
+Agents personnalisés pour ton flux de travail.
+
+<sub>Chapitre 05 · Niveau Intermédiaire</sub>
+
+</td>
+<td width="50%" valign="top">
+
+<img src="assets/tracks/automatisation-cover.png" width="100%" alt="">
+
+**🛠️ [Automatiser les tâches répétitives](./06-skills/README.md)**
+
+Compétences (skills) qui se chargent automatiquement.
+
+<sub>Chapitre 06 · Niveau Intermédiaire</sub>
+
+</td>
+</tr>
+<tr>
+<td width="50%" valign="top">
+
+<img src="assets/tracks/automatisation-cover.png" width="100%" alt="">
+
+**🔌 [Se connecter à GitHub, aux bases de données et aux API](./07-mcp-servers/README.md)**
+
+Intégration de serveurs MCP.
+
+<sub>Chapitre 07 · Niveau Intermédiaire</sub>
+
+</td>
+<td width="50%" valign="top">
+
+<img src="assets/tracks/automatisation-cover.png" width="100%" alt="">
+
+**🎯 [Assembler le tout](./08-putting-it-together/README.md)**
+
+Flux de travail complets.
+
+<sub>Chapitre 08 · Niveau Intermédiaire</sub>
+
+</td>
+</tr>
+</table>
 
 ### 🔒 Sécurité & maîtrise avancée
 
-| Ch | Niveau | Cours | Ce que tu vas construire |
-|:--:|--------|-------|-------------------|
-| 11 | ![Intermédiaire](https://img.shields.io/badge/-Interm%C3%A9diaire-0969da?style=flat-square) | 🔒 [Sécuriser votre code avec Copilot CLI](./11-security-with-copilot/README.md) | Une revue de sécurité de bout en bout : commande `/security-review`, instructions sécurisées par défaut, protection des secrets |
-| 13 | ![Débutant](https://img.shields.io/badge/-D%C3%A9butant-2ea44f?style=flat-square) | 🕰️ [Explorer l'historique de vos sessions avec /chronicle](./13-chronicle-session-insights/README.md) | Des rapports d'activité, conseils et recherches générés à partir de votre historique Copilot CLI |
+<table>
+<tr>
+<td width="50%" valign="top">
+
+<img src="assets/tracks/securite-cover.png" width="100%" alt="">
+
+**🔒 [Sécuriser votre code avec Copilot CLI](./11-security-with-copilot/README.md)**
+
+Une revue de sécurité de bout en bout : commande `/security-review`, instructions sécurisées par défaut, protection des secrets.
+
+<sub>Chapitre 11 · Niveau Intermédiaire</sub>
+
+</td>
+<td width="50%" valign="top">
+
+<img src="assets/tracks/securite-cover.png" width="100%" alt="">
+
+**🕰️ [Explorer l'historique de vos sessions avec /chronicle](./13-chronicle-session-insights/README.md)**
+
+Des rapports d'activité, conseils et recherches générés à partir de votre historique Copilot CLI.
+
+<sub>Chapitre 13 · Niveau Débutant</sub>
+
+</td>
+</tr>
+</table>
 
 ### 🎁 Modules bonus (optionnels)
 
-| Ch | Niveau | Cours | Ce que tu vas construire |
-|:--:|--------|-------|-------------------|
-| 09 | ![Intermédiaire](https://img.shields.io/badge/-Interm%C3%A9diaire-0969da?style=flat-square) ![Bonus](https://img.shields.io/badge/-Bonus-6e7681?style=flat-square) | 🐳 [Environnements isolés](./09-isolated-environments/README.md) *(Docker recommandé)* | Dev container, sandboxing natif de Copilot CLI et sandbox Docker isolée pour automatiser avec `--allow-all` en toute confiance |
-| 10 | ![Avancé](https://img.shields.io/badge/-Avanc%C3%A9-8957e5?style=flat-square) ![Bonus](https://img.shields.io/badge/-Bonus-6e7681?style=flat-square) | 🧠 [RAG sur votre vault Obsidian](./10-obsidian-rag/README.md) *(nécessite Obsidian)* | Un pipeline RAG local (recherche sémantique + citations) sur vos propres notes, via deux serveurs MCP |
-| 12 | ![Débutant](https://img.shields.io/badge/-D%C3%A9butant-2ea44f?style=flat-square) ![Bonus](https://img.shields.io/badge/-Bonus-6e7681?style=flat-square) | 🔍 [Comprendre l'acceptation de l'IA par les développeurs](./12-ai-developer-acceptance/README.md) | Une auto-évaluation personnelle confrontée aux études GitHub, McKinsey, DORA et Stack Overflow |
-| 14 | ![Avancé](https://img.shields.io/badge/-Avanc%C3%A9-8957e5?style=flat-square) ![Bonus](https://img.shields.io/badge/-Bonus-6e7681?style=flat-square) | 📊 [Analyser sa consommation de tokens avec RTK et Tokscale](./14-token-consumption-analysis/README.md) | Une sortie de commandes compressée avec RTK, et un tableau de bord de consommation avec Tokscale |
-| 15 | ![Intermédiaire](https://img.shields.io/badge/-Interm%C3%A9diaire-0969da?style=flat-square) ![Bonus](https://img.shields.io/badge/-Bonus-6e7681?style=flat-square) | 🧠 [Rédiger des instructions IA efficaces et réutilisables](./15-prompt-engineering/README.md) | Des templates de prompts réutilisables et le principe d'une CLI générée depuis un serveur MCP |
-| 16 | ![Avancé](https://img.shields.io/badge/-Avanc%C3%A9-8957e5?style=flat-square) ![Bonus](https://img.shields.io/badge/-Bonus-6e7681?style=flat-square) | 🌳 [Sessions parallèles avec les worktrees Git](./16-parallel-worktrees/README.md) | Deux sessions Copilot CLI isolées dans des worktrees Git, travaillant en parallèle sur le même dépôt |
-| 17 | ![Avancé](https://img.shields.io/badge/-Avanc%C3%A9-8957e5?style=flat-square) ![Bonus](https://img.shields.io/badge/-Bonus-6e7681?style=flat-square) | 🪙 [mcp2cli et le coût en tokens](./17-mcp2cli/README.md) *(complète le Chapitre 07)* | Interroger le serveur Context7 MCP directement depuis le terminal, sans passer par Copilot |
-| 18 | ![Avancé](https://img.shields.io/badge/-Avanc%C3%A9-8957e5?style=flat-square) ![Bonus](https://img.shields.io/badge/-Bonus-6e7681?style=flat-square) | 🔗 [Automatiser un workflow visuel avec n8n](./18-n8n-workflows/README.md) *(nécessite Docker)* | Un workflow n8n construit par Copilot CLI via MCP et les skills n8n officielles |
+<table>
+<tr>
+<td width="50%" valign="top">
+
+<img src="assets/tracks/bonus-cover.png" width="100%" alt="">
+
+**🐳 [Environnements isolés](./09-isolated-environments/README.md)** *(Docker recommandé)*
+
+Dev container, sandboxing natif de Copilot CLI et sandbox Docker isolée pour automatiser avec `--allow-all` en toute confiance.
+
+<sub>Chapitre 09 · Niveau Intermédiaire · Bonus</sub>
+
+</td>
+<td width="50%" valign="top">
+
+<img src="assets/tracks/bonus-cover.png" width="100%" alt="">
+
+**🧠 [RAG sur votre vault Obsidian](./10-obsidian-rag/README.md)** *(nécessite Obsidian)*
+
+Un pipeline RAG local (recherche sémantique + citations) sur vos propres notes, via deux serveurs MCP.
+
+<sub>Chapitre 10 · Niveau Avancé · Bonus</sub>
+
+</td>
+</tr>
+<tr>
+<td width="50%" valign="top">
+
+<img src="assets/tracks/bonus-cover.png" width="100%" alt="">
+
+**🔍 [Comprendre l'acceptation de l'IA par les développeurs](./12-ai-developer-acceptance/README.md)**
+
+Une auto-évaluation personnelle confrontée aux études GitHub, McKinsey, DORA et Stack Overflow.
+
+<sub>Chapitre 12 · Niveau Débutant · Bonus</sub>
+
+</td>
+<td width="50%" valign="top">
+
+<img src="assets/tracks/bonus-cover.png" width="100%" alt="">
+
+**📊 [Analyser sa consommation de tokens avec RTK et Tokscale](./14-token-consumption-analysis/README.md)**
+
+Une sortie de commandes compressée avec RTK, et un tableau de bord de consommation avec Tokscale.
+
+<sub>Chapitre 14 · Niveau Avancé · Bonus</sub>
+
+</td>
+</tr>
+<tr>
+<td width="50%" valign="top">
+
+<img src="assets/tracks/bonus-cover.png" width="100%" alt="">
+
+**🧠 [Rédiger des instructions IA efficaces et réutilisables](./15-prompt-engineering/README.md)**
+
+Des templates de prompts réutilisables et le principe d'une CLI générée depuis un serveur MCP.
+
+<sub>Chapitre 15 · Niveau Intermédiaire · Bonus</sub>
+
+</td>
+<td width="50%" valign="top">
+
+<img src="assets/tracks/bonus-cover.png" width="100%" alt="">
+
+**🌳 [Sessions parallèles avec les worktrees Git](./16-parallel-worktrees/README.md)**
+
+Deux sessions Copilot CLI isolées dans des worktrees Git, travaillant en parallèle sur le même dépôt.
+
+<sub>Chapitre 16 · Niveau Avancé · Bonus</sub>
+
+</td>
+</tr>
+<tr>
+<td width="50%" valign="top">
+
+<img src="assets/tracks/bonus-cover.png" width="100%" alt="">
+
+**🪙 [mcp2cli et le coût en tokens](./17-mcp2cli/README.md)** *(complète le Chapitre 07)*
+
+Interroger le serveur Context7 MCP directement depuis le terminal, sans passer par Copilot.
+
+<sub>Chapitre 17 · Niveau Avancé · Bonus</sub>
+
+</td>
+<td width="50%" valign="top">
+
+<img src="assets/tracks/bonus-cover.png" width="100%" alt="">
+
+**🔗 [Automatiser un workflow visuel avec n8n](./18-n8n-workflows/README.md)** *(nécessite Docker)*
+
+Un workflow n8n construit par Copilot CLI via MCP et les skills n8n officielles.
+
+<sub>Chapitre 18 · Niveau Avancé · Bonus</sub>
+
+</td>
+</tr>
+</table>
 
 ## 📖 Comment fonctionne ce cours
 
