@@ -108,7 +108,7 @@ Une représentation numérique du sens d'un texte (un vecteur), calculée par un
 
 ### Exclusion de contenu (content exclusion)
 
-Un réglage GitHub, configurable au niveau organisation ou dépôt, qui empêche certains fichiers d'alimenter les suggestions, le chat ou la revue de code Copilot. Limite importante : ce réglage ne couvre pas Copilot CLI ni le mode agent — un secret ne doit donc jamais reposer uniquement sur une exclusion de contenu pour rester protégé. Présenté au Chapitre 11.
+Un réglage GitHub, configurable au niveau organisation ou dépôt, qui empêche certains fichiers d'alimenter les suggestions, le chat ou la revue de code Copilot. Depuis septembre 2026, ce réglage est aussi disponible en disponibilité générale pour Copilot CLI et l'application Copilot, mais uniquement sur les plans Business et Enterprise (pas Free/Pro), avec des limites documentées (liens symboliques, systèmes de fichiers distants non couverts) — un secret ne doit donc jamais reposer uniquement sur une exclusion de contenu pour rester protégé. Présenté au Chapitre 11.
 
 ### Eza
 
