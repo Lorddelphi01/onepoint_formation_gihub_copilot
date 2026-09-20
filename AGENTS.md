@@ -29,6 +29,25 @@ Cours pour débutants enseignant GitHub Copilot CLI. Contenu pédagogique, pas u
 | `samples/src/` | **Extra optionnel** : anciens exemples JS/React d'une version précédente du cours |
 | `appendices/` | Documentation de référence complémentaire |
 
+## Pistes (tracks) du README
+
+Le catalogue de formation du `README.md` regroupe les 19 chapitres en 5
+pistes, calquées sur le découpage tronc-commun/bonus déjà en vigueur (pas de
+thématique inventée) :
+
+| Piste | Chapitres |
+|---|---|
+| 🧭 Fondamentaux | 00, 01, 02 |
+| ⚡ Flux de travail quotidiens | 03, 04 |
+| 🤖 Automatisation & agents IA | 05, 06, 07, 08 |
+| 🎓 Aller plus loin avec les commandes natives | 11, 13 |
+| 🎁 Modules bonus (optionnels) | 09, 10, 12, 14, 15, 16, 17, 18 |
+
+Chaque carte de chapitre affiche une durée estimée (lecture + pratique),
+calculée à partir du nombre de mots du `README.md` du chapitre divisé par 130
+mots/minute, arrondie aux 5 minutes les plus proches. Recalculer cette
+estimation si le contenu d'un chapitre change significativement.
+
 ## À faire
 
 - Garder des explications accessibles aux débutants ; expliquer le jargon IA/ML lorsqu'il est utilisé
@@ -42,6 +61,7 @@ Cours pour débutants enseignant GitHub Copilot CLI. Contenu pédagogique, pas u
 - Corriger les bugs dans `samples/book-app-buggy/` ou `samples/buggy-code/` — ils sont intentionnels
 - Ajouter des chapitres sans mettre à jour le tableau du cours dans README.md
 - Supposer que les lecteurs connaissent la terminologie IA/ML
+- Modifier le regroupement en pistes du README sans le répercuter dans la table « Pistes (tracks) du README » ci-dessus
 
 ## Build
 
