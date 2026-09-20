@@ -48,7 +48,7 @@ Un skill + proxy open source (`JuliusBrussee/caveman`) qui réduit la consommati
 
 ### Chronicle
 
-La commande `/chronicle` de Copilot CLI, qui analyse l'historique de vos sessions stockées localement et en tire des rapports d'activité (`standup`), des conseils personnalisés (`tips`, `cost-tips`), une recherche ciblée (`search`) ou des suggestions pour `.github/copilot-instructions.md` (`improve`). Présentée au Chapitre 13.
+La commande `/chronicle` de Copilot CLI, qui analyse l'historique de vos sessions stockées localement et en tire des rapports d'activité (`standup`), des conseils personnalisés (`tips`, `cost-tips`), une recherche ciblée (`search`), des suggestions pour `.github/copilot-instructions.md` (`improve`), des brouillons de skills réutilisables à partir de vos schémas de travail répétés (`skills review`, depuis la v1.0.66), ou une reconstruction de l'index local (`reindex`). Présentée au Chapitre 13.
 
 ### CIMD (Client ID Metadata Document)
 
