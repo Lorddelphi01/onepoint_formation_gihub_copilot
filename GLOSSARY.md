@@ -10,6 +10,10 @@ Référence rapide des termes techniques utilisés tout au long de ce cours. Ne 
 
 Une personnalité IA spécialisée avec une expertise dans un domaine (par exemple, frontend, sécurité). Défini dans des fichiers `.agent.md` avec un frontmatter YAML contenant au minimum un champ `description`.
 
+### Allow-tool / Deny-tool (`--allow-tool`, `--deny-tool`)
+
+Des drapeaux qui autorisent ou refusent des outils précis (ou des sous-commandes via des motifs, ex. `shell(git:*)`), plus fins que `--allow-all`. Le refus est toujours prioritaire sur l'autorisation. Les approbations sont sauvegardées dans `~/.copilot/permissions-config.json`. Présenté au Chapitre 09 comme entre-deux avant le sandboxing complet.
+
 ### API
 
 Application Programming Interface (interface de programmation d'application). Un moyen pour les programmes de communiquer entre eux.
@@ -282,7 +286,7 @@ Un outil tiers open source (`rtk-ai/rtk`), écrit en Rust, qui agit comme un pro
 
 ### Sandbox
 
-Un environnement d'exécution isolé (conteneur ou microVM) qui restreint l'accès de Copilot CLI au système de fichiers et au réseau, permettant d'utiliser `--allow-all`/`--yolo` sans surveillance humaine constante. Présenté au Chapitre 09 via Docker Sandboxes (`sbx run copilot`).
+Un environnement d'exécution isolé qui restreint l'accès de Copilot CLI au système de fichiers et au réseau, permettant d'utiliser `--allow-all`/`--yolo` sans surveillance humaine constante. Deux niveaux existent : le **sandboxing natif** de Copilot CLI (`/sandbox enable`, isolation au niveau processus sur votre OS, sans dépendance externe) et les **Docker Sandboxes** (`sbx run copilot`, isolation microVM complète avec Docker Desktop 4.50+). Présentés tous les deux au Chapitre 09.
 
 ### Session
 
