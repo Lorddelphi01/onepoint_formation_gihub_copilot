@@ -4,15 +4,15 @@ id: CopilotCLI-ROOT
 title: !translate GitHub Copilot CLI pour débutants
 description: !translate Apprends à démultiplier ton flux de travail de développement grâce à l'assistance en ligne de commande propulsée par l'IA, directement depuis ton terminal.
 audience: Developers / Students / Terminal users
-slug: copilot-cli-for-beginners
+slug: onepoint_formation_gihub_copilot
 weight: 0
 ---
 -->
 
-![GitHub Copilot CLI for Beginners](./assets/copilot-banner.png)
+![Onepoint - Formation GitHub Copilot CLI](./assets/copilot-banner.png)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)&ensp;
-[![Open project in GitHub Codespaces](https://img.shields.io/badge/Codespaces-Open-blue?style=flat-square&logo=github)](https://codespaces.new/github/copilot-cli-for-beginners?hide_repo_select=true&ref=main&quickstart=true)&ensp;
+[![Open project in GitHub Codespaces](https://img.shields.io/badge/Codespaces-Open-blue?style=flat-square&logo=github)](https://codespaces.new/Lorddelphi01/onepoint_formation_gihub_copilot?hide_repo_select=true&ref=main&quickstart=true)&ensp;
 [![Official Copilot CLI documentation](https://img.shields.io/badge/GitHub-CLI_Documentation-00a3ee?style=flat-square&logo=github)](https://docs.github.com/en/copilot/how-tos/copilot-cli)&ensp;
 [![Join AI Foundry Discord](https://img.shields.io/badge/Discord-AI_Community-blue?style=flat-square&logo=discord&color=5865f2&logoColor=fff)](https://aka.ms/foundry/discord)
 
@@ -292,9 +292,9 @@ Des extensions optionnelles : outils tiers, environnements isolés, et cas d'usa
 
 #### 🐳 [Environnements isolés](./09-isolated-environments/README.md)
 
-Dev container + sandbox Docker isolée pour automatiser avec `--allow-all` en toute confiance
+Dev container, sandboxing natif de Copilot CLI et sandbox Docker isolée pour automatiser avec `--allow-all` en toute confiance
 
-<sub>Chapitre 09 · ~20 min · Bonus · nécessite Docker</sub>
+<sub>Chapitre 09 · ~20 min · Bonus · Docker recommandé</sub>
 
 </td>
 <td width="50%" valign="top">
@@ -393,7 +393,7 @@ La **[référence des commandes GitHub Copilot CLI](https://docs.github.com/en/c
 
 **🐛 Tu as trouvé un bug ?**
 
-[Ouvre une issue](https://github.com/github/copilot-cli-for-beginners/issues)
+[Ouvre une issue](https://github.com/Lorddelphi01/onepoint_formation_gihub_copilot/issues)
 
 </td>
 <td width="50%" valign="top">

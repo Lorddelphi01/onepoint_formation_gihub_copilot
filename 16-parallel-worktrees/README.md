@@ -93,7 +93,7 @@ git worktree list
 ```
 
 ```
-/path/to/copilot-cli-for-beginners            a1b2c3d [main]
+/path/to/onepoint_formation_gihub_copilot     a1b2c3d [main]
 /path/to/book-app-hotfix                      a1b2c3d [fix/isbn-validation]
 ```
 
@@ -198,13 +198,15 @@ Ne forcez jamais la suppression sans avoir identifié précisément le worktree 
 
 ## Isoler une session Copilot CLI dans un worktree
 
-Vous pourriez toujours créer un worktree à la main puis y lancer `copilot` normalement — cela fonctionne très bien, et c'est le repli à connaître si votre version de Copilot CLI est trop ancienne. Mais depuis la version **v1.0.79**, Copilot CLI propose un raccourci intégré qui fait les deux étapes en une seule commande, directement depuis une session interactive :
+Vous pourriez toujours créer un worktree à la main puis y lancer `copilot` normalement — cela fonctionne très bien, et c'est le repli à connaître si l'une des commandes suivantes n'est pas reconnue par votre version de Copilot CLI (mettez à jour, ou vérifiez la liste avec `/help`). Mais depuis la version **v1.0.79**, Copilot CLI propose plusieurs raccourcis intégrés qui combinent la création du worktree et le démarrage d'une session dedans, directement depuis une session interactive.
+
+### `/worktree new` — une nouvelle conversation, en parallèle
 
 ```
 /worktree new
 ```
 
-Copilot crée un worktree isolé à partir du HEAD actuel, puis démarre une nouvelle conversation dans ce worktree — sans changer de branche dans votre répertoire de travail principal, exactement comme le résumait déjà l'encadré du [Chapitre 08](../08-putting-it-together/README.md) :
+Copilot crée un worktree isolé à partir du HEAD actuel, puis démarre une **nouvelle conversation** dans ce worktree — votre conversation actuelle et son dossier de travail restent inchangés, exactement comme le résumait déjà l'encadré du [Chapitre 08](../08-putting-it-together/README.md) :
 
 > 🛡️ *« `/worktree new` isole votre session de travail dans un nouveau worktree git — pratique pour paralléliser plusieurs tâches Copilot CLI (par exemple ce workflow et une correction de bug urgente) sans qu'elles ne se marchent dessus. »*
 
@@ -218,6 +220,49 @@ Comme pour toute nouvelle branche, le nouveau worktree part d'un point de dépar
 *Le résultat peut varier selon votre version de Copilot CLI et votre contexte : ne soyez pas surpris si votre sortie diffère de celle présentée ici.*
 
 </details>
+
+### `/worktree` et `/move` — basculer la session en cours
+
+Deux autres commandes créent un worktree et **basculent la session actuelle** dedans, au lieu d'en ouvrir une nouvelle. Elles se distinguent par ce qu'elles font de vos modifications non committées :
+
+```
+/worktree fix/isbn-validation
+```
+
+`/worktree [branche|description]` laisse vos modifications non committées **derrière**, dans le worktree d'origine, et poursuit votre conversation dans le nouveau worktree, sur une base propre.
+
+```
+/move fix/isbn-validation
+```
+
+`/move [branche|description]` fait l'inverse : il **emporte** vos modifications non committées avec vous dans le nouveau worktree. C'est la réponse directe au problème posé plus haut dans ce chapitre — plus besoin de `git stash` puis `git checkout` pour mettre une tâche de côté et en démarrer une autre, `/move` fait les deux en une commande.
+
+Les deux acceptent soit un nom de branche, soit une description de tâche en langage naturel (sur laquelle Copilot génère un nom de branche), soit aucun argument (génération automatique à partir de la conversation).
+
+### `/fork` et `/branch` — fourcher la conversation, sans nouveau worktree
+
+```
+/fork
+```
+
+`/fork [NOM]` (alias `/branch [NOM]`) fourche uniquement la **conversation** dans une nouvelle session — sans créer de worktree ni de nouveau dossier sur disque. Utile pour explorer deux pistes de discussion ou deux approches sur le même code, sans avoir besoin de l'isolation complète (et du coût disque) d'un worktree. Si vous n'avez pas besoin de faire tourner deux processus Copilot CLI en parallèle sur des fichiers différents, `/fork` suffit souvent et reste plus léger.
+
+### Depuis la ligne de commande, sans passer par une session interactive
+
+```bash
+copilot --worktree=fix-isbn-validation -p "Corrige la validation de l'ISBN dans samples/book-app-project/books.py"
+```
+
+Le flag `-w`/`--worktree[=NOM]` fait l'équivalent non-interactif de `/worktree new` : il crée (ou réutilise) un worktree isolé et y démarre la session, sans que vous ayez à taper de commande `/worktree` une fois Copilot lancé. Par défaut, Copilot range ces worktrees sous `<dépôt>.worktrees/<nom>` — un emplacement différent des dossiers `../book-app-hotfix` créés à la main plus haut dans ce chapitre ; `git worktree list` affiche les deux de la même façon, quel que soit l'endroit où ils se trouvent sur le disque.
+
+> ⚙️ **Faire partir un worktree d'une autre base que `HEAD`** — par défaut, `/worktree`, `/worktree new`, `/move` et `--worktree` créent leur branche à partir du commit actuellement extrait (`HEAD`) dans votre répertoire courant. Si vous êtes en plein milieu d'une feature branch et que vous voulez qu'un worktree de hotfix parte toujours de `main` plutôt que de votre branche en cours, réglez `worktreeBaseRef` sur `"defaultBranch"` dans la [configuration de Copilot CLI](https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-config-dir-reference).
+
+| Commande | Bascule la session en cours ? | Emporte les modifs non committées ? | Nouveau dossier sur disque ? |
+|---|---|---|---|
+| `/worktree new` | Non (nouvelle conversation en parallèle) | — (reste dans l'ancien worktree) | Oui |
+| `/worktree` | Oui | Non, les laisse derrière | Oui |
+| `/move` | Oui | Oui | Oui |
+| `/fork` / `/branch` | Oui (nouvelle conversation) | — (aucun fichier déplacé) | Non |
 
 ---
 
@@ -245,11 +290,46 @@ copilot -p "Dans samples/book-app-project/book_app.py, ajoute une commande find-
 
 Les deux sessions Copilot CLI travaillent sur le même historique Git, dans deux dossiers distincts, sans jamais se gêner. Vous pouvez suivre l'avancement de l'une pendant que l'autre tourne encore.
 
-> 💡 **Une autre manière de paralléliser : `/fleet`** — Le [Chapitre 08](../08-putting-it-together/README.md) mentionne aussi `/fleet`, qui laisse Copilot décomposer *une seule* tâche complexe en sous-tâches indépendantes, exécutées par des sous-agents en parallèle ([documentation officielle](https://docs.github.com/copilot/concepts/agents/copilot-cli/fleet)). Les deux approches sont complémentaires plutôt que concurrentes : les worktrees vous laissent orchestrer vous-même plusieurs tâches *distinctes* (comme dans l'exemple ci-dessus) ; `/fleet` laisse Copilot orchestrer lui-même la décomposition d'*une* tâche en sous-parties.
+> 💡 **Une autre manière de paralléliser : `/fleet`** — Le [Chapitre 08](../08-putting-it-together/README.md) mentionne aussi `/fleet`, qui laisse Copilot décomposer *une seule* tâche complexe en sous-tâches indépendantes, exécutées par des sous-agents en parallèle ([documentation officielle](https://docs.github.com/en/copilot/concepts/agents/copilot-cli/fleet)). Les deux approches sont complémentaires plutôt que concurrentes : les worktrees vous laissent orchestrer vous-même plusieurs tâches *distinctes* (comme dans l'exemple ci-dessus) ; `/fleet` laisse Copilot orchestrer lui-même la décomposition d'*une* tâche en sous-parties.
+
+### Ce qu'un worktree ne duplique pas
+
+Un worktree partage l'historique Git, mais **pas** votre environnement d'exécution : chaque nouveau dossier repart sans dépendances installées. Pour `samples/book-app-project/` (Python), recréez ou réutilisez un environnement virtuel dans chaque worktree avant de lancer les tests :
+
+```bash
+cd ../book-app-hotfix
+python -m venv .venv && source .venv/bin/activate
+pip install -r samples/book-app-project/requirements.txt 2>/dev/null || true
+python -m pytest samples/book-app-project/tests/
+```
+
+Si `pytest` échoue immédiatement après la création d'un worktree, pensez d'abord à cette étape avant de soupçonner le code généré. Pour la même raison, deux serveurs de développement lancés depuis deux worktrees différents peuvent entrer en conflit s'ils écoutent tous les deux sur le même port par défaut — attribuez-leur des ports distincts si vous en lancez plusieurs en même temps.
+
+Un raccourci non-interactif équivalent au workflow manuel ci-dessus, cette fois avec le flag `--worktree` :
+
+```bash
+copilot --worktree=feature-find-by-year -p "Dans samples/book-app-project/book_app.py, ajoute une commande find-by-year qui liste les livres publiés une année donnée. Ajoute un test."
+```
+
+Enfin, si une session Copilot CLI tourne encore dans un worktree, verrouillez-le pour éviter qu'un nettoyage manuel — le vôtre ou celui d'un script automatisé comme celui du devoir bonus plus bas — ne le supprime par erreur pendant qu'il travaille :
+
+```bash
+git worktree lock ../book-app-hotfix --reason "Session Copilot CLI en cours"
+# ... une fois la session terminée et le travail committé ...
+git worktree unlock ../book-app-hotfix
+```
 
 ---
 
 ## Fusionner et nettoyer
+
+Avant de fusionner, vérifiez ce que la session Copilot CLI a réellement modifié — un agent qui corrige une fonction touche parfois aussi, sans qu'on le lui ait demandé, un fichier voisin :
+
+```bash
+git diff main...fix/isbn-validation
+```
+
+(ou `/diff` directement dans une session Copilot CLI, qui bascule automatiquement sur ce même diff de branche dès que votre répertoire de travail est propre). Ne fusionnez pas tant que le diff contient des changements que vous n'attendiez pas.
 
 Une fois le travail d'un worktree terminé et validé, revenez au dépôt principal pour l'intégrer :
 
@@ -261,6 +341,8 @@ git push -u origin feature/find-by-year
 # Fusionnez comme vous le feriez pour n'importe quelle branche
 # (localement avec `git merge`, ou via une pull request GitHub)
 ```
+
+> 💡 **Ou laissez Copilot CLI gérer la pull request** — `/pr create` ouvre une pull request pour la branche courante directement depuis la session ; `/pr auto` la pousse jusqu'au vert (CI passante) puis s'arrête, et `/pr automerge` (alias `/agentmerge`) la pousse jusqu'au vert puis la fusionne. Voir la [documentation officielle sur la gestion des pull requests](https://docs.github.com/en/copilot/how-tos/copilot-cli/use-copilot-cli/manage-pull-requests).
 
 Puis nettoyez les worktrees devenus inutiles :
 
@@ -346,6 +428,8 @@ git worktree remove "$path"
 | `/worktree new` inconnue ou ignorée par Copilot CLI | Version de Copilot CLI antérieure à v1.0.79 | Mettez à jour avec `npm update -g @github/copilot` (ou l'équivalent de votre gestionnaire), ou utilisez `git worktree add` manuellement en attendant |
 | `fatal: '<chemin>' already exists` | Un dossier (ou un ancien worktree) du même nom existe déjà à cet endroit | Choisissez un autre chemin, ou supprimez l'ancien worktree avec `git worktree remove` avant de recréer le vôtre |
 | `git worktree remove` refuse de supprimer | Le worktree contient des modifications non committées ou des fichiers non suivis | Committez ou mettez de côté vos changements, ou forcez avec `git worktree remove -f` si vous êtes sûr de vouloir les perdre |
+| `git worktree remove` échoue avec une erreur de verrou | Le worktree a été verrouillé avec `git worktree lock` | Déverrouillez-le d'abord avec `git worktree unlock <chemin>`, puis relancez la suppression |
+| `pytest` (ou tout autre test) échoue juste après la création d'un worktree | Le nouveau dossier n'a pas ses dépendances installées (venv/`node_modules` non partagés entre worktrees) | Recréez l'environnement virtuel et réinstallez les dépendances dans le nouveau worktree avant de relancer les tests |
 | Vous ne savez plus quelle fenêtre correspond à quel worktree | Plusieurs sessions ouvertes sans repère visuel | Affichez la branche courante dans votre invite de shell (`git branch --show-current`), ou nommez vos onglets/panes de terminal explicitement |
 
 </details>
@@ -354,19 +438,23 @@ git worktree remove "$path"
 
 ## Résumé
 
-Vous savez maintenant isoler plusieurs sessions Copilot CLI dans des worktrees Git indépendants, pour mener de front des tâches distinctes sur le même dépôt sans qu'elles n'interfèrent entre elles — que vous les créiez à la main avec `git worktree add`, ou en un raccourci avec `/worktree new`.
+Vous savez maintenant isoler plusieurs sessions Copilot CLI dans des worktrees Git indépendants, pour mener de front des tâches distinctes sur le même dépôt sans qu'elles n'interfèrent entre elles — que vous les créiez à la main avec `git worktree add`, ou avec l'un des raccourcis intégrés (`/worktree new`, `/worktree`, `/move`, `--worktree`).
 
 ### 🔑 Points clés à retenir
 
 1. **Un worktree, une branche, un dossier** : vous ne pouvez pas extraire la même branche dans deux worktrees en même temps
 2. **L'historique Git est partagé, pas dupliqué** : contrairement à un second clone, aucune synchronisation à gérer entre worktrees
-3. **`/worktree new` automatise `git worktree add` + le démarrage d'une session Copilot CLI** — mais repose sur les mêmes commandes Git natives que vous pouvez toujours utiliser directement
-4. **Worktrees et `/fleet` sont complémentaires** : les premiers parallélisent des tâches distinctes que vous orchestrez ; `/fleet` décompose une seule tâche en sous-parties orchestrées par Copilot
+3. **Quatre commandes Copilot CLI, quatre nuances** : `/worktree new` ouvre une nouvelle conversation en parallèle ; `/worktree` bascule la session en cours en laissant les modifications non committées derrière ; `/move` bascule en les emportant ; `/fork`/`/branch` fourche la conversation seule, sans nouveau worktree — toutes reposent sur les mêmes commandes Git natives que vous pouvez toujours utiliser directement
+4. **Un worktree ne duplique pas votre environnement** : réinstallez les dépendances (venv, `node_modules`…) dans chaque nouveau worktree, et verrouillez-le (`git worktree lock`) pendant qu'une session y tourne
+5. **Worktrees et `/fleet` sont complémentaires** : les premiers parallélisent des tâches distinctes que vous orchestrez ; `/fleet` décompose une seule tâche en sous-parties orchestrées par Copilot
 
 ## 📋 Référence rapide
 
 - [Documentation officielle `git worktree`](https://git-scm.com/docs/git-worktree)
-- [Documentation officielle `/fleet`](https://docs.github.com/copilot/concepts/agents/copilot-cli/fleet)
+- [Référence complète des commandes Copilot CLI](https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference) — `/worktree`, `/worktree new`, `/move`, `/fork`, `/branch`, `--worktree`
+- [Configuration de Copilot CLI](https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-config-dir-reference) — dont le paramètre `worktreeBaseRef`
+- [Gérer les pull requests avec `/pr`](https://docs.github.com/en/copilot/how-tos/copilot-cli/use-copilot-cli/manage-pull-requests)
+- [Documentation officielle `/fleet`](https://docs.github.com/en/copilot/concepts/agents/copilot-cli/fleet)
 - [Utiliser Copilot CLI — vue d'ensemble des options](https://docs.github.com/en/copilot/how-tos/copilot-cli/use-copilot-cli/overview)
 - [Chapitre 08 : Tout assembler](../08-putting-it-together/README.md) — première mention de `/worktree new` et `/fleet`
 

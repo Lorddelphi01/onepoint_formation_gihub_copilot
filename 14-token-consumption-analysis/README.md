@@ -19,13 +19,14 @@ Au [Chapitre 13](../13-chronicle-session-insights/README.md), `/chronicle cost-t
 
 À la fin de ce chapitre, vous serez capable de :
 
+- Expliquer ce que sont les crédits IA GitHub et distinguer facturation officielle et estimations d'outils tiers
 - Expliquer la différence entre réduire la consommation de tokens à la source (RTK) et la mesurer a posteriori (Tokscale)
 - Installer RTK et le connecter à Copilot CLI
-- Lire un rapport `rtk gain` et l'interpréter correctement
+- Lire un rapport `rtk gain` et l'interpréter avec esprit critique
 - Activer l'export OpenTelemetry local de Copilot CLI
 - Installer Tokscale et lire un rapport de consommation par session
 
-> ⏱️ **Durée estimée : ~40 minutes** (10 min de lecture + 30 min de pratique, installation de deux outils tiers comprise)
+> ⏱️ **Durée estimée : ~45 minutes** (15 min de lecture + 30 min de pratique, installation de deux outils tiers comprise)
 
 ---
 
@@ -53,14 +54,59 @@ Les deux outils ne sont pas concurrents : RTK agit en amont (moins de bruit envo
 
 ---
 
+## Les crédits IA GitHub : ce que mesure vraiment votre facture
+
+<a id="les-crédits-ia-github-ce-que-mesure-vraiment-votre-facture"></a>
+
+Depuis le 1er juin 2026, GitHub a remplacé son ancienne facturation par « requêtes premium » par une **facturation à l'usage** : le coût de chaque interaction dépend du **modèle utilisé** et du **volume de tokens consommé** (entrée + sortie + cache), converti en **crédits IA GitHub** — 1 crédit IA = 0,01 $. C'est ce chiffre-là, et lui seul, qui constitue votre facture réelle ; RTK et Tokscale n'en donnent chacun qu'une approximation, comme vous le verrez plus loin dans ce chapitre.
+
+Chaque forfait inclut une allocation mensuelle de crédits IA :
+
+| Forfait | Allocation mensuelle |
+|---|---|
+| Copilot Free | Complétions de code uniquement (pas de crédits IA) |
+| Copilot Pro | 1 500 crédits IA |
+| Copilot Pro+ | 7 000 crédits IA |
+| Copilot Max | 20 000 crédits IA |
+
+> ⚠️ Ces chiffres datent du 20/09/2026 et peuvent évoluer, en particulier pour les forfaits Business/Enterprise non détaillés ici — vérifiez toujours l'allocation actuelle de votre forfait dans la [documentation officielle de facturation](https://docs.github.com/copilot/concepts/billing/usage-based-billing-for-individuals) avant d'en tirer une conclusion.
+
+Une fois l'allocation incluse épuisée, vous pouvez continuer en définissant un budget de dépense supplémentaire dans les paramètres de facturation GitHub.
+
+### Piloter son budget nativement : /usage, /context, /limits
+
+<a id="piloter-son-budget-nativement"></a>
+
+Avant d'installer le moindre outil tiers, Copilot CLI expose déjà des commandes natives pour surveiller et plafonner cette consommation :
+
+- `/usage` (vu au [Chapitre 02](../02-setup-and-first-steps/README.md)) affiche les crédits IA consommés dans la session en cours
+- `/context` (vu au [Chapitre 03](../03-context-conversations/README.md)) détaille la répartition du contexte envoyé au modèle (prompt système, instructions personnalisées, outils, messages, espace libre)
+
+Depuis mi-2026, une troisième commande native permet de **plafonner la dépense** d'une session, sans aucun outil tiers :
+
+```bash
+# En session interactive : consulter, définir ou retirer un plafond
+/limits
+
+# En mode non interactif (scripts, CI) : arrêter la session dès que le plafond est atteint
+copilot --max-ai-credits=500 -p "Corrige les tests qui échouent"
+```
+
+> 💡 **Plafond « souple »** : la limite est vérifiée entre deux réponses, pas pendant — une réponse déjà commencée se termine avant l'arrêt, donc la consommation réelle peut légèrement dépasser le chiffre fixé. Elle s'applique à toute la session (appels modèle, sous-agents, compaction comprise) et complète votre budget global GitHub sans le remplacer. Nécessite Copilot CLI 1.0.66 ou une version plus récente — mettez à jour avec `copilot update` si la commande `/limits` n'apparaît pas.
+
+---
+
 ## Je veux... | Aller à...
 
 | Je veux... | Aller à |
 |---|---|
+| Comprendre le nouveau système de crédits IA GitHub | [Les crédits IA GitHub](#les-crédits-ia-github-ce-que-mesure-vraiment-votre-facture) |
+| Plafonner mes dépenses nativement, sans outil tiers | [Piloter son budget nativement](#piloter-son-budget-nativement) |
 | Comparer une commande avant/après RTK | [Comparer une commande avant/après RTK](#comparer-une-commande-avantaprès-rtk) |
 | Réduire la sortie de mes commandes | [RTK — réduire la consommation à la source](#rtk-réduire-la-consommation-à-la-source) |
 | Distinguer les types de tokens | [Trois notions de « tokens » à ne pas confondre](#trois-notions-de--tokens--à-ne-pas-confondre) |
 | Voir mes économies de tokens | [Lire un rapport rtk gain](#lire-un-rapport-rtk-gain) |
+| Vérifier si les économies annoncées sont réelles | [Ce que révèlent des benchmarks indépendants](#ce-que-révèlent-des-benchmarks-indépendants) |
 | Activer l'export de données Copilot CLI | [Activer l'export OpenTelemetry de Copilot CLI](#activer-lexport-opentelemetry-de-copilot-cli) |
 | Visualiser ma consommation dans le temps | [Tokscale — mesurer la consommation après coup](#tokscale-mesurer-la-consommation-après-coup) |
 
@@ -124,15 +170,17 @@ Le contenu affiché (la liste des fichiers modifiés) reste identique dans les d
 
 ### Connecter RTK à Copilot CLI
 
-RTK propose une commande d'installation automatique qui met en place un hook de réécriture transparente des commandes :
+RTK propose une commande d'installation automatique dédiée à Copilot CLI :
 
 ```bash
-rtk init -g
+rtk init -g --copilot
 ```
 
-Redémarrez ensuite votre session Copilot CLI. Vos commandes verbeuses (`git status`, `npm test`...) sont désormais automatiquement préfixées par `rtk` sans que vous ayez besoin d'y penser.
+Redémarrez ensuite votre session Copilot CLI. Le mécanisme diffère ici de celui utilisé avec d'autres agents (Claude Code, Gemini CLI...) : Copilot CLI ne permet pas la réécriture silencieuse d'une commande avant son exécution. RTK installe donc un hook « *PreToolUse deny-with-suggestion* » — quand vous (ou l'agent) lancez une commande verbeuse, RTK bloque l'appel brut et suggère la version compressée équivalente, que Copilot relance alors lui-même. Le résultat final est le même (sortie compressée), mais vous verrez passer une étape de suggestion supplémentaire, propre à cette limitation du CLI.
 
 > 💡 **Méthode alternative sans hook** : le projet [rtk-for-copilot](https://github.com/Martin-Sciarrillo/rtk-for-copilot) propose une approche plus simple mais manuelle : copier un fichier `copilot-instructions.md` tout fait dans `~/.copilot/copilot-instructions.md` (ou l'ajouter au vôtre s'il existe déjà, voir [Chapitre 05](../05-agents-custom-instructions/README.md)). Ce fichier contient des instructions en langage naturel qui indiquent à Copilot CLI de préfixer lui-même les commandes concernées par `rtk` — aucun hook, aucune extension.
+
+> 🔎 **RTK ne compresse que la sortie shell.** Pour un outil qui va plus loin (style de communication de l'agent, logs, diffs, résultats de recherche web), voir **Caveman**, présenté à titre de comparaison au [Chapitre 01](../01-quick-start/README.md) — les deux outils sont complémentaires, pas interchangeables.
 
 ---
 
@@ -152,12 +200,17 @@ rtk gain --history
 rtk gain --graph
 # Visualisation ASCII des économies dans le temps
 
+rtk gain --daily
+# Répartition des économies jour par jour
+
 rtk discover
 # Repère les commandes fréquentes que vous n'avez pas encore optimisées avec RTK
 
 rtk proxy <commande>
 # Exécute n'importe quelle commande en passthrough brut, tout en suivant ses statistiques
 ```
+
+> 💡 **Pour aller plus loin** : `-u`/`--ultra-compact` (option globale) compresse encore davantage la sortie en s'appuyant sur des icônes ASCII, au prix d'une lisibilité réduite pour un humain. En CI/CD, `rtk init -g --auto-patch` installe le hook sans interaction, utile pour provisionner une image ou un conteneur automatiquement.
 
 Exemple d'ordre de grandeur documenté par le projet RTK lui-même :
 
@@ -178,10 +231,11 @@ Ce chapitre manipule trois mesures différentes qui portent toutes le nom de « 
 | Notion | Ce qu'elle mesure | Outil |
 |---|---|---|
 | Tokens de **sortie shell** | Le volume de caractères produit par une commande bash avant compression | RTK (`rtk gain`) |
-| Tokens de **contexte Copilot** | Tout ce qui est réellement envoyé au modèle pour une requête : sortie de commandes, fichiers ouverts, historique de conversation, instructions personnalisées | Aucun outil dédié dans ce chapitre — géré par Copilot CLI lui-même |
-| Tokens **facturés (métriques Tokscale)** | L'estimation de coût agrégée à partir des journaux OpenTelemetry d'une session complète (entrée + sortie modèle) | Tokscale |
+| Tokens de **contexte Copilot** | Tout ce qui est réellement envoyé au modèle pour une requête : sortie de commandes, fichiers ouverts, historique de conversation, instructions personnalisées | `/context`, natif à Copilot CLI ([Chapitre 03](../03-context-conversations/README.md)) |
+| Tokens **estimés (métriques Tokscale)** | Une estimation de coût agrégée à partir des journaux OpenTelemetry d'une session complète, calculée avec des tables de prix tierces | Tokscale |
+| **Crédits IA facturés** | Le seul chiffre qui compte réellement sur votre facture : calculé officiellement par GitHub à partir du modèle et des tokens consommés | `/usage`, natif à Copilot CLI (voir [ci-dessus](#les-crédits-ia-github-ce-que-mesure-vraiment-votre-facture)) |
 
-Réduire les tokens de sortie shell (RTK) diminue une partie des tokens de contexte, mais ne les élimine pas : le contexte inclut aussi vos fichiers, votre historique et les instructions système. C'est pourquoi une baisse de `rtk gain` ne se traduit pas mécaniquement en une baisse identique dans Tokscale.
+Réduire les tokens de sortie shell (RTK) diminue une partie des tokens de contexte, mais ne les élimine pas : le contexte inclut aussi vos fichiers, votre historique et les instructions système. C'est pourquoi une baisse de `rtk gain` ne se traduit pas mécaniquement en une baisse identique dans Tokscale — ni, surtout, dans vos crédits IA réellement facturés.
 
 <details>
 <summary>🎬 Voyez-le en action !</summary>
@@ -191,6 +245,16 @@ Réduire les tokens de sortie shell (RTK) diminue une partie des tokens de conte
 *Le résultat peut varier selon votre modèle, vos outils et votre contexte : ne soyez pas surpris si votre sortie diffère de celle présentée ici — les pourcentages d'économie dépendent directement des commandes que vous avez exécutées.*
 
 </details>
+
+### 🔬 Ce que révèlent des benchmarks indépendants
+
+<a id="ce-que-révèlent-des-benchmarks-indépendants"></a>
+
+L'avertissement ci-dessus (« `rtk gain` n'est pas votre facture ») n'est pas juste une précaution rhétorique : un [benchmark indépendant publié par JetBrains](https://blog.jetbrains.com/ai/2026/07/rtk-claude-code-token-savings/) l'a mesuré concrètement. Sur 86 tâches et 425 essais facturés (Claude Code, avec et sans RTK v0.43.0), RTK annonçait dans ses propres statistiques 96,2 millions de tokens économisés — 99,8 % de tout ce qu'il touchait. Pourtant, **la facture réelle mesurée a augmenté de 7,6 % en médiane** en effort de raisonnement faible (p=0,004), et est restée neutre (+0,1 %) en effort élevé, sans différence de qualité de résultat.
+
+La cause : RTK compte comme référence la sortie brute d'une commande, alors que l'agent la tronque déjà de son côté avant de la lire en entier, et les relectures depuis le cache — bien moins coûteuses — ne sont pas comptées à leur vrai prix. Un [benchmark comparable sur Caveman](https://blog.jetbrains.com/ai/2026/07/speak-to-ai-agents-like-cavemen-tosave-tokens/) (l'outil de compression présenté au [Chapitre 01](../01-quick-start/README.md)) a trouvé le même écart : 65 % d'économie annoncée contre 8,5 % réellement mesurée, un gain de coût souvent « effacé par la variance d'un essai à l'autre ».
+
+> 💡 **La leçon à retenir** : les statistiques auto-rapportées par un outil décrivent son propre calcul de référence, pas votre facture réelle. Avant de conclure qu'un outil vous fait économiser de l'argent, croisez toujours son rapport avec une mesure officielle — `/usage`, natif à Copilot CLI.
 
 ---
 
@@ -222,7 +286,7 @@ Aucune installation globale n'est nécessaire :
 
 ```bash
 npx tokscale@latest
-# Lance l'interface TUI interactive
+# Lance l'interface TUI interactive (identique à `tokscale tui`, vue au Chapitre 01)
 
 npx tokscale@latest --light
 # Sortie en tableau simple, sans interface interactive
@@ -232,7 +296,15 @@ npx tokscale@latest models
 
 npx tokscale@latest --json
 # Export JSON, utile pour scripter vos propres rapports
+
+npx tokscale@latest --client copilot
+# Filtre l'affichage sur les seules sessions Copilot CLI
+
+npx tokscale@latest --week
+# Filtre sur la semaine en cours (aussi disponibles : --month, --year, --since/--until)
 ```
+
+> 💡 Déjà installé Tokscale au [Chapitre 01](../01-quick-start/README.md) ? Pas besoin de le réinstaller : `npx tokscale@latest` reste la même commande, seuls les flags utilisés ici diffèrent de ceux présentés là-bas.
 
 Une fois lancé, Tokscale doit détecter au moins une session Copilot CLI grâce au fichier `.jsonl` produit à l'étape précédente, avec une estimation de tokens et de coût associée.
 
@@ -248,6 +320,8 @@ Une fois lancé, Tokscale doit détecter au moins une session Copilot CLI grâce
 | Ce que ça fait | Suggère des pistes en langage naturel | Réduit la sortie envoyée au modèle | Visualise la consommation dans le temps |
 | Agit sur | Vos habitudes de prompt | Le volume de sortie des commandes | Rien — mesure seulement |
 | Prérequis | Aucun (natif Copilot CLI) | Installation de RTK | Export OTel activé |
+
+> 🔎 Ces trois outils ciblent la sortie de commandes shell et les habitudes de session. Si vos serveurs MCP ([Chapitre 07](../07-mcp-servers/README.md)) représentent une part importante de votre contexte, voir le [Chapitre 17](../17-mcp2cli/README.md) : `mcp2cli` réduit spécifiquement le coût en tokens des schémas et résultats d'outils MCP, un angle différent de celui couvert ici.
 
 ---
 
@@ -296,7 +370,7 @@ Consignez vos résultats mesurés dans un tableau comme celui-ci (remplacez les 
 | Erreur | Ce qui se passe | Solution |
 |---|---|---|
 | `rtk gain` affiche « command not found » | Un autre paquet nommé `rtk` est installé, ou le binaire n'est pas dans le `PATH` | Vérifiez `which rtk` ; désinstallez l'autre paquet ou utilisez le chemin complet du binaire RTK |
-| Les commandes ne sont pas automatiquement préfixées par `rtk` après `rtk init -g` | La session Copilot CLI en cours a démarré avant l'installation du hook | Fermez et redémarrez complètement Copilot CLI |
+| RTK ne suggère jamais de version compressée après `rtk init -g --copilot` | La session Copilot CLI en cours a démarré avant l'installation du hook | Fermez et redémarrez complètement Copilot CLI |
 | Tokscale affiche 0 message pour Copilot CLI | Aucun fichier n'existe encore dans le chemin indiqué par `COPILOT_OTEL_FILE_EXPORTER_PATH` | Vérifiez que `COPILOT_OTEL_ENABLED=true` était bien exporté *avant* de lancer `copilot`, puis `ls ~/.copilot/otel/` |
 | `rtk gain` affiche des économies très faibles malgré RTK actif | Les commandes exécutées produisent naturellement peu de sortie (elles n'ont donc pas besoin de compression) | Normal : essayez sur une commande volontairement verbeuse (`git log`, une suite de tests complète) pour voir l'effet |
 
@@ -315,15 +389,34 @@ Vous disposez maintenant de deux outils complémentaires pour piloter votre cons
 3. `rtk gain` mesure la réduction de la sortie bash, pas directement votre facture finale — à interpréter comme une tendance
 4. Tokscale dépend de l'export OpenTelemetry local de Copilot CLI (`COPILOT_OTEL_ENABLED`, `COPILOT_OTEL_EXPORTER_TYPE`, `COPILOT_OTEL_FILE_EXPORTER_PATH`), désactivé par défaut
 5. `/chronicle cost-tips` (Chapitre 13), RTK et Tokscale se complètent : conseils en langage naturel, réduction automatique, mesure précise
+6. Depuis 2026, GitHub facture à l'usage en **crédits IA** (1 crédit = 0,01 $) ; un plafond natif existe (`/limits`, `--max-ai-credits`, Copilot CLI ≥ 1.0.66) et complète RTK/Tokscale sans les remplacer
+7. Les économies auto-rapportées par un outil ne prouvent pas une économie réelle sur la facture — un benchmark indépendant a mesuré l'inverse pour RTK dans certaines conditions ; croisez toujours avec `/usage`
 
 ---
 
 ## 📋 Référence rapide
 
+**Documentation officielle GitHub :**
+
+- [Facturation à l'usage et crédits IA](https://docs.github.com/copilot/concepts/billing/usage-based-billing-for-individuals) — définition des crédits IA, allocations par forfait
+- [Changelog : plafonds de crédits IA par session](https://github.blog/changelog/2026-07-01-set-ai-credit-session-limits-in-copilot-cli-and-sdk/) — `/limits` et `--max-ai-credits`
+- [Gestion du contexte dans Copilot CLI](https://docs.github.com/en/copilot/concepts/agents/copilot-cli/context-management) — `/context`, `/compact`, compaction automatique
+
+**Outils tiers :**
+
 - [github.com/rtk-ai/rtk](https://github.com/rtk-ai/rtk) — dépôt officiel de RTK
 - [github.com/Martin-Sciarrillo/rtk-for-copilot](https://github.com/Martin-Sciarrillo/rtk-for-copilot) — intégration RTK ↔ Copilot CLI via `copilot-instructions.md`
 - [github.com/junhoyeo/tokscale](https://github.com/junhoyeo/tokscale) — dépôt officiel de Tokscale
+
+**Benchmarks tiers indépendants** (ni GitHub, ni RTK, ni Caveman) :
+
+- [JetBrains — RTK sur Claude Code : économies annoncées vs facture réelle](https://blog.jetbrains.com/ai/2026/07/rtk-claude-code-token-savings/)
+- [JetBrains — Caveman : 65 % annoncés vs 8,5 % mesurés](https://blog.jetbrains.com/ai/2026/07/speak-to-ai-agents-like-cavemen-tosave-tokens/)
+
+**Chapitres du cours :**
+
 - [Chapitre 13 : /chronicle](../13-chronicle-session-insights/README.md) — pour `/chronicle cost-tips`, le premier niveau d'analyse, natif à Copilot CLI
+- [Chapitre 17 : mcp2cli](../17-mcp2cli/README.md) — le coût en tokens spécifique aux serveurs MCP
 
 ---
 

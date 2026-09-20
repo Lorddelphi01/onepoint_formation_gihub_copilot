@@ -10,6 +10,10 @@ Référence rapide des termes techniques utilisés tout au long de ce cours. Ne 
 
 Une personnalité IA spécialisée avec une expertise dans un domaine (par exemple, frontend, sécurité). Défini dans des fichiers `.agent.md` avec un frontmatter YAML contenant au minimum un champ `description`.
 
+### Allow-tool / Deny-tool (`--allow-tool`, `--deny-tool`)
+
+Des drapeaux qui autorisent ou refusent des outils précis (ou des sous-commandes via des motifs, ex. `shell(git:*)`), plus fins que `--allow-all`. Le refus est toujours prioritaire sur l'autorisation. Les approbations sont sauvegardées dans `~/.copilot/permissions-config.json`. Présenté au Chapitre 09 comme entre-deux avant le sandboxing complet.
+
 ### API
 
 Application Programming Interface (interface de programmation d'application). Un moyen pour les programmes de communiquer entre eux.
@@ -48,7 +52,7 @@ Un skill + proxy open source (`JuliusBrussee/caveman`) qui réduit la consommati
 
 ### Chronicle
 
-La commande `/chronicle` de Copilot CLI, qui analyse l'historique de vos sessions stockées localement et en tire des rapports d'activité (`standup`), des conseils personnalisés (`tips`, `cost-tips`), une recherche ciblée (`search`) ou des suggestions pour `.github/copilot-instructions.md` (`improve`). Présentée au Chapitre 13.
+La commande `/chronicle` de Copilot CLI, qui analyse l'historique de vos sessions stockées localement et en tire des rapports d'activité (`standup`), des conseils personnalisés (`tips`, `cost-tips`), une recherche ciblée (`search`), des suggestions pour `.github/copilot-instructions.md` (`improve`), des brouillons de skills réutilisables à partir de vos schémas de travail répétés (`skills review`, depuis la v1.0.66), ou une reconstruction de l'index local (`reindex`). Présentée au Chapitre 13.
 
 ### CIMD (Client ID Metadata Document)
 
@@ -74,6 +78,10 @@ Une construction Python utilisant l'instruction `with` qui gère automatiquement
 
 Un format de message de commit qui suit une structure standardisée : `type(scope): description`. Les types courants incluent `feat` (nouvelle fonctionnalité), `fix` (correction de bug), `docs` (documentation), `refactor`, et `test`. Exemple : `feat(auth): add password reset flow`.
 
+### Crédits IA (AI Credits)
+
+L'unité de facturation à l'usage de GitHub Copilot depuis le 1er juin 2026 : 1 crédit IA = 0,01 $, consommé selon le modèle utilisé et le volume de tokens (entrée, sortie, cache) d'une interaction. Remplace l'ancien modèle de « requêtes premium ». Consultables en session via `/usage`, plafonnables via `/limits` ou le flag `--max-ai-credits`. Présenté au Chapitre 14.
+
 ### CVE (Common Vulnerabilities and Exposures)
 
 Un identifiant public référençant une vulnérabilité de sécurité connue et documentée (par exemple dans une dépendance publiée). Détecté par des outils comme GitHub Dependabot, pas par la commande `/security-review` de Copilot CLI qui se concentre sur des schémas de code à risque plutôt que sur des correspondances avec des bases de CVE. Présenté au Chapitre 11.
@@ -90,6 +98,14 @@ Un décorateur Python (`@dataclass`) qui génère automatiquement `__init__`, `_
 
 Un environnement de développement décrit par un fichier `devcontainer.json` : image Docker, outils préinstallés, extensions VS Code. Garantit que toute l'équipe travaille dans un environnement identique, utilisé par GitHub Codespaces et l'extension VS Code Dev Containers. Présenté au Chapitre 09.
 
+### Diff (mode revue interactif)
+
+La commande `/diff` de Copilot CLI, qui ouvre une revue interactive des changements directement dans le terminal (bascule automatiquement sur le diff de branche quand l'arbre de travail est propre). Permet de commenter une ligne précise (`c`), d'afficher un résumé des commentaires (`s`), puis de les soumettre à Copilot (`Entrée`) — une alternative plus riche à `git diff` seul pour demander des ajustements ciblés avant de committer. Présenté au Chapitre 08.
+
+### Dockerfile
+
+Un fichier texte qui décrit, instruction par instruction (`FROM`, `RUN`, `COPY`, `CMD`...), comment construire une image Docker de façon reproductible. Permet d'embarquer des outils (comme GitHub CLI ou une stack terminal complète) dans une image réutilisable comme base de dev container, de sandbox, ou en CI. Présenté au Chapitre 09.
+
 ### DORA (DevOps Research and Assessment)
 
 Un référentiel de recherche indépendant (adossé à Google Cloud) qui publie chaque année un état des lieux des pratiques DevOps et, depuis 2024, de l'impact de l'IA sur le développement logiciel. Sa thèse centrale sur l'IA : elle agit comme un amplificateur des pratiques d'ingénierie déjà en place, pas comme un facteur de progrès universel. Présenté au Chapitre 12.
@@ -102,9 +118,13 @@ Un référentiel de recherche indépendant (adossé à Google Cloud) qui publie 
 
 Une représentation numérique du sens d'un texte (un vecteur), calculée par un modèle et utilisée pour retrouver des contenus par similarité de sens plutôt que par mot-clé exact. C'est ce que génère le plugin Obsidian Smart Connections pour permettre la recherche sémantique. Présenté au Chapitre 10.
 
+### Env (`/env`)
+
+La commande `/env` de Copilot CLI, qui liste en une seule fois tout ce qui est chargé dans la session courante : instructions personnalisées, serveurs MCP, skills, agents, hooks, plugins et serveurs de langage (LSP). Le premier réflexe pour déboguer une session qui combine plusieurs de ces mécanismes. Présenté au Chapitre 08.
+
 ### Exclusion de contenu (content exclusion)
 
-Un réglage GitHub, configurable au niveau organisation ou dépôt, qui empêche certains fichiers d'alimenter les suggestions, le chat ou la revue de code Copilot. Limite importante : ce réglage ne couvre pas Copilot CLI ni le mode agent — un secret ne doit donc jamais reposer uniquement sur une exclusion de contenu pour rester protégé. Présenté au Chapitre 11.
+Un réglage GitHub, configurable au niveau organisation ou dépôt, qui empêche certains fichiers d'alimenter les suggestions, le chat ou la revue de code Copilot. Depuis septembre 2026, ce réglage est aussi disponible en disponibilité générale pour Copilot CLI et l'application Copilot, mais uniquement sur les plans Business et Enterprise (pas Free/Pro), avec des limites documentées (liens symboliques, systèmes de fichiers distants non couverts) — un secret ne doit donc jamais reposer uniquement sur une exclusion de contenu pour rester protégé. Présenté au Chapitre 11.
 
 ### Eza
 
@@ -113,6 +133,14 @@ Un remplaçant moderne de la commande `ls`, avec icônes, couleurs par type de f
 ---
 
 ## F
+
+### Fleet
+
+Un mode de Copilot CLI (`/fleet`) qui laisse Copilot décomposer lui-même une tâche complexe en sous-tâches indépendantes, exécutées par des sous-agents en parallèle au sein d'une même session. Complémentaire des worktrees, qui parallélisent des tâches *distinctes* orchestrées par vous plutôt qu'une seule tâche décomposée par Copilot. Présenté aux Chapitres 08 et 16.
+
+### Fork de session
+
+Une duplication de la *conversation* Copilot CLI dans une nouvelle session (`/fork` ou son alias `/branch`), sans créer de worktree Git ni de nouveau dossier sur disque. Plus léger qu'un worktree quand on veut explorer deux pistes de discussion sans isolation de fichiers. Présenté au Chapitre 16.
 
 ### Frontmatter
 
@@ -125,6 +153,10 @@ Un outil de recherche floue (« fuzzy finder ») qui s'intègre au shell pour fi
 ---
 
 ## G
+
+### GitHub CLI (gh)
+
+L'outil en ligne de commande officiel de GitHub (`gh`) pour interagir avec les dépôts, issues, pull requests et l'authentification GitHub sans passer par le navigateur. GitHub Copilot CLI s'appuie sur son authentification (`gh auth login`, `gh auth token`) et peut être installé aux côtés de Copilot CLI dans un dev container ou une image Docker sur mesure. Présenté au Chapitre 09.
 
 ### Glob Pattern (motif glob)
 
@@ -254,7 +286,7 @@ Une technique en trois étapes : *retrieval* (retrouver des contenus pertinents 
 
 ### Rate Limiting (limitation de débit)
 
-Restrictions sur le nombre de requêtes que tu peux effectuer vers une API pendant une période donnée. Copilot peut temporairement limiter les réponses si tu dépasses le quota d'utilisation de ton forfait.
+Restrictions sur le nombre de requêtes que tu peux effectuer vers une API pendant une période donnée. Copilot peut temporairement limiter les réponses si tu dépasses le quota d'utilisation de ton forfait. À ne pas confondre avec `/limits`, qui plafonne volontairement tes propres crédits IA par session (voir [Crédits IA](#crédits-ia-ai-credits), Chapitre 14).
 
 ### Recherche sémantique (semantic search)
 
@@ -266,7 +298,7 @@ La commande `/rewind` de Copilot CLI, qui annule une ou plusieurs étapes d'une 
 
 ### RTK (Rust Token Killer)
 
-Un outil tiers open source (`rtk-ai/rtk`), écrit en Rust, qui agit comme un proxy CLI : il intercepte des commandes de développement verbeuses (git, npm, cargo, pytest...), les exécute normalement, puis renvoie à l'agent une version compressée de leur sortie. Se connecte à Copilot CLI via `rtk init -g` (hook de réécriture automatique) ou via un fichier `copilot-instructions.md` fourni par le projet `rtk-for-copilot`. Commande d'analyse principale : `rtk gain`. Présenté au Chapitre 14.
+Un outil tiers open source (`rtk-ai/rtk`), écrit en Rust, qui agit comme un proxy CLI : il intercepte des commandes de développement verbeuses (git, npm, cargo, pytest...), les exécute normalement, puis renvoie à l'agent une version compressée de leur sortie. Se connecte à Copilot CLI via `rtk init -g --copilot` (hook « deny-with-suggestion », une limitation du CLI empêchant la réécriture silencieuse) ou via un fichier `copilot-instructions.md` fourni par le projet `rtk-for-copilot`. Commande d'analyse principale : `rtk gain`. Un benchmark indépendant a mesuré que ses économies auto-rapportées ne se traduisent pas systématiquement en économies réelles sur la facture. Présenté au Chapitre 14.
 
 ---
 
@@ -274,7 +306,7 @@ Un outil tiers open source (`rtk-ai/rtk`), écrit en Rust, qui agit comme un pro
 
 ### Sandbox
 
-Un environnement d'exécution isolé (conteneur ou microVM) qui restreint l'accès de Copilot CLI au système de fichiers et au réseau, permettant d'utiliser `--allow-all`/`--yolo` sans surveillance humaine constante. Présenté au Chapitre 09 via Docker Sandboxes (`sbx run copilot`).
+Un environnement d'exécution isolé qui restreint l'accès de Copilot CLI au système de fichiers et au réseau, permettant d'utiliser `--allow-all`/`--yolo` sans surveillance humaine constante. Deux niveaux existent : le **sandboxing natif** de Copilot CLI (`/sandbox enable`, isolation au niveau processus sur votre OS, sans dépendance externe) et les **Docker Sandboxes** (`sbx run copilot`, isolation microVM complète avec Docker Desktop 4.50+). Présentés tous les deux au Chapitre 09.
 
 ### Session
 

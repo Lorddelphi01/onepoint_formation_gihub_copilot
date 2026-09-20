@@ -24,7 +24,7 @@ Depuis le début de ce cours, vous avez appris à configurer Copilot CLI : des i
 - Construire et réutiliser des templates de prompts pour standardiser les tâches répétitives de votre équipe
 - Expliquer le principe d'une CLI générée à partir d'un serveur MCP (illustré par la famille d'outils `mcp2cli`) et dans quels cas elle est pertinente
 
-> ⏱️ **Durée estimée : ~35 minutes** (15 min de lecture + 20 min de pratique)
+> ⏱️ **Durée estimée : ~40 minutes** (18 min de lecture + 20 min de pratique)
 
 ---
 
@@ -89,6 +89,8 @@ Le premier prompt laisse Copilot CLI deviner ce que "améliore" veut dire — il
 
 > 💡 **Une astuce simple** : si vous hésitez sur le niveau de détail, listez mentalement objectif / contraintes / format de sortie avant d'écrire votre prompt. Les trois n'ont pas besoin d'être longs — juste explicites.
 
+> 💡 **Pour une tâche à plusieurs étapes dépendantes** (ex. une fonctionnalité qui touche plusieurs fichiers), n'essayez pas de tout décrire dans un seul prompt géant : utilisez `/plan` (vu au [Chapitre 04](../04-development-workflows/README.md)), qui applique ce même triptyque objectif/contraintes/format à un plan que vous validez avant l'exécution. La documentation officielle Copilot CLI le confirme : les modèles réussissent mieux quand on leur donne un plan concret à suivre plutôt qu'une seule instruction dense. À l'inverse, réservez cette décomposition explicite aux tâches réellement complexes — pour une demande simple, elle ajoute de la friction sans gain de précision.
+
 ---
 
 ## Ancrer le prompt dans les données et le langage métier
@@ -147,6 +149,8 @@ copilot
 
 > 💡 **Pourquoi un fichier Markdown plutôt qu'un script** ? Un template de prompt n'a pas besoin d'être exécutable : c'est un texte structuré, versionné avec le reste de votre projet, que n'importe qui de l'équipe peut relire, faire évoluer et réutiliser sans connaître d'outillage particulier.
 
+> ⚠️ **Pourquoi coller le template plutôt que taper `/mon-template`** ? Contrairement à VS Code, Visual Studio et JetBrains, qui savent charger des *prompt files* (`.github/prompts/*.prompt.md`) comme des slash commands personnalisées, Copilot CLI ne propose pas encore ce mécanisme nativement : plusieurs demandes en ce sens restent ouvertes sur le dépôt `github/copilot-cli` (par exemple [l'issue #618](https://github.com/github/copilot-cli/issues/618)), sans implémentation à ce jour. Copier-coller le contenu rempli dans une session `copilot` n'est donc pas un pis-aller temporaire : c'est actuellement la bonne méthode pour la CLI. **Statut vérifié le 20 septembre 2026.**
+
 ---
 
 ## Choisir le bon support pour son prompt
@@ -179,6 +183,8 @@ copilot --prompt "Liste les fonctions publiques de samples/book-app-project/book
 | Explorer et affiner une demande | Prompt interactif | Poser une question, puis préciser la réponse |
 | Réutiliser une formulation validée avec l'équipe | Fichier Markdown | Remplir `code-review-prompt.md` |
 | Automatiser une tâche précise | Appel programmatique | Lancer `copilot --prompt "..." --allow-all-tools` depuis un script |
+
+> 💡 **Avant de coller un template dans une session déjà bien remplie** : un gabarit reste précis seulement si Copilot CLI n'a pas déjà beaucoup compacté son contexte (compaction automatique dès 80 % de la fenêtre de contexte, cf. [Chapitre 03 : Vérifier et gérer le contexte](../03-context-conversations/README.md#vérifier-et-gérer-le-contexte)). Si `/context` montre une session déjà chargée, démarrez plutôt une session fraîche avec `/clear` ou `/new` avant de coller votre template rempli, pour éviter que sa précision se dilue dans un historique compacté.
 
 ---
 
@@ -253,6 +259,7 @@ Vous avez vu que la qualité d'un résultat Copilot CLI dépend autant de la for
 2. Utiliser le vocabulaire métier réel de votre projet (noms de champs, de fonctions, de statuts) donne à Copilot CLI un contexte plus précis que des termes génériques
 3. Un template de prompt versionné dans le dépôt évite à une équipe de réinventer le même prompt à chaque tâche répétitive
 4. `mcp2cli` n'est pas un outil unique mais un principe (CLI typée générée depuis un serveur MCP) porté par plusieurs implémentations indépendantes
+5. Pour une tâche complexe à étapes dépendantes, préférez `/plan` (Chapitre 04) à un unique prompt géant : le triptyque objectif/contraintes/format reste utile pour cadrer chaque étape du plan
 
 ---
 
@@ -260,6 +267,8 @@ Vous avez vu que la qualité d'un résultat Copilot CLI dépend autant de la for
 
 - [Prompt engineering for GitHub Copilot Chat](https://docs.github.com/en/copilot/concepts/prompting/prompt-engineering) — documentation officielle, les principes s'appliquent directement à Copilot CLI
 - [Best practices for using GitHub Copilot](https://docs.github.com/en/copilot/get-started/best-practices) — recommandations générales officielles
+- [Best practices for GitHub Copilot CLI](https://docs.github.com/en/copilot/how-tos/copilot-cli/cli-best-practices) — recommandations spécifiques à la CLI : `/plan`, choix du modèle, flux de travail
+- [Managing context in GitHub Copilot CLI](https://docs.github.com/en/copilot/concepts/agents/copilot-cli/context-management) — compaction automatique et commandes `/context` / `/compact`
 - [knowsuchagency/mcp2cli](https://github.com/knowsuchagency/mcp2cli) — une implémentation open source du principe CLI générée depuis un serveur MCP
 - [Chapitre 07 : Serveurs MCP](../07-mcp-servers/README.md) — pour revoir la configuration MCP classique
 - [Templates de prompts de ce cours](../samples/prompt-templates/README.md)

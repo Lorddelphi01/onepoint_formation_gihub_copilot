@@ -79,12 +79,12 @@ Voyons maintenant pourquoi les développeurs parlent d'un « ingénieur senior d
 
 ### Démo 1 : Revue de code en quelques secondes
 
-Le cours inclut des fichiers d'exemple comportant des problèmes de qualité de code intentionnels. Si vous travaillez sur votre machine locale et n'avez pas encore cloné le dépôt, veuillez exécuter la commande `git clone` ci-dessous, naviguer vers le dossier `copilot-cli-for-beginners`, puis exécuter la commande `copilot`.
+Le cours inclut des fichiers d'exemple comportant des problèmes de qualité de code intentionnels. Si vous travaillez sur votre machine locale et n'avez pas encore cloné le dépôt, veuillez exécuter la commande `git clone` ci-dessous, naviguer vers le dossier `onepoint_formation_gihub_copilot`, puis exécuter la commande `copilot`.
 
 ```bash
 # Clonez le dépôt du cours si vous travaillez en local et ne l'avez pas encore fait
-git clone https://github.com/github/copilot-cli-for-beginners
-cd copilot-cli-for-beginners
+git clone https://github.com/Lorddelphi01/onepoint_formation_gihub_copilot
+cd onepoint_formation_gihub_copilot
 
 # Démarrez Copilot
 copilot

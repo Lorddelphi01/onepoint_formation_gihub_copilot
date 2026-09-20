@@ -7,7 +7,7 @@ Cours pour débutants enseignant GitHub Copilot CLI. Contenu pédagogique, pas u
 | Chemin | Objectif |
 |------|---------|
 | `00-08/` | Chapitres : analogie → concepts → pratique → devoir → suite. `00-modern-terminal-stack/` est un chapitre complémentaire (stack terminal) qui précède l'installation de Copilot CLI (01) et les premiers pas (02) |
-| `09-isolated-environments/` | Chapitre bonus (optionnel, nécessite Docker) : exécuter Copilot CLI dans un dev container puis dans une sandbox Docker isolée, pour automatiser avec `--allow-all` sans risque |
+| `09-isolated-environments/` | Chapitre bonus (optionnel, Docker recommandé) : exécuter Copilot CLI dans un dev container, activer son sandboxing natif (sans Docker), puis l'isoler dans une sandbox Docker, pour automatiser avec `--allow-all` sans risque |
 | `10-obsidian-rag/` | Chapitre bonus (optionnel, nécessite Obsidian) : connecter Copilot CLI à un vault Obsidian via deux serveurs MCP (recherche sémantique + accès au vault) pour construire un pipeline RAG local sur ses propres notes |
 | `11-security-with-copilot/` | Chapitre : la commande native `/security-review`, des instructions de sécurité par défaut, la protection des secrets, et un audit pratique sur `samples/buggy-code/` |
 | `12-ai-developer-acceptance/` | Chapitre bonus : études (GitHub, McKinsey, DORA, Stack Overflow) sur les impacts positifs de l'IA sur les développeurs, avec auto-évaluation personnelle |

@@ -24,6 +24,7 @@ Au [Chapitre 03](../03-context-conversations/README.md), vous avez appris à pil
 - Obtenir des conseils personnalisés sur votre usage de Copilot CLI avec `/chronicle tips` et `/chronicle cost-tips`
 - Rechercher un sujet précis dans l'historique de toutes vos sessions avec `/chronicle search`
 - Enrichir automatiquement vos instructions personnalisées avec `/chronicle improve`
+- Transformer un schéma de travail répétitif en skill réutilisable avec `/chronicle skills review`
 
 > ⏱️ **Durée estimée : ~30 minutes** (10 min de lecture + 20 min de pratique)
 
@@ -33,7 +34,7 @@ Au [Chapitre 03](../03-context-conversations/README.md), vous avez appris à pil
 
 - Avoir terminé le [Chapitre 03 : Contexte et conversations](../03-context-conversations/README.md) — ce chapitre réutilise `/context`, `/rewind` et `/compact` sans les réexpliquer
 - Avoir déjà travaillé avec Copilot CLI sur quelques sessions (idéalement en ayant fait les exercices des chapitres précédents) : `/chronicle` a besoin d'un minimum d'historique local pour produire des résultats utiles
-- ⚠️ La disponibilité et le détail des sous-commandes dépendent de la version de Copilot CLI. Vérifiez votre version avec `copilot --version`, puis consultez la [documentation officielle](https://docs.github.com/en/copilot/how-tos/copilot-cli/use-copilot-cli/chronicle). Si `/chronicle` n'est pas disponible, utilisez `/resume` pour retrouver une session et posez directement une question sur son contenu.
+- ⚠️ **Version recommandée : Copilot CLI v1.0.66 ou plus récent** (`/chronicle` existe depuis la v0.0.419, mais `skills review` — voir plus bas — n'existe que depuis cette version). Vérifiez votre version avec `copilot --version` et mettez à jour si besoin (`npm update -g @github/copilot`, `brew upgrade copilot-cli`, ou le gestionnaire équivalent). Consultez la [documentation officielle](https://docs.github.com/en/copilot/how-tos/copilot-cli/use-copilot-cli/chronicle) pour le détail exact des sous-commandes disponibles dans votre version. Si `/chronicle` n'est pas disponible, utilisez `/resume` pour retrouver une session et posez directement une question sur son contenu.
 
 ---
 
@@ -63,6 +64,8 @@ Pensez à `/rewind` comme à la touche « annuler » d'un éditeur de texte : el
 | Obtenir des conseils personnalisés | [Obtenir des conseils avec tips et cost-tips](#obtenir-des-conseils-avec-tips-et-cost-tips) |
 | Rechercher un sujet dans mon historique | [Rechercher dans l'historique avec search](#rechercher-dans-lhistorique-avec-search) |
 | Enrichir mes instructions personnalisées | [Enrichir vos instructions avec improve](#enrichir-vos-instructions-avec-improve) |
+| Transformer une habitude de travail en skill | [Transformer un schéma de travail en skill avec skills](#transformer-un-schéma-de-travail-en-skill-avec-skills) |
+| Reconstruire mon index local | [Comprendre /chronicle](#comprendre-chronicle) |
 
 ---
 
@@ -70,7 +73,7 @@ Pensez à `/rewind` comme à la touche « annuler » d'un éditeur de texte : el
 
 <a id="comprendre-chronicle"></a>
 
-`/chronicle` analyse les données de session stockées **localement sur votre machine** et en tire des informations exploitables. Ces données sont synchronisées par défaut avec votre compte GitHub afin de pouvoir les interroger depuis plusieurs surfaces Copilot. Contrairement à une question libre posée à Copilot (« résume ce que j'ai fait cette semaine »), ses sous-commandes sont des raccourcis pensés pour des besoins précis et récurrents.
+`/chronicle` analyse les données de session stockées **localement sur votre machine** — concrètement, dans `~/.copilot/session-state/`, indexées dans une base SQLite locale (`session-store.db`) que `/chronicle` interroge pour rester rapide même sur un gros historique — et en tire des informations exploitables. Ces données sont synchronisées par défaut avec votre compte GitHub afin de pouvoir les interroger depuis plusieurs surfaces Copilot (CLI, VS Code, JetBrains, l'app GitHub Copilot). Contrairement à une question libre posée à Copilot (« résume ce que j'ai fait cette semaine »), ses sous-commandes sont des raccourcis pensés pour des besoins précis et récurrents.
 
 | Sous-commande | Ce qu'elle fait |
 |---|---|
@@ -79,9 +82,22 @@ Pensez à `/rewind` comme à la touche « annuler » d'un éditeur de texte : el
 | `cost-tips` | Analyse vos habitudes de consommation de tokens pour repérer des pistes d'efficacité |
 | `search` | Recherche un mot-clé ou un sujet directement dans le contenu de vos sessions |
 | `improve` | Examine les points de friction rencontrés et propose des améliorations pour votre fichier `.github/copilot-instructions.md` |
+| `skills review` | Relit les brouillons de skills que Copilot a détectés dans vos sessions et vous laisse les accepter, rejeter ou reporter (voir [plus bas](#transformer-un-schéma-de-travail-en-skill-avec-skills)) |
 | `reindex` | Reconstruit l'index local de vos sessions et le resynchronise avec votre compte |
 
-Par défaut, ces sous-commandes s'appuient sur **toutes vos sessions enregistrées**, sans distinction de dépôt ou de branche. Seule exception : `improve`, qui se limite aux données du dépôt ou répertoire de travail courant, puisque ses recommandations concernent les instructions de ce projet. Le périmètre dépend toutefois de vos réglages de synchronisation : avec `"remoteExport": false`, les données restent sur votre machine.
+Par défaut, ces sous-commandes s'appuient sur **toutes vos sessions enregistrées**, sans distinction de dépôt ou de branche. Deux exceptions : `improve`, qui se limite aux données du dépôt ou répertoire de travail courant, puisque ses recommandations concernent les instructions de ce projet ; et `skills review`, dont les brouillons de skills proposés sont eux aussi ancrés dans le dépôt où le schéma de travail a été détecté. Le périmètre dépend toutefois de vos réglages de synchronisation : avec `"remoteExport": false`, les données restent sur votre machine.
+
+> 🕰️ **`/chronicle` a évolué vite** — utile à savoir si votre CLI affiche moins de sous-commandes que ce chapitre n'en montre :
+>
+> | Version | Date | Ce qui a changé |
+> |---|---|---|
+> | v0.0.419 | 27/02/2026 | `/chronicle` introduit (expérimental), avec `standup`, `tips`, `improve` |
+> | v1.0.40 | 01/05/2026 | Historique de session et `/chronicle` passent en disponibilité générale pour tous les utilisateurs |
+> | v1.0.49 | 18/05/2026 | Ajout de `search` |
+> | v1.0.51 | 20/05/2026 | Ajout de `cost-tips` |
+> | v1.0.66 | 30/06/2026 | Ajout de `skills review` |
+>
+> Sources : [changelog officiel de Copilot CLI](https://github.com/github/copilot-cli/blob/main/changelog.md).
 
 > 🔒 **Confidentialité** : l'historique peut contenir vos prompts, les réponses de Copilot, les outils utilisés et des informations sur les fichiers modifiés. N'y placez pas de secrets, mots de passe, jetons ou données personnelles. Les données de session peuvent être envoyées au modèle lorsque vous utilisez `/chronicle`, comme pour toute interaction Copilot. Les exemples et la démonstration de ce chapitre sont fictifs et anonymisés.
 
@@ -95,6 +111,13 @@ copilot
 > /chronicle standup for the last 3 days
 > /chronicle tips for better prompting
 ```
+
+> 🔁 **`reindex`, pour quand l'index local dérive de votre historique réel** : si des sessions récentes n'apparaissent pas dans `standup` ou `search`, lancez `/chronicle reindex` — il reconstruit l'index local et affiche sa progression directement dans la timeline de la session pendant l'opération.
+>
+> ```bash
+> > /chronicle reindex
+> Reindexing local sessions… ████████████░░░░ 74%
+> ```
 
 ---
 
@@ -221,9 +244,36 @@ Apply selected suggestions to .github/copilot-instructions.md? [y/N]
 
 ---
 
+## Transformer un schéma de travail en skill avec `skills`
+
+<a id="transformer-un-schéma-de-travail-en-skill-avec-skills"></a>
+
+`improve` enrichit vos *instructions* ; `skills` va plus loin et propose carrément une nouvelle **compétence réutilisable**. Quand Copilot détecte, dans votre historique de sessions, un schéma de travail répété plusieurs fois de la même façon (par exemple : toujours les mêmes étapes pour préparer une release, ou pour auditer un module avant de le fusionner), il peut en tirer un brouillon de skill — au même format `SKILL.md` que celui que vous avez découvert au [Chapitre 06](../06-skills/README.md).
+
+Ces brouillons se relisent avec `/chronicle skills review` : vous les acceptez, les rejetez, ou les reportez à plus tard, un par un.
+
+```bash
+copilot
+
+> /chronicle skills review
+
+Draft skill proposals:
+
+1. "release-checklist" — détecté sur 4 sessions (branches release/*)
+   Étapes observées : bump de version, mise à jour du changelog, tag Git, build
+
+   [a] Accepter  [r] Rejeter  [d] Reporter
+```
+
+> ⚠️ **À vérifier selon votre version** : `skills review` est confirmée par le [changelog officiel](https://github.com/github/copilot-cli/blob/main/changelog.md) à partir de la v1.0.66. La documentation de référence de Copilot CLI mentionne aussi deux sous-commandes complémentaires, `skills create` (déclencher manuellement un brouillon) et `skills status` (suivre l'état des brouillons en cours) — vérifiez leur disponibilité avec `copilot --version` et la [référence officielle des commandes](https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference), qui évolue plus vite que ce chapitre.
+
+Un brouillon accepté devient un fichier `SKILL.md` dans votre dépôt, structuré exactement comme ceux que vous avez écrits à la main au Chapitre 06 — sauf qu'ici, c'est votre propre historique de travail qui en a rédigé la première version.
+
+---
+
 ## Pratique
 
-Ouvrez une session Copilot CLI dans le projet du cours et essayez les quatre sous-commandes sur votre propre historique.
+Ouvrez une session Copilot CLI dans le projet du cours et essayez les sous-commandes sur votre propre historique.
 
 ### ▶️ À vous de jouer
 
@@ -231,6 +281,7 @@ Ouvrez une session Copilot CLI dans le projet du cours et essayez les quatre sou
 2. Lancez `/chronicle tips` : au moins un conseil vous concerne-t-il vraiment ?
 3. Choisissez un sujet traité il y a plusieurs sessions (par exemple un bug corrigé au Chapitre 04) et retrouvez-le avec `/chronicle search <mot-clé>`
 4. Lancez `/chronicle improve`, examinez les recommandations et ne validez que celles qui correspondent réellement à vos conventions
+5. Si votre version le permet, lancez `/chronicle skills review` : un brouillon de skill a-t-il été détecté dans vos sessions récentes ?
 
 ---
 
@@ -268,14 +319,15 @@ Ouvrez une session Copilot CLI dans le projet du cours et essayez les quatre sou
 
 ## Résumé
 
-Vous savez maintenant transformer votre historique Copilot CLI en informations exploitables : un rapport d'activité avec `standup`, des conseils personnalisés avec `tips` et `cost-tips`, une recherche ciblée avec `search`, et des instructions personnalisées enrichies automatiquement avec `improve`.
+Vous savez maintenant transformer votre historique Copilot CLI en informations exploitables : un rapport d'activité avec `standup`, des conseils personnalisés avec `tips` et `cost-tips`, une recherche ciblée avec `search`, des instructions personnalisées enrichies automatiquement avec `improve`, et des brouillons de skills réutilisables avec `skills review`.
 
 ### 🔑 Points clés à retenir
 
 1. `/chronicle` analyse **l'ensemble de votre historique enregistré**, contrairement à `/rewind` qui n'agit que sur la session en cours
-2. Ses sous-commandes (`standup`, `tips`, `cost-tips`, `search`, `improve`, `reindex`) répondent chacune à un besoin précis — pas besoin de les mémoriser toutes, `/chronicle` seul ouvre un sélecteur
-3. `improve` est la seule sous-commande limitée au dépôt courant, puisqu'elle écrit dans `.github/copilot-instructions.md`
+2. Ses sous-commandes (`standup`, `tips`, `cost-tips`, `search`, `improve`, `skills review`, `reindex`) répondent chacune à un besoin précis — pas besoin de les mémoriser toutes, `/chronicle` seul ouvre un sélecteur
+3. `improve` et `skills review` sont les deux sous-commandes ancrées au dépôt courant : la première modifie `.github/copilot-instructions.md`, la seconde en tire des fichiers `SKILL.md`
 4. `cost-tips` fait le pont avec l'analyse de consommation de tokens, approfondie au [Chapitre 14](../14-token-consumption-analysis/README.md)
+5. `skills review` fait le pont avec les skills réutilisables présentées au [Chapitre 06](../06-skills/README.md) — sauf que celles-ci naissent de votre propre historique plutôt que d'être écrites à la main
 
 > 📚 **Documentation officielle** : [Utiliser les données de session avec /chronicle](https://docs.github.com/en/copilot/how-tos/copilot-cli/use-copilot-cli/chronicle)
 
@@ -284,8 +336,11 @@ Vous savez maintenant transformer votre historique Copilot CLI en informations e
 ## 📋 Référence rapide
 
 - [Documentation officielle de `/chronicle`](https://docs.github.com/en/copilot/how-tos/copilot-cli/use-copilot-cli/chronicle)
+- [Référence des commandes Copilot CLI](https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference) — pour la liste à jour des sous-commandes de `/chronicle`
+- [Changelog officiel de Copilot CLI](https://github.com/github/copilot-cli/blob/main/changelog.md) — pour dater précisément l'arrivée d'une sous-commande
 - [Chapitre 03 : Contexte et conversations](../03-context-conversations/README.md) — pour `/context`, `/rewind`, `/compact` et la gestion des sessions
 - [Chapitre 05 : Créer des assistants IA spécialisés](../05-agents-custom-instructions/README.md) — pour comprendre `.github/copilot-instructions.md`, que `/chronicle improve` modifie
+- [Chapitre 06 : Automatiser les tâches répétitives](../06-skills/README.md) — pour la structure d'un `SKILL.md`, que `/chronicle skills review` génère à partir de vos sessions
 
 ---
 

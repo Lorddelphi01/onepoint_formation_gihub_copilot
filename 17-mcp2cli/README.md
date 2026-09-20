@@ -78,9 +78,11 @@ mcp2cli propose une troisième option, plus radicale : sortir complètement le m
 
 ## Découvrir mcp2cli
 
-[mcp2cli](https://mcp2cli.dev/) est un outil tiers (licence Apache 2.0) qui « transforme n'importe quel serveur MCP en application de ligne de commande native ». Il se connecte à un serveur MCP, découvre automatiquement ses outils, ressources et prompts, puis les expose comme des commandes de terminal typées : les champs obligatoires du schéma deviennent des flags obligatoires, et le schéma JSON pilote l'analyse des arguments.
+[mcp2cli](https://mcp2cli.dev/) est un outil tiers (licence Apache 2.0, dépôt [`mcp2cli/source-code`](https://github.com/mcp2cli/source-code)) qui « transforme n'importe quel serveur MCP en application de ligne de commande native ». Il se connecte à un serveur MCP, découvre automatiquement ses outils, ressources et prompts, puis les expose comme des commandes de terminal typées : les champs obligatoires du schéma deviennent des flags obligatoires, et le schéma JSON pilote l'analyse des arguments.
 
-> 💡 **mcp2cli n'est pas un produit GitHub ni Microsoft.** C'est un outil tiers indépendant. Il communique avec un serveur MCP via le même protocole standard que Copilot CLI — MCP 2026-07-28 et 2025-11-25 — mais c'est un projet distinct, à évaluer comme n'importe quel outil tiers avant de l'installer.
+> 💡 **mcp2cli n'est pas un produit GitHub ni Microsoft.** C'est un outil tiers indépendant. Il communique avec un serveur MCP via le même protocole standard que Copilot CLI — les deux révisions MCP 2026-07-28 (sans état, sondée en priorité) et 2025-11-25 (avec repli automatique) — mais c'est un projet distinct, à évaluer comme n'importe quel outil tiers avant de l'installer.
+>
+> ⚠️ **Attention à l'homonymie** : d'autres projets open source sans rapport portent aussi le nom « mcp2cli » (par exemple un plugin Claude Code ou une bibliothèque de pont générique). Ce chapitre suit exclusivement [mcp2cli.dev](https://mcp2cli.dev/) — vérifiez toujours l'URL du dépôt avant d'installer un outil qui porte ce nom.
 
 ### Installation
 
@@ -90,7 +92,10 @@ curl -fsSL https://mcp2cli.dev/install.sh | sh
 
 > ⚠️ **Avant d'exécuter un script d'installation via `curl | sh`**, il est prudent d'en inspecter le contenu (`curl -fsSL https://mcp2cli.dev/install.sh | less`) plutôt que de l'exécuter les yeux fermés — une bonne pratique pour n'importe quel script tiers, pas seulement celui-ci.
 
-Une fois installé, mcp2cli peut se connecter à un serveur MCP de deux façons : en pointant vers une URL distante (`--url`), ou en lançant un serveur local via la même commande que celle utilisée dans votre configuration Copilot (`--stdio`). C'est cette seconde option que vous utiliserez pour Context7, puisqu'il s'exécute localement via `npx`.
+Une fois installé, mcp2cli propose deux façons de se connecter à un serveur MCP :
+
+- **Ad hoc, sans configuration** : `--url <URL>` pour un serveur distant, ou `--stdio "<commande>"` pour lancer un serveur local — pratique pour un test ponctuel (vous vous en servirez pour le défi bonus avec le serveur Filesystem).
+- **Config nommée + alias**, pour un usage répété : `mcp2cli config init` enregistre la connexion sous un nom, puis `mcp2cli link create` génère une commande autonome (par exemple `context7`) que vous utilisez ensuite comme n'importe quel programme du terminal. C'est cette seconde option que vous utiliserez pour Context7, puisqu'il s'exécute localement via `npx`.
 
 ---
 
@@ -106,18 +111,21 @@ Le GIF ci-dessous suit les quatre commandes de ce TP. Son fichier source [`mcp2c
 
 ![Démonstration : découverte, signature, appel Context7 et comparaison avec Copilot CLI](assets/mcp2cli-context7-demo.gif)
 
-Les commandes ont été vérifiées avec **mcp2cli 3.7.0**. Elles utilisent le profil public `context7` fourni par mcp2cli : il appelle `https://mcp.context7.com/mcp`, sans clé API. Installez d'abord ce profil :
+Les commandes ont été vérifiées avec **mcp2cli v0.1.8** (la dernière version publiée au moment de la rédaction — l'outil est encore en version 0.x, vérifiez la vôtre avec `mcp2cli --version` et consultez la [référence CLI officielle](https://github.com/mcp2cli/source-code/blob/main/docs/reference/cli-reference.md) si une commande ci-dessous ne correspond plus). Le serveur Context7 utilisé est celui déjà configuré au Chapitre 07 : un processus local lancé via `npx -y @upstash/context7-mcp`, sans clé API. Créez d'abord une config nommée qui pointe vers cette même commande, puis un alias :
 
 ```bash
 curl -fsSL https://mcp2cli.dev/install.sh | sh
-mcp2cli bake install context7
+mcp2cli config init --name context7 --app bridge \
+  --transport stdio --stdio-command npx \
+  --stdio-arg -y --stdio-arg @upstash/context7-mcp
+mcp2cli link create --name context7
 ```
 
-Fermez et rouvrez le terminal si `mcp2cli-context7` n'est pas encore trouvé. Vous pouvez contrôler la version et la configuration effectivement utilisées :
+Fermez et rouvrez le terminal si la commande `context7` n'est pas encore trouvée (l'alias est un lien symbolique créé à côté du binaire `mcp2cli` — ajoutez ce dossier à votre `PATH` si besoin). Vous pouvez contrôler la version et la configuration effectivement utilisées :
 
 ```bash
 mcp2cli --version
-mcp2cli bake show context7
+mcp2cli config show --name context7
 ```
 
 > ⚠️ **Limite importante** : `mcp2cli` génère ses commandes à partir du schéma publié par le serveur. Une mise à jour de Context7 peut donc faire évoluer un nom ou un flag. Exécutez toujours les étapes 1 et 2 avant d'automatiser le flux.
@@ -125,7 +133,7 @@ mcp2cli bake show context7
 ### Étape 1 : découvrir le même outil Context7
 
 ```bash
-mcp2cli-context7 --list --verbose
+context7 ls --tools
 ```
 
 Vous devez voir notamment `resolve-library-id` et `query-docs`. Le premier transforme le nom d'une bibliothèque en identifiant Context7 ; le second recherche dans sa documentation.
@@ -133,7 +141,7 @@ Vous devez voir notamment `resolve-library-id` et `query-docs`. Le premier trans
 ### Étape 2 : inspecter sa signature générée
 
 ```bash
-mcp2cli-context7 resolve-library-id --help
+context7 resolve-library-id --help
 ```
 
 La signature affiche les deux flags obligatoires : `--library-name` et `--query`. C'est la version directement lisible de la signature MCP que Copilot reçoit lorsqu'il découvre l'outil.
@@ -141,13 +149,13 @@ La signature affiche les deux flags obligatoires : `--library-name` et `--query`
 ### Étape 3 : invoquer l'outil avec une requête fixe
 
 ```bash
-mcp2cli-context7 --json resolve-library-id --library-name=pytest --query="pytest fixture scopes"
+context7 --json resolve-library-id --library-name=pytest --query="pytest fixture scopes"
 ```
 
 **Résultat attendu** : la réponse JSON contient l'identifiant Context7 **`/pytest-dev/pytest`**. Conservez-le pour l'appel suivant :
 
 ```bash
-mcp2cli-context7 --json query-docs --library-id=/pytest-dev/pytest --query="pytest fixture scopes"
+context7 --json query-docs --library-id=/pytest-dev/pytest --query="pytest fixture scopes"
 ```
 
 Cette seconde réponse contient de la documentation sur les portées de fixtures pytest. Aucun token de **modèle** n'est consommé : vous appelez le serveur et lisez sa réponse directement. Le réseau, le terminal et Context7 continuent bien sûr de traiter la requête.
@@ -186,13 +194,13 @@ Ouvrez l'adresse locale affichée, sélectionnez `resolve-library-id`, puis sais
 
 ```bash
 mcp2cli --version
-mcp2cli bake show context7
-mcp2cli-context7 --list --verbose
+mcp2cli config show --name context7
+context7 ls --tools
 ```
 
-**Résultat attendu** : la version de mcp2cli, la configuration du profil et les outils `resolve-library-id` et `query-docs` s'affichent sans erreur.
+**Résultat attendu** : la version de mcp2cli, la configuration nommée et les outils `resolve-library-id` et `query-docs` s'affichent sans erreur.
 
-> 💡 **Ça échoue ?** Réinstallez le profil avec `mcp2cli bake install context7`. Vérifiez aussi que Context7 fonctionne avec Copilot (`/mcp show` au Chapitre 07) : si les deux clients ne le joignent pas, le problème est ailleurs.
+> 💡 **Ça échoue ?** Vérifiez que la config existe (`mcp2cli config list`) et recréez l'alias avec `mcp2cli link create --name context7 --force` si besoin. Vérifiez aussi que Context7 fonctionne avec Copilot (`/mcp show` au Chapitre 07) : si les deux clients ne le joignent pas, le problème est ailleurs.
 
 ---
 
@@ -201,8 +209,8 @@ mcp2cli-context7 --list --verbose
 Inspectez les paramètres du premier outil, puis ceux du second :
 
 ```bash
-mcp2cli-context7 resolve-library-id --help
-mcp2cli-context7 query-docs --help
+context7 resolve-library-id --help
+context7 query-docs --help
 ```
 
 **Résultat attendu** : vous identifiez `--library-name` et `--query` pour la résolution, puis `--library-id` et `--query` pour la recherche documentaire.
@@ -214,8 +222,8 @@ mcp2cli-context7 query-docs --help
 Utilisez la même requête que dans le TP, en sauvegardant les deux réponses JSON :
 
 ```bash
-mcp2cli-context7 --json resolve-library-id --library-name=pytest --query="pytest fixture scopes" > resolve-pytest.json
-mcp2cli-context7 --json query-docs --library-id=/pytest-dev/pytest --query="pytest fixture scopes" > pytest-fixture-scopes.json
+context7 --json resolve-library-id --library-name=pytest --query="pytest fixture scopes" > resolve-pytest.json
+context7 --json query-docs --library-id=/pytest-dev/pytest --query="pytest fixture scopes" > pytest-fixture-scopes.json
 ```
 
 **Résultat attendu** : `resolve-pytest.json` contient `/pytest-dev/pytest` et `pytest-fixture-scopes.json` contient une documentation exploitable sur les portées de fixtures, sans démarrer une session Copilot.
@@ -240,7 +248,7 @@ Dans Copilot configuré avec Context7, réutilisez précisément `library name =
 
 Utilisez mcp2cli pour construire, en une suite de commandes, un flux complet de recherche de documentation :
 
-1. **Découvrez** les outils du profil Context7 avec `mcp2cli-context7 --list --verbose`
+1. **Découvrez** les outils de l'alias Context7 avec `context7 ls --tools`
 2. **Inspectez** les deux signatures avec `--help`
 3. **Enchaînez** `resolve-library-id`, puis `query-docs` avec l'identifiant retourné
 4. **Sauvegardez** les résultats JSON dans deux fichiers
@@ -253,9 +261,9 @@ Utilisez mcp2cli pour construire, en une suite de commandes, un flux complet de 
 
 **Étape 1-2 : Découverte et inspection**
 ```bash
-mcp2cli-context7 --list --verbose
-mcp2cli-context7 resolve-library-id --help
-mcp2cli-context7 query-docs --help
+context7 ls --tools
+context7 resolve-library-id --help
+context7 query-docs --help
 ```
 
 **Étape 3 : Enchaîner les outils**
@@ -264,8 +272,8 @@ Le premier outil renvoie un identifiant de bibliothèque. Réutilisez-le avec `-
 
 **Étape 4 : Sauvegarder la sortie**
 ```bash
-mcp2cli-context7 --json resolve-library-id --library-name=pytest --query="pytest fixture scopes" > resolve-pytest.json
-mcp2cli-context7 --json query-docs --library-id=/pytest-dev/pytest --query="pytest fixture scopes" > pytest-fixture-scopes.json
+context7 --json resolve-library-id --library-name=pytest --query="pytest fixture scopes" > resolve-pytest.json
+context7 --json query-docs --library-id=/pytest-dev/pytest --query="pytest fixture scopes" > pytest-fixture-scopes.json
 ```
 
 **Si mcp2cli ne se connecte pas :** utilisez l'alternative MCP Inspector documentée dans le TP, puis vérifiez que Context7 fonctionne dans Copilot avec `/mcp show`.
@@ -293,20 +301,23 @@ Comparez la liste d'outils obtenue avec celle de Context7 — chaque serveur MCP
 |---------|--------------|-----|
 | Script d'installation bloqué par une politique de sécurité | `curl \| sh` échoue ou est refusé silencieusement | Téléchargez le script (`curl -fsSL https://mcp2cli.dev/install.sh -o install.sh`), inspectez-le, puis exécutez-le manuellement (`sh install.sh`) |
 | Premier démarrage lent ou en timeout | `npx` télécharge le paquet `@upstash/context7-mcp` à la première exécution | Relancez la commande ; les exécutions suivantes seront plus rapides grâce au cache npm |
-| Nom d'outil incorrect dans la commande | mcp2cli renvoie une erreur du type « commande inconnue » | Relancez `mcp2cli-context7 --list --verbose` pour obtenir le nom exact |
-| Argument obligatoire manquant | mcp2cli refuse la commande avant même de contacter le serveur | Relancez `mcp2cli-context7 resolve-library-id --help` ou `mcp2cli-context7 query-docs --help` |
+| Nom d'outil incorrect dans la commande | mcp2cli renvoie une erreur du type « commande inconnue » | Relancez `context7 ls --tools` pour obtenir le nom exact |
+| Argument obligatoire manquant | mcp2cli refuse la commande avant même de contacter le serveur | Relancez `context7 resolve-library-id --help` ou `context7 query-docs --help` |
 
 ### Dépannage
 
 **« La commande mcp2cli est introuvable »** - Vérifiez que le script d'installation a bien ajouté mcp2cli à votre `PATH`, puis ouvrez un nouveau terminal.
 
-**« Le serveur ne répond pas »** - Vérifiez la configuration publique du profil :
+**« La commande `context7` est introuvable »** - Le lien symbolique créé par `mcp2cli link create` vit à côté du binaire `mcp2cli`. Ajoutez ce dossier à votre `PATH`, ou recréez le lien ailleurs avec `mcp2cli link create --name context7 --dir ~/.local/bin --force`.
+
+**« Le serveur ne répond pas »** - Vérifiez la configuration nommée, puis lancez le diagnostic intégré :
 ```bash
-mcp2cli bake show context7
+mcp2cli config show --name context7
+context7 doctor
 ```
 Puis testez Context7 dans Copilot avec `/mcp show`. Si les deux clients échouent, revoyez le [Chapitre 07](../07-mcp-servers/README.md).
 
-**« Un serveur MCP distant demande une authentification »** - mcp2cli propose une sous-commande `auth` dédiée pour ce cas ; consultez `mcp2cli --stdio "..." auth --help` (Context7 n'en a pas besoin).
+**« Un serveur MCP distant demande une authentification »** - chaque alias expose sa propre sous-commande `auth` : `context7 auth login` ouvrirait un flux OAuth avec PKCE dans le navigateur pour un serveur qui l'annonce, ou accepte un jeton existant sans navigateur (`echo "$TOKEN" | context7 auth login`, ou `--non-interactive` en script). Le jeton est ensuite stocké localement (`~/.local/share/mcp2cli/instances/context7/tokens.json`, permissions `0600`) et réinjecté automatiquement à chaque appel — Context7 n'en a pas besoin ici puisqu'il tourne en local via `npx`.
 
 </details>
 
@@ -319,8 +330,8 @@ Puis testez Context7 dans Copilot avec `/mcp show`. Si les deux clients échouen
 1. **Chaque serveur MCP connecté a un coût en tokens** : les schémas de ses outils occupent la fenêtre de contexte, et chaque résultat renvoyé transite par le modèle
 2. **Vous connaissiez déjà deux leviers** pour réduire ce coût : limiter `"tools"` dans la configuration plutôt que `["*"]`, et `/mcp disable` un serveur inutilisé
 3. **mcp2cli transforme un serveur MCP en CLI native** : il parle le même protocole MCP que Copilot, mais sans modèle d'IA au milieu
-4. **`--stdio` lance un serveur local** avec la même commande que celle de votre configuration Copilot (`npx ...`) ; `--url` cible un serveur distant
-5. **`ls`, `inspect` et l'invocation directe** couvrent tout le flux découverte → schéma → appel, sans jamais démarrer `copilot`
+4. **Une config nommée (`mcp2cli config init`) + un alias (`mcp2cli link create`)** transforment un serveur MCP en commande autonome (`context7`) ; `--url`/`--stdio` permettent aussi une connexion ad hoc sans config, pratique pour un test ponctuel
+5. **`ls`, `inspect`, `doctor` et l'invocation directe** couvrent tout le flux découverte → schéma → appel → diagnostic, sans jamais démarrer `copilot`
 6. **Ce n'est pas un remplacement de Copilot** : mcp2cli convient aux requêtes ciblées et répétées ; Copilot reste préférable dès qu'il faut interpréter, enchaîner ou synthétiser
 
 > 📋 **Référence rapide** : [Documentation mcp2cli](https://mcp2cli.dev/docs) pour la liste complète des sous-commandes et options ; [Chapitre 07 : Serveurs MCP](../07-mcp-servers/README.md) pour revoir la configuration des serveurs.
@@ -329,12 +340,14 @@ Puis testez Context7 dans Copilot avec `/mcp show`. Si les deux clients échouen
 
 ## ➡️ Et ensuite
 
-Ce chapitre bonus clôt le parcours du cours. Vous savez maintenant configurer des serveurs MCP, les utiliser depuis Copilot, et sortir le modèle de l'équation avec mcp2cli quand c'est plus efficace de le faire.
+Ce chapitre bonus complète le Chapitre 07. Vous savez maintenant configurer des serveurs MCP, les utiliser depuis Copilot, et sortir le modèle de l'équation avec mcp2cli quand c'est plus efficace de le faire. D'autres chapitres bonus explorent d'autres façons d'étendre Copilot CLI, comme le [Chapitre 18 : Workflows n8n](../18-n8n-workflows/README.md), qui connecte Copilot CLI au serveur MCP de n8n.
 
 ### Ressources
 
 - [mcp2cli.dev](https://mcp2cli.dev/) — site officiel et documentation
-- [Spécification MCP](https://modelcontextprotocol.io/specification/2025-11-25)
+- [Référence CLI mcp2cli](https://github.com/mcp2cli/source-code/blob/main/docs/reference/cli-reference.md) — liste complète des sous-commandes et options (l'outil évolue vite en version 0.x)
+- [Spécification MCP 2025-11-25](https://modelcontextprotocol.io/specification/2025-11-25) — révision « avec session », encore largement déployée
+- [Spécification MCP 2026-07-28](https://modelcontextprotocol.io/specification/2026-07-28/changelog) — révision « sans état », que mcp2cli et Copilot CLI savent toutes deux négocier
 - [Chapitre 07 : Serveurs MCP](../07-mcp-servers/README.md) — pour revoir la configuration des serveurs
 
 ---

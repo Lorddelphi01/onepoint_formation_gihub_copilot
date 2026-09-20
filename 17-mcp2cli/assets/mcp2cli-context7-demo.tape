@@ -13,15 +13,15 @@ Set MarginFill "#282a36"
 Set Framerate 10
 Set TypingSpeed 35ms
 
-Type "printf '\033[1;36m1. DECOUVRIR\033[0m\n$ mcp2cli-context7 --list --verbose\nresolve-library-id  Resolves a package name to a Context7 library ID\nquery-docs          Retrieves Context7 documentation\n'"
+Type "printf '\033[1;36m1. DECOUVRIR\033[0m\n$ context7 ls --tools\nresolve-library-id  Resolves a package name to a Context7 library ID\nquery-docs          Retrieves Context7 documentation\n'"
 Enter
 Sleep 3s
 
-Type "printf '\033[1;36m2. INSPECTER LA SIGNATURE\033[0m\n$ mcp2cli-context7 resolve-library-id --help\n--library-name LIBRARY_NAME\n--query QUERY\n'"
+Type "printf '\033[1;36m2. INSPECTER LA SIGNATURE\033[0m\n$ context7 resolve-library-id --help\n--library-name LIBRARY_NAME\n--query QUERY\n'"
 Enter
 Sleep 3s
 
-Type "printf '\033[1;36m3. INVOQUER\033[0m\n$ mcp2cli-context7 --json resolve-library-id --library-name=pytest --query=\"pytest fixture scopes\"\nContext7-compatible library ID: /pytest-dev/pytest\n'"
+Type "printf '\033[1;36m3. INVOQUER\033[0m\n$ context7 --json resolve-library-id --library-name=pytest --query=\"pytest fixture scopes\"\nContext7-compatible library ID: /pytest-dev/pytest\n'"
 Enter
 Sleep 3s
 
