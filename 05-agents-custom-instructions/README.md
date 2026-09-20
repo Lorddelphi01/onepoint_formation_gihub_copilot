@@ -186,6 +186,10 @@ When reviewing code, always check for:
 
 **Chemins de recherche** : à chaque lancement de `/agent` ou `--agent <nom>`, Copilot CLI recherche un fichier `<nom>.agent.md` dans ces deux emplacements (ce cours n'utilise que les niveaux personnel et projet ; des niveaux organisation et entreprise existent aussi pour les comptes GitHub Enterprise, voir la documentation officielle citée plus haut). En cas de conflit de nom entre les deux, l'agent **personnel** (`~/.copilot/agents/`) prend le pas sur l'agent **projet** (`.github/agents/`) qui prend lui-même le pas sur les niveaux organisation/entreprise.
 
+> 🗂️ **Un troisième emplacement, à la volée** : la commande `/add-dir <chemin>` autorise l'accès à un dossier arbitraire et charge ses sous-dossiers `.github/skills` et `.github/agents` comme configurations de confiance, le temps de la session. Pratique pour tester un dépôt d'agents partagés cloné en dehors de votre projet, sans avoir à copier les fichiers dans `.github/agents/` ou `~/.copilot/agents/` : `/add-dir ../shared-agents`.
+>
+> 💡 **Déplacer `~/.copilot/` (Docker, CI, multi-comptes)** : la variable d'environnement `COPILOT_HOME` détermine où Copilot CLI lit sa configuration (donc où se trouve `~/.copilot/agents/`). Définissez-la pour isoler la configuration dans une image Docker ou un job CI. Le flag `--config-dir` fait la même chose mais est **déprécié** au profit de `COPILOT_HOME`.
+
 > 🔎 **Agent introuvable ?** Vérifiez d'abord que le fichier se termine bien par `.agent.md` (et non `.md`) et qu'il se trouve dans l'un des deux dossiers ci-dessus. Lancez `/agent` pour voir la liste à jour de ce que Copilot CLI détecte réellement. Le [Dépannage](#agent-introuvable) plus bas détaille la procédure complète.
 
 **Ce projet inclut des exemples de fichiers agent dans le dossier [.github/agents/](../.github/agents/)**. Vous pouvez écrire les vôtres, ou personnaliser ceux déjà fournis.
@@ -489,6 +493,8 @@ Copilot analysera votre projet et créera des fichiers d'instructions adaptés. 
 > 🎯 **Vous débutez ?** Utilisez `AGENTS.md` pour les instructions de projet. Vous pourrez explorer les autres formats plus tard, selon vos besoins.
 
 > 💡 **Quels fichiers s'appliquent réellement ?** *(depuis Copilot CLI v1.0.81)* La commande `/instructions` affiche séparément chaque fichier d'instructions actif pour la session en cours. C'est très utile pour déboguer : si Copilot se comporte d'une façon inattendue, `/instructions` vous montre exactement quels fichiers ont été chargés (et depuis quel emplacement).
+>
+> 🖥️ **Besoin d'un script ou d'une vérification en CI ?** `copilot instruction list` fait la même chose que `/instructions`, mais **sans ouvrir de session interactive** ; ajoutez `--json` pour une sortie exploitable par un script. Attention, ceci ne couvre que les fichiers d'instructions : les agents personnalisés n'ont pas d'équivalent non-interactif (voir la limitation en [Dépannage](#agent-introuvable)).
 
 ### AGENTS.md
 
@@ -880,6 +886,8 @@ copilot
 ```
 
 Si l'agent attendu n'apparaît toujours pas dans cette liste, revérifiez les points 1 à 3 ci-dessus - c'est presque toujours l'un d'entre eux.
+
+> ⚠️ **Pas de vérification en dehors d'une session** : contrairement aux fichiers d'instructions (`copilot instruction list`) ou aux skills (`copilot skill list`), les agents personnalisés n'ont **aucun équivalent non-interactif**. La documentation officielle est explicite : *« Custom agents and session-scoped hooks aren't covered by `copilot instruction`, `copilot lsp`, `copilot plugin`, `copilot mcp`, or `copilot skill`. All require a live session. »* `/agent` en session interactive reste donc la seule source de vérité.
 
 **L'agent ne suit pas les instructions** - Soyez explicite dans vos prompts et ajoutez plus de détails aux définitions d'agent :
 - Frameworks/bibliothèques spécifiques avec leurs versions
