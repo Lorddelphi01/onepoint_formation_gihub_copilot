@@ -220,18 +220,24 @@ Les Parties 1 et 2 reposent toutes les deux sur une image de base déjà prête 
 
 > 💬 **Pour aller plus loin** : cette approche n'est pas une invention isolée. Gordon Beeming documente une démarche très proche dans [*"Taming the AI: My Paranoid Guide to Running Copilot CLI in a Secure Docker Sandbox"*](https://gordonbeeming.com/blog/2025-10-03/taming-the-ai-my-paranoid-guide-to-running-copilot-cli-in-a-secure-docker-sandbox), où il construit une image Docker dédiée pour isoler Copilot CLI par projet ; son outil [`copilot_here`](https://github.com/GordonBeeming/copilot_here) en est le wrapper shell prêt à l'emploi. Si vous préférez rester sur des *Dev Container Features* plutôt qu'un `Dockerfile` sur-mesure, la Feature officielle `github-cli` (déjà utilisée en Partie 1) accepte aussi une option `extensions` pour installer des extensions `gh` comme `github/gh-copilot` — voir sa [documentation](https://github.com/devcontainers/features/tree/main/src/github-cli).
 
-Créez un fichier nommé `Dockerfile` dans un dossier de travail — **pas dans ce dépôt** — et collez-y :
+Ce chapitre fournit un `Dockerfile` prêt à l'emploi : **[`09-isolated-environments/Dockerfile`](./Dockerfile)**. En voici le contenu intégral, testé et construit avec succès (voir l'encart 🧪 après le bloc) :
 
 ```dockerfile
 FROM debian:bookworm-slim
 
 ENV DEBIAN_FRONTEND=noninteractive \
-    SHELL=/bin/zsh
+    SHELL=/bin/zsh \
+    PATH=/root/.atuin/bin:/root/.local/bin:/root/.fzf/bin:$PATH
 
-# --- Paquets de base + Node.js (requis par `npm install -g @github/copilot`) ---
+# --- Paquets de base ---
 RUN apt-get update && apt-get install -y --no-install-recommends \
         curl git gnupg ca-certificates wget \
-        zsh tmux nodejs npm \
+        zsh tmux \
+    && rm -rf /var/lib/apt/lists/*
+
+# --- Node.js (dépôt NodeSource — requis par `npm install -g @github/copilot`) ---
+RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash - \
+    && apt-get install -y nodejs \
     && rm -rf /var/lib/apt/lists/*
 
 # --- GitHub CLI (dépôt apt officiel cli.github.com) ---
@@ -245,12 +251,43 @@ RUN mkdir -p -m 755 /etc/apt/keyrings \
     && rm -rf /var/lib/apt/lists/*
 
 # --- GitHub Copilot CLI ---
-RUN npm install -g @github/copilot
+# Le paquet binaire spécifique à la plateforme (ex. @github/copilot-linux-x64) est une
+# dépendance npm "optionnelle" : si sa récupération échoue sur un réseau instable, `npm
+# install` ne remonte PAS d'erreur — il installe silencieusement un `copilot` cassé. On
+# tente donc l'installation une première fois sans bloquer sur un échec (`|| true`), une
+# seconde fois pour de bon (le cache npm du premier essai la rend quasi instantanée), puis
+# on vérifie explicitement avec `copilot --version` pour faire échouer le build si besoin.
+RUN npm install -g @github/copilot --fetch-retries=5 --fetch-retry-mintimeout=2000 || true \
+    && npm install -g @github/copilot --fetch-retries=5 --fetch-retry-mintimeout=2000 \
+    && copilot --version
 
 # --- Starship, Atuin, zoxide (scripts d'installation officiels — identiques au Chapitre 00) ---
-RUN curl -sS https://starship.rs/install.sh | sh -s -- --yes
-RUN curl --proto '=https' --tlsv1.2 -LsSf https://setup.atuin.sh | sh
-RUN curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
+# Ces trois scripts téléchargent un binaire précompilé depuis les releases GitHub, ce qui
+# peut occasionnellement rester bloqué plusieurs minutes sur un réseau instable avant
+# d'échouer — pire, un `curl ... | sh` avale silencieusement un échec de curl (le code de
+# sortie du pipe est celui de `sh`, pas de `curl` : un script vide "réussit" sans rien
+# installer). On télécharge donc chaque script séparément, on l'exécute avec un timeout
+# borné à 90s et jusqu'à 3 tentatives, puis on vérifie explicitement le binaire installé.
+RUN curl -sS https://starship.rs/install.sh -o /tmp/install.sh \
+    && ( for i in 1 2 3; do \
+           timeout 90 sh /tmp/install.sh --yes && break; \
+           echo "Tentative $i (Starship) échouée, nouvel essai..."; \
+         done ) \
+    && rm -f /tmp/install.sh && command -v starship
+
+RUN curl --proto '=https' --tlsv1.2 -LsSf https://setup.atuin.sh -o /tmp/install.sh \
+    && ( for i in 1 2 3; do \
+           timeout 90 sh /tmp/install.sh --non-interactive && break; \
+           echo "Tentative $i (Atuin) échouée, nouvel essai..."; \
+         done ) \
+    && rm -f /tmp/install.sh && command -v atuin
+
+RUN curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh -o /tmp/install.sh \
+    && ( for i in 1 2 3; do \
+           timeout 90 sh /tmp/install.sh && break; \
+           echo "Tentative $i (zoxide) échouée, nouvel essai..."; \
+         done ) \
+    && rm -f /tmp/install.sh && command -v zoxide
 
 # --- fzf ---
 RUN git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf \
@@ -310,16 +347,19 @@ WORKDIR /workspace
 CMD ["zsh"]
 ```
 
-`chsh` n'est volontairement pas utilisé ici : cette commande interactive échoue souvent lors d'un `RUN` de `docker build` non interactif. `CMD ["zsh"]` suffit à démarrer directement dans le bon shell à chaque `docker run`.
+`chsh` n'est volontairement pas utilisé ici : cette commande interactive échoue souvent lors d'un `RUN` de `docker build` non interactif. `CMD ["zsh"]` suffit à démarrer directement dans le bon shell à chaque `docker run`. La variable `PATH` est étendue explicitement dans l'`ENV` : Atuin, zoxide et fzf installent leur binaire dans `~/.atuin/bin`, `~/.local/bin` et `~/.fzf/bin`, des répertoires qui ne sont ajoutés au `PATH` par les scripts officiels que pour un **shell interactif** (via `.zshrc`) — sans cet `ENV`, ces commandes resteraient introuvables dans un script non interactif ou un `docker exec` direct.
 
-> 💡 **Version de Node.js** : le paquet `nodejs`/`npm` d'`apt` sur `debian:bookworm-slim` (18.x) suffit pour `npm install -g @github/copilot`. Si vous avez besoin d'une version plus récente, repliez-vous sur le script officiel NodeSource (`curl -fsSL https://deb.nodesource.com/setup_22.x | bash -` avant `apt-get install -y nodejs`).
+> 🧪 **Testé en conditions réelles** : ce `Dockerfile` a été construit et vérifié avec `docker build` + `docker run` avant publication de ce chapitre. Deux enseignements en ont émergé, déjà intégrés ci-dessus : (1) sur un réseau instable, `npm install -g @github/copilot` peut *silencieusement* omettre le paquet binaire de la plateforme (dépendance npm "optionnelle") — d'où la double tentative suivie d'une vérification explicite ; (2) `curl ... | sh` masque un échec de `curl` (le code de sortie du pipe est celui de `sh`, pas de `curl`) — d'où le téléchargement du script en deux temps, avec timeout et retries, pour Starship/Atuin/zoxide.
 
 > ⚠️ **Authentification** : ne figez jamais de token GitHub dans l'image (ni dans une instruction `ENV`, ni dans un `RUN gh auth login`) — un token intégré à une image est un token qui fuite avec elle. Authentifiez-vous plutôt de façon interactive au premier lancement du conteneur (`gh auth login`), ou injectez le token à l'exécution avec `-e GH_TOKEN=$(gh auth token)`. Voir le [Chapitre 11 : Sécurité avec Copilot](../11-security-with-copilot/README.md) pour approfondir ces bonnes pratiques.
 
 ### ▶️ À vous de jouer : TP 3 — construire et lancer votre image
 
-1. Créez le fichier `Dockerfile` ci-dessus dans un dossier de travail vide.
-2. Construisez l'image :
+1. Placez-vous dans le dossier de ce chapitre, où se trouve le `Dockerfile` fourni :
+   ```bash
+   cd 09-isolated-environments
+   ```
+2. Construisez l'image (comptez 3 à 5 minutes) :
    ```bash
    docker build -t gh-cli-terminal-stack .
    ```
@@ -394,7 +434,8 @@ Modifiez le `Dockerfile` implicite du dev container (ou créez-en un dérivé) p
 | `bat: command not found` dans le conteneur de la Partie 3 | Sur Debian, le paquet s'appelle `batcat` | Créez le lien symbolique `ln -sf $(which batcat) /usr/local/bin/bat`, comme au Chapitre 00 |
 | Les plugins Tmux (`tmux-resurrect`, `tmux-continuum`) ne se chargent pas | TPM ne peut installer les plugins que depuis une session tmux active, jamais pendant `docker build` | Une fois le conteneur lancé, ouvrez tmux puis appuyez sur `prefix + I`, comme au Chapitre 00 |
 | `gh auth login` redemande une authentification à chaque `docker run` | Le conteneur ne persiste rien entre deux exécutions (`--rm`) | Montez un volume pour `~/.config/gh` (`-v gh-config:/root/.config/gh`), ou passez `-e GH_TOKEN=$(gh auth token)` |
-| `npm install -g @github/copilot` échoue avec une erreur de version Node | Le `nodejs`/`npm` d'`apt` sur `debian:bookworm-slim` est parfois trop ancien | Repliez-vous sur le script officiel NodeSource (`curl -fsSL https://deb.nodesource.com/setup_22.x \| bash -`) avant `apt-get install -y nodejs` |
+| `copilot --version` échoue avec `no platform package found` | Le paquet npm optionnel spécifique à la plateforme (`@github/copilot-linux-x64`) n'a pas pu être téléchargé — `npm install` ne remonte pas cette erreur | Relancez `npm install -g @github/copilot`, comme le fait déjà le `Dockerfile` fourni (deuxième tentative + `copilot --version` explicite) |
+| `docker build` reste bloqué plusieurs minutes sur l'installation de Starship, Atuin ou zoxide | Leur script officiel télécharge un binaire depuis les releases GitHub ; sur un réseau instable, la requête peut rester ouverte sans erreur ni timeout | Interrompez et relancez `docker build` — le cache réutilise les couches déjà construites ; le `Dockerfile` fourni borne chaque tentative à 90s avec 3 essais pour éviter ce blocage |
 
 </details>
 
