@@ -364,7 +364,7 @@ Donnez aux sessions des noms significatifs afin de pouvoir les retrouver plus ta
 
 ```bash
 # Nommer une session dès son démarrage
-copilot --name book-app-review
+copilot --name=book-app-review
 
 # Ou renommer la session actuelle depuis l'intérieur
 copilot
@@ -388,36 +388,28 @@ copilot --resume=book-app-review
 
 </details>
 
-Pour nettoyer les sessions dont vous n'avez plus besoin, utilisez `/session delete` depuis l'intérieur d'une session :
+Pour consulter ou nettoyer vos sessions, la commande `/session` accepte plusieurs sous-commandes :
 
 ```bash
 copilot
 
+> /session info              # Détails de la session actuelle (nom, ID, répertoire de travail)
 > /session delete            # Supprime la session actuelle
 > /session delete abc123     # Supprime une session spécifique par son ID
 > /session delete-all        # Supprime toutes les sessions (à utiliser avec précaution !)
 ```
 
+> 💡 Pour un nettoyage moins radical que `delete-all`, `/session cleanup` et `/session prune` permettent de retirer sélectivement d'anciennes sessions plutôt que tout supprimer. Détails et sous-commandes complètes dans [Motifs @ supplémentaires et commandes de session](#additional-patterns) ci-dessous.
+
 ### Mémoire persistante entre les sessions
 
-Les sessions enregistrent votre historique de conversation, mais la **mémoire** va plus loin et permet à Copilot CLI de se souvenir de préférences et de faits *d'une session à l'autre*, pas seulement au sein d'une seule.
+Les sessions enregistrent votre historique de conversation, mais la **mémoire** (Copilot Memory) va plus loin et permet à Copilot de se souvenir de préférences et de faits *d'un compte à l'autre*, pas seulement au sein d'une session.
 
-```bash
-copilot
+Contrairement aux sessions, la mémoire ne se pilote pas depuis une commande slash dans le terminal : elle s'active au niveau de votre **compte GitHub**, depuis les paramètres web (Profil → Copilot settings → Features → Copilot Memory → Enabled/Disabled). Côté ligne de commande, le seul levier disponible est le drapeau `--enable-memory`, réservé au mode non interactif (`copilot -p "..."` avec `--enable-memory`) et désactivé par défaut.
 
-> /memory show
-# Affiche ce dont Copilot CLI se souvient actuellement à propos de vous et de votre projet
+Par exemple, si Copilot Memory est activé sur votre compte et que vous dites à Copilot CLI « Je préfère toujours pytest pour les tests Python », il peut retenir cette préférence et l'appliquer automatiquement dans des sessions futures, sans que vous ayez à la répéter.
 
-> /memory on
-# Active la mémoire (activée par défaut si votre compte le prend en charge)
-
-> /memory off
-# Désactive la mémoire (utile si vous préférez repartir de zéro à chaque fois)
-```
-
-Par exemple, si vous dites à Copilot CLI « Je préfère toujours pytest pour les tests Python », il peut retenir cette préférence et l'appliquer automatiquement dans les sessions futures. Sans que vous ayez à la répéter.
-
-> 💡 **Mémoire vs. sessions** : Les sessions enregistrent l'historique de conversation afin que vous puissiez reprendre une tâche spécifique. La mémoire enregistre des faits réutilisables sur le dépôt et des préférences utilisateur que Copilot peut appliquer dans les travaux futurs. Pensez aux sessions comme des carnets de tâches, et à la mémoire comme un contexte réutilisable que Copilot peut transporter avec lui.
+> 💡 **Mémoire vs. sessions** : Les sessions enregistrent l'historique de conversation afin que vous puissiez reprendre une tâche spécifique — activez-les et gérez-les entièrement depuis la CLI. La mémoire enregistre des faits réutilisables et des préférences au niveau du compte, se configure sur GitHub.com, et n'est exposée dans la CLI que via `--enable-memory` (mode `-p`). Pensez aux sessions comme des carnets de tâches, et à la mémoire comme une préférence de compte que Copilot transporte d'un projet à l'autre.
 
 ### Vérifier et gérer le contexte
 
@@ -435,13 +427,16 @@ Context usage: 62k/200k tokens (31%)
 > /new
 # Termine la session actuelle (en l'enregistrant dans l'historique pour recherche/reprise) et démarre une nouvelle conversation
 
-> /rewind
+> /undo
 # Ouvre un sélecteur de chronologie permettant de revenir à un point antérieur de votre conversation
+# (alias : /rewind)
 ```
 
 > 💡 **Quand utiliser `/clear` ou `/new`** : Si vous étiez en train de revoir books.py et souhaitez passer à une discussion sur utils.py, exécutez d'abord /new (ou /clear si vous n'avez pas besoin de l'historique de session). Sinon, du contexte périmé de l'ancien sujet pourrait perturber les réponses.
 
-> 💡 **Vous avez fait une erreur ou voulez essayer une approche différente ?** Utilisez `/rewind` (ou appuyez deux fois sur Échap) pour ouvrir un **sélecteur de chronologie** qui vous permet de revenir à n'importe quel point antérieur de votre conversation, pas seulement le plus récent. Depuis Copilot CLI v1.0.78, `/rewind` ne nécessite plus de dépôt git : au moment de rembobiner, on vous demande explicitement si vous voulez restaurer **uniquement la conversation** ou **la conversation et les fichiers**. Dans ce second cas, seuls les fichiers que Copilot a lui-même modifiés sont restaurés — un fichier dont le contenu ne correspond plus à ce que Copilot avait écrit en dernier est laissé de côté par sécurité. Ceci est utile lorsque vous vous êtes engagé dans une mauvaise voie et voulez revenir en arrière sans tout recommencer entièrement.
+> 💡 **Vous avez fait une erreur ou voulez essayer une approche différente ?** Utilisez `/undo` (alias `/rewind`, ou appuyez deux fois sur Échap) pour ouvrir un **sélecteur de chronologie** qui vous permet de revenir à n'importe quel point antérieur de votre conversation, pas seulement le plus récent. Depuis Copilot CLI v1.0.78, cette commande ne nécessite plus de dépôt git : au moment de revenir en arrière, on vous demande explicitement si vous voulez restaurer **uniquement la conversation** ou **la conversation et les fichiers**. Dans ce second cas, seuls les fichiers que Copilot a lui-même modifiés sont restaurés — un fichier dont le contenu ne correspond plus à ce que Copilot avait écrit en dernier est laissé de côté par sécurité. Ceci est utile lorsque vous vous êtes engagé dans une mauvaise voie et voulez revenir en arrière sans tout recommencer entièrement.
+>
+> ⚠️ **Note de sécurité sur `--add-dir`** : autoriser un répertoire ne fait pas que débloquer l'accès à ses fichiers — Copilot CLI charge aussi les fichiers `.github/skills` et `.github/agents` de ce répertoire comme des **configurations de confiance**. N'ajoutez donc que des répertoires dont vous savez qu'ils ne contiennent pas de skills ou d'agents malveillants.
 
 ---
 
@@ -455,7 +450,7 @@ Imaginez ce flux de travail sur plusieurs jours :
 
 ```bash
 # Lundi : Démarrer la revue de l'application de livres avec un nom dès le départ
-copilot --name book-app-review
+copilot --name=book-app-review
 
 > @samples/book-app-project/books.py
 > Review and number all code quality issues
@@ -540,20 +535,48 @@ copilot
 
 ### Voir les informations de session
 
+La commande `/session` (alias `/sessions`) accepte plusieurs sous-commandes :
+
+| Sous-commande | Ce qu'elle fait |
+|---|---|
+| `/session info` | Détails de la session actuelle et résumé de l'espace de travail |
+| `/session checkpoints` | Liste les checkpoints créés par les compactions successives (voir [Comprendre les fenêtres de contexte](#understanding-context-windows)) |
+| `/session checkpoints N` | Affiche le contenu détaillé du checkpoint `N` |
+| `/session files` | Liste les fichiers évoqués ou modifiés dans la session |
+| `/session plan` | Affiche le plan/todo en cours pour la session |
+| `/session rename [NOM]` | Renomme la session (alias : `/rename`) |
+| `/session cleanup` | Supprime sélectivement d'anciennes sessions selon des critères (alternative moins radicale que `delete-all`) |
+| `/session prune` | Réduit l'historique des sessions conservées |
+| `/session delete [ID]` | Supprime la session actuelle, ou une session spécifique par ID |
+| `/session delete-all` | Supprime toutes les sessions (à utiliser avec précaution !) |
+
 ```bash
 copilot
 
-> /session
-# Affiche les détails de la session actuelle et un résumé de l'espace de travail
-
 > /usage
-# Affiche les métriques et statistiques de la session
+# Affiche les métriques et statistiques de la session, y compris le total de
+# tokens par modèle. Pour les comptes facturés au token, chaque modèle affiche
+# aussi sa propre consommation en crédits IA (ex : "1 AIC")
+
+> /list-dirs
+# Affiche tous les répertoires auxquels l'accès a été autorisé via --add-dir ou /add-dir
+
+> /search rate limiting
+> /find rate limiting
+# Recherche un mot-clé dans l'historique de la conversation en cours
 ```
 
 ### Partager votre session
 
 ```bash
 copilot
+
+> /share
+# Sans argument : crée un lien GitHub partageable si vous êtes connecté
+# (repli automatique sur un export Markdown local sinon). Alias : /export
+
+> /share off
+# Arrête le partage d'un lien précédemment créé
 
 > /share file ./my-session.md
 # Exporte la session sous forme de fichier markdown
@@ -646,6 +669,8 @@ Context usage: 120,000 / 128,000 tokens (94%)
 Context limit reached. Older context will be summarized.
 ```
 
+> 💡 **Ce que `/context` détaille réellement** : l'exemple ci-dessus simplifie à un seul pourcentage global. En pratique, `/context` ventile l'usage par catégorie : invite système (System Prompt), instructions personnalisées (Custom Instructions), outils système (System Tools), outils MCP (MCP Tools), messages de la conversation (Messages), espace libre (Free Space) et une marge de sécurité (Buffer). Utile pour repérer *ce qui* remplit votre fenêtre de contexte, pas seulement de combien elle est remplie.
+
 #### La commande `/compact`
 
 Lorsque votre contexte se remplit mais que vous ne voulez pas perdre la conversation, `/compact` résume votre historique pour libérer des tokens :
@@ -669,13 +694,38 @@ copilot
 
 > 💡 **Quand utiliser des instructions de focalisation** : Si votre conversation a couvert de nombreux sujets, les instructions de focalisation aident `/compact` à conserver les parties les plus pertinentes pour vos prochaines étapes afin de ne pas perdre le fil.
 
+> 🔎 **Compaction automatique** : vous n'avez pas besoin d'attendre la limite pour que la compaction se déclenche. À la date de rédaction, Copilot CLI lance automatiquement une compaction en arrière-plan aux alentours de **80 %** d'utilisation de la fenêtre de contexte, et marque une pause si la fenêtre atteint environ **95 %** avant que la compaction ne soit terminée. Ces seuils peuvent évoluer d'une version à l'autre — retenez surtout le principe : la compaction agit avant que vous ne soyez bloqué.
+
+#### Checkpoints : ce qui se passe concrètement à chaque compaction
+
+Chaque compaction (automatique ou déclenchée via `/compact`) prend un instantané de la conversation, en génère un résumé structuré via le modèle, puis remplace l'historique détaillé par ce résumé (en conservant les instructions initiales et l'état du plan/todo en cours). Ce résumé conserve vos conclusions et décisions clés, mais **pas** la formulation exacte ni la sortie complète des commandes exécutées.
+
+Chaque compaction crée un **checkpoint** numéroté et titré, consultable à tout moment :
+
+```bash
+copilot
+
+> /session checkpoints
+# Liste les checkpoints créés par les compactions successives de cette session
+
+> /session checkpoints 2
+# Affiche le contenu détaillé du checkpoint n°2
+```
+
+Les checkpoints sont utiles pour comprendre ce qui a été résumé, vérifier que le fil de la conversation reste cohérent, ou déboguer une réponse qui semble « avoir oublié » un détail. Une fois qu'une compaction a eu lieu, elle ne peut pas être annulée — si vous avez besoin de revenir en arrière avant la compaction, utilisez `/undo` plutôt que d'espérer récupérer le détail perdu.
+
+#### Sorties d'outils volumineuses
+
+Quand une commande ou un outil produit une sortie très volumineuse (plus de **20 Kio**), Copilot CLI ne l'injecte pas telle quelle dans la conversation : elle est enregistrée dans un fichier temporaire, et le modèle ne reçoit que le chemin du fichier plus un aperçu. Cela évite qu'une seule commande verbeuse (un `npm install`, un gros diff, un dump de logs) ne sature votre fenêtre de contexte. Ce seuil est configurable via la variable d'environnement `COPILOT_LARGE_OUTPUT_THRESHOLD_BYTES` si vous avez besoin d'un comportement différent.
+
 #### Astuces d'efficacité du contexte
 
 | Situation | Action | Pourquoi |
 |-----------|--------|-----|
 | Démarrer un nouveau sujet | `/clear` | Supprime le contexte non pertinent |
-| Engagé dans une mauvaise voie | `/rewind` | Revenir en arrière dans la conversation (et éventuellement restaurer les fichiers) à un point antérieur |
+| Engagé dans une mauvaise voie | `/undo` (alias `/rewind`) | Revenir en arrière dans la conversation (et éventuellement restaurer les fichiers) à un point antérieur |
 | Conversation longue | `/compact` | Résume l'historique, libère des tokens |
+| Vérifier une compaction passée | `/session checkpoints` | Voir ce qui a été résumé et quand |
 | Besoin d'un fichier spécifique | `@file.py` plutôt que `@folder/` | Ne charge que ce dont vous avez besoin |
 | Atteinte des limites | `/new` ou `/clear` | Contexte neuf |
 | Sujets multiples | Utilisez `/rename` par sujet | Facile de reprendre la bonne session |
@@ -944,7 +994,7 @@ copilot
 **« Permission denied »** - Ajoutez le répertoire à votre liste autorisée :
 
 ```bash
-copilot --add-dir /path/to/directory
+copilot --add-dir=/path/to/directory
 
 # Ou dans une session :
 > /add-dir /path/to/directory
@@ -964,6 +1014,12 @@ copilot --add-dir /path/to/directory
 - Utilisez `/clear` entre les différents sujets
 - Répartissez le travail sur plusieurs sessions
 
+**Copilot CLI se comporte de façon inattendue** - `/diagnose` analyse le journal de la session en cours pour repérer des erreurs ou un comportement anormal :
+
+```bash
+> /diagnose
+```
+
 </details>
 
 ---
@@ -974,15 +1030,15 @@ copilot --add-dir /path/to/directory
 
 1. La **syntaxe `@`** donne à Copilot CLI du contexte sur les fichiers, répertoires et images
 2. Les **conversations multi-tours** s'appuient les unes sur les autres à mesure que le contexte s'accumule
-3. Les **sessions s'enregistrent automatiquement** : nommez-les au démarrage avec `--name`, reprenez-les par nom avec `--resume=<name>`, ou utilisez `--continue` pour reprendre la session la plus récente
-4. Les **fenêtres de contexte** ont des limites : gérez-les avec `/clear`, `/compact`, `/context`, `/new`, et `/rewind`. Utilisez `/compact focus on <topic>` pour orienter ce qui est conservé dans le résumé
-5. La **mémoire persistante** (`/memory`) permet à Copilot CLI de se souvenir de préférences et de faits d'une session à l'autre — pas seulement la session actuelle
+3. Les **sessions s'enregistrent automatiquement** : nommez-les au démarrage avec `--name=<nom>`, reprenez-les par nom avec `--resume=<nom>`, ou utilisez `--continue` pour reprendre la session la plus récente
+4. Les **fenêtres de contexte** ont des limites : gérez-les avec `/clear`, `/compact`, `/context`, `/new`, et `/undo` (alias `/rewind`). Utilisez `/compact focus on <topic>` pour orienter ce qui est conservé dans le résumé
+5. La **mémoire persistante** (Copilot Memory) permet à Copilot de se souvenir de préférences d'un compte à l'autre — elle se configure sur GitHub.com, pas via une commande slash, et n'est exposée dans la CLI que par le drapeau `--enable-memory` (mode `-p`)
 6. Les **drapeaux de permission** (`--add-dir`, `--allow-all`) contrôlent l'accès multi-répertoires. Utilisez-les judicieusement !
 7. Les **références d'images** (`@screenshot.png`) aident à déboguer visuellement les problèmes d'interface utilisateur
 
 > 📚 **Documentation officielle** : [Utiliser Copilot CLI](https://docs.github.com/copilot/how-tos/copilot-cli/use-copilot-cli) pour la référence complète sur le contexte, les sessions et le travail avec les fichiers.
 
-> 📋 **Référence rapide** : Consultez la [référence des commandes GitHub Copilot CLI](https://docs.github.com/en/copilot/reference/cli-command-reference) pour une liste complète des commandes et raccourcis.
+> 📋 **Référence rapide** : Consultez la [référence des commandes GitHub Copilot CLI](https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference) pour une liste complète des commandes et raccourcis.
 
 ---
 
