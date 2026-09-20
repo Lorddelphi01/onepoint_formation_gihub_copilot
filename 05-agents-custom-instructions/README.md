@@ -104,9 +104,7 @@ copilot
 <details>
 <summary>🎬 Voyez l'agent Plan en action !</summary>
 
-![Built-in Agent Demo](assets/builtin-agent-demo.gif)
-
-*La sortie de la démo peut varier - votre modèle, vos outils et vos réponses différeront de ce qui est présenté ici.*
+🚧 *Démo en préparation — le script d'enregistrement (`assets/builtin-agent-demo.tape`) existe déjà ; il reste à le rendre avec `npm run generate:vhs -- --chapter 05` pour produire ce GIF.*
 
 </details>
 
@@ -572,9 +570,7 @@ copilot --no-custom-instructions
 <details>
 <summary>🎬 Voyez la différence avec et sans <code>--no-custom-instructions</code> !</summary>
 
-![No Custom Instructions Demo](assets/no-custom-instructions-demo.gif)
-
-*La sortie de la démo peut varier - votre modèle, vos outils et vos réponses différeront de ce qui est présenté ici.*
+🚧 *Démo en préparation — le script d'enregistrement (`assets/no-custom-instructions-demo.tape`) existe déjà ; il reste à le rendre avec `npm run generate:vhs -- --chapter 05` pour produire ce GIF.*
 
 </details>
 
@@ -741,9 +737,7 @@ copilot
 <details>
 <summary>🎬 Voyez la création d'un agent en action !</summary>
 
-![Agent Creation Demo](assets/agent-creation-demo.gif)
-
-*La sortie de la démo peut varier - votre modèle, vos outils et vos réponses différeront de ce qui est présenté ici.*
+🚧 *Démo en préparation — le script d'enregistrement (`assets/agent-creation-demo.tape`) existe déjà ; il reste à le rendre avec `npm run generate:vhs -- --chapter 05` pour produire ce GIF.*
 
 </details>
 
