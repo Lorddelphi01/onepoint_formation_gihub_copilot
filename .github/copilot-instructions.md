@@ -68,3 +68,4 @@ Ne vous écartez pas de cette structure lors de la modification ou de l'ajout de
 | Devcontainer mis à jour | `.devcontainer/devcontainer.json`, Chapitre 01 (instructions d'installation) |
 | Image ou bannière modifiée | Répertoire `assets/`, tout README référençant l'image |
 | Exigences de version de Copilot CLI modifiées | Chapitre 01, Chapitre 02, `.devcontainer/devcontainer.json` |
+| Chapitre déplacé/reclassé entre pistes (tracks) | `README.md` (catalogue de formation), `AGENTS.md` (table « Pistes (tracks) du README ») |
