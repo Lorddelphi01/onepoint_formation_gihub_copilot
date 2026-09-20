@@ -5,7 +5,8 @@
       "url": "http://127.0.0.1:27123/mcp/",
       "headers": {
         "Authorization": "Bearer ${OBSIDIAN_API_KEY}"
-      }
+      },
+      "tools": ["*"]
     },
     "smart-connections": {
       "type": "local",
@@ -13,7 +14,8 @@
       "args": ["-y", "smart-connections-mcp"],
       "env": {
         "SMART_VAULT_PATH": "/chemin/absolu/vers/votre/vault"
-      }
+      },
+      "tools": ["*"]
     }
   }
 }
