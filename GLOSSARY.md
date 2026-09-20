@@ -126,6 +126,14 @@ Un remplaçant moderne de la commande `ls`, avec icônes, couleurs par type de f
 
 ## F
 
+### Fleet
+
+Un mode de Copilot CLI (`/fleet`) qui laisse Copilot décomposer lui-même une tâche complexe en sous-tâches indépendantes, exécutées par des sous-agents en parallèle au sein d'une même session. Complémentaire des worktrees, qui parallélisent des tâches *distinctes* orchestrées par vous plutôt qu'une seule tâche décomposée par Copilot. Présenté aux Chapitres 08 et 16.
+
+### Fork de session
+
+Une duplication de la *conversation* Copilot CLI dans une nouvelle session (`/fork` ou son alias `/branch`), sans créer de worktree Git ni de nouveau dossier sur disque. Plus léger qu'un worktree quand on veut explorer deux pistes de discussion sans isolation de fichiers. Présenté au Chapitre 16.
+
 ### Frontmatter
 
 Métadonnées en haut d'un fichier Markdown, délimitées par `---`. Utilisées dans les fichiers d'agents et de compétences (skills) pour définir des propriétés comme `description` et `name` au format YAML.
