@@ -169,16 +169,13 @@ Installation et vérification
 </td>
 </tr>
 <tr>
-<td width="50%" valign="top">
+<td colspan="2" valign="top">
 
 #### 👋 [Premiers pas](./02-setup-and-first-steps/README.md)
 
 Démonstrations en direct + trois modes d'interaction
 
 <sub>Chapitre 02 · ~50 min · Fondamental</sub>
-
-</td>
-<td width="50%" valign="top">
 
 </td>
 </tr>
