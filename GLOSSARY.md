@@ -74,6 +74,10 @@ Une construction Python utilisant l'instruction `with` qui gère automatiquement
 
 Un format de message de commit qui suit une structure standardisée : `type(scope): description`. Les types courants incluent `feat` (nouvelle fonctionnalité), `fix` (correction de bug), `docs` (documentation), `refactor`, et `test`. Exemple : `feat(auth): add password reset flow`.
 
+### Crédits IA (AI Credits)
+
+L'unité de facturation à l'usage de GitHub Copilot depuis le 1er juin 2026 : 1 crédit IA = 0,01 $, consommé selon le modèle utilisé et le volume de tokens (entrée, sortie, cache) d'une interaction. Remplace l'ancien modèle de « requêtes premium ». Consultables en session via `/usage`, plafonnables via `/limits` ou le flag `--max-ai-credits`. Présenté au Chapitre 14.
+
 ### CVE (Common Vulnerabilities and Exposures)
 
 Un identifiant public référençant une vulnérabilité de sécurité connue et documentée (par exemple dans une dépendance publiée). Détecté par des outils comme GitHub Dependabot, pas par la commande `/security-review` de Copilot CLI qui se concentre sur des schémas de code à risque plutôt que sur des correspondances avec des bases de CVE. Présenté au Chapitre 11.
@@ -278,7 +282,7 @@ Une technique en trois étapes : *retrieval* (retrouver des contenus pertinents 
 
 ### Rate Limiting (limitation de débit)
 
-Restrictions sur le nombre de requêtes que tu peux effectuer vers une API pendant une période donnée. Copilot peut temporairement limiter les réponses si tu dépasses le quota d'utilisation de ton forfait.
+Restrictions sur le nombre de requêtes que tu peux effectuer vers une API pendant une période donnée. Copilot peut temporairement limiter les réponses si tu dépasses le quota d'utilisation de ton forfait. À ne pas confondre avec `/limits`, qui plafonne volontairement tes propres crédits IA par session (voir [Crédits IA](#crédits-ia-ai-credits), Chapitre 14).
 
 ### Recherche sémantique (semantic search)
 
@@ -290,7 +294,7 @@ La commande `/rewind` de Copilot CLI, qui annule une ou plusieurs étapes d'une 
 
 ### RTK (Rust Token Killer)
 
-Un outil tiers open source (`rtk-ai/rtk`), écrit en Rust, qui agit comme un proxy CLI : il intercepte des commandes de développement verbeuses (git, npm, cargo, pytest...), les exécute normalement, puis renvoie à l'agent une version compressée de leur sortie. Se connecte à Copilot CLI via `rtk init -g` (hook de réécriture automatique) ou via un fichier `copilot-instructions.md` fourni par le projet `rtk-for-copilot`. Commande d'analyse principale : `rtk gain`. Présenté au Chapitre 14.
+Un outil tiers open source (`rtk-ai/rtk`), écrit en Rust, qui agit comme un proxy CLI : il intercepte des commandes de développement verbeuses (git, npm, cargo, pytest...), les exécute normalement, puis renvoie à l'agent une version compressée de leur sortie. Se connecte à Copilot CLI via `rtk init -g --copilot` (hook « deny-with-suggestion », une limitation du CLI empêchant la réécriture silencieuse) ou via un fichier `copilot-instructions.md` fourni par le projet `rtk-for-copilot`. Commande d'analyse principale : `rtk gain`. Un benchmark indépendant a mesuré que ses économies auto-rapportées ne se traduisent pas systématiquement en économies réelles sur la facture. Présenté au Chapitre 14.
 
 ---
 
