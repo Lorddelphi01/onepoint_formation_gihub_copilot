@@ -155,6 +155,12 @@ git diff --staged
 staged correspond au plan et aucun fichier de `samples/book-app-buggy/` ou
 `samples/buggy-code/` n'est concerné.
 
+> 💡 **Astuce** : `/diff` ouvre un mode de revue interactif directement dans
+> le terminal, en alternative à `git diff` brut. Appuyez sur `c` pour
+> commenter une ligne précise, `s` pour afficher un résumé de vos
+> commentaires, puis `Entrée` pour les soumettre à Copilot — pratique pour
+> demander des ajustements ciblés avant de committer, sans quitter la revue.
+
 ### 6. Préparer la PR
 
 ```text
@@ -271,11 +277,12 @@ copilot
 
 **L'idée clé** : Vous avez dirigé des spécialistes comme un architecte. Ils ont géré les détails. Vous avez géré la vision.
 
-> 💡 **Pour aller plus loin** : Pour de grands plans en plusieurs étapes comme celui-ci, essayez `/fleet` pour laisser Copilot exécuter des sous-tâches indépendantes en parallèle. Consultez la [documentation officielle](https://docs.github.com/copilot/concepts/agents/copilot-cli/fleet) pour plus de détails.
+> 💡 **Pour aller plus loin** : Pour de grands plans en plusieurs étapes comme celui-ci, essayez `/fleet` pour laisser Copilot exécuter des sous-tâches indépendantes en parallèle. Une autre option, complémentaire, est `/delegate` (vu au Chapitre 04) : confiez une sous-tâche bien délimitée à un agent cloud en arrière-plan tout en continuant à travailler dans votre session principale. Consultez la [documentation officielle](https://docs.github.com/copilot/concepts/agents/copilot-cli/fleet) pour plus de détails sur `/fleet`.
 
-> 🛡️ **Sécurité et organisation** : Deux commandes complètent utilement ce flux de bout en bout :
+> 🛡️ **Sécurité et organisation** : Trois commandes complètent utilement ce flux de bout en bout :
 > - `/worktree new` isole votre session de travail dans un nouveau worktree git *(depuis Copilot CLI v1.0.79)* — pratique pour paralléliser plusieurs tâches Copilot CLI (par exemple ce workflow et une correction de bug urgente) sans qu'elles ne se marchent dessus.
 > - `/rewind` sert de filet de sécurité pour annuler une étape qui part dans la mauvaise direction *(depuis Copilot CLI v1.0.78)*. Il ne dépend plus de git, ne restaure que les fichiers modifiés par Copilot, et vous laisse choisir entre annuler « la conversation seule » ou « la conversation et les fichiers ».
+> - `/tasks` affiche un tableau de bord des subagents en arrière-plan et des sessions shell détachées (vu au Chapitre 05) — utile pour surveiller ce que `/fleet` ou `/delegate` ont lancé sans perdre le fil de votre session principale.
 
 ---
 
@@ -394,6 +401,8 @@ chmod +x .git/hooks/pre-commit
 > 📚 **Documentation officielle** : [Utiliser les hooks](https://docs.github.com/copilot/how-tos/copilot-cli/use-hooks) et la [référence de configuration des hooks](https://docs.github.com/copilot/reference/hooks-configuration) pour l'API complète des hooks.
 >
 > 💡 **Alternative intégrée** : Copilot CLI dispose également d'un système de hooks intégré (`copilot hooks`) qui peut s'exécuter automatiquement sur des événements comme le pre-commit. Le hook git manuel ci-dessus vous donne un contrôle total, tandis que le système intégré est plus simple à configurer. Consultez la documentation ci-dessus pour décider quelle approche convient à votre workflow.
+>
+> ⚠️ **Ne pas confondre avec `/security-review`** : ce hook appelle `copilot -p` en mode scripté, pensé pour tourner sans surveillance à chaque commit. La commande `/security-review`, présentée au [Chapitre 11 (bonus)](../11-security-with-copilot/README.md), est un outil différent : une revue de sécurité interactive que vous lancez à la demande, en session, sur votre diff local. Les deux se complètent, ce ne sont pas deux façons interchangeables de faire la même chose.
 
 Désormais, chaque commit reçoit une revue de sécurité rapide :
 
@@ -491,6 +500,8 @@ Chaque outil a son point fort :
 ```
 
 > 💡 **Point clé** : Les agents et les skills peuvent tous deux analyser ET générer du code. La vraie différence est **la façon dont ils s'activent** — les agents sont explicites (`/agent`), les skills sont automatiques (correspondance de prompt), et les instructions personnalisées sont toujours actives.
+
+> 🔎 **Vérifier ce qui est réellement chargé** : Dans une session qui combine instructions, agents, skills, MCP et hooks, il devient facile de perdre le fil. Lancez `/env` pour lister en une seule commande tout ce que Copilot a chargé pour la session courante — instructions personnalisées, serveurs MCP, skills, agents, hooks, plugins et serveurs de langage (LSP). C'est le premier réflexe à avoir si un outil combiné ne se déclenche pas comme prévu.
 
 ### 3. Garder les sessions ciblées
 
@@ -672,7 +683,13 @@ Félicitations ! Vous avez appris :
 
 Vous êtes maintenant équipé pour utiliser GitHub Copilot CLI comme un véritable multiplicateur de force dans votre workflow de développement.
 
-> 🎁 **Envie d'aller plus loin ?** Le [Chapitre 09 (bonus) : Environnements isolés](../09-isolated-environments/README.md) vous montre comment exécuter Copilot CLI dans un dev container puis dans une sandbox Docker isolée, pour automatiser avec `--allow-all` sans surveillance et sans risque pour le reste de votre machine.
+> 🎁 **Envie d'aller plus loin ?** Le tronc commun s'arrête ici, mais **dix chapitres bonus** (09 à 18) prolongent directement les thèmes de ce chapitre :
+> - [Chapitre 11 : Sécuriser votre code avec Copilot CLI](../11-security-with-copilot/README.md) — approfondit `/security-review`, mentionné dans le Workflow 2 ci-dessus.
+> - [Chapitre 13 : Explorer l'historique de vos sessions avec /chronicle](../13-chronicle-session-insights/README.md) — transforme vos habitudes de travail en rapports, conseils et skills, pour aller plus loin que la bonne pratique n°4 (« Rendre les workflows réutilisables ») et l'Exercice 3 de ce chapitre.
+> - [Chapitre 16 : Sessions parallèles avec les worktrees Git](../16-parallel-worktrees/README.md) — approfondit `/worktree new`, mentionné dans le parcours guidé.
+> - Les autres : [09 Environnements isolés](../09-isolated-environments/README.md) (Docker), [10 RAG sur Obsidian](../10-obsidian-rag/README.md), [12 Acceptation de l'IA par les développeurs](../12-ai-developer-acceptance/README.md), [14 Consommation de tokens (RTK/Tokscale)](../14-token-consumption-analysis/README.md), [15 Prompt engineering](../15-prompt-engineering/README.md), [17 mcp2cli](../17-mcp2cli/README.md), [18 Workflows n8n](../18-n8n-workflows/README.md).
+>
+> Consultez le [tableau complet des chapitres](../README.md#comment-fonctionne-ce-cours) pour choisir selon vos besoins — aucun ordre n'est imposé au-delà du tronc commun 00–08.
 
 ## ➡️ Et ensuite ?
 

@@ -90,6 +90,10 @@ Un décorateur Python (`@dataclass`) qui génère automatiquement `__init__`, `_
 
 Un environnement de développement décrit par un fichier `devcontainer.json` : image Docker, outils préinstallés, extensions VS Code. Garantit que toute l'équipe travaille dans un environnement identique, utilisé par GitHub Codespaces et l'extension VS Code Dev Containers. Présenté au Chapitre 09.
 
+### Diff (mode revue interactif)
+
+La commande `/diff` de Copilot CLI, qui ouvre une revue interactive des changements directement dans le terminal (bascule automatiquement sur le diff de branche quand l'arbre de travail est propre). Permet de commenter une ligne précise (`c`), d'afficher un résumé des commentaires (`s`), puis de les soumettre à Copilot (`Entrée`) — une alternative plus riche à `git diff` seul pour demander des ajustements ciblés avant de committer. Présenté au Chapitre 08.
+
 ### Dockerfile
 
 Un fichier texte qui décrit, instruction par instruction (`FROM`, `RUN`, `COPY`, `CMD`...), comment construire une image Docker de façon reproductible. Permet d'embarquer des outils (comme GitHub CLI ou une stack terminal complète) dans une image réutilisable comme base de dev container, de sandbox, ou en CI. Présenté au Chapitre 09.
@@ -105,6 +109,10 @@ Un référentiel de recherche indépendant (adossé à Google Cloud) qui publie 
 ### Embedding
 
 Une représentation numérique du sens d'un texte (un vecteur), calculée par un modèle et utilisée pour retrouver des contenus par similarité de sens plutôt que par mot-clé exact. C'est ce que génère le plugin Obsidian Smart Connections pour permettre la recherche sémantique. Présenté au Chapitre 10.
+
+### Env (`/env`)
+
+La commande `/env` de Copilot CLI, qui liste en une seule fois tout ce qui est chargé dans la session courante : instructions personnalisées, serveurs MCP, skills, agents, hooks, plugins et serveurs de langage (LSP). Le premier réflexe pour déboguer une session qui combine plusieurs de ces mécanismes. Présenté au Chapitre 08.
 
 ### Exclusion de contenu (content exclusion)
 
