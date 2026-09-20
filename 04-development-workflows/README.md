@@ -205,6 +205,18 @@ copilot
 
 > 💡 **Astuce** : L'agent code-review fonctionne mieux lorsque vous avez des changements en attente. Indexez vos fichiers avec `git add` pour des revues plus ciblées.
 
+### 🆕 Obtenir un second avis avec /rubber-duck
+
+Après une revue avec `/review`, si vous hésitez encore sur une correction ou un plan, la commande `/rubber-duck` consulte un agent dédié pour un second avis sur votre code, vos plans ou vos tests — comme le fait un vrai canard en plastique posé sur le bureau, mais avec des retours concrets.
+
+```bash
+copilot
+
+> /rubber-duck Is this fix for find_by_author actually safe, or am I missing an edge case?
+```
+
+> 💡 **Quand l'utiliser** : entre `/review` (qui liste des problèmes) et un commit, `/rubber-duck` est utile pour challenger une hypothèse ou un plan avant de l'exécuter, plutôt que pour lister des bugs.
+
 </details>
 
 ---
@@ -433,6 +445,31 @@ copilot
 > Users report that the book list numbering starts at 0 instead of 1.
 > @samples/book-app-buggy/book_app_buggy.py @samples/book-app-buggy/books_buggy.py
 > Trace through the list display flow and identify where the issue occurs
+```
+
+### 🆕 Reproduire le bug sans quitter la session
+
+Préfixez une ligne avec `!` pour exécuter une commande shell directement depuis votre session Copilot CLI, sans perdre le contexte de la conversation. Utile pour relancer un test qui échoue juste après avoir décrit le symptôme.
+
+```bash
+copilot
+
+> @samples/book-app-buggy/books_buggy.py Users report the search is case-sensitive. Debug why.
+
+# Copilot CLI propose une hypothèse de cause racine
+
+> !python -m pytest tests/ -k search -v
+
+# La sortie du test reste visible dans la même conversation :
+# Copilot CLI peut confirmer ou corriger son hypothèse à partir du résultat réel
+```
+
+> 💡 **Astuce** : `!` (seul, sans commande) bascule en mode shell pour enchaîner plusieurs commandes de suite. `$` (seul) rend la main à votre shell interactif habituel si vous avez besoin d'une session complète.
+
+Si l'hypothèse de Copilot CLI vous semble incertaine, demandez un second avis avec `/rubber-duck` avant d'appliquer le correctif :
+
+```bash
+> /rubber-duck Before I apply this fix, does the root cause explanation actually match the symptom?
 ```
 
 ### Comprendre les problèmes de données
@@ -694,8 +731,18 @@ Si vous travaillez avec une branche en mode interactif de Copilot CLI, vous pouv
 ```bash
 copilot
 
-> /pr [view|create|fix|auto]
+> /pr [view|create|fix|auto|automerge]
 ```
+
+| Mode | Ce qu'il fait |
+|------|---------------|
+| `view` | Affiche la PR de la branche courante |
+| `create` | Crée une nouvelle PR |
+| `fix` | Corrige une PR existante (ex. après un retour de revue) |
+| `auto` | Corrige les vérifications CI jusqu'à ce qu'elles passent au vert, puis s'arrête |
+| `automerge` *(alias `agentmerge`)* 🆕 | Corrige les vérifications CI jusqu'au vert, **puis fusionne automatiquement** la PR |
+
+> ⚠️ **Attention avec `automerge`** : cette option fusionne la PR sans confirmation manuelle une fois les checks au vert. Réservez-la à des changements que vous avez déjà revus, sur des dépôts où la fusion automatique est acceptable.
 
 ### Revue avant push
 
@@ -716,9 +763,6 @@ copilot
 
 > /delegate Add input validation to the login form
 
-# Ou utilisez le raccourci avec le préfixe & :
-> & Fix the typo in the README header
-
 # Copilot CLI :
 # 1. Commite vos changements sur une nouvelle branche
 # 2. Ouvre une pull request en brouillon
@@ -728,9 +772,11 @@ copilot
 
 C'est idéal pour des tâches bien définies que vous voulez voir accomplies pendant que vous vous concentrez sur autre chose.
 
-### Utiliser /diff pour relire les changements de la session
+### Utiliser /diff pour relire et commenter les changements
 
-La commande `/diff` affiche tous les changements effectués durant votre session actuelle. Utilisez cette commande slash pour voir un diff visuel de tout ce que Copilot CLI a modifié avant de committer. Elle fonctionne aussi dans des dossiers qui ne sont pas des dépôts git.
+La commande `/diff` ouvre un véritable **mode de revue interactif** sur les changements du répertoire courant (elle bascule automatiquement sur le diff de branche quand l'arbre de travail est propre). Elle fonctionne aussi dans des dossiers qui ne sont pas des dépôts git.
+
+> 🧪 **Expérimental** : `/diff` est marquée expérimentale dans la documentation officielle. Si elle ne répond pas, activez les fonctionnalités expérimentales avec `/experimental on`.
 
 ```bash
 copilot
@@ -738,9 +784,23 @@ copilot
 # Après avoir effectué quelques changements...
 > /diff
 
-# Affiche un diff visuel de tous les fichiers modifiés dans cette session
-# Idéal pour relire avant de committer
+# Ouvre le mode diff interactif
 ```
+
+Une fois en mode diff, quelques raccourcis utiles :
+
+| Touche | Action |
+|--------|--------|
+| `↑`/`↓` (ou `k`/`j`) | Naviguer ligne par ligne |
+| `←`/`→` (ou `h`/`l`) | Passer au fichier précédent/suivant |
+| `c` | Ajouter ou éditer un commentaire sur la ligne sélectionnée |
+| `s` | Afficher le résumé des commentaires |
+| `b` | Basculer entre diff non indexé et diff de branche |
+| `w` | Masquer les changements d'espaces uniquement |
+| `Enter` | Soumettre tous les commentaires (Copilot CLI les traite comme des retours de revue) |
+| `Esc` / `Ctrl+C` | Quitter le mode diff |
+
+> 💡 **Pourquoi c'est utile** : laisser des commentaires ligne par ligne avec `c` puis les soumettre avec `Enter` revient à faire une auto-revue de PR directement dans le terminal, avant même d'ouvrir GitHub.
 
 ### Créer une branche de votre session avec /branch ou /fork
 
@@ -760,11 +820,11 @@ copilot
 # Si le résultat ne vous plaît pas, revenez à votre session d'origine avec /session
 ```
 
-> 💡 **`/branch` et `/fork` sont identiques** : Les deux commandes font exactement la même chose. `/branch` a été ajoutée comme nom plus intuitif. Utilisez celle qui vous convient le mieux.
+> 💡 **`/branch` et `/fork` sont identiques** : Les deux commandes font exactement la même chose. `/branch` a été ajoutée comme nom plus intuitif. Utilisez celle qui vous convient le mieux. 🆕 Les deux acceptent désormais un nom optionnel (`/branch nom-de-session`, `/fork nom-de-session`) pour retrouver facilement la copie dans votre liste de sessions.
 
 > 💡 **Quand créer une branche** : Créer une branche est utile quand vous n'êtes pas sûr de quelle approche est la meilleure et que vous voulez garder les deux options ouvertes.
 
-### Isoler un flux de travail avec /worktree ou --worktree
+### Isoler un flux de travail avec /worktree, /move ou --worktree
 
 `/branch` et `/fork` dupliquent votre *conversation*, mais les fichiers restent partagés sur le même disque. Pour de vraies copies de travail isolées — utile quand vous voulez travailler sur plusieurs branches en parallèle sans faire de `git stash` — utilisez plutôt un [worktree git](../GLOSSARY.md#worktree) dédié.
 
@@ -785,9 +845,33 @@ Vous pouvez aussi démarrer directement une session dans un nouveau worktree dep
 copilot --worktree
 ```
 
+🆕 `/worktree` accepte désormais directement un nom de branche ou une description de tâche, et **bascule votre session courante** dans le nouveau worktree (vos changements non commités restent derrière, dans le worktree d'origine) :
+
+```bash
+copilot
+
+> /worktree fix-search-bug
+# Crée le worktree "fix-search-bug" et y bascule la session courante
+
+> /worktree Add pagination to the book list
+# Sans nom de branche fourni, la description de tâche sert de premier prompt
+# et un nom de branche est généré automatiquement à partir de la conversation
+```
+
+🆕 Si vous avez déjà des changements non commités et voulez les **déplacer** (plutôt que les laisser) vers un nouveau worktree, utilisez `/move` :
+
+```bash
+copilot
+
+> /move fix-search-bug
+# Déplace les changements non commités du checkout courant vers le nouveau worktree
+```
+
+> 💡 **`/worktree` vs `/move`** : `/worktree` laisse vos changements non commités dans le worktree d'origine et démarre propre dans le nouveau. `/move` emporte ces changements avec vous.
+
 > 💡 **`/branch`/`/fork` vs `/worktree`** : `/branch` (ou `/fork`) est léger et rapide - il duplique la conversation, mais vous restez sur le même checkout de fichiers. `/worktree` (et `--worktree`) crée un dossier de checkout entièrement séparé : idéal pour garder une branche en cours de review pendant que vous travaillez déjà sur la suivante, sans conflits de fichiers ni stash.
 
-> 🆕 *(depuis Copilot CLI v1.0.81)* Le réglage `worktreeBaseRef` contrôle si `/worktree`, `/worktree new` et `--worktree` démarrent depuis `HEAD` ou depuis la branche distante par défaut. Les trois démarrent désormais depuis `HEAD` par défaut.
+> 🆕 *(depuis Copilot CLI v1.0.81)* Le réglage `worktreeBaseRef` contrôle si `/worktree`, `/worktree new` et `--worktree` démarrent depuis `HEAD` ou depuis la branche distante par défaut. Par défaut, les trois démarrent depuis `HEAD` (le checkout courant) ; réglez `worktreeBaseRef` sur `"defaultBranch"` pour démarrer plutôt depuis la branche distante par défaut.
 
 </details>
 
@@ -854,6 +938,16 @@ copilot -p "Generate commit message for: $(git diff --staged)"
 
 git commit -m "<coller le message généré>"
 ```
+
+> 🆕 **Rester dans la même session** : au lieu de `/exit` puis `git add .` dans un terminal séparé, vous pouvez préfixer une commande shell avec `!` pour l'exécuter directement depuis la session interactive, sans perdre le contexte de conversation :
+> ```bash
+> > !git add .
+> > !git diff --staged
+> > /review
+> ```
+> Utile si vous voulez que Copilot CLI enchaîne l'indexation, une dernière revue avec `/review`, puis le message de commit, sans changer de fenêtre.
+>
+> 🆕 **Reprendre après un `-p`** : le résumé affiché à la fin d'une commande `copilot -p "..."` inclut désormais un indice `--resume=SESSION-ID`. S'il vous reste des questions après le commit, vous pouvez reprendre cette même session en mode interactif au lieu d'en démarrer une nouvelle.
 
 ### Résumé du flux de correction de bug
 
@@ -971,6 +1065,7 @@ Cet exercice montre aux développeurs comment utiliser GitHub Copilot CLI pour c
 | Ne pas utiliser `/review` pour les revues de code | Se priver de l'agent code-review optimisé | Utilisez `/review`, réglé pour une sortie à haut rapport signal/bruit |
 | Demander de « trouver des bugs » sans contexte | Copilot CLI ne sait pas quel bug vous rencontrez | Décrivez le symptôme : « Users report X happens when Y » |
 | Générer des tests sans préciser le framework | Les tests peuvent utiliser une syntaxe ou une bibliothèque d'assertions incorrecte | Précisez : « Generate tests using Jest » ou « using pytest » |
+| `/diff` ne répond pas | La commande est marquée expérimentale et peut être désactivée par défaut | Activez-la avec `/experimental on`, ou listez les commandes disponibles avec `copilot help commands` |
 
 ### Dépannage
 
@@ -1018,7 +1113,7 @@ copilot
 4. La **génération de tests** doit inclure les cas limites et les scénarios d'erreur
 5. L'**intégration git** automatise les messages de commit et les descriptions de PR
 
-> 📋 **Référence rapide** : Consultez la [référence des commandes GitHub Copilot CLI](https://docs.github.com/en/copilot/reference/cli-command-reference) pour une liste complète des commandes et raccourcis.
+> 📋 **Référence rapide** : Consultez la [référence des commandes GitHub Copilot CLI](https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference) pour une liste complète des commandes et raccourcis.
 
 ---
 
@@ -1040,10 +1135,11 @@ Les chapitres 05 à 07 couvrent des fonctionnalités supplémentaires qui apport
 
 Il n'existe pas de « bonne » façon unique d'utiliser GitHub Copilot CLI. Voici quelques conseils pendant que vous développez vos propres habitudes :
 
-> 📚 **Documentation officielle** : [Bonnes pratiques Copilot CLI](https://docs.github.com/copilot/how-tos/copilot-cli/cli-best-practices) pour des flux de travail recommandés et des astuces de GitHub.
+> 📚 **Documentation officielle** : [Bonnes pratiques Copilot CLI](https://docs.github.com/en/copilot/how-tos/copilot-cli/cli-best-practices) pour des flux de travail recommandés et des astuces de GitHub.
 
 - **Commencez par `/plan`** pour tout ce qui n'est pas trivial. Affinez le plan avant l'exécution - un bon plan mène à de meilleurs résultats.
 - **Automatisez les tâches routinières avec `--plan --mode autopilot`.** *(depuis Copilot CLI v1.0.79)* 🆕 En combinant les deux, Copilot CLI planifie d'abord la tâche, puis l'implémente directement sans attendre votre approbation à chaque étape. Réservez cette combinaison aux tâches routinières ou déjà bien maîtrisées.
+- **Plafonnez la dépense avec `/goal --max-ai-credits N`.** 🆕 En mode interactif, `/autopilot [OBJECTIF]` (ou son alias `/goal [OBJECTIF]`) démarre ou réoriente le mode autopilot ; ajoutez `--max-ai-credits N` pour plafonner les crédits IA consommés sur cet objectif (ex. `/goal Refactor remove_book --max-ai-credits 5`). Une fois le plafond atteint, autopilot se met en pause et affiche un panneau pour reprendre avec une nouvelle fenêtre de crédits. `/goal on`/`/goal off` bascule le mode sans fixer de nouvel objectif.
 - **Enchaînez plusieurs étapes sans attendre.** *(depuis Copilot CLI v1.0.79)* 🆕 Vous pouvez mettre en file d'attente des prompts, des commandes shell et certaines commandes slash : ils s'exécutent dans l'ordre dès que la tâche en cours se termine, sans que vous ayez à surveiller la session pour enchaîner manuellement les étapes d'un flux de travail.
 - **Sauvegardez les prompts qui fonctionnent bien.** Quand Copilot CLI fait une erreur, notez ce qui n'a pas marché. Avec le temps, cela devient votre carnet de bord personnel.
 - **Expérimentez librement.** Certains développeurs préfèrent des prompts longs et détaillés. D'autres préfèrent des prompts courts avec des relances. Essayez différentes approches et voyez ce qui vous semble naturel.
