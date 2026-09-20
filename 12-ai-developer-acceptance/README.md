@@ -2,7 +2,7 @@
 ---
 id: CopilotCLI-12
 title: !translate Comprendre l'acceptation de l'IA par les développeurs
-description: !translate Découvrez ce que les études de GitHub, McKinsey, DORA et Stack Overflow révèlent sur les impacts positifs de l'IA sur les développeurs, et confrontez ces résultats à votre propre expérience de Copilot CLI.
+description: !translate Découvrez ce que les études de GitHub, McKinsey, DORA, Stack Overflow et LinearB révèlent sur les impacts positifs de l'IA sur les développeurs, et confrontez ces résultats à votre propre expérience de Copilot CLI.
 audience: Developers / Students / Terminal users
 slug: developer-acceptance-of-ai
 weight: 13
@@ -19,7 +19,7 @@ Depuis le Chapitre 01, vous avez installé, testé et pratiqué Copilot CLI sur 
 
 À la fin de ce chapitre, vous serez capable de :
 
-- Citer quatre études de référence sur l'IA et la productivité des développeurs (GitHub, McKinsey, DORA, Stack Overflow)
+- Citer cinq études de référence sur l'IA et la productivité des développeurs (GitHub, McKinsey, DORA, Stack Overflow, LinearB)
 - Distinguer un chiffre de productivité mesurée d'un chiffre de productivité perçue ou autodéclarée
 - Identifier les facteurs qui font varier les bénéfices de l'IA d'une équipe à l'autre
 - Mener votre propre auto-évaluation et la confronter aux données présentées
@@ -96,6 +96,14 @@ Mais la confiance, elle, recule : le sentiment positif global vis-à-vis de l'IA
 
 > 📎 **Source :** [Stack Overflow Developer Survey 2025 — section IA](https://survey.stackoverflow.co/2025/ai) · **Date :** 2025 · **Population :** communauté mondiale de développeurs répondant volontairement à l'enquête annuelle Stack Overflow · **Type de preuve :** perception et autodéclaration pures (aucune mesure chronométrée ni expérience contrôlée) · **Limites méthodologiques :** échantillon auto-sélectionné (les répondants sont des utilisateurs actifs de Stack Overflow, pas un panel représentatif de tous les développeurs) ; les variations d'une année sur l'autre peuvent refléter des changements de composition du panel autant qu'une évolution réelle des opinions.
 
+### LinearB : le vrai sens du mot « acceptation »
+
+Les quatre études précédentes mesurent la vitesse, le ressenti ou l'adoption déclarée — mais aucune ne mesure l'acceptation au sens le plus littéral du terme pour un flux de travail Copilot CLI : est-ce que le code produit par l'IA finit réellement fusionné ? Le rapport *2026 Engineering Benchmarks* de LinearB (mai 2026), construit à partir de 8,1 millions de pull requests sur 4 800 équipes dans 42 pays, répond à cette question précise. Si 88,3 % des développeurs utilisent désormais l'IA régulièrement (contre un peu moins de 72 % début 2024), le taux de PR effectivement **fusionnées sous 30 jours** raconte une autre histoire : **32,7 %** pour le code généré par IA, contre **84,5 %** pour le code écrit par des humains — moins de la moitié.
+
+L'écart se creuse encore en amont : une PR générée par IA attend en moyenne **plus de 16 heures** avant qu'un relecteur ne s'en saisisse, contre environ 200 minutes pour une PR classique. Une fois prise en charge, en revanche, l'écart se referme presque : la relecture elle-même prend 194 minutes contre 252 minutes. Autrement dit, le goulot d'étranglement n'est pas la relecture en tant que telle, mais la décision de s'y atteler — et, une fois entamée, la conclusion (fusionner ou non).
+
+> 📎 **Source :** [LinearB — 8 million pull requests reveal where engineering productivity breaks down](https://linearb.io/blog/8-million-prs-engineering-productivity) · **Date :** 4 mai 2026 · **Population :** 8,1 millions de pull requests, 4 800 équipes, 42 pays · **Type de preuve :** mesure opérationnelle à grande échelle sur des données réelles de dépôts (télémétrie de plateforme), pas une expérience contrôlée en laboratoire · **Limites méthodologiques :** LinearB est un éditeur d'outils d'analytics d'ingénierie qui a un intérêt commercial à mettre en avant ce goulot d'étranglement ; « acceptation » signifie ici précisément « fusionnée sous 30 jours », ce qui peut confondre une PR lente à relire avec une PR réellement rejetée ; l'étude ne contrôle pas la complexité relative des PR IA comparées aux PR humaines.
+
 ### Synthèse
 
 | Étude | Échantillon | Résultat clé |
@@ -104,10 +112,13 @@ Mais la confiance, elle, recule : le sentiment positif global vis-à-vis de l'IA
 | McKinsey (2023) | Panel de développeurs sur des tâches types (documentation, code, refactoring) | Jusqu'à 2x plus rapide sur tâches bien cadrées ; moins de 10 % de gain sur tâches complexes |
 | DORA (2025) | Enquête à grande échelle + études de cas (Adidas, Booking.com) | Plus de 80 % déclarent une productivité accrue ; l'IA amplifie les forces et les faiblesses organisationnelles existantes |
 | Stack Overflow Developer Survey (2025) | Communauté mondiale de développeurs | 84 % utilisent ou prévoient d'utiliser l'IA (+8 points vs 2024) ; sentiment positif en recul (70 %+ → 60 %) |
+| LinearB (2026) | 8,1 millions de PR, 4 800 équipes, 42 pays | Taux d'acceptation de PR : 32,7 % pour l'IA vs 84,5 % pour l'humain ; attente avant revue 4,6x plus longue pour l'IA |
 
 ## Ce qu'il faut nuancer
 
-Ces quatre études racontent la même histoire à des degrés différents : des bénéfices réels et mesurés, mais ni uniformes ni automatiques. La thèse « amplificateur » de DORA explique pourquoi deux équipes utilisant le même outil peuvent obtenir des résultats opposés. Le paradoxe confiance/adoption de Stack Overflow rappelle qu'utiliser un outil plus souvent ne veut pas dire lui faire une confiance aveugle. Et la limite identifiée par McKinsey sur les tâches complexes confirme ce que vous avez sans doute déjà observé en pratiquant Copilot CLI : plus une tâche est bien cadrée, plus l'IA y excelle.
+Ces cinq études racontent la même histoire à des degrés différents : des bénéfices réels et mesurés, mais ni uniformes ni automatiques. La thèse « amplificateur » de DORA explique pourquoi deux équipes utilisant le même outil peuvent obtenir des résultats opposés. Le paradoxe confiance/adoption de Stack Overflow rappelle qu'utiliser un outil plus souvent ne veut pas dire lui faire une confiance aveugle. Et la limite identifiée par McKinsey sur les tâches complexes confirme ce que vous avez sans doute déjà observé en pratiquant Copilot CLI : plus une tâche est bien cadrée, plus l'IA y excelle.
+
+Les chiffres LinearB éclairent une tension que DORA nomme la **taxe de vérification** (*« le temps gagné à l'écriture est souvent réinvesti dans l'audit »*) : les gains de vitesse mesurés par GitHub Research et McKinsey portent sur l'écriture d'une tâche isolée, mais ce temps gagné en amont peut être en partie reperdu plus loin dans le cycle, au moment de relire et de valider le résultat. C'est exactement ce que montre l'écart entre 32,7 % et 84,5 % : produire du code plus vite ne suffit pas à le faire accepter plus vite, et c'est précisément le rôle de la relecture humaine que vous pratiquez depuis le Chapitre 04.
 
 <details>
 <summary>🎬 Voyez-le en action !</summary>
@@ -132,6 +143,7 @@ Ce chapitre ne comporte pas de commande à exécuter ni de démo à filmer. Voic
 - **Taille et composition de l'échantillon** : une expérience sur 95 développeurs volontaires n'est pas représentative de toute la profession ; une enquête à 2 000+ réponses est plus solide, mais reste soumise au profil de qui répond (les utilisateurs déjà convaincus répondent souvent plus volontiers).
 - **Qui finance et publie l'étude** : une étude publiée par l'éditeur d'un outil IA a un intérêt à en montrer les bénéfices — cela ne rend pas ses chiffres faux, mais justifie de les croiser avec une source indépendante, comme DORA ou Stack Overflow, qui ne vendent pas d'outil IA.
 - **Le biais de sélection des cas publiés** : les études de cas à succès (comme Adidas dans le rapport DORA) sont choisies pour illustrer un potentiel, pas une moyenne garantie — le même rapport documente aussi des équipes qui n'en tirent presque aucun bénéfice.
+- **« Acceptation » n'a pas un seul sens** : ce mot recouvre au moins trois métriques différentes, souvent confondues dans les articles qui en parlent — l'acceptation d'une suggestion inline pendant que vous tapez (environ 30 % selon plusieurs études tierces ; GitHub Copilot ne publie pas de chiffre officiel unique pour ce cas précis), l'acceptation d'une pull request générée par un agent IA au sens où elle est fusionnée (32,7 % selon LinearB), et l'acceptation au sens de la confiance déclarée dans un sondage (33 % selon Stack Overflow). Avant de citer un pourcentage d'« acceptation de l'IA », vérifiez toujours laquelle de ces trois choses est réellement mesurée.
 
 </details>
 
@@ -145,7 +157,7 @@ Reprenez vos notes (ou votre mémoire) des chapitres précédents : les tâches 
 
 1. Listez trois tâches où Copilot CLI vous a fait gagner du temps depuis le début de ce cours
 2. Pour chacune, estimez le temps gagné en pourcentage, comme le font les études de ce chapitre
-3. Identifiez laquelle des quatre études présentées correspond le mieux à votre propre expérience, et expliquez pourquoi
+3. Identifiez laquelle des cinq études présentées correspond le mieux à votre propre expérience, et expliquez pourquoi
 
 ### 🧪 Activité avant/après : mesurez votre propre expérience
 
@@ -189,6 +201,7 @@ Comparez ensuite vos deux colonnes : sur quelle métrique l'écart est-il le plu
 | Généraliser un chiffre moyen à son propre cas | « L'IA fait gagner 55 % de temps » est appliqué tel quel à une tâche très différente de celle testée | Repérez la tâche exacte utilisée dans l'étude (ici, un serveur HTTP en JavaScript) avant de comparer à votre contexte |
 | Ignorer qui publie l'étude | Un chiffre très favorable venant d'un éditeur d'outil IA est pris pour une vérité absolue | Croisez toujours avec au moins une source indépendante (DORA, Stack Overflow) avant de tirer une conclusion |
 | Oublier l'effet « amplificateur » | On attend les mêmes gains d'IA quelle que soit la maturité de son équipe ou de son organisation | Rappelez-vous que le rapport DORA montre des gains très inégaux selon les pratiques d'ingénierie déjà en place (architecture, formation, etc.) |
+| Confondre taux de fusion et jugement de qualité | Un taux d'acceptation de PR (« 32,7 % fusionnées ») est interprété comme une note de qualité du code produit | Le taux LinearB mesure une PR fusionnée ou non sous 30 jours — une PR peut attendre longtemps pour des raisons de priorité ou de charge de l'équipe, pas seulement à cause d'un défaut du code |
 
 </details>
 
@@ -204,6 +217,7 @@ Les études indépendantes convergent sur un point : l'IA de codage produit des 
 2. Les gains de productivité varient fortement selon le type de tâche : très élevés sur les tâches répétitives et bien cadrées (McKinsey), beaucoup plus faibles sur les tâches complexes
 3. L'IA agit comme un amplificateur des pratiques existantes, pas comme une solution universelle — c'est la thèse centrale du rapport DORA
 4. L'adoption de l'IA progresse plus vite que la confiance qu'on lui accorde (Stack Overflow) — un scepticisme mesuré reste une posture saine, pas un obstacle à l'usage
+5. « Acceptation » a plusieurs sens : suggestion inline acceptée (~30 %), PR fusionnée (32,7 %, LinearB), confiance déclarée (33 %, Stack Overflow) — écrire du code plus vite ne veut pas dire le faire accepter plus vite, c'est la taxe de vérification mise en évidence par DORA
 
 ---
 
@@ -213,12 +227,13 @@ Les études indépendantes convergent sur un point : l'IA de codage produit des 
 - [McKinsey : Unleashing developer productivity with generative AI](https://www.mckinsey.com/capabilities/tech-and-ai/our-insights/unleashing-developer-productivity-with-generative-ai)
 - [DORA : State of AI-Assisted Software Development 2025](https://dora.dev/dora-report-2025/)
 - [Stack Overflow Developer Survey 2025 — section IA](https://survey.stackoverflow.co/2025/ai)
+- [LinearB : 8 million pull requests reveal where engineering productivity breaks down](https://linearb.io/blog/8-million-prs-engineering-productivity)
 - [Chapitre 04 : Flux de travail de développement](../04-development-workflows/README.md) — pour revoir les tâches déléguées à Copilot CLI que vous allez confronter à ces études
 
 ---
 
 ## ➡️ Et ensuite ?
 
-Vous avez terminé la partie pratique de ce cours et pris du recul sur ce que la recherche indépendante dit de l'IA en développement. La suite vous appartient : continuer à pratiquer, mesurer votre propre expérience, et rester aussi critique envers vos propres impressions qu'envers les chiffres des études.
+Vous avez pris du recul sur ce que la recherche indépendante dit de l'IA en développement, et mesuré votre propre expérience avec l'activité avant/après. Dans le **[Chapitre 13 : Explorer l'historique de vos sessions avec /chronicle](../13-chronicle-session-insights/README.md)**, vous allez passer de cette auto-évaluation manuelle à une mesure objectivée, construite directement à partir de votre historique réel de sessions Copilot CLI.
 
-**[← Chapitre précédent : Sécuriser son code avec Copilot CLI](../11-security-with-copilot/README.md)** | **[Retour à l'accueil du cours →](../README.md)**
+**[← Chapitre précédent : Sécuriser son code avec Copilot CLI](../11-security-with-copilot/README.md)** | **[Chapitre suivant : Explorer l'historique de vos sessions avec /chronicle →](../13-chronicle-session-insights/README.md)**
