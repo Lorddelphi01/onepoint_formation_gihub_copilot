@@ -194,7 +194,7 @@ Un champ optionnel (`model-policy`) du frontmatter d'un agent personnalisé (`.a
 
 ### n8n
 
-Un outil open source d'automatisation de workflows par blocs visuels (« nœuds ») reliés entre eux, plutôt que par du code écrit ligne par ligne. Peut être connecté à Copilot CLI via son propre serveur MCP intégré. Présenté au Chapitre 18.
+Un outil open source d'automatisation de workflows par blocs visuels (« nœuds ») reliés entre eux, plutôt que par du code écrit ligne par ligne. Son serveur MCP intégré (« Instance-level MCP », activable dans Settings) permet à un agent comme Copilot CLI de créer et modifier des workflows directement, pas seulement de s'y connecter. Présenté au Chapitre 18.
 
 ### Nœud (node, n8n)
 

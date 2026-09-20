@@ -96,9 +96,9 @@ docker exec n8n n8n --version
 
 Dans l'interface n8n, ouvrez **Settings → Instance-level MCP** et activez l'option. Ce réglage expose le point d'accès `http://localhost:5678/mcp-server/http`, que Copilot CLI utilisera à l'étape suivante.
 
-> ⚠️ **Fonctionnalité dépendante de la version.** L'emplacement du réglage et les options d'accès peuvent évoluer avec n8n. La documentation n8n actuelle indique que la construction ou l'édition de workflows via MCP est disponible à partir de **n8n 2.13.0**. Si « Instance-level MCP » n'apparaît pas, consultez la [documentation MCP n8n](https://docs.n8n.io/advanced-ai/accessing-n8n-mcp-server/) correspondant à votre version, puis mettez à jour l'image si nécessaire. N'exposez pas le serveur tant que ce réglage n'est pas compris.
+> ⚠️ **Fonctionnalité dépendante de la version.** L'emplacement du réglage et les options d'accès peuvent évoluer avec n8n. La documentation n8n actuelle indique que la construction ou l'édition de workflows via MCP est disponible à partir de **n8n 2.13.0**. Si « Instance-level MCP » n'apparaît pas, consultez la [documentation de connexion au serveur MCP n8n](https://docs.n8n.io/connect/connect-to-n8n-mcp-server) correspondant à votre version, puis mettez à jour l'image si nécessaire. N'exposez pas le serveur tant que ce réglage n'est pas compris.
 
-L'activation au niveau de l'instance ne rend pas tous vos workflows accessibles automatiquement : activez aussi, un par un, les workflows que vous souhaitez exposer à MCP et conservez les contrôles d'accès proposés par n8n.
+L'activation au niveau de l'instance ne rend pas tous vos workflows accessibles automatiquement : chaque workflow doit être exposé individuellement, soit depuis son propre menu `...` → **Settings** → bascule **Available in MCP**, soit depuis `Settings → Instance-level MCP → Workflows exposed`. Seuls les workflows **publiés** avec un déclencheur Webhook, Form, Schedule ou Chat sont éligibles — c'est pourquoi le workflow construit plus loin dans ce chapitre devra être activé avant de pouvoir être exposé, pas seulement pour répondre sur son URL de production.
 
 ---
 
@@ -129,6 +129,8 @@ copilot
 
 Sélectionnez `n8n` puis suivez le flux d'authentification proposé par votre instance. Vérifiez la connexion avec `/mcp show` : le serveur `n8n` doit apparaître comme activé.
 
+> 💡 **Pas de navigateur disponible ?** La boîte de dialogue `Settings → Instance-level MCP → Connect a client` propose aussi un onglet **API key** : un jeton d'accès personnel à copier directement dans `mcp-config.json` (en en-tête d'authentification), sans passer par le flux OAuth. C'est l'option la plus fiable pour un terminal distant ou un conteneur sans navigateur.
+
 ### 🔒 Protéger les identifiants et l'accès MCP
 
 Le compte propriétaire créé au premier démarrage et les identifiants de vos connexions n8n donnent accès à vos automatisations. Utilisez des comptes de test pendant ce tutoriel, gardez le volume Docker `n8n_data` privé et ne copiez jamais un fichier de configuration contenant un jeton d'accès MCP dans Git, une issue ou une capture d'écran. Si vous devez déplacer une configuration vers une machine distante, recréez l'authentification sur cette machine au lieu de copier ses secrets.
@@ -141,7 +143,9 @@ Le serveur MCP peut créer, modifier ou lancer les workflows que vous lui autori
 
 <a id="récupérer-les-skills-n8n-officielles"></a>
 
-Le projet [n8n-io/skills](https://github.com/n8n-io/skills) contient 14 skills officielles (plus une méta-skill) qui apprennent à un agent IA les bonnes pratiques de construction de workflows n8n (syntaxe d'expression, gestion d'erreurs, patterns de workflow, etc.). Ce dépôt est conçu en premier lieu pour Claude Code (installation via `/plugin install`, une commande propre à Claude Code) — il faut donc l'adapter légèrement pour Copilot CLI, qui charge ses skills depuis `.github/skills/` (voir [Chapitre 06](../06-skills/README.md)).
+Le projet [n8n-io/skills](https://github.com/n8n-io/skills) contient 13 skills de capacité officielles (syntaxe d'expression, gestion d'erreurs, patterns de workflow, etc.), plus une méta-skill (`using-n8n-skills-official`) qui route automatiquement vers la bonne skill — soit 14 fichiers `SKILL.md` au total. Ce dépôt est conçu en premier lieu pour Claude Code et Codex (installation via `/plugin install`, propre à ces agents) ; son propre README indique d'ailleurs chercher des contributeurs pour les autres agents (Cursor, OpenCode…) sans encore garantir de parité de fonctionnalités. Copilot CLI fait partie de ce vide : ce chapitre l'adapte manuellement, en copiant les skills à l'emplacement que Copilot CLI charge, `.github/skills/` (voir [Chapitre 06](../06-skills/README.md)).
+
+> 💡 **La méta-skill ne se charge pas toute seule ici.** Avec le plugin officiel (Claude Code, Codex), un hook au démarrage de session charge automatiquement `using-n8n-skills-official`, qui route ensuite vers la bonne skill selon le contexte. La copie manuelle ci-dessous ne reproduit pas ce hook : Copilot CLI continue de charger les skills sur détection de mots-clés dans le prompt (voir [Chapitre 06](../06-skills/README.md)), d'où l'astuce du tableau de dépannage plus bas pour mentionner explicitement « nœud » ou « workflow n8n ».
 
 Clonez le dépôt puis copiez son contenu à l'emplacement attendu par Copilot CLI :
 
@@ -242,8 +246,9 @@ curl --get --data-urlencode "titre=The Hobbit" "$WEBHOOK_URL"
 | `n8n` absent de `/mcp show` | Le fichier `mcp-config.json` n'a pas été rechargé, ou l'URL est incorrecte | Vérifiez l'URL (`http://localhost:5678/mcp-server/http`), redémarrez Copilot CLI |
 | Port `5678` déjà utilisé | Une autre instance n8n (ou un autre service) tourne déjà sur ce port | Ajoutez `-p 5679:5678` à `docker run` et adaptez l'URL MCP en conséquence |
 | Réglage « Instance-level MCP » introuvable | Votre version ou votre édition n8n ne propose pas cette fonctionnalité à cet emplacement | Vérifiez `docker exec n8n n8n --version`, consultez la documentation MCP correspondant à cette version, puis mettez à jour l'image si nécessaire |
-| L'authentification ne s'ouvre pas | Environnement sans navigateur (conteneur headless, Codespace distant) | Ouvrez le flux indiqué par n8n ou Copilot depuis une machine avec navigateur ; recréez l'authentification dans l'environnement distant, sans copier de jeton |
+| L'authentification ne s'ouvre pas | Environnement sans navigateur (conteneur headless, Codespace distant) | Utilisez l'onglet **API key** de `Settings → Instance-level MCP → Connect a client` plutôt que le flux OAuth ; générez le jeton depuis une machine avec navigateur et collez-le dans `mcp-config.json` de l'environnement distant |
 | L'URL de production répond `404` | Le workflow n'est pas actif, ou vous utilisez une URL de test hors de l'éditeur | Activez le workflow et copiez son URL « Production URL » ; gardez l'URL « Test URL » pour l'écoute de test |
+| Le workflow n'apparaît pas dans la liste d'outils du client MCP | Le workflow n'est pas publié, ou son déclencheur n'est pas éligible à MCP | Publiez le workflow (un déclencheur Webhook, Form, Schedule ou Chat est requis), puis activez **Available in MCP** depuis son menu `...` → Settings |
 | `/skills list` n'affiche aucune skill n8n | Les fichiers ont été copiés au mauvais endroit | Vérifiez `ls .github/skills/` — les dossiers de skills doivent être directement dedans, pas dans un sous-dossier `skills/` imbriqué |
 | Le workflow créé ignore les instructions de style/bonnes pratiques n8n | Les skills ne se sont pas chargées pour ce prompt | Mentionnez explicitement « nœud », « workflow n8n » ou « expression n8n » dans votre prompt pour déclencher leur chargement automatique |
 
@@ -267,6 +272,7 @@ Vous avez connecté Copilot CLI à une instance n8n locale via MCP, adapté un p
 ## 📋 Référence rapide
 
 - [Exemple de config MCP pour n8n](../samples/mcp-configs/n8n-mcp-config.json) — à copier-coller dans votre `.mcp.json`
+- [Connexion au serveur MCP n8n](https://docs.n8n.io/connect/connect-to-n8n-mcp-server) — configuration, authentification OAuth et clé API
 - [n8n-io/skills](https://github.com/n8n-io/skills) — skills officielles n8n
 - [Documentation Docker de n8n](https://hub.docker.com/r/n8nio/n8n) — image officielle
 - [API Open Library](https://openlibrary.org/developers/api) — utilisée dans l'exemple de ce chapitre
@@ -277,5 +283,7 @@ Vous avez connecté Copilot CLI à une instance n8n locale via MCP, adapté un p
 ## ➡️ Et ensuite ?
 
 Vous avez maintenant vu Copilot CLI travailler dans deux mondes différents : celui du code, et celui des workflows visuels d'un outil tiers. Le principe reste le même dans les deux cas — décrire un résultat, laisser l'IA assembler les briques, puis relire avant de valider.
+
+Ce chapitre couvre le sens « Copilot CLI pilote n8n ». La direction inverse existe aussi : le nœud `MCP Server Trigger` transforme un workflow n8n déjà construit en son propre serveur MCP, consommable par d'autres agents — une piste à explorer une fois celui-ci maîtrisé.
 
 **[← Chapitre précédent : mcp2cli et le coût en tokens](../17-mcp2cli/README.md)** | **[Retour à l'accueil du cours →](../README.md)**
