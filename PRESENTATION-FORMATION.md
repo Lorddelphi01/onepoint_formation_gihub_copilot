@@ -5,6 +5,36 @@ paginate: true
 size: 16:9
 lang: fr
 title: Formation GitHub Copilot CLI
+style: |
+  section {
+    justify-content: flex-start !important;
+    padding: 46px 64px;
+    font-size: 25px;
+    line-height: 1.35;
+  }
+  section h1 {
+    font-size: 32px;
+    margin: 0 0 14px 0;
+  }
+  section h3 {
+    font-size: 20px;
+    margin: 0 0 12px 0;
+  }
+  section ul, section ol {
+    margin: 4px 0;
+  }
+  section li {
+    margin-bottom: 5px;
+  }
+  section p {
+    margin: 6px 0;
+  }
+  section table {
+    font-size: 21px;
+  }
+  section code {
+    font-size: 0.85em;
+  }
 ---
 
 <!-- _paginate: false -->
