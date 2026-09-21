@@ -352,4 +352,4 @@ Ce chapitre bonus complète le Chapitre 07. Vous savez maintenant configurer des
 
 ---
 
-**[← Chapitre précédent : Sessions parallèles avec les worktrees Git](../16-parallel-worktrees/README.md)** | **[Retour à l'accueil du cours →](../README.md)**
+**[← Chapitre précédent : Sessions parallèles avec les worktrees Git](../16-parallel-worktrees/README.md)** | **[Chapitre suivant : Workflows n8n →](../18-n8n-workflows/README.md)**

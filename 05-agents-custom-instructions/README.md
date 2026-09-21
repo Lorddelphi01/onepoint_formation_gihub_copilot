@@ -881,7 +881,7 @@ copilot
 
 Si l'agent attendu n'apparaît toujours pas dans cette liste, revérifiez les points 1 à 3 ci-dessus - c'est presque toujours l'un d'entre eux.
 
-> ⚠️ **Pas de vérification en dehors d'une session** : contrairement aux fichiers d'instructions (`copilot instruction list`) ou aux skills (`copilot skill list`), les agents personnalisés n'ont **aucun équivalent non-interactif**. La documentation officielle est explicite : *« Custom agents and session-scoped hooks aren't covered by `copilot instruction`, `copilot lsp`, `copilot plugin`, `copilot mcp`, or `copilot skill`. All require a live session. »* `/agent` en session interactive reste donc la seule source de vérité.
+> ⚠️ **Pas de vérification en dehors d'une session** : contrairement aux fichiers d'instructions (`copilot instruction list`) ou aux skills (`copilot skill list`), les agents personnalisés n'ont **aucun équivalent non-interactif**. La documentation officielle est explicite : *« Les agents personnalisés et les hooks limités à la session ne sont couverts ni par `copilot instruction`, ni par `copilot lsp`, `copilot plugin`, `copilot mcp`, ou `copilot skill`. Tous nécessitent une session active. »* (VO : *« Custom agents and session-scoped hooks aren't covered by `copilot instruction`, `copilot lsp`, `copilot plugin`, `copilot mcp`, or `copilot skill`. All require a live session. »*) `/agent` en session interactive reste donc la seule source de vérité.
 
 **L'agent ne suit pas les instructions** - Soyez explicite dans vos prompts et ajoutez plus de détails aux définitions d'agent :
 - Frameworks/bibliothèques spécifiques avec leurs versions

@@ -464,4 +464,4 @@ Vous savez maintenant isoler plusieurs sessions Copilot CLI dans des worktrees G
 
 Vous avez maintenant exploré trois façons de faire travailler Copilot CLI de manière isolée : dans un dev container cohérent, dans une sandbox strictement verrouillée (Chapitre 09), et dans des worktrees parallèles pour mener plusieurs tâches de front. À vous de combiner ces briques selon vos besoins — rien ne vous empêche, par exemple, de lancer une sandbox Docker *depuis* un worktree.
 
-**[← Chapitre précédent : Rédiger des instructions IA efficaces et réutilisables](../15-prompt-engineering/README.md)** | **[Retour à l'accueil du cours →](../README.md)**
+**[← Chapitre précédent : Rédiger des instructions IA efficaces et réutilisables](../15-prompt-engineering/README.md)** | **[Chapitre suivant : mcp2cli et le coût en tokens →](../17-mcp2cli/README.md)**
