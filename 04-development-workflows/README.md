@@ -33,7 +33,7 @@ Dans ce chapitre, GitHub Copilot CLI devient votre outil quotidien. Vous l'utili
 
 Un charpentier ne se contente pas de savoir utiliser des outils, il a des *flux de travail* pour différents types de chantiers :
 
-<img src="assets/carpenter-workflow-steps.png" alt="Craftsman workshop showing three workflow lanes: Building Furniture (Measure, Cut, Assemble, Finish), Fixing Damage (Assess, Remove, Repair, Match), and Quality Check (Inspect, Test Joints, Check Alignment)" width="800"/>
+<img src="assets/carpenter-workflow-steps.png" alt="Atelier d'artisan montrant trois flux de travail : Construire un meuble (Mesurer, Couper, Assembler, Finir), Réparer un dommage (Évaluer, Retirer, Réparer, Harmoniser), et Contrôle qualité (Inspecter, Tester les joints, Vérifier l'alignement)" width="800"/>
 
 De la même manière, les développeurs ont des flux de travail pour différentes tâches. GitHub Copilot CLI améliore chacun de ces flux, vous rendant plus efficace au quotidien.
 
@@ -41,7 +41,7 @@ De la même manière, les développeurs ont des flux de travail pour différente
 
 # Les cinq flux de travail
 
-<img src="assets/five-workflows.png" alt="Five glowing neon icons representing code review, testing, debugging, refactoring, and git integration workflows" width="800"/>
+<img src="assets/five-workflows.png" alt="Cinq icônes néon lumineuses représentant les flux de revue de code, de tests, de débogage, de refactoring et d'intégration Git" width="800"/>
 
 Chaque flux de travail ci-dessous est autonome. Choisissez ceux qui correspondent à vos besoins actuels, ou parcourez-les tous.
 
@@ -64,7 +64,7 @@ Pour que le flux soit réellement vérifiable, suivez la même séquence à chaq
 
 Ce chapitre couvre cinq flux de travail que les développeurs utilisent habituellement. **Cependant, vous n'avez pas besoin de tout lire d'un coup !** Chaque flux de travail est autonome dans une section repliable ci-dessous. Choisissez ceux qui correspondent le mieux à votre projet actuel. Vous pourrez toujours revenir explorer les autres plus tard.
 
-<img src="assets/five-workflows-swimlane.png" alt="Five Development Workflows: Code Review, Refactoring, Debugging, Test Generation, and Git Integration shown as horizontal swimlanes" width="800"/>
+<img src="assets/five-workflows-swimlane.png" alt="Cinq flux de travail de développement : Revue de code, Refactoring, Débogage, Génération de tests et Intégration Git, présentés sous forme de bandes horizontales" width="800"/>
 
 | Je veux... | Aller à |
 |---|---|
@@ -86,7 +86,7 @@ Ce chapitre couvre cinq flux de travail que les développeurs utilisent habituel
 
 ✅ Résultat observable : Copilot produit une checklist triée par gravité, avec au moins un problème identifié et un plan d'action clair.
 
-<img src="assets/code-review-swimlane-single.png" alt="Code review workflow: review, identify issues, prioritize, generate checklist." width="800"/>
+<img src="assets/code-review-swimlane-single.png" alt="Flux de revue de code : relire, identifier les problèmes, prioriser, générer une checklist." width="800"/>
 
 ### Revue de base
 
@@ -227,7 +227,7 @@ copilot
 
 ✅ Résultat observable : le refactoring réduit la duplication ou la complexité du code et la validation ciblée (tests ou lint) continue à passer.
 
-<img src="assets/refactoring-swimlane-single.png" alt="Refactoring workflow: assess code, plan changes, implement, verify behavior." width="800"/>
+<img src="assets/refactoring-swimlane-single.png" alt="Flux de refactoring : évaluer le code, planifier les changements, implémenter, vérifier le comportement." width="800"/>
 
 ### Refactoring simple
 
@@ -322,7 +322,7 @@ copilot
 
 ✅ Résultat observable : le symptôme est reproduit, la cause racine est expliquée avec un fichier et une ligne ou une fonction, et la correction proposée est testable.
 
-<img src="assets/debugging-swimlane-single.png" alt="Debugging workflow: understand error, locate root cause, fix, test." width="800"/>
+<img src="assets/debugging-swimlane-single.png" alt="Flux de débogage : comprendre l'erreur, localiser la cause racine, corriger, tester." width="800"/>
 
 > ⚠️ **Attention :** les dossiers `samples/book-app-buggy/` et `samples/buggy-code/` sont volontairement bogués pour l'apprentissage. Ne corrigez pas ces fichiers dans le dépôt du cours pendant les exercices ; utilisez-les pour reproduire et diagnostiquer un bug, pas pour livrer une correction permanente.
 
@@ -493,7 +493,7 @@ copilot
 
 ✅ Résultat observable : les tests générés couvrent au moins le cas nominal et un ou deux cas limites, puis `python -m pytest tests/` se termine sans échec.
 
-<img src="assets/test-gen-swimlane-single.png" alt="Test Generation workflow: analyze function, generate tests, include edge cases, run." width="800"/>
+<img src="assets/test-gen-swimlane-single.png" alt="Flux de génération de tests : analyser la fonction, générer les tests, inclure les cas limites, exécuter." width="800"/>
 
 > **Essayez ceci en premier :** `@samples/book-app-project/books.py Generate pytest tests for all functions including edge cases`
 
@@ -648,7 +648,7 @@ copilot
 
 ✅ Résultat observable : après `git add`, `git diff --staged` montre un diff propre et Copilot génère un message de commit cohérent avec les changements indexés.
 
-<img src="assets/git-integration-swimlane-single.png" alt="Git Integration workflow: stage changes, generate message, commit, create PR." width="800"/>
+<img src="assets/git-integration-swimlane-single.png" alt="Flux d'intégration Git : indexer les changements, générer le message, committer, créer la PR." width="800"/>
 
 > 💡 **Ce flux de travail suppose une familiarité de base avec git** (indexation, commits, branches). Si git est nouveau pour vous, essayez d'abord les quatre autres flux de travail.
 
@@ -965,7 +965,7 @@ git commit -m "<coller le message généré>"
 
 # Pratique
 
-<img src="../assets/practice.png" alt="Warm desk setup with monitor showing code, lamp, coffee cup, and headphones ready for hands-on practice" width="800"/>
+<img src="../assets/practice.png" alt="Bureau chaleureux avec un moniteur affichant du code, une lampe, une tasse de café et un casque, prêt pour la pratique" width="800"/>
 
 C'est maintenant à vous d'appliquer ces flux de travail.
 
@@ -1105,7 +1105,7 @@ copilot
 
 ## 🔑 Points clés à retenir
 
-<img src="assets/specialized-workflows.png" alt="Specialized Workflows for Every Task: Code Review, Refactoring, Debugging, Testing, and Git Integration" width="800"/>
+<img src="assets/specialized-workflows.png" alt="Des flux de travail spécialisés pour chaque tâche : revue de code, refactoring, débogage, tests et intégration Git" width="800"/>
 
 1. La **revue de code** devient complète avec des prompts précis
 2. Le **refactoring** est plus sûr quand vous générez d'abord des tests

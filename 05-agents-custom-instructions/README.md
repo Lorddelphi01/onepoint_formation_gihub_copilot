@@ -43,7 +43,7 @@ Quand vous avez besoin d'aide pour votre maison, vous n'appelez pas un « assist
 
 Les agents fonctionnent de la même façon. Plutôt qu'une IA générique, utilisez des agents concentrés sur des tâches spécifiques et qui connaissent le bon processus à suivre. Configurez les instructions une fois, puis réutilisez-les chaque fois que vous avez besoin de cette spécialité : revue de code, tests, sécurité, documentation.
 
-<img src="assets/hiring-specialists-analogy.png" alt="Hiring Specialists Analogy - Just as you call specialized tradespeople for house repairs, AI agents are specialized for specific tasks like code review, testing, security, and documentation" width="800" />
+<img src="assets/hiring-specialists-analogy.png" alt="Analogie des spécialistes à domicile : de même qu'on fait appel à des artisans spécialisés pour des réparations, les agents IA sont spécialisés pour des tâches précises comme la revue de code, les tests, la sécurité et la documentation" width="800" />
 
 ---
 
@@ -147,7 +147,7 @@ copilot
 
 Vous pouvez tout simplement définir vos propres agents pour qu'ils fassent partie de votre flux de travail ! Définissez une fois, puis dirigez !
 
-<img src="assets/using-agents.png" alt="Four colorful AI robots standing together, each with different tools representing specialized agent capabilities" width="800"/>
+<img src="assets/using-agents.png" alt="Quatre robots IA colorés côte à côte, chacun équipé d'outils différents représentant des capacités d'agent spécialisées" width="800"/>
 
 <a id="-add-your-agents"></a>
 ## 🗂️ Ajoutez vos agents
@@ -254,7 +254,7 @@ copilot --agent python-reviewer
 
 # Aller plus loin avec les agents
 
-<img src="assets/creating-custom-agents.png" alt="Robot being assembled on a workbench surrounded by components and tools representing custom agent creation" width="800"/>
+<img src="assets/creating-custom-agents.png" alt="Robot en cours d'assemblage sur un établi entouré de composants et d'outils représentant la création d'un agent personnalisé" width="800"/>
 
 > 💡 **Cette section est facultative.** Les agents intégrés (`/plan`, `/review`) sont assez puissants pour la plupart des flux de travail. Créez des agents personnalisés quand vous avez besoin d'une expertise spécialisée appliquée de manière cohérente à travers votre travail.
 
@@ -451,7 +451,7 @@ Voyez-le ainsi : les agents sont des spécialistes que vous sollicitez, et les f
 
 Vous connaissez déjà les deux emplacements principaux (voir [Où placer les fichiers agent](#where-to-put-agent-files) ci-dessus). Utilisez cet arbre de décision pour choisir :
 
-<img src="assets/agent-file-placement-decision-tree.png" alt="Decision tree for where to put agent files: experimenting → current folder, team use → .github/agents/, everywhere → ~/.copilot/agents/" width="800"/>
+<img src="assets/agent-file-placement-decision-tree.png" alt="Arbre de décision pour l'emplacement des fichiers d'agent : test → dossier courant, usage d'équipe → .github/agents/, partout → ~/.copilot/agents/" width="800"/>
 
 **Commencez simple :** Créez un seul fichier `*.agent.md` dans votre dossier de projet. Déplacez-le vers un emplacement permanent une fois que vous en êtes satisfait.
 
@@ -674,7 +674,7 @@ Pour des agents communautaires, voir [github/awesome-copilot](https://github.com
 
 # Pratique
 
-<img src="../assets/practice.png" alt="Warm desk setup with monitor showing code, lamp, coffee cup, and headphones ready for hands-on practice" width="800"/>
+<img src="../assets/practice.png" alt="Bureau chaleureux avec un moniteur affichant du code, une lampe, une tasse de café et un casque, prêt pour la pratique" width="800"/>
 
 Créez vos propres agents et voyez-les en action.
 

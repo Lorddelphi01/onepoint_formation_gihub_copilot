@@ -32,7 +32,7 @@ Dans ce chapitre, vous allez rassembler tout ce que vous avez appris en workflow
 
 ## 🧩 Analogie du monde réel : l'orchestre
 
-<img src="assets/orchestra-analogy.png" alt="Orchestra Analogy - Unified Workflow" width="800"/>
+<img src="assets/orchestra-analogy.png" alt="Analogie de l'orchestre : un flux de travail unifié" width="800"/>
 
 Un orchestre symphonique comporte plusieurs sections :
 - Les **cordes** fournissent la base (comme vos workflows de base)
@@ -288,7 +288,7 @@ copilot
 
 # Workflows supplémentaires
 
-<img src="assets/combined-workflows.png" alt="People assembling a colorful giant jigsaw puzzle with gears, representing how agents, skills, and MCP combine into unified workflows" width="800"/>
+<img src="assets/combined-workflows.png" alt="Des personnes assemblant un immense puzzle coloré avec des engrenages, représentant comment agents, skills et MCP se combinent en flux de travail unifiés" width="800"/>
 
 Pour les utilisateurs avancés ayant terminé les Chapitres 04 à 06, ces workflows montrent comment agents, skills et MCP multiplient votre efficacité.
 
@@ -296,7 +296,7 @@ Pour les utilisateurs avancés ayant terminé les Chapitres 04 à 06, ces workfl
 
 Voici le modèle mental pour tout combiner :
 
-<img src="assets/integration-pattern.png" alt="The Integration Pattern - A 4-phase workflow: Gather Context (MCP), Analyze and Plan (Agents), Execute (Skills + Manual), Complete (MCP)" width="800"/>
+<img src="assets/integration-pattern.png" alt="Le schéma d'intégration : un flux en 4 phases — Rassembler le contexte (MCP), Analyser et planifier (Agents), Exécuter (Skills + manuel), Terminer (MCP)" width="800"/>
 
 *Légende : le contexte rassemble les informations, le plan choisit l'approche,
 l'exécution applique les changements, puis la phase de clôture vérifie et livre
@@ -567,7 +567,7 @@ Pour les équipes disposant de pipelines CI/CD existants, vous pouvez automatise
 
 # Pratique
 
-<img src="../assets/practice.png" alt="Warm desk setup with monitor showing code, lamp, coffee cup, and headphones ready for hands-on practice" width="800"/>
+<img src="../assets/practice.png" alt="Bureau chaleureux avec un moniteur affichant du code, une lampe, une tasse de café et un casque, prêt pour la pratique" width="800"/>
 
 Mettez le workflow complet en pratique.
 

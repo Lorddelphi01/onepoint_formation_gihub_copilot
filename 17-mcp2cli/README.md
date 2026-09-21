@@ -101,7 +101,7 @@ Une fois installé, mcp2cli propose deux façons de se connecter à un serveur M
 
 ## TP : interroger Context7 sans passer par Copilot
 
-<img src="../assets/practice.png" alt="Warm desk setup with monitor showing code, lamp, coffee cup, and headphones ready for hands-on practice" width="800"/>
+<img src="../assets/practice.png" alt="Bureau chaleureux avec un moniteur affichant du code, une lampe, une tasse de café et un casque, prêt pour la pratique" width="800"/>
 
 ![Parcours reproductible : le modèle lit les schémas et résultats MCP, tandis que la CLI générée appelle Context7 directement](assets/mcp-cost-comparison.svg)
 

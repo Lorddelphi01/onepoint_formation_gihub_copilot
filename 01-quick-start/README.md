@@ -169,7 +169,7 @@ copilot
 
 Il vous sera demandé de faire confiance au dossier contenant le dépôt (si ce n'est pas déjà fait). Vous pouvez lui faire confiance une seule fois ou pour toutes les sessions futures.
 
-<img src="assets/copilot-trust.png" alt="Trusting files in a folder with the Copilot CLI" width="800"/>
+<img src="assets/copilot-trust.png" alt="Faire confiance aux fichiers d'un dossier avec Copilot CLI" width="800"/>
 
 Après avoir approuvé le dossier, vous pouvez vous connecter avec votre compte GitHub.
 
@@ -191,7 +191,7 @@ Depuis Copilot CLI v1.0.77, le **flux par navigateur est le flux par défaut** l
 >
 > Pour forcer explicitement un flux plutôt que de laisser Copilot CLI choisir selon le contexte, utilisez `copilot login --web-flow` (navigateur) ou `copilot login --device-code` (code d'appareil). Vous pouvez aussi choisir de façon interactive avec `/login`.
 >
-> <img src="assets/auth-device-flow.png" alt="Device Authorization Flow - showing the 5-step process from terminal login to signed-in confirmation" width="800"/>
+> <img src="assets/auth-device-flow.png" alt="Flux d'autorisation par code d'appareil : les 5 étapes, de la connexion au terminal jusqu'à la confirmation de connexion" width="800"/>
 >
  
 *Le flux par défaut selon le contexte (depuis Copilot CLI v1.0.77) : navigateur en local interactif — votre navigateur s'ouvre automatiquement et vous autorisez en un clic — et code d'appareil en distant/headless, où un code à saisir sur `github.com/login/device` est affiché à la place.*

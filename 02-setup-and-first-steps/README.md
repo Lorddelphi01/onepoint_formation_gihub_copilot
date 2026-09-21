@@ -31,7 +31,7 @@ C'est dans ce chapitre que la magie commence ! Vous allez découvrir par vous-m�
 
 # Votre première expérience avec Copilot CLI
 
-<img src="assets/first-copilot-experience.png" alt="Developer sitting at a desk with code on the monitor and glowing particles representing AI assistance" width="800"/>
+<img src="assets/first-copilot-experience.png" alt="Développeur assis à son bureau avec du code affiché à l'écran et des particules lumineuses représentant l'assistance de l'IA" width="800"/>
 
 Lancez-vous directement et découvrez ce que Copilot CLI peut faire.
 
@@ -206,7 +206,7 @@ Une fois votre exploration terminée, quittez la session :
 
 # Modes et commandes
 
-<img src="assets/modes-and-commands.png" alt="Futuristic control panel with glowing screens, dials, and equalizers representing Copilot CLI modes and commands" width="800"/>
+<img src="assets/modes-and-commands.png" alt="Panneau de contrôle futuriste avec écrans lumineux, cadrans et égaliseurs représentant les modes et commandes de Copilot CLI" width="800"/>
 
 Vous venez de voir ce que Copilot CLI peut faire. Comprenons maintenant *comment* utiliser ces capacités efficacement. La clé est de savoir lequel des trois modes d'interaction utiliser selon les situations.
 
@@ -226,7 +226,7 @@ Pensez à l'utilisation de GitHub Copilot CLI comme à une sortie au restaurant.
 
 Tout comme au restaurant, vous apprendrez naturellement quand chaque approche est la plus adaptée.
 
-<img src="assets/ordering-food-analogy.png" alt="Three Ways to Use GitHub Copilot CLI - Plan Mode (GPS route to restaurant), Interactive Mode (talking to waiter), Programmatic Mode (drive-through)" width="800"/>
+<img src="assets/ordering-food-analogy.png" alt="Trois façons d'utiliser GitHub Copilot CLI : mode Plan (itinéraire GPS vers le restaurant), mode Interactif (discussion avec le serveur), mode Programmatique (commande au drive)" width="800"/>
 
 *Choisissez votre mode selon la tâche : Plan pour tracer le parcours au préalable, Interactif pour une collaboration en va-et-vient, Programmatique pour des résultats rapides en un coup*
 
@@ -247,7 +247,7 @@ Une fois à l'aise, essayez :
 
 ### Mode 1 : Mode Interactif (commencez ici)
 
-<img src="assets/interactive-mode.png" alt="Interactive Mode - Like talking to a waiter who can answer questions and adjust the order" width="250"/>
+<img src="assets/interactive-mode.png" alt="Mode Interactif : comme discuter avec un serveur qui répond aux questions et ajuste la commande" width="250"/>
 
 **Idéal pour** : L'exploration, l'itération, les conversations à plusieurs échanges. Comme discuter avec un serveur capable de répondre aux questions, prendre en compte les retours, et ajuster la commande à la volée.
 
@@ -285,7 +285,7 @@ Remarquez comment chaque prompt s'appuie sur la réponse précédente. Vous tene
 
 ### Mode 2 : Mode Plan
 
-<img src="assets/plan-mode.png" alt="Plan Mode - Like planning a route before a trip using GPS" width="250"/>
+<img src="assets/plan-mode.png" alt="Mode Plan : comme planifier un itinéraire avant un trajet avec le GPS" width="250"/>
 
 **Idéal pour** : Les tâches complexes où vous voulez revoir l'approche avant l'exécution. Comparable à planifier un itinéraire avant un trajet à l'aide du GPS.
 
@@ -341,7 +341,7 @@ Proceed with implementation? [Y/n]
 
 ### Mode 3 : Mode Programmatique
 
-<img src="assets/programmatic-mode.png" alt="Programmatic Mode - Like using a drive-through for a quick order" width="250"/>
+<img src="assets/programmatic-mode.png" alt="Mode Programmatique : comme utiliser un drive pour une commande rapide" width="250"/>
 
 **Idéal pour** : L'automatisation, les scripts, le CI/CD, les commandes ponctuelles. Comme utiliser un drive pour une commande rapide sans avoir à parler à un serveur.
 
@@ -546,7 +546,7 @@ copilot
 
 # Pratique
 
-<img src="../assets/practice.png" alt="Warm desk setup with monitor showing code, lamp, coffee cup, and headphones ready for hands-on practice" width="800"/>
+<img src="../assets/practice.png" alt="Bureau chaleureux avec un moniteur affichant du code, une lampe, une tasse de café et un casque, prêt pour la pratique" width="800"/>
 
 Il est temps de mettre en pratique ce que vous avez appris.
 

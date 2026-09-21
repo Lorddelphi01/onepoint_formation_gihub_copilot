@@ -37,7 +37,7 @@ C'est exactement ce que fait MCP (Model Context Protocol). C'est un moyen de con
 
 ## 🧩 Analogie du monde réel : les extensions de navigateur
 
-<img src="assets/browser-extensions-analogy.png" alt="MCP Servers are like Browser Extensions" width="800"/>
+<img src="assets/browser-extensions-analogy.png" alt="Les serveurs MCP sont comme des extensions de navigateur" width="800"/>
 
 Pensez aux serveurs MCP comme à des extensions de navigateur. Votre navigateur, seul, peut afficher des pages web, mais les extensions le connectent à des services supplémentaires :
 
@@ -55,7 +55,7 @@ Sans extensions, votre navigateur reste utile, mais avec elles, il devient redou
 
 ---
 
-<img src="assets/quick-start-mcp.png" alt="Power cable connecting with bright electrical spark surrounded by floating tech icons representing MCP server connections" width="800"/>
+<img src="assets/quick-start-mcp.png" alt="Câble d'alimentation qui se connecte avec une étincelle électrique lumineuse, entouré d'icônes technologiques flottantes représentant les connexions aux serveurs MCP" width="800"/>
 
 # Démarrage rapide : MCP en 30 secondes
 
@@ -207,7 +207,7 @@ MCP rend Copilot conscient de votre environnement de développement réel.
 
 # Configurer les serveurs MCP
 
-<img src="assets/configuring-mcp-servers.png" alt="Hands adjusting knobs and sliders on a professional audio mixing board representing MCP server configuration" width="800"/>
+<img src="assets/configuring-mcp-servers.png" alt="Mains ajustant les boutons et curseurs d'une table de mixage audio professionnelle représentant la configuration des serveurs MCP" width="800"/>
 
 Maintenant que vous avez vu MCP en action, configurons des serveurs supplémentaires. Vous pouvez ajouter des serveurs de deux façons : **depuis le registre intégré** (le plus simple — configuration guidée directement dans la CLI) ou en **modifiant le fichier de configuration** manuellement (plus flexible). Commencez par l'option du registre si vous ne savez pas laquelle choisir.
 
@@ -451,7 +451,7 @@ Enregistrez ceci sous `~/.copilot/mcp-config.json` pour un accès global ou `.mc
 
 Maintenant que vos serveurs MCP sont configurés, voyons ce qu'ils peuvent faire.
 
-<img src="assets/using-mcp-servers.png" alt="Using MCP Servers - Hub-and-spoke diagram showing a Developer CLI connected to GitHub, Filesystem, Context7, and Custom/Web Fetch servers" width="800" />
+<img src="assets/using-mcp-servers.png" alt="Utiliser les serveurs MCP : schéma en étoile montrant une CLI développeur connectée aux serveurs GitHub, Filesystem, Context7 et Custom/Web Fetch" width="800" />
 
 ---
 
@@ -649,7 +649,7 @@ copilot
 
 Ces workflows montrent pourquoi les développeurs disent « je ne veux plus jamais travailler sans ça ». Chaque exemple combine plusieurs serveurs MCP au sein d'une même session.
 
-<img src="assets/issue-to-pr-workflow.png" alt="Issue to PR Workflow using MCP - Shows the complete flow from getting a GitHub issue through creating a pull request" width="800"/>
+<img src="assets/issue-to-pr-workflow.png" alt="Flux d'une issue à la PR avec MCP : montre le déroulement complet, de la récupération d'une issue GitHub jusqu'à la création de la pull request" width="800"/>
 
 *Workflow MCP complet : GitHub MCP récupère les données du dépôt, Filesystem MCP trouve le code, Context7 MCP fournit les bonnes pratiques, et Copilot gère l'analyse*
 
@@ -801,7 +801,7 @@ Recommendations:
 
 # Pratique
 
-<img src="../assets/practice.png" alt="Warm desk setup with monitor showing code, lamp, coffee cup, and headphones ready for hands-on practice" width="800"/>
+<img src="../assets/practice.png" alt="Bureau chaleureux avec un moniteur affichant du code, une lampe, une tasse de café et un casque, prêt pour la pratique" width="800"/>
 
 **🎉 Vous connaissez maintenant l'essentiel !** Vous comprenez MCP, vous avez vu comment configurer des serveurs, et vous avez vu de vrais workflows en action. Il est temps d'essayer vous-même.
 

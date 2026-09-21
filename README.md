@@ -137,7 +137,7 @@ Ce cours se concentre sur **GitHub Copilot CLI**, qui apporte l'assistance de l'
 
 ## 🎓 Catalogue de formation
 
-![GitHub Copilot CLI Learning Path](assets/learning-path.png)
+![Parcours d'apprentissage GitHub Copilot CLI](assets/learning-path.png)
 
 **19 chapitres, dont 11 chapitres du tronc commun et 8 modules bonus (optionnels).**
 
