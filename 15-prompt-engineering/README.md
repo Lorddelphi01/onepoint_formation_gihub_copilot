@@ -269,7 +269,7 @@ Vous avez vu que la qualité d'un résultat Copilot CLI dépend autant de la for
 - [Best practices for using GitHub Copilot](https://docs.github.com/en/copilot/get-started/best-practices) — recommandations générales officielles
 - [Best practices for GitHub Copilot CLI](https://docs.github.com/en/copilot/how-tos/copilot-cli/cli-best-practices) — recommandations spécifiques à la CLI : `/plan`, choix du modèle, flux de travail
 - [Managing context in GitHub Copilot CLI](https://docs.github.com/en/copilot/concepts/agents/copilot-cli/context-management) — compaction automatique et commandes `/context` / `/compact`
-- [knowsuchagency/mcp2cli](https://github.com/knowsuchagency/mcp2cli) — une implémentation open source du principe CLI générée depuis un serveur MCP
+- [Chapitre 17 : mcp2cli et le coût en tokens](../17-mcp2cli/README.md) — traite ce même principe en détail avec une implémentation concrète (attention, plusieurs projets indépendants portent le nom « mcp2cli » : voir l'avertissement d'homonymie de ce chapitre)
 - [Chapitre 07 : Serveurs MCP](../07-mcp-servers/README.md) — pour revoir la configuration MCP classique
 - [Templates de prompts de ce cours](../samples/prompt-templates/README.md)
 
@@ -277,6 +277,6 @@ Vous avez vu que la qualité d'un résultat Copilot CLI dépend autant de la for
 
 ## ➡️ Et ensuite ?
 
-Vous avez maintenant parcouru l'ensemble du cours, de l'installation de Copilot CLI jusqu'à l'automatisation de workflows visuels et à l'écriture d'instructions réutilisables. La suite logique : appliquer ces pratiques à votre propre projet, et faire évoluer vos templates de prompts au fil de ce que vous apprenez sur ce qui fonctionne avec votre équipe.
+Vous savez maintenant rédiger des prompts clairs et construire des templates réutilisables. Il reste trois chapitres bonus optionnels pour aller plus loin : paralléliser des sessions avec les worktrees Git (Chapitre 16), transformer un serveur MCP en CLI native avec mcp2cli (Chapitre 17), et piloter des workflows visuels n8n depuis Copilot CLI (Chapitre 18).
 
-**[← Chapitre précédent : Analyser sa consommation de tokens avec RTK et Tokscale](../14-token-consumption-analysis/README.md)** | **[Retour à l'accueil du cours →](../README.md)**
+**[← Chapitre précédent : Analyser sa consommation de tokens avec RTK et Tokscale](../14-token-consumption-analysis/README.md)** | **[Chapitre suivant : Worktrees parallèles →](../16-parallel-worktrees/README.md)**

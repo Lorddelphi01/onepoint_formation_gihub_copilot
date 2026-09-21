@@ -278,4 +278,6 @@ Vous avez connecté Copilot CLI à une instance n8n locale via MCP, adapté un p
 
 Vous avez maintenant vu Copilot CLI travailler dans deux mondes différents : celui du code, et celui des workflows visuels d'un outil tiers. Le principe reste le même dans les deux cas — décrire un résultat, laisser l'IA assembler les briques, puis relire avant de valider.
 
+Vous avez maintenant parcouru l'ensemble du cours, de l'installation de Copilot CLI jusqu'à l'automatisation de workflows visuels. La suite logique : appliquer ces pratiques à votre propre projet, et revenir piocher dans les chapitres bonus au fil de vos besoins.
+
 **[← Chapitre précédent : mcp2cli et le coût en tokens](../17-mcp2cli/README.md)** | **[Retour à l'accueil du cours →](../README.md)**

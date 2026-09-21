@@ -424,4 +424,4 @@ Vous disposez maintenant de deux outils complémentaires pour piloter votre cons
 
 Vous avez maintenant les outils natifs (`/chronicle`) et tiers (RTK, Tokscale) pour comprendre et réduire votre consommation de tokens sur la durée — la même discipline de relecture et d'amélioration continue que vous appliquez déjà à votre code avec Copilot CLI.
 
-**[← Chapitre précédent : Explorer l'historique de vos sessions avec /chronicle](../13-chronicle-session-insights/README.md)** | **[Retour à l'accueil du cours →](../README.md)**
+**[← Chapitre précédent : Explorer l'historique de vos sessions avec /chronicle](../13-chronicle-session-insights/README.md)** | **[Chapitre suivant : Rédiger des instructions IA efficaces →](../15-prompt-engineering/README.md)**

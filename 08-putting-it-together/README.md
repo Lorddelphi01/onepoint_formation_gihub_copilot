@@ -559,10 +559,6 @@ Pour les équipes disposant de pipelines CI/CD existants, vous pouvez automatise
 
 > 📖 **En savoir plus** : Consultez [Intégration CI/CD](../appendices/ci-cd-integration.md) pour des workflows GitHub Actions complets, des options de configuration, et des astuces de dépannage.
 
-### 🧪 Pour aller plus loin (expérimental)
-
-> ⚗️ **Project HydraFusion** *(annoncé le 10 septembre 2026)* : un routage sémantique automatique entre modèles locaux, cloud et composés, accessible en `/experimental` via `/model` comme n'importe quel autre modèle. Il choisit lui-même un flux qui équilibre performance, coût et latence selon la tâche. **Ce n'est pas nécessaire pour suivre ce cours** — c'est une piste expérimentale à explorer uniquement si vous êtes déjà à l'aise avec les workflows présentés ci-dessus.
-
 ---
 
 # Pratique
@@ -577,7 +573,7 @@ Mettez le workflow complet en pratique.
 
 Après avoir terminé les démonstrations, essayez ces variations :
 
-1. **Défi de bout en bout** : Choisissez une petite fonctionnalité (par exemple, « list unread books » ou « export to CSV »). Utilisez le workflow complet :
+1. **Défi de bout en bout** : Choisissez une petite fonctionnalité (par exemple, « export to CSV » ou « trier par auteur »). Utilisez le workflow complet :
    - Planifier avec `/plan`
    - Concevoir avec les agents (python-reviewer, pytest-helper)
    - Implémenter
@@ -596,15 +592,15 @@ Après avoir terminé les démonstrations, essayez ces variations :
 
 ### Défi principal : fonctionnalité de bout en bout
 
-Les exemples pratiques ont parcouru la construction d'une fonctionnalité « list unread books ». Maintenant, pratiquez le workflow complet sur une fonctionnalité différente : **rechercher des livres par plage d'années** :
+Le parcours guidé ci-dessus a construit la fonctionnalité « search by year » pas à pas. Pratiquez maintenant le même workflow complet sur une fonctionnalité différente : **lister les livres non lus** :
 
 1. Démarrez Copilot et rassemblez le contexte : `@samples/book-app-project/books.py`
-2. Planifiez avec `/plan Add a "search by year" command that lets users find books published between two years`
-3. Implémentez une méthode `find_by_year_range(start_year, end_year)` dans `BookCollection`
-4. Ajoutez une fonction `handle_search_year()` dans `book_app.py` qui demande à l'utilisateur les années de début et de fin
-5. Générez les tests : `@samples/book-app-project/books.py @samples/book-app-project/tests/test_books.py Generate tests for find_by_year_range() including edge cases like invalid years, reversed range, and no results.`
+2. Planifiez avec `/plan Add a "list unread books" command that shows every book whose read status is False`
+3. Implémentez une méthode `list_unread()` dans `BookCollection`
+4. Ajoutez une fonction `handle_list_unread()` dans `book_app.py` qui affiche les livres non lus
+5. Générez les tests : `@samples/book-app-project/books.py @samples/book-app-project/tests/test_books.py Generate tests for list_unread() including edge cases like an empty collection and a collection where every book is already read.`
 6. Révisez avec `/review`
-7. Mettez à jour le README : `@samples/book-app-project/README.md Add documentation for the new "search by year" command.`
+7. Mettez à jour le README : `@samples/book-app-project/README.md Add documentation for the new "list unread books" command.`
 8. Générez un message de commit
 
 Documentez votre workflow au fur et à mesure.
@@ -616,20 +612,20 @@ Documentez votre workflow au fur et à mesure.
 <details>
 <summary>💡 Indices (cliquer pour développer)</summary>
 
-**Suivez le modèle de l'exemple ["Idée vers PR fusionnée"](#de-lidée-à-la-pr-fusionnée-en-une-seule-session)** en haut de ce chapitre. Les étapes clés sont :
+**Suivez le modèle de l'exemple ["Idée vers PR fusionnée"](#de-lidée-à-la-pr-fusionnée-en-une-seule-session)** en haut de ce chapitre, en l'adaptant à la nouvelle fonctionnalité. Les étapes clés sont :
 
 1. Rassembler le contexte avec `@samples/book-app-project/books.py`
-2. Planifier avec `/plan Add a "search by year" command`
+2. Planifier avec `/plan Add a "list unread books" command`
 3. Implémenter la méthode et le gestionnaire de commande
-4. Générer les tests avec des cas limites (entrée invalide, résultats vides, plage inversée)
+4. Générer les tests avec des cas limites (collection vide, tous les livres déjà lus)
 5. Réviser avec `/review`
 6. Mettre à jour le README avec `@samples/book-app-project/README.md`
 7. Générer le message de commit avec `-p`
 
 **Cas limites auxquels penser :**
-- Que se passe-t-il si l'utilisateur saisit « 2000 » puis « 1990 » (plage inversée) ?
-- Que se passe-t-il si aucun livre ne correspond à la plage ?
-- Que se passe-t-il si l'utilisateur saisit une entrée non numérique ?
+- Que se passe-t-il si la collection est vide ?
+- Que se passe-t-il si tous les livres sont déjà marqués comme lus ?
+- Comment l'affichage distingue-t-il clairement un livre lu d'un livre non lu ?
 
 **L'essentiel est de pratiquer le workflow complet** de l'idée → contexte → plan → implémentation → test → documentation → commit.
 
