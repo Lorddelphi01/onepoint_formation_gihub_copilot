@@ -1,0 +1,17 @@
+# Conteneur de test pour install-linux.sh : Debian bookworm-slim, au plus
+# proche de la cible réelle du script (WSL Debian), avec un utilisateur non
+# root + sudo sans mot de passe (comme un compte WSL classique).
+FROM debian:bookworm-slim
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        sudo ca-certificates \
+    && rm -rf /var/lib/apt/lists/* \
+    && useradd -m -s /bin/bash tester \
+    && echo "tester ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/tester \
+    && chmod 0440 /etc/sudoers.d/tester
+
+ENV HOME=/home/tester
+USER tester
+WORKDIR /home/tester
+
+COPY --chmod=755 install-linux.sh /home/tester/install-linux.sh

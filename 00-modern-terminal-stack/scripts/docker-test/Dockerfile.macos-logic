@@ -1,0 +1,8 @@
+# Conteneur de test "logique" pour install-macos.sh : l'image officielle
+# homebrew/brew fournit un Homebrew fonctionnel sous Linux (Linuxbrew), ce qui
+# permet d'exercer réellement les commandes `brew install`/`brew uninstall`
+# du script. Ce n'est PAS une fidélité macOS complète (zsh n'y est pas le
+# shell par défaut comme sur un vrai Mac) : voir README.md dans ce dossier.
+FROM homebrew/brew:latest
+
+COPY --chmod=755 install-macos.sh /tmp/install-macos.sh

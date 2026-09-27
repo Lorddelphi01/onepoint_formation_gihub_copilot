@@ -69,3 +69,4 @@ Ne vous écartez pas de cette structure lors de la modification ou de l'ajout de
 | Image ou bannière modifiée | Répertoire `assets/`, tout README référençant l'image |
 | Exigences de version de Copilot CLI modifiées | Chapitre 01, Chapitre 02, `.devcontainer/devcontainer.json` |
 | Chapitre déplacé/reclassé entre pistes (tracks) | `README.md` (catalogue de formation), `AGENTS.md` (table « Pistes (tracks) du README ») |
+| Scripts d'installation du Chapitre 00 modifiés (`00-modern-terminal-stack/scripts/`) | Valider avec `bash 00-modern-terminal-stack/scripts/docker-test/run-tests.sh` avant de fusionner, puis mettre à jour `00-modern-terminal-stack/README.md` si les options/outils gérés changent |

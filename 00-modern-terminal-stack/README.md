@@ -524,6 +524,9 @@ Le vrai levier ici n'est pas la liste d'outils elle-même. Le levier, c'est de l
 
 ## Scripts d'installation
 
+Sans option, chaque script ouvre un **menu interactif** : installer tous les outils, en installer
+ou désinstaller un seul, ou quitter.
+
 ```bash
 # 🍎 macOS
 bash scripts/install-macos.sh
@@ -533,10 +536,38 @@ bash scripts/install-linux.sh
 ```
 
 ```powershell
-# 🪟 PowerShell (Windows) — installe le sous-ensemble de la stack disponible nativement
-# (zsh, tmux et leurs plugins nécessitent WSL, voir scripts/install-linux.sh)
+# 🪟 PowerShell (Windows) — gère le sous-ensemble de la stack disponible nativement
+# (zsh, eza, tmux et leurs plugins nécessitent WSL, voir scripts/install-linux.sh)
 .\scripts\install-windows.ps1
 ```
+
+Pour scripter l'installation (CI, réinstallation rapide, formation à plusieurs) plutôt que de
+répondre au menu, chaque script accepte aussi des options :
+
+```bash
+bash scripts/install-linux.sh --list                  # État (installé/absent) de chaque outil
+bash scripts/install-linux.sh --install=eza            # Installe un seul outil
+bash scripts/install-linux.sh --install=all --yes      # Installe tout, sans confirmation
+bash scripts/install-linux.sh --uninstall=eza          # Désinstalle un seul outil
+bash scripts/install-linux.sh --uninstall=all --yes    # Désinstalle tout, sans confirmation
+```
+
+```powershell
+.\scripts\install-windows.ps1 -ListTools
+.\scripts\install-windows.ps1 -Install starship
+.\scripts\install-windows.ps1 -Uninstall starship
+```
+
+Noms d'outils reconnus par `--install=`/`--uninstall=` (Linux) : `zsh starship atuin zoxide fzf eza
+bat zsh-autosuggestions zsh-syntax-highlighting tmux tmux-plugins`. Sur macOS, la liste est
+identique sans `zsh` (déjà le shell par défaut). Sur Windows, seuls `starship fzf bat zoxide atuin`
+sont gérables via `winget` (voir `-Help` pour le détail).
+
+La désinstallation retire le paquet ou le binaire, les dépôts Git clonés (fzf, plugins zsh, TPM), et
+régénère automatiquement les blocs de configuration (`~/.zshrc`, `~/.tmux.conf`, profil PowerShell)
+pour ne garder que ce qui reste réellement installé. Elle conserve en revanche votre historique
+Atuin local (base chiffrée), qu'elle ne touche jamais. `tmux-plugins` (TPM) nécessite `tmux` :
+désinstallez-le d'abord si vous voulez retirer les deux.
 
 Sur WSL Debian, deux étapes post-installation restent manuelles côté Windows (pas automatisables depuis le shell Linux) :
 
@@ -552,6 +583,11 @@ Les dépôts Git et les paquets déjà présents ne sont pas réinstallés.
 > chaque outil et sont suffisants pour suivre les manipulations. Aucun GIF global
 > supplémentaire n'est nécessaire ; la feuille de route finale ci-dessous sert de
 > synthèse textuelle et vérifiable.
+
+> 🧑‍💻 **Pour les mainteneurs** : avant de fusionner un changement sur ces scripts, validez-le dans
+> des conteneurs Docker jetables plutôt que sur votre propre machine, avec
+> `bash scripts/docker-test/run-tests.sh` (voir `scripts/docker-test/README.md` pour le détail et les
+> limites de fidélité par plateforme).
 
 ## ✅ Contrôles copiables
 

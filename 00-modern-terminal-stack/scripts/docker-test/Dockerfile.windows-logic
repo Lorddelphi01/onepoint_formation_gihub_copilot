@@ -1,0 +1,9 @@
+# Conteneur de test "logique" pour install-windows.ps1 : image Linux
+# mcr.microsoft.com/powershell avec un faux `winget` (fake-winget.sh). Valide
+# le menu, les paramètres, la gestion des noms d'outils invalides et la
+# régénération du bloc de profil — jamais une vraie installation Windows.
+# Voir README.md dans ce dossier.
+FROM mcr.microsoft.com/powershell:latest
+
+COPY --chmod=755 docker-test/fake-winget.sh /usr/local/bin/winget
+COPY --chmod=755 install-windows.ps1 /tmp/install-windows.ps1
