@@ -132,6 +132,27 @@ Choisissez **une seule** méthode dans la matrice. Elles installent le même pro
 
     **Résultat attendu** : le terminal affiche un numéro de version. S'il affiche `command not found` ou une commande inconnue, fermez et rouvrez le terminal, puis utilisez la solution de repli de la matrice correspondant à votre système.
 
+### Automatiser l'installation (scripts)
+
+Si vous préférez ne pas suivre les sous-étapes 2 et 3 ci-dessus à la main (installation puis vérification de version), un script par système les exécute pour vous, **et** vérifie en plus que la Book App fonctionne (Étape 2 de la section suivante), en une seule commande. Clonez d'abord le dépôt (sous-étape 1 ci-dessus), puis exécutez le script depuis la racine du dépôt :
+
+```bash
+# 🐧 Linux (WSL Debian)
+bash 01-quick-start/scripts/install-linux.sh
+
+# 🍎 macOS
+bash 01-quick-start/scripts/install-macos.sh
+```
+
+```powershell
+# 🪟 PowerShell (Windows)
+.\01-quick-start\scripts\install-windows.ps1
+```
+
+> 💡 Chaque script retrouve seul l'emplacement du dépôt (via son propre chemin), donc peu importe le dossier depuis lequel vous l'exécutez tant que vous restez dans le dépôt cloné.
+
+Les scripts s'arrêtent avant l'authentification : `/login` reste une étape manuelle, car elle nécessite un navigateur ou la saisie d'un code d'appareil (voir la section [Authentification](#authentification) ci-dessous).
+
 <details>
 <summary>Optionnel : activer l'autocomplétion du shell</summary>
 
