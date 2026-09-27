@@ -303,7 +303,11 @@ Copilot scanne automatiquement ces emplacements à la recherche de skills :
 | Emplacement | Portée |
 |----------|-------|
 | `.github/skills/` | Spécifique au projet (partagé avec l'équipe via git) |
+| `.claude/skills/` ou `.agents/skills/` | Spécifique au projet — également reconnus (standard ouvert partagé avec d'autres outils IA) |
 | `~/.copilot/skills/` | Spécifique à l'utilisateur (vos skills personnels) |
+| `~/.agents/skills/` | Spécifique à l'utilisateur — également reconnu |
+
+> 💡 **Pourquoi plusieurs dossiers ?** Le format SKILL.md suit une spécification ouverte, réutilisée par plusieurs outils IA (dont Claude Code, d'où `.claude/skills/`). Si votre équipe a déjà des skills définis pour un autre outil, Copilot CLI peut souvent les découvrir sans dupliquer les fichiers.
 
 ### Structure d'un skill
 
@@ -370,6 +374,9 @@ Provide issues as a numbered list with severity:
 | `description` | **Oui** | Ce que fait le skill et quand Copilot doit l'utiliser |
 | `license` | Non | Licence applicable à ce skill |
 | `argument-hint` | Non | Court indice affiché aux utilisateurs décrivant l'argument attendu par le skill (par ex. `"file path or code snippet"`) |
+| `allowed-tools` | Non | Pré-approuve certains outils (ex. `shell`) pour ce skill, sans invite de confirmation |
+
+> ⚠️ **Attention avec `allowed-tools`** : pré-approuver l'outil `shell` signifie que Copilot pourra exécuter des commandes shell proposées par ce skill **sans vous demander confirmation**. N'utilisez ce champ que sur des skills dont vous avez lu et audité entièrement les instructions — voir la checklist de sécurité plus bas.
 
 > 💡 **Qu'est-ce que `argument-hint` ?** Lorsque les utilisateurs invoquent un skill directement (par ex. `/security-audit`), le texte `argument-hint` apparaît comme un texte indicatif suggérant quoi taper ensuite — un peu comme une mini-aide. Par exemple, définir `argument-hint: "file path to review"` indique à l'utilisateur de fournir un chemin de fichier après le nom du skill.
 
@@ -783,6 +790,26 @@ copilot plugin marketplace update
 ```
 
 > 🆕 **Mises à jour automatiques et manuelles** *(depuis v1.0.81)* : les plugins **de première partie** (fournis par GitHub) se mettent à jour automatiquement à chaque démarrage de session — rien à faire de votre côté. Pour les autres plugins, `/plugin` affiche désormais un indicateur de mise à jour disponible et propose une action **« Update »** directement dans le tableau de bord.
+
+Copilot est livré avec deux marketplaces enregistrées par défaut : `copilot-plugins` (officielle GitHub) et `awesome-copilot` (communautaire). Comme pour les skills, vous pouvez aussi les gérer depuis le terminal, sans session interactive :
+
+```bash
+# Lister les marketplaces disponibles
+copilot plugin marketplace list
+
+# Parcourir les plugins d'une marketplace
+copilot plugin marketplace browse awesome-copilot
+
+# Installer un plugin (syntaxe : nom-du-plugin@marketplace)
+copilot plugin install database-data-management@awesome-copilot
+
+# Gérer les plugins installés
+copilot plugin list
+copilot plugin update <plugin-name>
+copilot plugin uninstall <plugin-name>
+```
+
+> ⚠️ **En cas de conflit de noms** : si un skill de votre projet porte le même nom qu'un skill fourni par un plugin installé, c'est **le skill du projet qui l'emporte silencieusement** — celui du plugin est ignoré sans avertissement. Si un skill de plugin ne semble jamais se déclencher, vérifiez d'abord qu'aucun skill local du même nom ne le masque avec `/skills info <name>`.
 
 Les plugins peuvent regrouper plusieurs fonctionnalités ensemble. Un seul plugin peut inclure des skills, des agents et des configurations de serveurs MCP liés qui fonctionnent ensemble.
 
