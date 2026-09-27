@@ -16,7 +16,7 @@ weight: 0
 [![Official Copilot CLI documentation](https://img.shields.io/badge/GitHub-CLI_Documentation-00a3ee?style=flat-square&logo=github)](https://docs.github.com/en/copilot/how-tos/copilot-cli)&ensp;
 [![Join AI Foundry Discord](https://img.shields.io/badge/Discord-AI_Community-blue?style=flat-square&logo=discord&color=5865f2&logoColor=fff)](https://aka.ms/foundry/discord)
 
-🎯 [Ce que tu vas apprendre](#-ce-que-tu-vas-apprendre) &ensp; ✅ [Prérequis](#-prérequis) &ensp; 🤖 [Famille Copilot](#-comprendre-la-famille-github-copilot) &ensp; 🎓 [Catalogue de formation](#-catalogue-de-formation) &ensp; 📋 [Référence des commandes](#-référence-des-commandes-github-copilot-cli)
+🎯 [Ce que tu vas apprendre](#-ce-que-tu-vas-apprendre) &ensp; ✅ [Prérequis](#-prérequis) &ensp; 🤖 [Famille Copilot](#-comprendre-la-famille-github-copilot) &ensp; 📚 [Catalogue de formation](#-catalogue-de-formation) &ensp; 📋 [Référence des commandes](#-référence-des-commandes-github-copilot-cli)
 
 # GitHub Copilot CLI pour débutants
 
@@ -28,29 +28,29 @@ Imagine-le comme un collègue compétent disponible 24 h/24 et 7 j/7, capable de
 
 > 📘 **Tu préfères une expérience web ?** Tu peux suivre ce cours ici même sur GitHub, ou le consulter sur [Awesome Copilot](https://awesome-copilot.github.com/learning-hub/cli-for-beginners/) pour une expérience de navigation plus traditionnelle.
 
-Ce cours est conçu pour :
+### Ce cours est conçu pour
 
 <table>
 <tr>
 <td width="33%" valign="top">
 
-**👩‍💻 Les développeurs et développeuses**
+**🧑‍💻 Les développeurs et développeuses**
 
-Qui veulent utiliser l'IA depuis la ligne de commande
+Qui veulent utiliser l'IA depuis la ligne de commande.
 
 </td>
 <td width="33%" valign="top">
 
 **⌨️ Les utilisateurs de terminal**
 
-Qui préfèrent des flux de travail pilotés au clavier plutôt que des intégrations IDE
+Qui préfèrent des flux de travail pilotés au clavier plutôt que des intégrations IDE.
 
 </td>
 <td width="33%" valign="top">
 
-**🤝 Les équipes souhaitant standardiser**
+**🏢 Les équipes**
 
-Les pratiques de revue de code et de développement assistées par l'IA
+Qui souhaitent standardiser les pratiques de revue de code et de développement assistées par l'IA.
 
 </td>
 </tr>
@@ -58,7 +58,10 @@ Les pratiques de revue de code et de développement assistées par l'IA
 
 ## 🎯 Ce que tu vas apprendre
 
-Ce cours pratique t'emmène de zéro à la productivité avec GitHub Copilot CLI. Tu travailleras avec une seule application Python de gestion de collection de livres tout au long des chapitres, en l'améliorant progressivement grâce à des flux de travail assistés par l'IA. À la fin, tu utiliseras l'IA en toute confiance pour relire du code, générer des tests, déboguer des problèmes, et automatiser des flux de travail : le tout depuis ton terminal.
+Ce cours pratique t'emmène de zéro à la productivité avec GitHub Copilot CLI. Tu travailleras avec une seule application Python de gestion de collection de livres tout au long des chapitres, en l'améliorant progressivement grâce à des flux de travail assistés par l'IA.
+
+> **À la fin de ce cours, tu sauras :**
+> utiliser l'IA en toute confiance pour relire du code, générer des tests, déboguer des problèmes, et automatiser des flux de travail — le tout depuis ton terminal.
 
 **Aucune expérience de l'IA n'est requise.** Si tu sais utiliser un terminal, tu peux apprendre cela.
 
@@ -66,29 +69,27 @@ Ce cours pratique t'emmène de zéro à la productivité avec GitHub Copilot CLI
 
 ## ✅ Prérequis
 
-Avant de commencer, assure-toi d'avoir :
-
 <table>
 <tr>
 <td width="33%" valign="top">
 
-**🔑 Un compte GitHub**
+**🐙 Un compte GitHub**
 
 [Crée-en un gratuitement](https://github.com/signup)
 
 </td>
 <td width="33%" valign="top">
 
-**🤖 Un accès à GitHub Copilot**
+**🔑 Un accès à GitHub Copilot**
 
-[Offre gratuite](https://github.com/features/copilot/plans), [abonnement mensuel](https://github.com/features/copilot/plans), ou [gratuit pour les étudiants/enseignants](https://education.github.com/pack)
+[Offre gratuite](https://github.com/features/copilot/plans) · [Abonnement mensuel](https://github.com/features/copilot/plans) · [Gratuit pour les étudiants/enseignants](https://education.github.com/pack)
 
 </td>
 <td width="33%" valign="top">
 
 **⌨️ Des bases du terminal**
 
-Être à l'aise avec `cd`, `ls`, l'exécution de commandes
+Être à l'aise avec `cd`, `ls`, l'exécution de commandes.
 
 </td>
 </tr>
@@ -102,32 +103,36 @@ GitHub Copilot a évolué en une famille d'outils propulsés par l'IA. Voici où
 <tr>
 <td width="50%" valign="top">
 
-**💻 [GitHub Copilot CLI](https://docs.github.com/copilot/how-tos/copilot-cli/cli-getting-started)** *(ce cours)*
+**[GitHub Copilot CLI](https://docs.github.com/copilot/how-tos/copilot-cli/cli-getting-started)** *(ce cours)*
+📍 Ton terminal
 
-Ton terminal — assistant de codage IA natif du terminal
+Assistant de codage IA natif du terminal.
 
 </td>
 <td width="50%" valign="top">
 
-**🧩 [GitHub Copilot](https://docs.github.com/copilot)**
+**[GitHub Copilot](https://docs.github.com/copilot)**
+📍 VS Code, Visual Studio, JetBrains, etc.
 
-VS Code, Visual Studio, JetBrains, etc. — mode agent, chat, suggestions en ligne
+Mode agent, chat, suggestions en ligne.
 
 </td>
 </tr>
 <tr>
 <td width="50%" valign="top">
 
-**🌐 [Copilot sur GitHub.com](https://github.com/copilot)**
+**[Copilot sur GitHub.com](https://github.com/copilot)**
+📍 GitHub
 
-GitHub — chat immersif sur tes dépôts, création d'agents, et plus
+Chat immersif sur tes dépôts, création d'agents, et plus.
 
 </td>
 <td width="50%" valign="top">
 
-**☁️ [Agent cloud GitHub Copilot](https://docs.github.com/copilot/using-github-copilot/using-copilot-coding-agent-to-work-on-tasks)**
+**[Agent cloud GitHub Copilot](https://docs.github.com/copilot/using-github-copilot/using-copilot-coding-agent-to-work-on-tasks)**
+📍 GitHub
 
-GitHub — assigne des issues à des agents, récupère des PR en retour
+Assigne des issues à des agents, récupère des PR en retour.
 
 </td>
 </tr>
@@ -135,74 +140,82 @@ GitHub — assigne des issues à des agents, récupère des PR en retour
 
 Ce cours se concentre sur **GitHub Copilot CLI**, qui apporte l'assistance de l'IA directement dans ton terminal.
 
-## 🎓 Catalogue de formation
+## 📚 Catalogue de formation
 
-![Parcours d'apprentissage GitHub Copilot CLI](assets/learning-path.png)
+![GitHub Copilot CLI Learning Path](assets/learning-path.png)
 
-**19 chapitres, dont 11 chapitres du tronc commun et 8 modules bonus (optionnels).**
+Le parcours est organisé en modules progressifs, du démarrage aux automatisations avancées, plus une série de modules bonus optionnels à picorer selon tes besoins.
 
-[Tout](#-catalogue-de-formation) · [🧭 Fondamentaux](#-fondamentaux) · [⚡ Flux de travail quotidiens](#-flux-de-travail-quotidiens) · [🤖 Automatisation & agents IA](#-automatisation--agents-ia) · [🎓 Aller plus loin](#-aller-plus-loin-avec-les-commandes-natives) · [🎁 Modules bonus](#-modules-bonus-optionnels)
+**[Tout](#-catalogue-de-formation)** · [Fondamentaux](#-fondamentaux) · [Flux de travail quotidiens](#-flux-de-travail-quotidiens) · [Automatisation & agents IA](#-automatisation--agents-ia) · [Sécurité & maîtrise avancée](#-sécurité--maîtrise-avancée) · [Modules bonus](#-modules-bonus-optionnels)
+&emsp;·&emsp;**19 chapitres**, dont **8 modules bonus** optionnels
 
 ### 🧭 Fondamentaux
-
-Installer Copilot CLI, comprendre ses modes d'interaction, et équiper son terminal.
 
 <table>
 <tr>
 <td width="50%" valign="top">
 
-#### 🧰 [Équipez votre terminal](./00-modern-terminal-stack/README.md)
+<img src="assets/tracks/fondamentaux-cover.png" width="100%" alt="">
 
-Une stack terminal moderne (zsh, Starship, tmux, Atuin, Zoxide, fzf, eza, bat)
+**🧰 [Équipez votre terminal](./00-modern-terminal-stack/README.md)**
 
-<sub>Chapitre 00 · ~35 min · Fondamental</sub>
+Une stack terminal moderne (zsh, Starship, tmux, Atuin, Zoxide, fzf, eza, bat).
+
+<sub>Chapitre 00 · Niveau Débutant</sub>
 
 </td>
 <td width="50%" valign="top">
 
-#### 🚀 [Démarrage rapide](./01-quick-start/README.md)
+<img src="assets/tracks/fondamentaux-cover.png" width="100%" alt="">
 
-Installation et vérification
+**🚀 [Démarrage rapide](./01-quick-start/README.md)**
 
-<sub>Chapitre 01 · ~55 min · Fondamental</sub>
+Installation et vérification.
+
+<sub>Chapitre 01 · Niveau Débutant</sub>
 
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top">
+<td width="50%" valign="top">
 
-#### 👋 [Premiers pas](./02-setup-and-first-steps/README.md)
+<img src="assets/tracks/fondamentaux-cover.png" width="100%" alt="">
 
-Démonstrations en direct + trois modes d'interaction
+**👋 [Premiers pas](./02-setup-and-first-steps/README.md)**
 
-<sub>Chapitre 02 · ~50 min · Fondamental</sub>
+Démonstrations en direct + trois modes d'interaction.
+
+<sub>Chapitre 02 · Niveau Débutant</sub>
 
 </td>
+<td width="50%" valign="top"></td>
 </tr>
 </table>
 
 ### ⚡ Flux de travail quotidiens
 
-Utiliser Copilot CLI pour comprendre du code existant et l'améliorer au quotidien.
-
 <table>
 <tr>
 <td width="50%" valign="top">
 
-#### 🔍 [Contexte et conversations](./03-context-conversations/README.md)
+<img src="assets/tracks/workflows-cover.png" width="100%" alt="">
 
-Analyse de projet multi-fichiers
+**🔍 [Contexte et conversations](./03-context-conversations/README.md)**
 
-<sub>Chapitre 03 · ~45 min · Fondamental</sub>
+Analyse de projet multi-fichiers.
+
+<sub>Chapitre 03 · Niveau Débutant</sub>
 
 </td>
 <td width="50%" valign="top">
 
-#### ⚡ [Flux de travail de développement](./04-development-workflows/README.md)
+<img src="assets/tracks/workflows-cover.png" width="100%" alt="">
 
-Revue de code, débogage, génération de tests
+**⚡ [Flux de travail de développement](./04-development-workflows/README.md)**
 
-<sub>Chapitre 04 · ~50 min · Fondamental</sub>
+Revue de code, débogage, génération de tests.
+
+<sub>Chapitre 04 · Niveau Intermédiaire</sub>
 
 </td>
 </tr>
@@ -210,73 +223,81 @@ Revue de code, débogage, génération de tests
 
 ### 🤖 Automatisation & agents IA
 
-Créer des agents, des skills et des connexions MCP sur mesure, puis les assembler.
-
 <table>
 <tr>
 <td width="50%" valign="top">
 
-#### 🤖 [Créer des assistants IA spécialisés](./05-agents-custom-instructions/README.md)
+<img src="assets/tracks/automatisation-cover.png" width="100%" alt="">
 
-Agents personnalisés pour ton flux de travail
+**🤖 [Créer des assistants IA spécialisés](./05-agents-custom-instructions/README.md)**
 
-<sub>Chapitre 05 · ~45 min · Fondamental</sub>
+Agents personnalisés pour ton flux de travail.
+
+<sub>Chapitre 05 · Niveau Intermédiaire</sub>
 
 </td>
 <td width="50%" valign="top">
 
-#### 🛠️ [Automatiser les tâches répétitives](./06-skills/README.md)
+<img src="assets/tracks/automatisation-cover.png" width="100%" alt="">
 
-Compétences (skills) qui se chargent automatiquement
+**🛠️ [Automatiser les tâches répétitives](./06-skills/README.md)**
 
-<sub>Chapitre 06 · ~55 min · Fondamental</sub>
+Compétences (skills) qui se chargent automatiquement.
+
+<sub>Chapitre 06 · Niveau Intermédiaire</sub>
 
 </td>
 </tr>
 <tr>
 <td width="50%" valign="top">
 
-#### 🔌 [Se connecter à GitHub, aux bases de données et aux API](./07-mcp-servers/README.md)
+<img src="assets/tracks/automatisation-cover.png" width="100%" alt="">
 
-Intégration de serveurs MCP
+**🔌 [Se connecter à GitHub, aux bases de données et aux API](./07-mcp-servers/README.md)**
 
-<sub>Chapitre 07 · ~55 min · Fondamental</sub>
+Intégration de serveurs MCP.
+
+<sub>Chapitre 07 · Niveau Intermédiaire</sub>
 
 </td>
 <td width="50%" valign="top">
 
-#### 🎯 [Assembler le tout](./08-putting-it-together/README.md)
+<img src="assets/tracks/automatisation-cover.png" width="100%" alt="">
 
-Flux de travail complets
+**🎯 [Assembler le tout](./08-putting-it-together/README.md)**
 
-<sub>Chapitre 08 · ~35 min · Fondamental</sub>
+Flux de travail complets.
+
+<sub>Chapitre 08 · Niveau Intermédiaire</sub>
 
 </td>
 </tr>
 </table>
 
-### 🎓 Aller plus loin avec les commandes natives
-
-Deux commandes natives avancées pour sécuriser son code et exploiter son historique de sessions.
+### 🔒 Sécurité & maîtrise avancée
 
 <table>
 <tr>
 <td width="50%" valign="top">
 
-#### 🔒 [Sécuriser votre code avec Copilot CLI](./11-security-with-copilot/README.md)
+<img src="assets/tracks/securite-cover.png" width="100%" alt="">
 
-Une revue de sécurité de bout en bout : commande `/security-review`, instructions sécurisées par défaut, protection des secrets
+**🔒 [Sécuriser votre code avec Copilot CLI](./11-security-with-copilot/README.md)**
 
-<sub>Chapitre 11 · ~25 min · Fondamental</sub>
+Une revue de sécurité de bout en bout : commande `/security-review`, instructions sécurisées par défaut, protection des secrets.
+
+<sub>Chapitre 11 · Niveau Intermédiaire</sub>
 
 </td>
 <td width="50%" valign="top">
 
-#### 🕰️ [Explorer l'historique de vos sessions avec /chronicle](./13-chronicle-session-insights/README.md)
+<img src="assets/tracks/securite-cover.png" width="100%" alt="">
 
-Des rapports d'activité, conseils et recherches générés à partir de votre historique Copilot CLI
+**🕰️ [Explorer l'historique de vos sessions avec /chronicle](./13-chronicle-session-insights/README.md)**
 
-<sub>Chapitre 13 · ~20 min · Fondamental</sub>
+Des rapports d'activité, conseils et recherches générés à partir de votre historique Copilot CLI.
+
+<sub>Chapitre 13 · Niveau Débutant</sub>
 
 </td>
 </tr>
@@ -284,86 +305,100 @@ Des rapports d'activité, conseils et recherches générés à partir de votre h
 
 ### 🎁 Modules bonus (optionnels)
 
-Des extensions optionnelles : outils tiers, environnements isolés, et cas d'usage avancés.
-
 <table>
 <tr>
 <td width="50%" valign="top">
 
-#### 🐳 [Environnements isolés](./09-isolated-environments/README.md)
+<img src="assets/tracks/bonus-cover.png" width="100%" alt="">
 
-Dev container, sandboxing natif de Copilot CLI et sandbox Docker isolée pour automatiser avec `--allow-all` en toute confiance
+**🐳 [Environnements isolés](./09-isolated-environments/README.md)** *(Docker recommandé)*
 
-<sub>Chapitre 09 · ~20 min · Bonus · Docker recommandé</sub>
+Dev container, sandboxing natif de Copilot CLI et sandbox Docker isolée pour automatiser avec `--allow-all` en toute confiance.
 
-</td>
-<td width="50%" valign="top">
-
-#### 🧠 [RAG sur votre vault Obsidian](./10-obsidian-rag/README.md)
-
-Un pipeline RAG local (recherche sémantique + citations) sur vos propres notes, via deux serveurs MCP
-
-<sub>Chapitre 10 · ~20 min · Bonus · nécessite Obsidian</sub>
-
-</td>
-</tr>
-<tr>
-<td width="50%" valign="top">
-
-#### 🔍 [Comprendre l'acceptation de l'IA par les développeurs](./12-ai-developer-acceptance/README.md)
-
-Une auto-évaluation personnelle confrontée aux études GitHub, McKinsey, DORA et Stack Overflow
-
-<sub>Chapitre 12 · ~25 min · Bonus</sub>
+<sub>Chapitre 09 · Niveau Intermédiaire · Bonus</sub>
 
 </td>
 <td width="50%" valign="top">
 
-#### 📊 [Analyser sa consommation de tokens avec RTK et Tokscale](./14-token-consumption-analysis/README.md)
+<img src="assets/tracks/bonus-cover.png" width="100%" alt="">
 
-Une sortie de commandes compressée avec RTK, et un tableau de bord de consommation avec Tokscale
+**🧠 [RAG sur votre vault Obsidian](./10-obsidian-rag/README.md)** *(nécessite Obsidian)*
 
-<sub>Chapitre 14 · ~20 min · Bonus</sub>
+Un pipeline RAG local (recherche sémantique + citations) sur vos propres notes, via deux serveurs MCP.
+
+<sub>Chapitre 10 · Niveau Avancé · Bonus</sub>
 
 </td>
 </tr>
 <tr>
 <td width="50%" valign="top">
 
-#### 🧠 [Rédiger des instructions IA efficaces et réutilisables](./15-prompt-engineering/README.md)
+<img src="assets/tracks/bonus-cover.png" width="100%" alt="">
 
-Des templates de prompts réutilisables et le principe d'une CLI générée depuis un serveur MCP
+**🔍 [Comprendre l'acceptation de l'IA par les développeurs](./12-ai-developer-acceptance/README.md)**
 
-<sub>Chapitre 15 · ~20 min · Bonus</sub>
+Une auto-évaluation personnelle confrontée aux études GitHub, McKinsey, DORA et Stack Overflow.
+
+<sub>Chapitre 12 · Niveau Débutant · Bonus</sub>
 
 </td>
 <td width="50%" valign="top">
 
-#### 🌳 [Sessions parallèles avec les worktrees Git](./16-parallel-worktrees/README.md)
+<img src="assets/tracks/bonus-cover.png" width="100%" alt="">
 
-Deux sessions Copilot CLI isolées dans des worktrees Git, travaillant en parallèle sur le même dépôt
+**📊 [Analyser sa consommation de tokens avec RTK et Tokscale](./14-token-consumption-analysis/README.md)**
 
-<sub>Chapitre 16 · ~25 min · Bonus</sub>
+Une sortie de commandes compressée avec RTK, et un tableau de bord de consommation avec Tokscale.
+
+<sub>Chapitre 14 · Niveau Avancé · Bonus</sub>
 
 </td>
 </tr>
 <tr>
 <td width="50%" valign="top">
 
-#### 🪙 [mcp2cli et le coût en tokens](./17-mcp2cli/README.md)
+<img src="assets/tracks/bonus-cover.png" width="100%" alt="">
 
-Interroger le serveur Context7 MCP directement depuis le terminal, sans passer par Copilot
+**🧠 [Rédiger des instructions IA efficaces et réutilisables](./15-prompt-engineering/README.md)**
 
-<sub>Chapitre 17 · ~20 min · Bonus · complète le Chapitre 07</sub>
+Des templates de prompts réutilisables et le principe d'une CLI générée depuis un serveur MCP.
+
+<sub>Chapitre 15 · Niveau Intermédiaire · Bonus</sub>
 
 </td>
 <td width="50%" valign="top">
 
-#### 🔗 [Automatiser un workflow visuel avec n8n](./18-n8n-workflows/README.md)
+<img src="assets/tracks/bonus-cover.png" width="100%" alt="">
 
-Un workflow n8n construit par Copilot CLI via MCP et les skills n8n officielles
+**🌳 [Sessions parallèles avec les worktrees Git](./16-parallel-worktrees/README.md)**
 
-<sub>Chapitre 18 · ~20 min · Bonus · nécessite Docker</sub>
+Deux sessions Copilot CLI isolées dans des worktrees Git, travaillant en parallèle sur le même dépôt.
+
+<sub>Chapitre 16 · Niveau Avancé · Bonus</sub>
+
+</td>
+</tr>
+<tr>
+<td width="50%" valign="top">
+
+<img src="assets/tracks/bonus-cover.png" width="100%" alt="">
+
+**🪙 [mcp2cli et le coût en tokens](./17-mcp2cli/README.md)** *(complète le Chapitre 07)*
+
+Interroger le serveur Context7 MCP directement depuis le terminal, sans passer par Copilot.
+
+<sub>Chapitre 17 · Niveau Avancé · Bonus</sub>
+
+</td>
+<td width="50%" valign="top">
+
+<img src="assets/tracks/bonus-cover.png" width="100%" alt="">
+
+**🔗 [Automatiser un workflow visuel avec n8n](./18-n8n-workflows/README.md)** *(nécessite Docker)*
+
+Un workflow n8n construit par Copilot CLI via MCP et les skills n8n officielles.
+
+<sub>Chapitre 18 · Niveau Avancé · Bonus</sub>
 
 </td>
 </tr>
@@ -379,7 +414,7 @@ Chaque chapitre suit le même schéma :
 4. **Exercice** : mettre en pratique ce que tu as appris
 5. **Et ensuite ?** : aperçu du chapitre suivant
 
-**Les exemples de code sont exécutables.** Chaque bloc de texte copilot de ce cours peut être copié et exécuté dans ton terminal.
+> 💡 **Les exemples de code sont exécutables.** Chaque bloc de texte copilot de ce cours peut être copié et exécuté dans ton terminal.
 
 ## 📋 Référence des commandes GitHub Copilot CLI
 
@@ -442,3 +477,4 @@ démonstration animée et `<concept>-analogy.png` pour une illustration statique
 ## Licence
 
 Ce projet est distribué sous les termes de la licence open source MIT. Consulte le fichier [LICENSE](./LICENSE) pour les termes complets.
+</content>
