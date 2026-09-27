@@ -455,6 +455,181 @@ CMD ["zsh"]
 
 ---
 
+## Partie 3 : Construire votre propre image Docker avec GitHub CLI et la stack terminal
+
+Les Parties 1 et 2 reposent toutes les deux sur une image de base déjà prête (`mcr.microsoft.com/devcontainers/python:...` pour le dev container, `node:22` pour le repli `docker run`), à laquelle on ajoute GitHub CLI et Copilot CLI à chaud. Le *Défi bonus* du Devoir ci-dessous vous demandera d'aller plus loin : construire **votre propre image**, avec GitHub CLI, Copilot CLI et — pourquoi pas — toute la stack terminal du [Chapitre 00 : Stack terminal moderne](../00-modern-terminal-stack/README.md) déjà installée dedans. Une seule image que vous pouvez ensuite réutiliser comme base de dev container, comme repli `docker run`, ou en CI — au lieu de réinstaller les mêmes outils à chaque couche.
+
+> 💬 **Pour aller plus loin** : cette approche n'est pas une invention isolée. Gordon Beeming documente une démarche très proche dans [*"Taming the AI: My Paranoid Guide to Running Copilot CLI in a Secure Docker Sandbox"*](https://gordonbeeming.com/blog/2025-10-03/taming-the-ai-my-paranoid-guide-to-running-copilot-cli-in-a-secure-docker-sandbox), où il construit une image Docker dédiée pour isoler Copilot CLI par projet ; son outil [`copilot_here`](https://github.com/GordonBeeming/copilot_here) en est le wrapper shell prêt à l'emploi. Si vous préférez rester sur des *Dev Container Features* plutôt qu'un `Dockerfile` sur-mesure, la Feature officielle `github-cli` (déjà utilisée en Partie 1) accepte aussi une option `extensions` pour installer des extensions `gh` comme `github/gh-copilot` — voir sa [documentation](https://github.com/devcontainers/features/tree/main/src/github-cli).
+
+Ce chapitre fournit un `Dockerfile` prêt à l'emploi : **[`09-isolated-environments/Dockerfile`](./Dockerfile)**. En voici le contenu intégral, testé et construit avec succès (voir l'encart 🧪 après le bloc) :
+
+```dockerfile
+FROM debian:bookworm-slim
+
+ENV DEBIAN_FRONTEND=noninteractive \
+    SHELL=/bin/zsh \
+    PATH=/root/.atuin/bin:/root/.local/bin:/root/.fzf/bin:$PATH
+
+# --- Paquets de base ---
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        curl git gnupg ca-certificates wget \
+        zsh tmux \
+    && rm -rf /var/lib/apt/lists/*
+
+# --- Node.js (dépôt NodeSource — requis par `npm install -g @github/copilot`) ---
+RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash - \
+    && apt-get install -y nodejs \
+    && rm -rf /var/lib/apt/lists/*
+
+# --- GitHub CLI (dépôt apt officiel cli.github.com) ---
+RUN mkdir -p -m 755 /etc/apt/keyrings \
+    && wget -nv -O /etc/apt/keyrings/githubcli-archive-keyring.gpg \
+        https://cli.github.com/packages/githubcli-archive-keyring.gpg \
+    && chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg \
+    && echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" \
+        > /etc/apt/sources.list.d/github-cli.list \
+    && apt-get update && apt-get install -y gh \
+    && rm -rf /var/lib/apt/lists/*
+
+# --- GitHub Copilot CLI ---
+# Le paquet binaire spécifique à la plateforme (ex. @github/copilot-linux-x64) est une
+# dépendance npm "optionnelle" : si sa récupération échoue sur un réseau instable, `npm
+# install` ne remonte PAS d'erreur — il installe silencieusement un `copilot` cassé. On
+# tente donc l'installation une première fois sans bloquer sur un échec (`|| true`), une
+# seconde fois pour de bon (le cache npm du premier essai la rend quasi instantanée), puis
+# on vérifie explicitement avec `copilot --version` pour faire échouer le build si besoin.
+RUN npm install -g @github/copilot --fetch-retries=5 --fetch-retry-mintimeout=2000 || true \
+    && npm install -g @github/copilot --fetch-retries=5 --fetch-retry-mintimeout=2000 \
+    && copilot --version
+
+# --- Starship, Atuin, zoxide (scripts d'installation officiels — identiques au Chapitre 00) ---
+# Ces trois scripts téléchargent un binaire précompilé depuis les releases GitHub, ce qui
+# peut occasionnellement rester bloqué plusieurs minutes sur un réseau instable avant
+# d'échouer — pire, un `curl ... | sh` avale silencieusement un échec de curl (le code de
+# sortie du pipe est celui de `sh`, pas de `curl` : un script vide "réussit" sans rien
+# installer). On télécharge donc chaque script séparément, on l'exécute avec un timeout
+# borné à 90s et jusqu'à 3 tentatives, puis on vérifie explicitement le binaire installé.
+RUN curl -sS https://starship.rs/install.sh -o /tmp/install.sh \
+    && ( for i in 1 2 3; do \
+           timeout 90 sh /tmp/install.sh --yes && break; \
+           echo "Tentative $i (Starship) échouée, nouvel essai..."; \
+         done ) \
+    && rm -f /tmp/install.sh && command -v starship
+
+RUN curl --proto '=https' --tlsv1.2 -LsSf https://setup.atuin.sh -o /tmp/install.sh \
+    && ( for i in 1 2 3; do \
+           timeout 90 sh /tmp/install.sh --non-interactive && break; \
+           echo "Tentative $i (Atuin) échouée, nouvel essai..."; \
+         done ) \
+    && rm -f /tmp/install.sh && command -v atuin
+
+RUN curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh -o /tmp/install.sh \
+    && ( for i in 1 2 3; do \
+           timeout 90 sh /tmp/install.sh && break; \
+           echo "Tentative $i (zoxide) échouée, nouvel essai..."; \
+         done ) \
+    && rm -f /tmp/install.sh && command -v zoxide
+
+# --- fzf ---
+RUN git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf \
+    && ~/.fzf/install --all --no-bash --no-fish
+
+# --- eza (dépôt apt dédié — identique au Chapitre 00) ---
+RUN mkdir -p /etc/apt/keyrings \
+    && wget -qO- https://raw.githubusercontent.com/eza-community/eza/main/deb.asc \
+        | gpg --dearmor -o /etc/apt/keyrings/gierens.gpg \
+    && echo "deb [signed-by=/etc/apt/keyrings/gierens.gpg] http://deb.gierens.de stable main" \
+        > /etc/apt/sources.list.d/gierens.list \
+    && apt-get update && apt-get install -y eza \
+    && rm -rf /var/lib/apt/lists/*
+
+# --- bat (le paquet Debian s'appelle `batcat`) ---
+RUN apt-get update && apt-get install -y bat && rm -rf /var/lib/apt/lists/* \
+    && mkdir -p /usr/local/bin \
+    && ln -sf "$(which batcat)" /usr/local/bin/bat
+
+# --- zsh-autosuggestions + zsh-syntax-highlighting (l'ordre de source compte) ---
+RUN mkdir -p ~/.zsh \
+    && git clone https://github.com/zsh-users/zsh-autosuggestions ~/.zsh/zsh-autosuggestions \
+    && git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.zsh/zsh-syntax-highlighting
+
+# --- TPM + tmux-resurrect + tmux-continuum ---
+RUN mkdir -p ~/.tmux/plugins \
+    && git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+
+# --- Configuration shell (~/.zshrc), identique au Chapitre 00 ---
+RUN { \
+      echo 'eval "$(starship init zsh)"'; \
+      echo 'eval "$(atuin init zsh)"'; \
+      echo 'eval "$(zoxide init zsh)"'; \
+      echo '[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh'; \
+      echo "alias ls='eza --icons --group-directories-first'"; \
+      echo "alias ll='eza -lh --icons --grid'"; \
+      echo 'command -v bat >/dev/null && alias cat=bat'; \
+      echo "alias cd='z'"; \
+      echo 'source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh'; \
+      echo 'source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh'; \
+    } >> ~/.zshrc
+
+# --- Configuration tmux (~/.tmux.conf), plugins déclarés — installation via `prefix + I` au premier lancement ---
+RUN { \
+      echo 'set -g default-terminal "screen-256color"'; \
+      echo 'set -g mouse on'; \
+      echo 'set -sg escape-time 0'; \
+      echo 'set -g history-limit 10000'; \
+      echo "set -g @plugin 'tmux-plugins/tpm'"; \
+      echo "set -g @plugin 'tmux-plugins/tmux-resurrect'"; \
+      echo "set -g @plugin 'tmux-plugins/tmux-continuum'"; \
+      echo "set -g @continuum-restore 'on'"; \
+      echo "run '~/.tmux/plugins/tpm/tpm'"; \
+    } >> ~/.tmux.conf
+
+WORKDIR /workspace
+CMD ["zsh"]
+```
+
+`chsh` n'est volontairement pas utilisé ici : cette commande interactive échoue souvent lors d'un `RUN` de `docker build` non interactif. `CMD ["zsh"]` suffit à démarrer directement dans le bon shell à chaque `docker run`. La variable `PATH` est étendue explicitement dans l'`ENV` : Atuin, zoxide et fzf installent leur binaire dans `~/.atuin/bin`, `~/.local/bin` et `~/.fzf/bin`, des répertoires qui ne sont ajoutés au `PATH` par les scripts officiels que pour un **shell interactif** (via `.zshrc`) — sans cet `ENV`, ces commandes resteraient introuvables dans un script non interactif ou un `docker exec` direct.
+
+> 🧪 **Testé en conditions réelles** : ce `Dockerfile` a été construit et vérifié avec `docker build` + `docker run` avant publication de ce chapitre. Deux enseignements en ont émergé, déjà intégrés ci-dessus : (1) sur un réseau instable, `npm install -g @github/copilot` peut *silencieusement* omettre le paquet binaire de la plateforme (dépendance npm "optionnelle") — d'où la double tentative suivie d'une vérification explicite ; (2) `curl ... | sh` masque un échec de `curl` (le code de sortie du pipe est celui de `sh`, pas de `curl`) — d'où le téléchargement du script en deux temps, avec timeout et retries, pour Starship/Atuin/zoxide.
+
+> ⚠️ **Authentification** : ne figez jamais de token GitHub dans l'image (ni dans une instruction `ENV`, ni dans un `RUN gh auth login`) — un token intégré à une image est un token qui fuite avec elle. Authentifiez-vous plutôt de façon interactive au premier lancement du conteneur (`gh auth login`), ou injectez le token à l'exécution avec `-e GH_TOKEN=$(gh auth token)`. Voir le [Chapitre 11 : Sécurité avec Copilot](../11-security-with-copilot/README.md) pour approfondir ces bonnes pratiques.
+
+### ▶️ À vous de jouer : TP 3 — construire et lancer votre image
+
+1. Placez-vous dans le dossier de ce chapitre, où se trouve le `Dockerfile` fourni :
+   ```bash
+   cd 09-isolated-environments
+   ```
+2. Construisez l'image (comptez 3 à 5 minutes) :
+   ```bash
+   docker build -t gh-cli-terminal-stack .
+   ```
+3. Lancez un conteneur à partir de cette image, avec votre dossier courant monté :
+   ```bash
+   docker run -it --rm -v "$(pwd)":/workspace gh-cli-terminal-stack
+   ```
+4. Dans le conteneur, reprenez les **contrôles copiables** du Chapitre 00 pour vérifier que toute la stack est bien installée, puis ajoutez `gh` et `copilot` :
+   ```bash
+   zsh --version
+   starship --version
+   atuin --version
+   zoxide --version
+   fzf --version
+   eza --version
+   bat --version
+   tmux -V
+   gh --version
+   copilot --version
+   ```
+5. Authentifiez-vous et vérifiez que Copilot CLI fonctionne :
+   ```bash
+   gh auth login
+   copilot --version
+   ```
+6. **Défi** : publiez l'image dans un registre (`docker build -t ghcr.io/<votre-compte>/gh-cli-terminal-stack:latest . && docker push ghcr.io/<votre-compte>/gh-cli-terminal-stack:latest`), puis réutilisez-la comme `"image"` dans une copie de `.devcontainer/devcontainer.json` (Partie 1) à la place de `mcr.microsoft.com/devcontainers/python:2-3.13-bullseye` — vous n'avez alors plus besoin des Features `github-cli`/`node`, puisque tout est déjà dans votre image.
+
+---
+
 ## 📝 Devoir
 
 ### Défi principal : revue automatisée verrouillée
