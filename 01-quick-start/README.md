@@ -75,18 +75,7 @@ Si vous ne voulez installer aucun des prérequis, vous pouvez utiliser GitHub Co
 
 ### Installation locale
 
-Suivez ces étapes si vous souhaitez exécuter Copilot CLI sur votre machine locale avec les exemples du cours.
-
-### Choisir une méthode d'installation
-
-Choisissez **une seule** méthode dans la matrice. Elles installent le même programme `copilot` ; ne les cumulez pas. Après chaque installation, exécutez `copilot --version` : c'est la vérification commune à tous les systèmes.
-
-| Système | Méthode conseillée | Prérequis | Solution de repli |
-|---|---|---|---|
-| 🐧 Linux | Script d'installation | `curl` et Bash | `npm` avec Node.js |
-| 🍎 macOS | Homebrew | Homebrew installé | Script d'installation, puis `npm` |
-| 🪟 Windows | WinGet dans PowerShell | Windows avec WinGet | `npm` avec Node.js |
-| 🐧 🍎 🪟 Tous | `npm` | Node.js LTS et npm | Utilisez la méthode propre à votre système ci-dessus |
+Suivez ces étapes si vous souhaitez exécuter Copilot CLI sur votre machine locale avec les exemples du cours. L'installation est entièrement prise en charge par un script : vous n'avez aucune commande d'installation à saisir à la main.
 
 1. Clonez le dépôt pour récupérer les exemples du cours sur votre machine :
 
@@ -95,61 +84,24 @@ Choisissez **une seule** méthode dans la matrice. Elles installent le même pro
     cd onepoint_formation_gihub_copilot
     ```
 
-2. Installez Copilot CLI en utilisant l'une des options suivantes.
-
-    > 💡 **Vous ne savez pas laquelle choisir ?** Utilisez `npm` si vous avez Node.js installé. Sinon, choisissez l'option qui correspond à votre système.
-
-    ### 🐧 Linux · 🍎 macOS · 🪟 PowerShell (npm, toutes plateformes)
+2. Exécutez le script correspondant à votre système, depuis la racine du dépôt. Il installe Copilot CLI, vérifie sa version, **et** contrôle que la Book App fonctionne (Étape 2 de la section « Vérifier que tout fonctionne ») :
 
     ```bash
-    # Si vous avez Node.js installé, c'est un moyen rapide d'obtenir le CLI
-    npm install -g @github/copilot
+    # 🐧 Linux (WSL Debian)
+    bash 01-quick-start/scripts/install-linux.sh
+
+    # 🍎 macOS
+    bash 01-quick-start/scripts/install-macos.sh
     ```
-
-    ### 🐧 Linux · 🍎 macOS (Homebrew)
-
-    ```bash
-    brew install copilot-cli
-    ```
-
-    ### 🪟 PowerShell (WinGet)
 
     ```powershell
-    winget install GitHub.Copilot
+    # 🪟 PowerShell (Windows)
+    .\01-quick-start\scripts\install-windows.ps1
     ```
 
-    ### 🐧 Linux · 🍎 macOS (script d'installation)
+    > 💡 Chaque script retrouve seul l'emplacement du dépôt (via son propre chemin), donc peu importe le dossier depuis lequel vous l'exécutez tant que vous restez dans le dépôt cloné.
 
-    ```bash
-    curl -fsSL https://gh.io/copilot-install | bash
-    ```
-
-3. Vérifiez la version installée avant de vous connecter :
-
-    ```bash
-    copilot --version
-    ```
-
-    **Résultat attendu** : le terminal affiche un numéro de version. S'il affiche `command not found` ou une commande inconnue, fermez et rouvrez le terminal, puis utilisez la solution de repli de la matrice correspondant à votre système.
-
-### Automatiser l'installation (scripts)
-
-Si vous préférez ne pas suivre les sous-étapes 2 et 3 ci-dessus à la main (installation puis vérification de version), un script par système les exécute pour vous, **et** vérifie en plus que la Book App fonctionne (Étape 2 de la section suivante), en une seule commande. Clonez d'abord le dépôt (sous-étape 1 ci-dessus), puis exécutez le script depuis la racine du dépôt :
-
-```bash
-# 🐧 Linux (WSL Debian)
-bash 01-quick-start/scripts/install-linux.sh
-
-# 🍎 macOS
-bash 01-quick-start/scripts/install-macos.sh
-```
-
-```powershell
-# 🪟 PowerShell (Windows)
-.\01-quick-start\scripts\install-windows.ps1
-```
-
-> 💡 Chaque script retrouve seul l'emplacement du dépôt (via son propre chemin), donc peu importe le dossier depuis lequel vous l'exécutez tant que vous restez dans le dépôt cloné.
+    **Résultat attendu** : le script affiche un numéro de version de `copilot`. S'il signale une erreur ou que `copilot` reste introuvable, fermez et rouvrez le terminal, puis relancez le script.
 
 Les scripts s'arrêtent avant l'authentification : `/login` reste une étape manuelle, car elle nécessite un navigateur ou la saisie d'un code d'appareil (voir la section [Authentification](#authentification) ci-dessous).
 
@@ -229,7 +181,7 @@ Les démonstrations ci-dessous illustrent les quatre parcours à retenir. Elles 
 
 | Geste | Démonstration | Si votre écran diffère |
 |---|---|---|
-| Installer puis vérifier | `quick-start-install-demo.gif` | Suivez la matrice ci-dessus et vérifiez avec `copilot --version`. |
+| Installer puis vérifier | `quick-start-install-demo.gif` | Relancez le script d'installation de votre système et vérifiez avec `copilot --version`. |
 | Se connecter | `quick-start-authentication-demo.gif` | Sur un terminal sans navigateur, utilisez le code d'appareil montré dans la démonstration de dépannage. |
 | Poser la première question | `quick-start-first-command-demo.gif` | La réponse peut être différente : cela confirme néanmoins que le CLI fonctionne. |
 | Dépanner l'authentification | `quick-start-authentication-help-demo.gif` | Ouvrez [le dépannage](#dépannage) si le code ou le navigateur ne résout pas le problème. |
@@ -804,15 +756,7 @@ Installez le serveur MCP de Graphiti (bloc E.2) et tentez de le connecter à Cop
 
 ### « copilot: command not found »
 
-Le CLI n'est pas installé. Essayez une méthode d'installation différente :
-
-```bash
-# Si brew a échoué, essayez npm :
-npm install -g @github/copilot
-
-# Ou le script d'installation :
-curl -fsSL https://gh.io/copilot-install | bash
-```
+Le CLI n'est pas installé, ou le terminal ne le trouve pas. Fermez et rouvrez le terminal, puis relancez le script d'installation de votre système (voir [Installation locale](#installation-locale)).
 
 Vérifiez ensuite que le terminal voit bien la nouvelle installation :
 
@@ -885,7 +829,7 @@ Vérifiez d'abord que la commande existe dans votre `PATH` (`which <commande>`) 
 ## 🔑 Points clés à retenir
 
 1. **Un GitHub Codespace est un moyen rapide de démarrer** - Python, pytest, et GitHub Copilot CLI sont tous préinstallés pour que vous puissiez passer directement aux démonstrations
-2. **Plusieurs méthodes d'installation** - Choisissez celle qui convient à votre système (Homebrew, WinGet, npm, ou script d'installation)
+2. **Un script d'installation par système** - Linux, macOS et Windows ont chacun leur script, qui installe et vérifie tout en une commande
 3. **Authentification unique** - La connexion persiste jusqu'à l'expiration du jeton
 4. **La Book App fonctionne** - Vous utiliserez `samples/book-app-project` tout au long du cours
 5. **La section « Pour aller plus loin » est optionnelle** - Modèle Auto, Statusline, Caveman/peon-ping, OpenTelemetry, Tokscale/Graphiti et serveurs LSP approfondissent votre configuration, mais rien de tout cela n'est requis pour continuer le cours
