@@ -2,7 +2,7 @@
 ---
 id: CopilotCLI-00
 title: !translate Équipez votre terminal avant de plonger dans Copilot CLI
-description: !translate Installez et configurez une stack terminal moderne (zsh, Starship, tmux, Atuin, Zoxide, fzf, eza, bat) qui rend chaque session Copilot CLI plus rapide, plus lisible et plus résiliente.
+description: !translate Découvrez et configurez une stack terminal moderne (zsh, Starship, tmux, Atuin, Zoxide, fzf, eza, bat) qui rend chaque session Copilot CLI plus rapide, plus lisible et plus résiliente.
 audience: Developers / Students / Terminal users
 slug: modern-terminal-stack
 weight: 1
@@ -13,11 +13,11 @@ weight: 1
 
 > **Et si votre terminal travaillait pour vous, avant même que Copilot CLI n'entre en jeu ?**
 
-Avant même d'installer GitHub Copilot CLI (Chapitre 01) et de vous lancer dans les démonstrations en direct du Chapitre 02, faisons une pause d'installation — optionnelle, mais qui change concrètement votre quotidien.
+Avant même d'installer GitHub Copilot CLI (Chapitre 01) et de vous lancer dans les démonstrations en direct du Chapitre 02, faisons une pause — optionnelle, mais qui change concrètement votre quotidien.
 
 GitHub Copilot CLI vit entièrement dans votre terminal. Or la plupart des développeurs et développeuses utilisent encore la configuration par défaut de leur shell, quasiment inchangée depuis vingt ans : pas d'autocomplétion intelligente, pas d'historique réellement exploitable, pas de navigation rapide entre les projets. C'est de la friction gratuite, répétée des centaines de fois par jour — et cette friction ne disparaît pas quand vous ajoutez Copilot CLI par-dessus, elle s'additionne.
 
-Ce chapitre vous propose une stack de onze outils, cohérente et éprouvée, qui remplace les commandes Unix historiques par des équivalents modernes — plus rapides, plus lisibles, et pensés pour la façon dont on travaille réellement aujourd'hui. Chaque outil est accompagné de scripts d'installation automatisés pour macOS et pour WSL Debian, afin que toute une équipe reparte du même socle sans y passer une après-midi.
+Ce chapitre vous propose une stack de onze outils, cohérente et éprouvée, qui remplace les commandes Unix historiques par des équivalents modernes — plus rapides, plus lisibles, et pensés pour la façon dont on travaille réellement aujourd'hui. L'installation est entièrement portée par des scripts automatisés (macOS, WSL Debian, Windows PowerShell — voir [Installer la stack avec les scripts](#installer-la-stack-avec-les-scripts)) : ce chapitre explique donc ce que fait chaque outil et comment il est configuré, afin que toute une équipe reparte du même socle sans y passer une après-midi.
 
 > 💡 **Chapitre complémentaire** : Vous pouvez tout à fait passer directement au [Chapitre 01](../01-quick-start/README.md) et revenir ici plus tard. Mais plus votre terminal sera confortable, plus les longues sessions Copilot CLI des chapitres suivants (contexte, workflows, agents, MCP...) seront agréables et rapides à mener.
 
@@ -25,43 +25,26 @@ Ce chapitre vous propose une stack de onze outils, cohérente et éprouvée, qui
 
 À la fin de ce chapitre, vous serez capable de :
 
-- Installer et configurer zsh comme shell par défaut, avec Starship comme invite de commandes
+- Comprendre le rôle de zsh et de Starship, et lancer le script qui les installe et les configure
 - Retrouver n'importe quelle commande passée et naviguer entre vos projets sans retaper de chemins, grâce à Atuin et Zoxide
 - Chercher, lister et lire des fichiers plus vite grâce à fzf, eza et bat
 - Bénéficier d'une complétion et d'une coloration en temps réel pendant la frappe
 - Créer des sessions Tmux persistantes qui survivent à un redémarrage ou à un crash
 - Automatiser l'ensemble de cette installation avec un seul script, reproductible pour toute une équipe
 
-> ⏱️ **Durée estimée : ~60 minutes** (20 min de lecture + 40 min d'installation et de configuration)
+> ⏱️ **Durée estimée : ~60 minutes** (20 min de lecture + 40 min d'exécution du script et de prise en main)
 
 ---
 
 ## ✅ Prérequis
 
-- Une machine **macOS**, **Linux/WSL Debian**, ou **Windows avec PowerShell** (les commandes des trois plateformes sont données à chaque étape)
+- Une machine **macOS**, **Linux/WSL Debian**, ou **Windows avec PowerShell** (un script d'installation est fourni pour chacune)
 - Être à l'aise avec l'édition d'un fichier de configuration (`~/.zshrc`, `~/.tmux.conf`, ou votre profil PowerShell) dans un éditeur de texte
-- Des droits d'administration sur votre machine (`sudo` sur Linux, `brew` sur macOS, `winget` sur Windows)
+- Des droits d'administration sur votre machine (nécessaires au script d'installation)
 
 > 🏷️ **Tags de disponibilité** : chaque outil ci-dessous indique sur quelles plateformes il fonctionne — 🐧 **Linux** (WSL Debian ou distribution native), 🍎 **macOS**, 🪟 **PowerShell** (Windows natif). Quand un outil n'a pas d'équivalent natif sous PowerShell, la mention **🪟 non applicable** l'indique explicitement : passez alors par WSL (voir `scripts/install-linux.sh`).
 
 > ⚠️ **Remarque WSL** : deux étapes restent manuelles côté Windows (pas automatisables depuis le shell Linux) : l'installation d'une police adaptée et le changement de shell par défaut. Elles sont détaillées à la fin de ce chapitre.
-
-### 🧭 Matrice de compatibilité et solutions de repli
-
-Les commandes Linux ci-dessous fonctionnent aussi dans WSL Debian. Sur Linux natif,
-utilisez le gestionnaire de paquets de votre distribution lorsque la commande APT
-n'est pas disponible.
-
-| Famille d'outils | macOS | Linux natif | WSL Debian | Windows PowerShell |
-|---|---|---|---|---|
-| zsh et ses plugins | Préinstallé + clonage Git | `apt` + clonage Git | `apt` + clonage Git | WSL Debian |
-| Starship, Atuin, Zoxide | Homebrew | Scripts officiels | Scripts officiels | `winget` ; WSL si l'installation échoue |
-| fzf, eza, bat | Homebrew | APT ou dépôt indiqué | APT ou dépôt indiqué | `winget` pour fzf/bat ; WSL ou Cargo pour eza |
-| Tmux et plugins | Homebrew + TPM | APT + TPM | APT + TPM | WSL Debian ou volets Windows Terminal |
-
-Les identifiants `winget` peuvent évoluer. Si un paquet Windows n'est pas trouvé,
-relancez la commande avec `winget search <nom>`, installez-le depuis sa source
-officielle, ou utilisez WSL Debian avec `scripts/install-linux.sh`.
 
 ---
 
@@ -79,11 +62,13 @@ Piloter avec un terminal par défaut, c'est un peu comme piloter avec un manche 
 | Boîte noire increvable | Tmux + resurrect/continuum | Vos sessions survivent à un crash ou un redémarrage |
 | Copilote qui termine vos phrases | zsh-autosuggestions | Suggestions de commandes pendant la frappe |
 
-**C'est ce que ce chapitre installe !** Un cockpit instrumenté ne change rien à la destination — mais il change radicalement le confort et la vitesse du trajet.
+**C'est ce que ce chapitre met en place !** Un cockpit instrumenté ne change rien à la destination — mais il change radicalement le confort et la vitesse du trajet.
 
 ---
 
 # 1. Le shell et l'invite de commandes
+
+> ℹ️ Les scripts d'installation (voir [section 6](#installer-la-stack-avec-les-scripts)) installent les outils **et** écrivent les blocs de configuration ci-dessous pour vous. Ils sont montrés ici pour que vous compreniez ce que chaque outil change.
 
 ## zsh — le shell par défaut
 
@@ -92,21 +77,6 @@ Piloter avec un terminal par défaut, c'est un peu comme piloter avec un manche 
 **Le problème :** bash reste la valeur par défaut sur beaucoup de systèmes, mais son autocomplétion est limitée et son écosystème de plugins bien plus pauvre que celui de zsh.
 
 **Pourquoi l'adopter :** zsh est le socle sur lequel repose tout le reste de cette stack — suggestions, coloration syntaxique, thèmes. C'est un changement invisible au quotidien une fois en place, mais un prérequis non négociable pour tout ce qui suit.
-
-**Installation**
-
-🍎 macOS (préinstallé, rien à faire) :
-```bash
-# zsh est déjà présent sur macOS
-```
-
-🐧 Linux (WSL Debian) :
-```bash
-sudo apt update && sudo apt install -y zsh
-chsh -s "$(which zsh)"
-```
-
-Après le `chsh`, il faut ouvrir une nouvelle session (ou lancer `exec zsh`) pour que le changement prenne effet.
 
 <details>
 <summary>🎬 Voyez-le en action !</summary>
@@ -119,25 +89,11 @@ Après le `chsh`, il faut ouvrir une nouvelle session (ou lancer `exec zsh`) pou
 
 ## Starship — un prompt minimaliste et rapide
 
-**Disponibilité** : 🐧 Linux · 🍎 macOS · 🪟 PowerShell (winget)
+**Disponibilité** : 🐧 Linux · 🍎 macOS · 🪟 PowerShell
 
 **Le problème :** un prompt bash par défaut ne donne aucune information contextuelle (branche git, langage détecté, statut de la dernière commande), ou alors via des configurations maison lentes à charger.
 
 **Pourquoi l'adopter :** Starship est écrit en Rust, se charge quasi instantanément, et affiche automatiquement le contexte utile (répertoire, git, version de Node/Python détectée) sans configuration complexe.
-
-**Installation** :
-```bash
-# 🍎 macOS
-brew install starship
-
-# 🐧 Linux (WSL Debian)
-curl -sS https://starship.rs/install.sh | sh -s -- --yes
-```
-
-```powershell
-# 🪟 PowerShell (Windows)
-winget install Starship.Starship
-```
 
 **Configuration** (`~/.zshrc`) :
 ```zsh
@@ -164,25 +120,11 @@ Invoke-Expression (&starship init powershell)
 
 ## Atuin — un historique de commandes qui se cherche vraiment
 
-**Disponibilité** : 🐧 Linux · 🍎 macOS · 🪟 PowerShell (winget, installation Windows non vérifiée par ce chapitre — voir issue de suivi)
+**Disponibilité** : 🐧 Linux · 🍎 macOS · 🪟 PowerShell
 
 **Le problème :** l'historique bash/zsh par défaut est une liste plate, non synchronisée, et sa recherche (`Ctrl+R`) est rudimentaire dès qu'on a plusieurs milliers de lignes.
 
 **Pourquoi l'adopter :** Atuin remplace l'historique par une base de données consultable en plein écran, avec recherche floue, filtrage par répertoire, et — si on le souhaite — synchronisation chiffrée entre machines.
-
-**Installation :**
-```bash
-# 🍎 macOS
-brew install atuin
-
-# 🐧 Linux (WSL Debian)
-curl --proto '=https' --tlsv1.2 -LsSf https://setup.atuin.sh | sh
-```
-
-```powershell
-# 🪟 PowerShell (Windows) — identifiant winget non confirmé officiellement
-winget install ellie.atuin
-```
 
 **Configuration** (`~/.zshrc`) :
 ```zsh
@@ -203,25 +145,11 @@ bindkey '^[[A' atuin-up-search
 
 ## Zoxide — un `cd` qui apprend vos habitudes
 
-**Disponibilité** : 🐧 Linux · 🍎 macOS · 🪟 PowerShell (winget)
+**Disponibilité** : 🐧 Linux · 🍎 macOS · 🪟 PowerShell
 
 **Le problème :** naviguer entre projets avec `cd` demande de retaper (ou de compléter au Tab) des chemins entiers, encore et encore, y compris pour les répertoires qu'on visite dix fois par jour.
 
 **Pourquoi l'adopter :** Zoxide retient la fréquence et la récence de vos déplacements et vous laisse sauter directement vers un projet avec quelques lettres (`z monrepo` plutôt que `cd ~/dev/clients/x/monrepo/backend`).
-
-**Installation :**
-```bash
-# 🍎 macOS
-brew install zoxide
-
-# 🐧 Linux (WSL Debian)
-curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
-```
-
-```powershell
-# 🪟 PowerShell (Windows)
-winget install ajeetdsouza.zoxide
-```
 
 **Configuration** (`~/.zshrc`) :
 ```zsh
@@ -249,26 +177,11 @@ Invoke-Expression (& { (zoxide init powershell | Out-String) })
 
 ## fzf — la recherche floue partout dans le terminal
 
-**Disponibilité** : 🐧 Linux · 🍎 macOS · 🪟 PowerShell (winget, via le module `PSFzf` pour l'intégration au shell)
+**Disponibilité** : 🐧 Linux · 🍎 macOS · 🪟 PowerShell (avec le module `PSFzf` pour l'intégration au shell)
 
 **Le problème :** rechercher un fichier, une commande ou un processus dans un shell classique impose de connaître le nom exact ou de jongler avec `grep`/`find` à la main.
 
 **Pourquoi l'adopter :** fzf s'intègre dans le shell (complétion, historique, navigation de fichiers) et permet de filtrer n'importe quelle liste en tapant quelques caractères approximatifs.
-
-**Installation :**
-```bash
-# 🍎 macOS
-brew install fzf
-
-# 🐧 Linux (WSL Debian — installation via git, génère ~/.fzf.zsh pour les raccourcis)
-git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-~/.fzf/install --all --no-bash --no-fish
-```
-
-```powershell
-# 🪟 PowerShell (Windows)
-winget install junegunn.fzf
-```
 
 **Configuration** (`~/.zshrc`) :
 ```zsh
@@ -286,25 +199,11 @@ winget install junegunn.fzf
 
 ## eza — `ls` avec des icônes, des couleurs et du bon sens
 
-**Disponibilité** : 🐧 Linux · 🍎 macOS · 🪟 non confirmé (pas de paquet winget officiel — utilisez WSL, ou `cargo install eza` si Rust est installé)
+**Disponibilité** : 🐧 Linux · 🍎 macOS · 🪟 non confirmé (utilisez WSL)
 
 **Le problème :** la sortie de `ls` est brute — pas de couleurs cohérentes par type de fichier, pas de tri intelligent des répertoires, pas d'icônes.
 
 **Pourquoi l'adopter :** eza est un remplacement direct et moderne de `ls`, avec icônes, couleurs par type, regroupement automatique des répertoires, et une vue grille lisible pour `ll`.
-
-**Installation :**
-```bash
-# 🍎 macOS
-brew install eza
-
-# 🐧 Linux (WSL Debian — dépôt officiel eza)
-sudo mkdir -p /etc/apt/keyrings
-wget -qO- https://raw.githubusercontent.com/eza-community/eza/main/deb.asc \
-    | sudo gpg --dearmor -o /etc/apt/keyrings/gierens.gpg
-echo "deb [signed-by=/etc/apt/keyrings/gierens.gpg] http://deb.gierens.de stable main" \
-    | sudo tee /etc/apt/sources.list.d/gierens.list > /dev/null
-sudo apt update && sudo apt install -y eza
-```
 
 **Configuration** (`~/.zshrc`) :
 ```zsh
@@ -323,31 +222,11 @@ alias ll='eza -lh --icons --grid'                # 'ls -l' avec icônes et vue g
 
 ## bat — `cat` avec coloration syntaxique
 
-**Disponibilité** : 🐧 Linux · 🍎 macOS · 🪟 PowerShell (winget)
+**Disponibilité** : 🐧 Linux · 🍎 macOS · 🪟 PowerShell
 
 **Le problème :** `cat` affiche un fichier en texte brut, sans coloration ni contexte, ce qui rend la lecture rapide d'un fichier de config ou de code peu agréable en ligne de commande.
 
 **Pourquoi l'adopter :** bat ajoute la coloration syntaxique, les numéros de ligne, et une intégration git (indication des lignes modifiées). C'est un remplacement transparent : on tape toujours `cat`, mais on lit un fichier bien plus vite.
-
-**Installation :**
-```bash
-# 🍎 macOS
-brew install bat
-
-# 🐧 Linux (WSL Debian) — le paquet s'installe sous le nom 'batcat'
-sudo apt install -y bat
-mkdir -p ~/.local/bin
-if command -v batcat &> /dev/null && ! command -v bat &> /dev/null; then
-    ln -sf "$(which batcat)" ~/.local/bin/bat
-fi
-```
-
-```powershell
-# 🪟 PowerShell (Windows)
-winget install sharkdp.bat
-```
-
-> ⚠️ **Point d'attention Debian** : le paquet APT s'appelle `batcat`, pas `bat` — d'où le symlink ci-dessus pour garder un alias cohérent entre macOS et Linux.
 
 **Configuration** (`~/.zshrc`) :
 ```zsh
@@ -379,12 +258,6 @@ command -v bat &>/dev/null && alias cat='bat' || alias cat='batcat'
 
 **Pourquoi l'adopter :** ce plugin affiche en grisé la commande la plus probable pendant que vous tapez, basée sur votre historique — il suffit d'appuyer sur `→` pour l'accepter.
 
-**Installation** (identique sur macOS et WSL Debian) :
-```bash
-mkdir -p ~/.zsh
-git clone https://github.com/zsh-users/zsh-autosuggestions ~/.zsh/zsh-autosuggestions
-```
-
 **Configuration** (`~/.zshrc`) :
 ```zsh
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
@@ -406,12 +279,6 @@ source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 **Le problème :** dans un shell nu, une commande mal orthographiée ou une syntaxe invalide ne se révèle qu'à l'exécution — trop tard, et souvent après avoir déjà appuyé sur Entrée.
 
 **Pourquoi l'adopter :** ce plugin colore la commande pendant la frappe (vert si la commande existe, rouge sinon). On repère une faute de frappe avant même de valider.
-
-**Installation** (identique sur macOS et WSL Debian) :
-```bash
-mkdir -p ~/.zsh
-git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.zsh/zsh-syntax-highlighting
-```
 
 **Configuration** (`~/.zshrc`) — **attention à l'ordre : ce plugin doit être sourcé après `zsh-autosuggestions`** :
 ```zsh
@@ -439,15 +306,6 @@ source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 **Le problème :** sans multiplexeur, chaque tâche parallèle (une session Copilot CLI en cours, des logs, un éditeur, un shell de debug) demande un nouvel onglet ou une nouvelle fenêtre — et tout disparaît si la connexion SSH tombe ou si le terminal se ferme.
 
 **Pourquoi l'adopter :** Tmux donne des sessions persistantes et des volets (panes) dans une seule fenêtre. On détache une session, on ferme le laptop, on la retrouve intacte le lendemain — ou sur une autre machine via SSH.
-
-**Installation :**
-```bash
-# 🍎 macOS
-brew install tmux
-
-# 🐧 Linux (WSL Debian)
-sudo apt install -y tmux
-```
 
 **Configuration** (`~/.tmux.conf`, extrait) :
 ```tmux
@@ -484,12 +342,6 @@ bind -n M-Down select-pane -D
 
 **Pourquoi l'adopter :** TPM (Tmux Plugin Manager) gère l'installation des plugins Tmux ; `tmux-resurrect` sauvegarde l'état complet d'une session ; `tmux-continuum` automatise cette sauvegarde toutes les 15 minutes et restaure tout au démarrage suivant.
 
-**Installation** (identique sur macOS et WSL Debian) :
-```bash
-mkdir -p ~/.tmux/plugins
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-```
-
 **Configuration** (`~/.tmux.conf`) :
 ```tmux
 set -g @plugin 'tmux-plugins/tpm'            # Le gestionnaire de plugins Tmux lui-même
@@ -500,11 +352,6 @@ set -g @continuum-restore 'on'
 
 # Initialise TPM. Cette ligne DOIT être à la toute fin de .tmux.conf
 run '~/.tmux/plugins/tpm/tpm'
-```
-
-Puis, pour installer les plugins déclarés sans intervention manuelle :
-```bash
-~/.tmux/plugins/tpm/bin/install_plugins
 ```
 
 <details>
@@ -522,7 +369,7 @@ Puis, pour installer les plugins déclarés sans intervention manuelle :
 
 Le vrai levier ici n'est pas la liste d'outils elle-même. Le levier, c'est de la rendre **reproductible en une commande**, pour que toute l'équipe parte du même socle sans y passer une après-midi.
 
-## Scripts d'installation
+## Installer la stack avec les scripts
 
 Sans option, chaque script ouvre un **menu interactif** : installer tous les outils, en installer
 ou désinstaller un seul, ou quitter.
@@ -665,7 +512,7 @@ Mettez la stack en pratique sur votre propre machine.
 
 ## ▶️ À vous de jouer
 
-1. **Installez un premier bloc** : zsh + Starship. Ouvrez une nouvelle session et vérifiez que votre invite affiche désormais le répertoire courant et l'état git.
+1. **Lancez le script d'installation** de votre plateforme (section « Installer la stack avec les scripts »), ou installez seulement zsh + Starship avec `--install=zsh` puis `--install=starship`. Ouvrez une nouvelle session et vérifiez que votre invite affiche désormais le répertoire courant et l'état git.
 2. **Ajoutez Atuin et Zoxide** : tapez quelques commandes, changez de répertoire plusieurs fois, puis testez `atuin-up-search` (flèche du haut) et `z <fragment-de-nom-de-dossier>`.
 3. **Ajoutez fzf, eza et bat** : lancez `ll` dans un dossier de projet et ouvrez un fichier de configuration avec `cat` — comparez le rendu à l'ancien `cat` brut.
 4. **Activez tmux** : créez une session, divisez-la en deux volets avec `Ctrl+b` puis `|`, détachez-la avec `Ctrl+b` puis `d`, et reprenez-la avec `tmux attach`.
@@ -691,8 +538,8 @@ Ajoutez un alias supplémentaire dans votre `~/.zshrc` (par exemple un raccourci
 <details>
 <summary>💡 Indices (cliquer pour développer)</summary>
 
-- Si le prompt Starship ne s'affiche pas après l'installation, vérifiez que la ligne `eval "$(starship init zsh)"` est bien présente dans `~/.zshrc` et que vous avez rechargé votre shell (`exec zsh`).
-- Sur WSL Debian, si `chsh -s "$(which zsh)"` ne semble rien changer, c'est normal : il faut fermer et rouvrir la session (ou lancer `exec zsh`) pour que le nouveau shell devienne actif.
+- Si le prompt Starship ne s'affiche pas après l'exécution du script, vérifiez que la ligne `eval "$(starship init zsh)"` est bien présente dans `~/.zshrc` et que vous avez rechargé votre shell (`exec zsh`).
+- Sur WSL Debian, si zsh n'est pas actif juste après le script, c'est normal : il faut fermer et rouvrir la session (ou lancer `exec zsh`) pour que le nouveau shell devienne actif.
 - Pour Tmux, rappelez-vous que le préfixe par défaut est `Ctrl+b` : toutes les combinaisons de raccourcis commencent par cette touche, relâchée avant la touche suivante.
 
 </details>
@@ -704,8 +551,8 @@ Ajoutez un alias supplémentaire dans votre `~/.zshrc` (par exemple un raccourci
 
 | Erreur | Ce qui se passe | Solution |
 |---------|--------------|-----|
-| `chsh -s "$(which zsh)"` ne change rien immédiatement | Le shell actif reste bash tant que la session n'est pas relancée | Ouvrez une nouvelle session, ou lancez `exec zsh` |
-| `cat` ne fonctionne toujours pas comme `bat` sur Debian | Le paquet APT s'appelle `batcat`, pas `bat` | Créez le symlink `~/.local/bin/bat` vers `batcat`, ou utilisez l'alias conditionnel fourni |
+| Le changement de shell par défaut (zsh) ne prend pas effet immédiatement | Le shell actif reste bash tant que la session n'est pas relancée | Ouvrez une nouvelle session, ou lancez `exec zsh` |
+| `cat` ne fonctionne toujours pas comme `bat` sur Debian | Le paquet APT s'appelle `batcat`, pas `bat` | Relancez le script (il crée le symlink `~/.local/bin/bat`), ou utilisez l'alias conditionnel fourni |
 | La coloration en temps réel ne s'affiche pas | Les plugins zsh sont sourcés dans le mauvais ordre | `zsh-syntax-highlighting` doit toujours être sourcé **après** `zsh-autosuggestions` |
 | Tmux ne restaure rien après un redémarrage | `tmux-continuum` n'a pas encore effectué de sauvegarde automatique, ou les plugins TPM n'ont pas été installés | Attendez le premier cycle de sauvegarde (15 min), ou lancez manuellement `~/.tmux/plugins/tpm/bin/install_plugins` |
 | Les icônes eza/Starship s'affichent comme des carrés vides | La police du terminal ne contient pas les glyphes Nerd Font nécessaires | Installez une police compatible (par exemple Anka-Coder-Font) et sélectionnez-la dans les paramètres de votre terminal |
