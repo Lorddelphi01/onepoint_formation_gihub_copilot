@@ -273,4 +273,6 @@ Vous avez connecté Copilot CLI à votre vault Obsidian via deux serveurs MCP co
 
 Vous avez maintenant vu Copilot CLI puiser dans trois sources différentes au fil de ce cours : sa connaissance générale, les fichiers de votre dépôt, et vos notes personnelles. Le principe reste le même partout — plus la source est vérifiable, plus vous pouvez faire confiance à la réponse.
 
-**[← Chapitre précédent : Environnements isolés](../09-isolated-environments/README.md)** | **[Retour à l'accueil du cours →](../README.md)**
+Dans le **[Chapitre 11 : Sécuriser votre code avec Copilot CLI](../11-security-with-copilot/README.md)**, vous allez retourner le raisonnement : après avoir donné à Copilot CLI accès à vos sources, comment protéger votre code et vos secrets.
+
+**[← Chapitre précédent : Environnements isolés](../09-isolated-environments/README.md)** | **[Chapitre suivant : Sécuriser votre code avec Copilot CLI →](../11-security-with-copilot/README.md)**

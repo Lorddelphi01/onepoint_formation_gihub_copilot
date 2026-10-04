@@ -330,6 +330,6 @@ Vous avez ajouté une dernière brique à votre flux de travail sécurité : une
 
 ## ➡️ Et ensuite ?
 
-Vous avez terminé le parcours de ce cours : de l'installation de Copilot CLI à la sécurisation de votre code, en passant par les agents, les skills, les serveurs MCP et les environnements isolés. La suite vous appartient : appliquez ces réflexes sur vos propres projets, et gardez toujours la relecture humaine comme dernière ligne de défense.
+Vous savez maintenant sécuriser votre code et vos secrets face à Copilot CLI. Gardez toujours la relecture humaine comme dernière ligne de défense. Dans le **[Chapitre 12 : Comprendre l'acceptation de l'IA par les développeurs](../12-ai-developer-acceptance/README.md)**, vous allez prendre du recul sur ce que la recherche indépendante dit de l'IA en développement.
 
-**[← Chapitre précédent : Environnements isolés](../09-isolated-environments/README.md)** | **[Retour à l'accueil du cours →](../README.md)**
+**[← Chapitre précédent : Construire un pipeline RAG sur votre vault Obsidian](../10-obsidian-rag/README.md)** | **[Chapitre suivant : Comprendre l'acceptation de l'IA par les développeurs →](../12-ai-developer-acceptance/README.md)**

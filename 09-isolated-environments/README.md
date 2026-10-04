@@ -724,4 +724,4 @@ Vous avez maintenant vu Copilot CLI dans plusieurs contextes d'exécution à tra
 
 > 💬 **Pour aller plus loin** : GitHub propose aussi des **sandboxes cloud** — des environnements Linux éphémères, hébergés par GitHub, qui permettent de reprendre une session Copilot CLI d'un appareil à l'autre (`copilot --cloud --experimental`). Ils nécessitent qu'un propriétaire d'organisation ou d'entreprise active la politique correspondante, et sont facturés à l'usage : hors périmètre de ce chapitre, mais utiles à connaître si vous travaillez dans une organisation GitHub. Voir [la documentation officielle](https://docs.github.com/en/copilot/concepts/about-cloud-and-local-sandboxes).
 
-**[← Chapitre précédent : Tout assembler](../08-putting-it-together/README.md)** | **[Retour à l'accueil du cours →](../README.md)**
+**[← Chapitre précédent : Tout assembler](../08-putting-it-together/README.md)** | **[Chapitre suivant : Construire un pipeline RAG sur votre vault Obsidian →](../10-obsidian-rag/README.md)**
