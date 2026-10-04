@@ -453,6 +453,15 @@ CMD ["zsh"]
    ```
 6. **Défi** : publie l'image dans un registre (`docker build -t ghcr.io/<ton-compte>/gh-cli-terminal-stack:latest . && docker push ghcr.io/<ton-compte>/gh-cli-terminal-stack:latest`), puis réutilise-la comme `"image"` dans une copie de `.devcontainer/devcontainer.json` (Partie 1) à la place de `mcr.microsoft.com/devcontainers/python:2-3.13-bullseye` — tu n'as alors plus besoin des Features `github-cli`/`node`, puisque tout est déjà dans ton image.
 
+<details>
+<summary>🎬 Vois-le en action !</summary>
+
+![Démo : construction et lancement de l'image Docker gh-cli-terminal-stack](assets/docker-gh-cli-demo.gif)
+
+*La démo illustre le résultat attendu. Les temps de construction varient selon ta connexion et ton système d'exploitation.*
+
+</details>
+
 ---
 
 ## Partie 3 : Construire ta propre image Docker avec GitHub CLI et la stack terminal
@@ -627,6 +636,15 @@ CMD ["zsh"]
    copilot --version
    ```
 6. **Défi** : publie l'image dans un registre (`docker build -t ghcr.io/<ton-compte>/gh-cli-terminal-stack:latest . && docker push ghcr.io/<ton-compte>/gh-cli-terminal-stack:latest`), puis réutilise-la comme `"image"` dans une copie de `.devcontainer/devcontainer.json` (Partie 1) à la place de `mcr.microsoft.com/devcontainers/python:2-3.13-bullseye` — tu n'as alors plus besoin des Features `github-cli`/`node`, puisque tout est déjà dans ton image.
+
+<details>
+<summary>🎬 Vois-le en action !</summary>
+
+![Démo : construction et lancement de l'image Docker gh-cli-terminal-stack](assets/docker-gh-cli-demo.gif)
+
+*La démo illustre le résultat attendu. Les temps de construction varient selon ta connexion et ton système d'exploitation.*
+
+</details>
 
 ---
 

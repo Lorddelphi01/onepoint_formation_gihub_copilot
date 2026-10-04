@@ -308,6 +308,15 @@ npx tokscale@latest --week
 
 Une fois lancé, Tokscale doit détecter au moins une session Copilot CLI grâce au fichier `.jsonl` produit à l'étape précédente, avec une estimation de tokens et de coût associée.
 
+<details>
+<summary>🎬 Vois-le en action !</summary>
+
+![Démo : rapport de consommation Tokscale sur des sessions Copilot CLI](assets/tokscale-demo.gif)
+
+*Le résultat peut varier selon tes sessions et tes tables de prix : tes chiffres seront différents de ceux présentés ici.*
+
+</details>
+
 > ⚠️ **Tokscale n'est ni un serveur MCP, ni un mécanisme de facturation officiel de GitHub.** Ses estimations de coût s'appuient sur des tables de prix tierces (LiteLLM) : utilise-les comme un ordre de grandeur, pas comme une facture garantie exacte.
 
 ---
