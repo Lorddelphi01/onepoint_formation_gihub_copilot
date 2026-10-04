@@ -2,7 +2,7 @@
 ---
 id: CopilotCLI-07-Custom-MCP-Server
 title: !translate Créer un serveur MCP personnalisé
-description: !translate Créez un serveur MCP personnalisé simple en Python pour connecter GitHub Copilot CLI à vos propres API.
+description: !translate Crée un serveur MCP personnalisé simple en Python pour connecter GitHub Copilot CLI à tes propres API.
 audience: Developers / Students / Terminal users
 slug: building-a-custom-mcp-server
 weight: 71
@@ -11,18 +11,18 @@ weight: 71
 
 # Construire un serveur MCP personnalisé
 
-> ⚠️ **Ce contenu est entièrement facultatif.** Vous pouvez être très productif avec Copilot CLI en utilisant uniquement les serveurs MCP préconstruits (GitHub, filesystem, Context7). Ce guide s'adresse aux développeurs qui veulent connecter Copilot à des API internes personnalisées. Consultez le [cours MCP for Beginners](https://github.com/microsoft/mcp-for-beginners) pour plus de détails.
+> ⚠️ **Ce contenu est entièrement facultatif.** Tu peux être très productif avec Copilot CLI en utilisant uniquement les serveurs MCP préconstruits (GitHub, filesystem, Context7). Ce guide s'adresse aux développeurs qui veulent connecter Copilot à des API internes personnalisées. Consulte le [cours MCP for Beginners](https://github.com/microsoft/mcp-for-beginners) pour plus de détails.
 >
 > **Prérequis :**
 > - À l'aise avec Python
 > - Compréhension des patterns `async`/`await`
-> - `pip` disponible sur votre système (inclus dans ce conteneur de développement)
+> - `pip` disponible sur ton système (inclus dans ce conteneur de développement)
 >
 > **[← Retour au Chapitre 07 : Serveurs MCP](README.md)**
 
 ---
 
-Vous voulez connecter Copilot à vos propres API ? Voici comment construire un serveur MCP simple en Python qui recherche des informations sur des livres, en lien avec le projet d'application de gestion de livres que vous utilisez tout au long de ce cours.
+Tu veux connecter Copilot à tes propres API ? Voici comment construire un serveur MCP simple en Python qui recherche des informations sur des livres, en lien avec le projet d'application de gestion de livres que tu utilises tout au long de ce cours.
 
 ## Configuration du projet
 
@@ -32,11 +32,11 @@ cd book-lookup-mcp-server
 pip install mcp
 ```
 
-> 💡 **Qu'est-ce que le paquet `mcp` ?** C'est le SDK Python officiel pour construire des serveurs MCP. Il gère les détails du protocole afin que vous puissiez vous concentrer sur vos outils.
+> 💡 **Qu'est-ce que le paquet `mcp` ?** C'est le SDK Python officiel pour construire des serveurs MCP. Il gère les détails du protocole afin que tu puisses te concentrer sur tes outils.
 
 ## Implémentation du serveur
 
-Créez un fichier appelé `server.py` :
+Crée un fichier appelé `server.py` :
 
 ```python
 # server.py
@@ -116,11 +116,11 @@ if __name__ == "__main__":
 | Annotations de type + docstrings | Indiquent à Copilot ce que fait chaque outil et quels paramètres il nécessite |
 | `mcp.run()` | Démarre le serveur et écoute les requêtes |
 
-> 💡 **Pourquoi des décorateurs ?** Le décorateur `@mcp.tool()` est tout ce dont vous avez besoin. Le SDK MCP lit automatiquement le nom de votre fonction, ses annotations de type et sa docstring pour générer le schéma de l'outil. Aucun schéma JSON manuel nécessaire !
+> 💡 **Pourquoi des décorateurs ?** Le décorateur `@mcp.tool()` est tout ce dont tu as besoin. Le SDK MCP lit automatiquement le nom de ta fonction, ses annotations de type et sa docstring pour générer le schéma de l'outil. Aucun schéma JSON manuel nécessaire !
 
 ## Configuration
 
-Ajoutez ceci à votre `~/.copilot/mcp-config.json` :
+Ajoute ceci à ton `~/.copilot/mcp-config.json` :
 
 ```json
 {
@@ -168,16 +168,16 @@ copilot
 
 ## Prochaines étapes
 
-Une fois que vous avez construit un serveur basique, vous pouvez :
+Une fois que tu as construit un serveur basique, tu peux :
 
 1. **Ajouter plus d'outils** - Chaque fonction `@mcp.tool()` devient un outil que Copilot peut appeler
 2. **Connecter de vraies API** - Remplacer le faux `BOOKS_DB` par de véritables appels API ou requêtes de base de données
 3. **Ajouter une authentification** - Gérer les clés API et jetons de manière sécurisée
-4. **Partager votre serveur** - Publier sur PyPI pour que d'autres puissent l'installer avec `pip`
+4. **Partager ton serveur** - Publier sur PyPI pour que d'autres puissent l'installer avec `pip`
 
 ## Ressources
 
-> 📚 **Spécification à jour** *(depuis Copilot CLI v1.0.81)* : Copilot CLI prend en charge la spécification MCP 2026-07-28 (CLI, SDK, IDE, clients en mémoire). Votre serveur personnalisé communique avec Copilot via le même protocole que les serveurs préconstruits (GitHub, filesystem, Context7).
+> 📚 **Spécification à jour** *(depuis Copilot CLI v1.0.81)* : Copilot CLI prend en charge la spécification MCP 2026-07-28 (CLI, SDK, IDE, clients en mémoire). Ton serveur personnalisé communique avec Copilot via le même protocole que les serveurs préconstruits (GitHub, filesystem, Context7).
 
 - [SDK Python MCP](https://github.com/modelcontextprotocol/python-sdk)
 - [SDK TypeScript MCP](https://github.com/modelcontextprotocol/typescript-sdk)

@@ -16,7 +16,7 @@ New-Item -ItemType Directory -Force -Path $CopilotHome | Out-Null
 if (-not (Test-Path $Target)) { Set-Content -Path $Target -Value '{"mcpServers":{}}' -Encoding UTF8 }
 
 try { $config = Get-Content $Target -Raw | ConvertFrom-Json }
-catch { throw "$Target n'est pas un JSON valide : corrigez-le avant de relancer ce script." }
+catch { throw "$Target n'est pas un JSON valide : corrige-le avant de relancer ce script." }
 $src = Get-Content $Source -Raw | ConvertFrom-Json
 
 Copy-Item $Target "$Target.bak" -Force
@@ -32,4 +32,4 @@ foreach ($name in 'filesystem', 'context7') {
 $config | ConvertTo-Json -Depth 10 | Set-Content -Path $Target -Encoding UTF8
 Write-Host "OK : configuration MCP mise à jour : $Target (sauvegarde : $Target.bak)"
 $config.mcpServers.PSObject.Properties.Name | ForEach-Object { Write-Host "   - $_" }
-Write-Host "Vérifiez dans Copilot CLI avec : copilot mcp list   (ou /mcp en session)"
+Write-Host "Vérifie dans Copilot CLI avec : copilot mcp list   (ou /mcp en session)"

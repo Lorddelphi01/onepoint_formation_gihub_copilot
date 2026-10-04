@@ -2,7 +2,7 @@
 ---
 id: CopilotCLI-07
 title: !translate Se connecter à GitHub, aux bases de données et aux API
-description: !translate Configurez des serveurs MCP pour que GitHub Copilot CLI puisse se connecter à GitHub, aux fichiers locaux, à la documentation, aux bases de données et à d'autres sources de données en direct.
+description: !translate Configure des serveurs MCP pour que GitHub Copilot CLI puisse se connecter à GitHub, aux fichiers locaux, à la documentation, aux bases de données et à d'autres sources de données en direct.
 audience: Developers / Students / Terminal users
 slug: connect-to-github-databases-and-apis
 weight: 8
@@ -11,17 +11,17 @@ weight: 8
 
 ![Chapitre 07 : Serveurs MCP](assets/chapter-header.png)
 
-> **Et si Copilot pouvait lire vos issues GitHub, vérifier votre base de données et créer des PR... le tout depuis le terminal ?**
+> **Et si Copilot pouvait lire tes issues GitHub, vérifier ta base de données et créer des PR... le tout depuis le terminal ?**
 
-Jusqu'à présent, Copilot ne pouvait travailler qu'avec ce que vous lui fournissiez directement : les fichiers référencés avec `@`, l'historique de conversation, et ses propres données d'entraînement. Mais que se passerait-il s'il pouvait aller chercher lui-même des informations dans votre dépôt GitHub, parcourir les fichiers de votre projet, ou consulter la documentation la plus récente d'une bibliothèque ?
+Jusqu'à présent, Copilot ne pouvait travailler qu'avec ce que tu lui fournissais directement : les fichiers référencés avec `@`, l'historique de conversation, et ses propres données d'entraînement. Mais que se passerait-il s'il pouvait aller chercher lui-même des informations dans ton dépôt GitHub, parcourir les fichiers de ton projet, ou consulter la documentation la plus récente d'une bibliothèque ?
 
-C'est exactement ce que fait MCP (Model Context Protocol). C'est un moyen de connecter Copilot à des services externes afin qu'il ait accès à des données réelles et actualisées. Chaque service auquel Copilot se connecte est appelé un « serveur MCP ». Dans ce chapitre, vous allez configurer quelques-unes de ces connexions et voir à quel point elles rendent Copilot considérablement plus utile.
+C'est exactement ce que fait MCP (Model Context Protocol). C'est un moyen de connecter Copilot à des services externes afin qu'il ait accès à des données réelles et actualisées. Chaque service auquel Copilot se connecte est appelé un « serveur MCP ». Dans ce chapitre, tu vas configurer quelques-unes de ces connexions et voir à quel point elles rendent Copilot considérablement plus utile.
 
-> 💡 **Déjà familier avec MCP ?** [Passez directement au démarrage rapide](#-use-the-built-in-github-mcp) pour vérifier que tout fonctionne et commencer à configurer des serveurs.
+> 💡 **Déjà familier avec MCP ?** [Passe directement au démarrage rapide](#-use-the-built-in-github-mcp) pour vérifier que tout fonctionne et commencer à configurer des serveurs.
 
 ## 🎯 Objectifs d'apprentissage
 
-À la fin de ce chapitre, vous serez capable de :
+À la fin de ce chapitre, tu seras capable de :
 
 - Comprendre ce qu'est MCP et pourquoi c'est important
 - Gérer les serveurs MCP avec les commandes `/mcp`
@@ -39,19 +39,19 @@ C'est exactement ce que fait MCP (Model Context Protocol). C'est un moyen de con
 
 <img src="assets/browser-extensions-analogy.png" alt="Les serveurs MCP sont comme des extensions de navigateur" width="800"/>
 
-Pensez aux serveurs MCP comme à des extensions de navigateur. Votre navigateur, seul, peut afficher des pages web, mais les extensions le connectent à des services supplémentaires :
+Pense aux serveurs MCP comme à des extensions de navigateur. Ton navigateur, seul, peut afficher des pages web, mais les extensions le connectent à des services supplémentaires :
 
 | Extension de navigateur | À quoi elle se connecte | Équivalent MCP |
 |-------------------|---------------------|----------------|
-| Gestionnaire de mots de passe | Votre coffre-fort de mots de passe | **GitHub MCP** → vos dépôts, issues, PR |
+| Gestionnaire de mots de passe | Ton coffre-fort de mots de passe | **GitHub MCP** → tes dépôts, issues, PR |
 | Grammarly | Service d'analyse d'écriture | **Context7 MCP** → documentation de bibliothèques |
 | Gestionnaire de fichiers | Stockage cloud | **Filesystem MCP** → fichiers locaux du projet |
 
-Sans extensions, votre navigateur reste utile, mais avec elles, il devient redoutablement puissant. Les serveurs MCP font la même chose pour Copilot. Ils le connectent à des sources de données réelles et actualisées afin qu'il puisse lire vos issues GitHub, explorer votre système de fichiers, récupérer une documentation à jour, et bien plus encore.
+Sans extensions, ton navigateur reste utile, mais avec elles, il devient redoutablement puissant. Les serveurs MCP font la même chose pour Copilot. Ils le connectent à des sources de données réelles et actualisées afin qu'il puisse lire tes issues GitHub, explorer ton système de fichiers, récupérer une documentation à jour, et bien plus encore.
 
 ***Les serveurs MCP connectent Copilot au monde extérieur : GitHub, les dépôts, la documentation, et plus encore***
 
-> 💡 **Point clé** : Sans MCP, Copilot ne peut voir que les fichiers que vous partagez explicitement avec `@`. Avec MCP, il peut explorer votre projet de façon proactive, vérifier votre dépôt GitHub et consulter la documentation, le tout automatiquement.
+> 💡 **Point clé** : Sans MCP, Copilot ne peut voir que les fichiers que tu partages explicitement avec `@`. Avec MCP, il peut explorer ton projet de façon proactive, vérifier ton dépôt GitHub et consulter la documentation, le tout automatiquement.
 
 ---
 
@@ -61,20 +61,20 @@ Sans extensions, votre navigateur reste utile, mais avec elles, il devient redou
 
 ## Commencer avec le serveur GitHub MCP intégré
 Voyons MCP en action tout de suite, avant même de configurer quoi que ce soit.
-Le serveur GitHub MCP est inclus par défaut. Essayez ceci :
+Le serveur GitHub MCP est inclus par défaut. Essaie ceci :
 
 ```bash
 copilot
 > List the recent commits in this repository
 ```
 
-Si Copilot renvoie de vraies données de commits, vous venez de voir MCP en action. C'est le serveur GitHub MCP qui contacte GitHub en votre nom. Mais GitHub n'est qu'*un seul* serveur parmi d'autres. Ce chapitre vous montre comment en ajouter d'autres (accès au système de fichiers, documentation à jour, et bien plus) pour que Copilot en fasse encore davantage.
+Si Copilot renvoie de vraies données de commits, tu viens de voir MCP en action. C'est le serveur GitHub MCP qui contacte GitHub en ton nom. Mais GitHub n'est qu'*un seul* serveur parmi d'autres. Ce chapitre te montre comment en ajouter d'autres (accès au système de fichiers, documentation à jour, et bien plus) pour que Copilot en fasse encore davantage.
 
 ---
 
 ## Le tableau de bord unifié `/mcp`
 
-*(depuis Copilot CLI v1.0.81)* Taper `/mcp` sans argument n'ouvre plus un gestionnaire MCP isolé : il ouvre désormais le **même tableau de bord unifié** que `/plugin` et `/skills`. Ce tableau de bord liste vos serveurs MCP, vos compétences (skills) et vos agents côte à côte, chacun avec son statut (activé/désactivé) — une seule vue pour tout ce qui étend Copilot.
+*(depuis Copilot CLI v1.0.81)* Taper `/mcp` sans argument n'ouvre plus un gestionnaire MCP isolé : il ouvre désormais le **même tableau de bord unifié** que `/plugin` et `/skills`. Ce tableau de bord liste tes serveurs MCP, tes compétences (skills) et tes agents côte à côte, chacun avec son statut (activé/désactivé) — une seule vue pour tout ce qui étend Copilot.
 
 ```bash
 copilot
@@ -94,18 +94,18 @@ MCP Servers:
 ✓ filesystem (enabled) - File system access
 ```
 
-> 💡 **Vous ne voyez que le serveur GitHub ?** C'est normal ! Si vous n'avez pas encore ajouté de serveurs MCP supplémentaires, GitHub est le seul listé. Vous en ajouterez d'autres dans la section suivante.
+> 💡 **Tu ne vois que le serveur GitHub ?** C'est normal ! Si tu n'as pas encore ajouté de serveurs MCP supplémentaires, GitHub est le seul listé. Tu en ajouteras d'autres dans la section suivante.
 
-Pour ajouter, modifier ou authentifier un serveur, utilisez `/mcp config` *(depuis Copilot CLI v1.0.81)*. Cette commande ouvre toujours l'assistant de configuration MCP dédié (formulaires d'ajout, d'édition et d'authentification) — mais ce formulaire s'ouvre maintenant **depuis** le tableau de bord des plugins, et le fermer vous y ramène, au lieu de vous laisser dans un gestionnaire MCP totalement séparé.
+Pour ajouter, modifier ou authentifier un serveur, utilise `/mcp config` *(depuis Copilot CLI v1.0.81)*. Cette commande ouvre toujours l'assistant de configuration MCP dédié (formulaires d'ajout, d'édition et d'authentification) — mais ce formulaire s'ouvre maintenant **depuis** le tableau de bord des plugins, et le fermer t'y ramène, au lieu de te laisser dans un gestionnaire MCP totalement séparé.
 
-> 📚 **Vous voulez voir toutes les commandes de gestion MCP ?** Vous pouvez gérer les serveurs avec les commandes slash `/mcp` à l'intérieur du chat, ou avec `copilot mcp` directement depuis votre terminal. Consultez la [référence complète des commandes](#-additional-mcp-commands) à la fin de ce chapitre.
+> 📚 **Tu veux voir toutes les commandes de gestion MCP ?** Tu peux gérer les serveurs avec les commandes slash `/mcp` à l'intérieur du chat, ou avec `copilot mcp` directement depuis ton terminal. Consulte la [référence complète des commandes](#-additional-mcp-commands) à la fin de ce chapitre.
 
 <details>
 <summary>🎬 Voir ça en action !</summary>
 
 ![MCP Status Demo](assets/mcp-status-demo.gif)
 
-*Le résultat de la démo peut varier. Votre modèle, vos outils et vos réponses différeront de ce qui est montré ici.*
+*Le résultat de la démo peut varier. Ton modèle, tes outils et tes réponses différeront de ce qui est montré ici.*
 
 </details>
 
@@ -114,9 +114,9 @@ Pour ajouter, modifier ou authentifier un serveur, utilisez `/mcp config` *(depu
 ## 🎬 Démonstrations et diagnostic MCP
 
 Les démonstrations ci-dessous montrent les étapes importantes sans supposer que
-tous les serveurs sont disponibles sur votre machine :
+tous les serveurs sont disponibles sur ta machine :
 
-| Démonstration | Ce que vous verrez |
+| Démonstration | Ce que tu verras |
 |---|---|
 | [`/mcp show`](assets/mcp-show-demo.gif) | Les serveurs détectés et leur statut |
 | [`/mcp config`](assets/mcp-config-demo.gif) | L'assistant pour ajouter, modifier ou authentifier un serveur |
@@ -125,7 +125,7 @@ tous les serveurs sont disponibles sur votre machine :
 | [Combinaison de serveurs](assets/mcp-multi-server-demo.gif) | Une session qui utilise filesystem et GitHub ensemble |
 
 Les GIF sont illustratifs : le nom des outils et les réponses peuvent varier
-selon la version de Copilot CLI et la configuration de votre machine. Les
+selon la version de Copilot CLI et la configuration de ta machine. Les
 fichiers `.tape` associés sont conservés dans `07-mcp-servers/assets/` pour
 rejouer ou régénérer les démonstrations.
 
@@ -133,20 +133,20 @@ rejouer ou régénérer les démonstrations.
 
 | Type | Où le serveur s'exécute | Configuration et données accessibles | Permissions et solution de repli |
 |---|---|---|---|
-| **Intégré** (GitHub) | Dans l'intégration Copilot/GitHub | Aucune entrée dans `mcp-config.json`. Après `/login`, Copilot peut consulter les dépôts, issues, PR et actions accessibles à votre compte. | Les permissions GitHub de votre compte s'appliquent. Si le serveur n'apparaît pas, exécutez `/login`, puis utilisez `gh` ou copiez les informations nécessaires manuellement. |
-| **Local `stdio`** | Sur votre machine, comme un processus lancé par `command` | [`local-stdio-mcp-config.json`](../samples/mcp-configs/local-stdio-mcp-config.json) lance Filesystem MCP avec un périmètre `.`. Les outils listés peuvent lire et rechercher les fichiers de ce répertoire. | Limitez `tools` aux outils nécessaires et ne lancez Copilot que dans un dossier de confiance. Si `npx` ou le paquet ne fonctionne pas, utilisez `@fichier` pour fournir les fichiers utiles ou exécutez les commandes locales vous-même. |
-| **Distant HTTP** | Sur un service accessible par URL | [`remote-http-mcp-config.json`](../samples/mcp-configs/remote-http-mcp-config.json) pointe vers un serveur n8n local via HTTP. Le serveur distant reçoit les appels d'outils autorisés et les données qu'ils demandent. | N'autorisez que les outils nécessaires et protégez l'URL derrière votre réseau ou votre authentification. Si le service est arrêté, utilisez son interface web ou exportez les données dans un fichier local. |
+| **Intégré** (GitHub) | Dans l'intégration Copilot/GitHub | Aucune entrée dans `mcp-config.json`. Après `/login`, Copilot peut consulter les dépôts, issues, PR et actions accessibles à ton compte. | Les permissions GitHub de ton compte s'appliquent. Si le serveur n'apparaît pas, exécute `/login`, puis utilise `gh` ou copie les informations nécessaires manuellement. |
+| **Local `stdio`** | Sur ta machine, comme un processus lancé par `command` | [`local-stdio-mcp-config.json`](../samples/mcp-configs/local-stdio-mcp-config.json) lance Filesystem MCP avec un périmètre `.`. Les outils listés peuvent lire et rechercher les fichiers de ce répertoire. | Limite `tools` aux outils nécessaires et ne lance Copilot que dans un dossier de confiance. Si `npx` ou le paquet ne fonctionne pas, utilise `@fichier` pour fournir les fichiers utiles ou exécute les commandes locales toi-même. |
+| **Distant HTTP** | Sur un service accessible par URL | [`remote-http-mcp-config.json`](../samples/mcp-configs/remote-http-mcp-config.json) pointe vers un serveur n8n local via HTTP. Le serveur distant reçoit les appels d'outils autorisés et les données qu'ils demandent. | N'autorise que les outils nécessaires et protège l'URL derrière ton réseau ou ton authentification. Si le service est arrêté, utilise son interface web ou exporte les données dans un fichier local. |
 
-Un serveur HTTP peut aussi proposer OAuth. Dans ce cas, copiez
+Un serveur HTTP peut aussi proposer OAuth. Dans ce cas, copie
 [`remote-oauth-mcp-config.json`](../samples/mcp-configs/remote-oauth-mcp-config.json),
-remplacez l'URL d'exemple par celle du fournisseur, puis exécutez
+remplace l'URL d'exemple par celle du fournisseur, puis exécute
 `/mcp auth remote-oauth`. Le jeton est géré par la CLI : il ne doit pas être
 écrit dans un fichier versionné. Les permissions et les données accessibles
 dépendent toujours du compte autorisé par le fournisseur.
 
 ### Diagnostic minimal : configuration → démarrage → outils → appel
 
-Suivez toujours ces quatre étapes dans l'ordre. La première étape qui échoue
+Suis toujours ces quatre étapes dans l'ordre. La première étape qui échoue
 identifie généralement le problème :
 
 ```bash
@@ -166,14 +166,14 @@ copilot
 
 | Étape en échec | Indice courant | Action corrective |
 |---|---|---|
-| Configuration | Le serveur n'est pas listé | Vérifiez le JSON, le nom, `type`, `command`/`url`, puis relancez `copilot mcp list`. |
-| Démarrage | Le serveur est listé mais `disabled` ou `failed` | Utilisez `/mcp enable <server-name>`, vérifiez la commande manuellement et consultez les messages de démarrage. |
-| Outils | Le serveur démarre mais n'expose aucun outil attendu | Réduisez `tools` à des noms réellement fournis par le serveur ou utilisez `tools: ["*"]` temporairement pour diagnostiquer. |
-| Appel | L'outil existe mais l'appel est refusé ou vide | Vérifiez le chemin autorisé, l'authentification et les droits du compte. En repli, utilisez `@fichier`, `gh` ou la commande native du service. |
+| Configuration | Le serveur n'est pas listé | Vérifie le JSON, le nom, `type`, `command`/`url`, puis relance `copilot mcp list`. |
+| Démarrage | Le serveur est listé mais `disabled` ou `failed` | Utilise `/mcp enable <server-name>`, vérifie la commande manuellement et consulte les messages de démarrage. |
+| Outils | Le serveur démarre mais n'expose aucun outil attendu | Réduis `tools` à des noms réellement fournis par le serveur ou utilise `tools: ["*"]` temporairement pour diagnostiquer. |
+| Appel | L'outil existe mais l'appel est refusé ou vide | Vérifie le chemin autorisé, l'authentification et les droits du compte. En repli, utilise `@fichier`, `gh` ou la commande native du service. |
 
 > ⚠️ **Principe de moindre privilège** : `tools: ["*"]` autorise tous les
-> outils exposés par le serveur. Pour un dépôt partagé, préférez une liste
-> explicite d'outils en lecture seule et n'accordez l'accès qu'aux données
+> outils exposés par le serveur. Pour un dépôt partagé, préfère une liste
+> explicite d'outils en lecture seule et n'accorde l'accès qu'aux données
 > nécessaires à l'exercice.
 
 ---
@@ -199,7 +199,7 @@ Labels: bug, priority-high
 Description: Users report that passwords containing...
 ```
 
-MCP rend Copilot conscient de votre environnement de développement réel.
+MCP rend Copilot conscient de ton environnement de développement réel.
 
 > 📚 **Documentation officielle** : [About MCP](https://docs.github.com/copilot/concepts/context/mcp) pour un aperçu plus approfondi du fonctionnement de MCP avec GitHub Copilot.
 
@@ -209,7 +209,7 @@ MCP rend Copilot conscient de votre environnement de développement réel.
 
 <img src="assets/configuring-mcp-servers.png" alt="Mains ajustant les boutons et curseurs d'une table de mixage audio professionnelle représentant la configuration des serveurs MCP" width="800"/>
 
-Maintenant que vous avez vu MCP en action, configurons des serveurs supplémentaires. Vous pouvez ajouter des serveurs de deux façons : **depuis le registre intégré** (le plus simple — configuration guidée directement dans la CLI) ou en **modifiant le fichier de configuration** manuellement (plus flexible). Commencez par l'option du registre si vous ne savez pas laquelle choisir.
+Maintenant que tu as vu MCP en action, configurons des serveurs supplémentaires. Tu peux ajouter des serveurs de deux façons : **depuis le registre intégré** (le plus simple — configuration guidée directement dans la CLI) ou en **modifiant le fichier de configuration** manuellement (plus flexible). Commence par l'option du registre si tu ne sais pas laquelle choisir.
 
 ---
 
@@ -223,19 +223,19 @@ copilot
 > /mcp search
 ```
 
-Copilot ouvre un sélecteur interactif affichant les serveurs disponibles. Choisissez-en un, et la CLI vous guide à travers toute configuration requise (clés API, chemins, etc.) et l'ajoute automatiquement à votre configuration.
+Copilot ouvre un sélecteur interactif affichant les serveurs disponibles. Choisis-en un, et la CLI te guide à travers toute configuration requise (clés API, chemins, etc.) et l'ajoute automatiquement à ta configuration.
 
-> 💡 **Pourquoi utiliser le registre ?** C'est le moyen le plus simple de démarrer — vous n'avez pas besoin de connaître le nom du paquet npm, les arguments de commande ou la structure JSON. La CLI s'occupe de tout cela pour vous.
+> 💡 **Pourquoi utiliser le registre ?** C'est le moyen le plus simple de démarrer — tu n'as pas besoin de connaître le nom du paquet npm, les arguments de commande ou la structure JSON. La CLI s'occupe de tout cela pour toi.
 
 ---
 
 ## Fichier de configuration MCP
 
-Les serveurs MCP peuvent être configurés au niveau utilisateur dans `~/.copilot/mcp-config.json`, ce qui s'applique à tous les projets, au niveau projet dans `.mcp.json`, ou dans le fichier de configuration d'espace de travail `.github/mcp.json`. `.github/mcp.json` est chargé automatiquement en même temps que `.mcp.json`. Si vous avez utilisé `/mcp search`, la CLI a créé ou mis à jour votre fichier `~/.copilot/mcp-config.json` au niveau utilisateur, mais comprendre le format JSON est utile lorsque vous voulez personnaliser ou partager une configuration MCP au niveau projet.
+Les serveurs MCP peuvent être configurés au niveau utilisateur dans `~/.copilot/mcp-config.json`, ce qui s'applique à tous les projets, au niveau projet dans `.mcp.json`, ou dans le fichier de configuration d'espace de travail `.github/mcp.json`. `.github/mcp.json` est chargé automatiquement en même temps que `.mcp.json`. Si tu as utilisé `/mcp search`, la CLI a créé ou mis à jour ton fichier `~/.copilot/mcp-config.json` au niveau utilisateur, mais comprendre le format JSON est utile lorsque tu veux personnaliser ou partager une configuration MCP au niveau projet.
 
 > 📚 **Spécification MCP à jour** *(depuis Copilot CLI v1.0.81)* : la CLI prend en charge la spécification MCP 2026-07-28, aussi bien côté CLI que SDK, IDE et clients en mémoire.
 
-> ⚠️ **Remarque** : `.vscode/mcp.json` n'est plus pris en charge comme source de configuration MCP. Si vous avez un fichier `.vscode/mcp.json` existant, migrez-le vers `.mcp.json` à la racine de votre projet. La CLI affichera une indication de migration si elle détecte un ancien fichier de configuration.
+> ⚠️ **Remarque** : `.vscode/mcp.json` n'est plus pris en charge comme source de configuration MCP. Si tu as un fichier `.vscode/mcp.json` existant, migre-le vers `.mcp.json` à la racine de ton projet. La CLI affichera une indication de migration si elle détecte un ancien fichier de configuration.
 
 ```json
 {
@@ -253,21 +253,21 @@ Les serveurs MCP peuvent être configurés au niveau utilisateur dans `~/.copilo
 *La plupart des serveurs MCP sont distribués sous forme de paquets npm et s'exécutent via la commande `npx`.*
 
 <details>
-<summary>💡 <strong>Nouveau avec JSON ?</strong> Cliquez ici pour comprendre chaque champ</summary>
+<summary>💡 <strong>Nouveau avec JSON ?</strong> Clique ici pour comprendre chaque champ</summary>
 
 | Champ | Ce qu'il signifie |
 |-------|---------------|
-| `"mcpServers"` | Conteneur pour toutes vos configurations de serveurs MCP |
-| `"server-name"` | Un nom que vous choisissez (par ex., « github », « filesystem ») |
-| `"type": "local"` | Le serveur s'exécute sur votre machine |
+| `"mcpServers"` | Conteneur pour toutes tes configurations de serveurs MCP |
+| `"server-name"` | Un nom que tu choisis (par ex., « github », « filesystem ») |
+| `"type": "local"` | Le serveur s'exécute sur ta machine |
 | `"command": "npx"` | Le programme à exécuter (npx exécute des paquets npm) |
 | `"args": [...]` | Arguments passés à la commande |
 | `"tools": ["*"]` | Autoriser tous les outils de ce serveur |
 
 **Règles JSON importantes :**
-- Utilisez des guillemets doubles `"` pour les chaînes de caractères (pas de guillemets simples)
+- Utilise des guillemets doubles `"` pour les chaînes de caractères (pas de guillemets simples)
 - Pas de virgule finale après le dernier élément
-- Le fichier doit être un JSON valide (utilisez un [validateur JSON](https://jsonlint.com/) en cas de doute)
+- Le fichier doit être un JSON valide (utilise un [validateur JSON](https://jsonlint.com/) en cas de doute)
 
 </details>
 
@@ -275,7 +275,7 @@ Les serveurs MCP peuvent être configurés au niveau utilisateur dans `~/.copilo
 
 ## Ajouter des serveurs MCP
 
-Le serveur GitHub MCP est intégré et ne nécessite aucune configuration. Voici d'autres serveurs que vous pouvez ajouter. **Choisissez ce qui vous intéresse, ou parcourez-les dans l'ordre.**
+Le serveur GitHub MCP est intégré et ne nécessite aucune configuration. Voici d'autres serveurs que tu peux ajouter. **Choisis ce qui t'intéresse, ou parcours-les dans l'ordre.**
 
 | Je veux... | Aller à |
 |---|---|
@@ -284,7 +284,7 @@ Le serveur GitHub MCP est intégré et ne nécessite aucune configuration. Voici
 | Explorer les extras facultatifs (serveurs personnalisés, web_fetch) | [Au-delà des bases](#beyond-the-basics) |
 
 <details>
-<summary><strong>Serveur Filesystem</strong> - Laisser Copilot explorer les fichiers de votre projet</summary>
+<summary><strong>Serveur Filesystem</strong> - Laisser Copilot explorer les fichiers de ton projet</summary>
 <a id="filesystem-server"></a>
 
 ### Serveur Filesystem
@@ -302,9 +302,9 @@ Le serveur GitHub MCP est intégré et ne nécessite aucune configuration. Voici
 }
 ```
 
-> 💡 **Le chemin `.`** : Le `.` signifie « répertoire courant ». Copilot peut accéder aux fichiers par rapport à l'endroit où vous l'avez lancé. Dans un Codespace, il s'agit de la racine de votre espace de travail. Vous pouvez aussi utiliser un chemin absolu comme `/workspaces/onepoint_formation_gihub_copilot` si vous préférez.
+> 💡 **Le chemin `.`** : Le `.` signifie « répertoire courant ». Copilot peut accéder aux fichiers par rapport à l'endroit où tu l'as lancé. Dans un Codespace, il s'agit de la racine de ton espace de travail. Tu peux aussi utiliser un chemin absolu comme `/workspaces/onepoint_formation_gihub_copilot` si tu préfères.
 
-Ajoutez ceci à votre `~/.copilot/mcp-config.json` et redémarrez Copilot.
+Ajoute ceci à ton `~/.copilot/mcp-config.json` et redémarre Copilot.
 
 </details>
 
@@ -331,9 +331,9 @@ Context7 donne à Copilot accès à une documentation à jour pour les framework
 
 - ✅ **Aucune clé API requise** 
 - ✅ **Aucun compte nécessaire** 
-- ✅ **Votre code reste local**
+- ✅ **Ton code reste local**
 
-Ajoutez ceci à votre `~/.copilot/mcp-config.json` et redémarrez Copilot.
+Ajoute ceci à ton `~/.copilot/mcp-config.json` et redémarre Copilot.
 
 </details>
 
@@ -341,11 +341,11 @@ Ajoutez ceci à votre `~/.copilot/mcp-config.json` et redémarrez Copilot.
 <summary><strong>Au-delà des bases</strong> - Serveurs personnalisés et accès web (facultatif)</summary>
 <a id="beyond-the-basics"></a>
 
-Ce sont des extras facultatifs pour lorsque vous êtes à l'aise avec les serveurs de base ci-dessus.
+Ce sont des extras facultatifs pour lorsque tu es à l'aise avec les serveurs de base ci-dessus.
 
 ### Serveur Microsoft Learn MCP
 
-Chaque serveur MCP que vous avez vu jusqu'ici (filesystem, Context7) s'exécute localement sur votre machine. Mais les serveurs MCP peuvent aussi s'exécuter à distance, ce qui signifie qu'il suffit de pointer Copilot CLI vers une URL et il se charge du reste. Pas de `npx` ni de `python`, pas de processus local, aucune dépendance à installer.
+Chaque serveur MCP que tu as vu jusqu'ici (filesystem, Context7) s'exécute localement sur ta machine. Mais les serveurs MCP peuvent aussi s'exécuter à distance, ce qui signifie qu'il suffit de pointer Copilot CLI vers une URL et il se charge du reste. Pas de `npx` ni de `python`, pas de processus local, aucune dépendance à installer.
 
 Le [serveur Microsoft Learn MCP](https://github.com/microsoftdocs/mcp) en est un bon exemple. Il donne à Copilot CLI un accès direct à la documentation officielle Microsoft (Azure, Microsoft Foundry et d'autres sujets IA, .NET, Microsoft 365, et bien plus) afin qu'il puisse rechercher dans la documentation, récupérer des pages complètes et trouver des exemples de code officiels au lieu de se fier aux données d'entraînement d'un modèle.
 
@@ -355,7 +355,7 @@ Le [serveur Microsoft Learn MCP](https://github.com/microsoftdocs/mcp) en est un
 
 **Installation rapide avec `/plugin install` :**
 
-Plutôt que de modifier votre fichier de configuration JSON manuellement, vous pouvez l'installer en une seule commande :
+Plutôt que de modifier ton fichier de configuration JSON manuellement, tu peux l'installer en une seule commande :
 
 ```bash
 copilot
@@ -380,9 +380,9 @@ copilot
 
 ### Accès web avec `web_fetch`
 
-Copilot CLI inclut un outil intégré `web_fetch` qui peut récupérer du contenu depuis n'importe quelle URL. C'est utile pour récupérer des README, de la documentation d'API ou des notes de version sans quitter votre terminal. Aucun serveur MCP nécessaire.
+Copilot CLI inclut un outil intégré `web_fetch` qui peut récupérer du contenu depuis n'importe quelle URL. C'est utile pour récupérer des README, de la documentation d'API ou des notes de version sans quitter ton terminal. Aucun serveur MCP nécessaire.
 
-Vous pouvez contrôler quelles URL sont accessibles via `~/.copilot/config.json` (paramètres généraux de Copilot), qui est distinct de `~/.copilot/mcp-config.json` (définitions des serveurs MCP).
+Tu peux contrôler quelles URL sont accessibles via `~/.copilot/config.json` (paramètres généraux de Copilot), qui est distinct de `~/.copilot/mcp-config.json` (définitions des serveurs MCP).
 
 ```json
 {
@@ -408,11 +408,11 @@ copilot
 
 ### Construire un serveur MCP personnalisé
 
-Vous voulez connecter Copilot à vos propres API, bases de données ou outils internes ? Vous pouvez construire un serveur MCP personnalisé en Python. C'est entièrement facultatif puisque les serveurs préconstruits (GitHub, filesystem, Context7) couvrent la plupart des cas d'usage.
+Tu veux connecter Copilot à tes propres API, bases de données ou outils internes ? Tu peux construire un serveur MCP personnalisé en Python. C'est entièrement facultatif puisque les serveurs préconstruits (GitHub, filesystem, Context7) couvrent la plupart des cas d'usage.
 
-📖 Consultez le [guide du serveur MCP personnalisé](mcp-custom-server.md) pour un tutoriel complet utilisant l'application de gestion de livres comme exemple.
+📖 Consulte le [guide du serveur MCP personnalisé](mcp-custom-server.md) pour un tutoriel complet utilisant l'application de gestion de livres comme exemple.
 
-📚 Pour plus de contexte, consultez le [cours MCP for Beginners](https://github.com/microsoft/mcp-for-beginners).
+📚 Pour plus de contexte, consulte le [cours MCP for Beginners](https://github.com/microsoft/mcp-for-beginners).
 
 </details>
 
@@ -422,7 +422,7 @@ Vous voulez connecter Copilot à vos propres API, bases de données ou outils in
 
 Voici un `mcp-config.json` complet avec les serveurs filesystem et Context7 :
 
-> 💡 **Remarque :** GitHub MCP est intégré. Vous n'avez pas besoin de l'ajouter à votre fichier de configuration.
+> 💡 **Remarque :** GitHub MCP est intégré. Tu n'as pas besoin de l'ajouter à ton fichier de configuration.
 
 ```json
 {
@@ -443,23 +443,23 @@ Voici un `mcp-config.json` complet avec les serveurs filesystem et Context7 :
 }
 ```
 
-Enregistrez ceci sous `~/.copilot/mcp-config.json` pour un accès global ou `.mcp.json` à la racine du projet pour une configuration spécifique au projet.
+Enregistre ceci sous `~/.copilot/mcp-config.json` pour un accès global ou `.mcp.json` à la racine du projet pour une configuration spécifique au projet.
 
 ---
 
 # Utiliser les serveurs MCP
 
-Maintenant que vos serveurs MCP sont configurés, voyons ce qu'ils peuvent faire.
+Maintenant que tes serveurs MCP sont configurés, voyons ce qu'ils peuvent faire.
 
 <img src="assets/using-mcp-servers.png" alt="Utiliser les serveurs MCP : schéma en étoile montrant une CLI développeur connectée aux serveurs GitHub, Filesystem, Context7 et Custom/Web Fetch" width="800" />
 
 ---
 
-> 🤖 **Raccourci :** plutôt que de copier ce JSON à la main, lancez `bash 07-mcp-servers/scripts/setup-mcp-config.sh` (Linux/macOS/WSL, nécessite `jq`) ou `.\07-mcp-servers\scripts\setup-mcp-config.ps1` (Windows). Le script **fusionne** filesystem et Context7 dans `~/.copilot/mcp-config.json` sans toucher à vos autres serveurs, et crée une sauvegarde `.bak`. Relancez-le sans risque : il est idempotent.
+> 🤖 **Raccourci :** plutôt que de copier ce JSON à la main, lance `bash 07-mcp-servers/scripts/setup-mcp-config.sh` (Linux/macOS/WSL, nécessite `jq`) ou `.\07-mcp-servers\scripts\setup-mcp-config.ps1` (Windows). Le script **fusionne** filesystem et Context7 dans `~/.copilot/mcp-config.json` sans toucher à tes autres serveurs, et crée une sauvegarde `.bak`. Relance-le sans risque : il est idempotent.
 
 ## Exemples d'utilisation des serveurs
 
-**Choisissez un serveur à explorer, ou parcourez-les dans l'ordre.**
+**Choisis un serveur à explorer, ou parcours-les dans l'ordre.**
 
 | Je veux essayer... | Aller à |
 |---|---|
@@ -474,22 +474,22 @@ Maintenant que vos serveurs MCP sont configurés, voyons ce qu'ils peuvent faire
 
 ### Serveur GitHub (intégré)
 
-Le serveur GitHub MCP est **intégré**. Si vous vous êtes connecté à Copilot (ce que vous avez fait lors de la configuration initiale), il fonctionne déjà. Aucune configuration nécessaire !
+Le serveur GitHub MCP est **intégré**. Si tu t'es connecté à Copilot (ce que tu as fait lors de la configuration initiale), il fonctionne déjà. Aucune configuration nécessaire !
 
-> 💡 **Ça ne fonctionne pas ?** Exécutez `/login` pour vous réauthentifier auprès de GitHub.
+> 💡 **Ça ne fonctionne pas ?** Exécute `/login` pour te réauthentifier auprès de GitHub.
 
 <details>
 <summary><strong>Authentification dans les conteneurs de développement</strong></summary>
 
-- **GitHub Codespaces** (recommandé) : L'authentification est automatique. La CLI `gh` hérite de votre jeton Codespace. Aucune action requise.
-- **Conteneur de développement local (Docker)** : Exécutez `gh auth login` après le démarrage du conteneur, puis redémarrez Copilot.
+- **GitHub Codespaces** (recommandé) : L'authentification est automatique. La CLI `gh` hérite de ton jeton Codespace. Aucune action requise.
+- **Conteneur de développement local (Docker)** : Exécute `gh auth login` après le démarrage du conteneur, puis redémarre Copilot.
 
 **Dépannage de l'authentification :**
 ```bash
-# Vérifier si vous êtes authentifié
+# Vérifier si tu es authentifié
 gh auth status
 
-# Si non, connectez-vous
+# Si non, connecte-toi
 gh auth login
 
 # Vérifier que GitHub MCP est connecté
@@ -533,9 +533,9 @@ Found 1 file:
 - samples/book-app-project/tests/test_books.py
 ```
 
-> 💡 **Vous travaillez sur votre propre fork ?** Si vous avez forké ce dépôt de cours, vous pouvez aussi essayer des opérations d'écriture comme créer des issues et des pull requests. Nous pratiquerons cela dans les exercices ci-dessous.
+> 💡 **Tu travailles sur ton propre fork ?** Si tu as forké ce dépôt de cours, tu peux aussi essayer des opérations d'écriture comme créer des issues et des pull requests. Nous pratiquerons cela dans les exercices ci-dessous.
 
-> ⚠️ **Vous ne voyez pas de résultats ?** Le GitHub MCP opère sur le distant du dépôt (sur github.com), pas seulement sur les fichiers locaux. Assurez-vous que votre dépôt a un distant : exécutez `git remote -v` pour vérifier.
+> ⚠️ **Tu ne vois pas de résultats ?** Le GitHub MCP opère sur le distant du dépôt (sur github.com), pas seulement sur les fichiers locaux. Assure-toi que ton dépôt a un distant : exécute `git remote -v` pour vérifier.
 
 </details>
 
@@ -619,7 +619,7 @@ Best practices:
 
 ### Au-delà des bases
 
-**Serveur MCP personnalisé** : Si vous avez construit le serveur book-lookup à partir du [guide du serveur MCP personnalisé](mcp-custom-server.md), vous pouvez interroger votre collection de livres directement :
+**Serveur MCP personnalisé** : Si tu as construit le serveur book-lookup à partir du [guide du serveur MCP personnalisé](mcp-custom-server.md), tu peux interroger ta collection de livres directement :
 
 ```bash
 copilot
@@ -627,7 +627,7 @@ copilot
 > Look up information about "1984" using the book lookup server. Search for books by George Orwell
 ```
 
-**Microsoft Learn MCP** : Si vous avez installé le [serveur Microsoft Learn MCP](#microsoft-learn-mcp-server), vous pouvez consulter directement la documentation officielle Microsoft :
+**Microsoft Learn MCP** : Si tu as installé le [serveur Microsoft Learn MCP](#microsoft-learn-mcp-server), tu peux consulter directement la documentation officielle Microsoft :
 
 ```bash
 copilot
@@ -635,7 +635,7 @@ copilot
 > How do I configure managed identity for an Azure Function? Search Microsoft Learn.
 ```
 
-**Web Fetch** : Utilisez l'outil intégré `web_fetch` pour récupérer du contenu depuis n'importe quelle URL :
+**Web Fetch** : Utilise l'outil intégré `web_fetch` pour récupérer du contenu depuis n'importe quelle URL :
 
 ```bash
 copilot
@@ -655,7 +655,7 @@ Ces workflows montrent pourquoi les développeurs disent « je ne veux plus jama
 
 *Workflow MCP complet : GitHub MCP récupère les données du dépôt, Filesystem MCP trouve le code, Context7 MCP fournit les bonnes pratiques, et Copilot gère l'analyse*
 
-Chaque exemple ci-dessous est autonome. **Choisissez celui qui vous intéresse, ou lisez-les tous.**
+Chaque exemple ci-dessous est autonome. **Choisis celui qui t'intéresse, ou lis-les tous.**
 
 | Je veux voir... | Aller à |
 |---|---|
@@ -713,7 +713,7 @@ Suggestions:
 
 ![MCP Workflow Demo](assets/mcp-workflow-demo.gif)
 
-*Le résultat de la démo peut varier. Votre modèle, vos outils et vos réponses différeront de ce qui est montré ici.*
+*Le résultat de la démo peut varier. Ton modèle, tes outils et tes réponses différeront de ce qui est montré ici.*
 
 </details>
 
@@ -725,11 +725,11 @@ Suggestions:
 <summary><strong>Workflow issue-vers-PR</strong> - Passer d'une issue GitHub à une pull request sans quitter le terminal</summary>
 <a id="issue-to-pr-workflow"></a>
 
-#### Le workflow issue-vers-PR (sur votre propre dépôt)
+#### Le workflow issue-vers-PR (sur ton propre dépôt)
 
-Cela fonctionne mieux sur votre propre fork ou dépôt où vous avez un accès en écriture :
+Cela fonctionne mieux sur ton propre fork ou dépôt où tu as un accès en écriture :
 
-> 💡 **Ne vous inquiétez pas si vous ne pouvez pas essayer ceci maintenant.** Si vous êtes sur un clone en lecture seule, vous pratiquerez cela dans l'exercice. Pour l'instant, contentez-vous de lire pour comprendre le déroulement.
+> 💡 **Ne t'inquiète pas si tu ne peux pas essayer ceci maintenant.** Si tu es sur un clone en lecture seule, tu pratiqueras cela dans l'exercice. Pour l'instant, contente-toi de lire pour comprendre le déroulement.
 
 ```bash
 copilot
@@ -805,17 +805,17 @@ Recommendations:
 
 <img src="../assets/practice.png" alt="Bureau chaleureux avec un moniteur affichant du code, une lampe, une tasse de café et un casque, prêt pour la pratique" width="800"/>
 
-**🎉 Vous connaissez maintenant l'essentiel !** Vous comprenez MCP, vous avez vu comment configurer des serveurs, et vous avez vu de vrais workflows en action. Il est temps d'essayer vous-même.
+**🎉 Tu connais maintenant l'essentiel !** Tu comprends MCP, tu as vu comment configurer des serveurs, et tu as vu de vrais workflows en action. Il est temps d'essayer toi-même.
 
 ---
 
-## ▶️ À vous de jouer
+## ▶️ À toi de jouer
 
-C'est à vous maintenant ! Complétez ces exercices pour pratiquer l'utilisation des serveurs MCP avec le projet d'application de gestion de livres.
+C'est à toi maintenant ! Complète ces exercices pour pratiquer l'utilisation des serveurs MCP avec le projet d'application de gestion de livres.
 
-### Exercice 1 : Vérifier votre statut MCP
+### Exercice 1 : Vérifier ton statut MCP
 
-Commencez par voir quels serveurs MCP sont disponibles :
+Commence par voir quels serveurs MCP sont disponibles :
 
 ```bash
 copilot
@@ -823,13 +823,13 @@ copilot
 > /mcp show
 ```
 
-Vous devriez voir le serveur GitHub listé comme activé. Si non, exécutez `/login` pour vous authentifier.
+Tu devrais voir le serveur GitHub listé comme activé. Si non, exécute `/login` pour t'authentifier.
 
 ---
 
 ### Exercice 2 : Explorer l'application de gestion de livres avec filesystem MCP
 
-Si vous avez configuré le serveur filesystem, utilisez-le pour explorer l'application de gestion de livres :
+Si tu as configuré le serveur filesystem, utilise-le pour explorer l'application de gestion de livres :
 
 ```bash
 copilot
@@ -840,13 +840,13 @@ copilot
 
 **Résultat attendu** : Copilot liste `book_app.py`, `books.py` et `utils.py` avec leurs fonctions.
 
-> 💡 **Vous n'avez pas encore configuré filesystem MCP ?** Créez le fichier de configuration à partir de la section [Configuration complète](#complete-configuration-file) ci-dessus. Puis redémarrez Copilot.
+> 💡 **Tu n'as pas encore configuré filesystem MCP ?** Crée le fichier de configuration à partir de la section [Configuration complète](#complete-configuration-file) ci-dessus. Puis redémarre Copilot.
 
 ---
 
 ### Exercice 3 : Interroger l'historique du dépôt avec GitHub MCP
 
-Utilisez le GitHub MCP intégré pour explorer ce dépôt de cours :
+Utilise le GitHub MCP intégré pour explorer ce dépôt de cours :
 
 ```bash
 copilot
@@ -858,13 +858,13 @@ copilot
 
 **Résultat attendu** : Copilot affiche les messages de commits récents et les noms de branches depuis le distant GitHub.
 
-> ⚠️ **Dans un Codespace ?** Cela fonctionne automatiquement. L'authentification est héritée. Si vous êtes sur un clone local, assurez-vous que `gh auth status` indique que vous êtes connecté.
+> ⚠️ **Dans un Codespace ?** Cela fonctionne automatiquement. L'authentification est héritée. Si tu es sur un clone local, assure-toi que `gh auth status` indique que tu es connecté.
 
 ---
 
 ### Exercice 4 : Combiner plusieurs serveurs MCP
 
-Combinez maintenant filesystem et GitHub MCP en une seule session :
+Combine maintenant filesystem et GitHub MCP en une seule session :
 
 ```bash
 copilot
@@ -876,7 +876,7 @@ copilot
 
 **Résultat attendu** : Copilot lit le fichier JSON (filesystem MCP), liste les 5 livres dont « The Hobbit », « 1984 », « Dune », « To Kill a Mockingbird » et « Mysterious Book », puis interroge GitHub pour l'historique des commits.
 
-**Auto-vérification** : Vous comprenez MCP quand vous pouvez expliquer pourquoi « Vérifie l'historique des commits de mon dépôt » est préférable à l'exécution manuelle de `git log` et au collage du résultat dans votre invite.
+**Auto-vérification** : Tu comprends MCP quand tu peux expliquer pourquoi « Vérifie l'historique des commits de mon dépôt » est préférable à l'exécution manuelle de `git log` et au collage du résultat dans ton invite.
 
 ---
 
@@ -884,38 +884,38 @@ copilot
 
 ### Défi principal : Exploration MCP de l'application de gestion de livres
 
-Pratiquez l'utilisation des serveurs MCP ensemble sur le projet d'application de gestion de livres. Complétez ces étapes en une seule session Copilot :
+Pratique l'utilisation des serveurs MCP ensemble sur le projet d'application de gestion de livres. Complète ces étapes en une seule session Copilot :
 
-1. **Vérifiez que MCP fonctionne** : Exécutez `/mcp show` et confirmez qu'au moins le serveur GitHub est activé
-2. **Configurez filesystem MCP** (si ce n'est pas déjà fait) : Créez `~/.copilot/mcp-config.json` avec la configuration du serveur filesystem
-3. **Explorez le code** : Demandez à Copilot d'utiliser le serveur filesystem pour :
+1. **Vérifie que MCP fonctionne** : Exécute `/mcp show` et confirme qu'au moins le serveur GitHub est activé
+2. **Configure filesystem MCP** (si ce n'est pas déjà fait) : Crée `~/.copilot/mcp-config.json` avec la configuration du serveur filesystem
+3. **Explore le code** : Demande à Copilot d'utiliser le serveur filesystem pour :
    - Lister toutes les fonctions dans `samples/book-app-project/books.py`
    - Vérifier quelles fonctions dans `samples/book-app-project/utils.py` n'ont pas d'annotations de type
-   - Lire `samples/book-app-project/data.json` et identifier tout problème de qualité de données (indice : regardez la dernière entrée)
-4. **Vérifiez l'activité du dépôt** : Demandez à Copilot d'utiliser GitHub MCP pour :
+   - Lire `samples/book-app-project/data.json` et identifier tout problème de qualité de données (indice : regarde la dernière entrée)
+4. **Vérifie l'activité du dépôt** : Demande à Copilot d'utiliser GitHub MCP pour :
    - Lister les commits récents ayant touché des fichiers dans `samples/book-app-project/`
    - Vérifier s'il existe des issues ou pull requests ouvertes
-5. **Combinez les serveurs** : Dans une seule invite, demandez à Copilot de :
+5. **Combine les serveurs** : Dans une seule invite, demande à Copilot de :
    - Lire le fichier de test à `samples/book-app-project/tests/test_books.py`
    - Comparer les fonctions testées avec toutes les fonctions de `books.py`
    - Résumer quelle couverture de tests manque
 
-**Critères de réussite** : Vous pouvez combiner sans effort les données de filesystem et GitHub MCP en une seule session Copilot, et vous pouvez expliquer ce que chaque serveur MCP a apporté à la réponse.
+**Critères de réussite** : Tu peux combiner sans effort les données de filesystem et GitHub MCP en une seule session Copilot, et tu peux expliquer ce que chaque serveur MCP a apporté à la réponse.
 
 <details>
-<summary>💡 Indices (cliquez pour développer)</summary>
+<summary>💡 Indices (clique pour développer)</summary>
 
 **Étape 1 : Vérifier MCP**
 ```bash
 copilot
 > /mcp show
 # Devrait montrer "github" comme activé
-# Sinon, exécutez : /login
+# Sinon, exécute : /login
 ```
 
 **Étape 2 : Créer le fichier de configuration**
 
-Utilisez le JSON de la section [Configuration complète](#complete-configuration-file) ci-dessus et enregistrez-le sous `~/.copilot/mcp-config.json`.
+Utilise le JSON de la section [Configuration complète](#complete-configuration-file) ci-dessus et enregistre-le sous `~/.copilot/mcp-config.json`.
 
 **Étape 3 : Problème de qualité de données à rechercher**
 
@@ -934,77 +934,77 @@ Un auteur vide et une année de 0. C'est le problème de qualité de données !
 
 Les tests dans `test_books.py` couvrent : `add_book`, `mark_as_read`, `remove_book`, `get_unread_books`, et `find_book_by_title`. Des fonctions comme `load_books`, `save_books`, et `list_books` n'ont pas de tests directs. Les fonctions CLI dans `book_app.py` et les helpers dans `utils.py` n'ont aucun test du tout.
 
-**Si MCP ne fonctionne pas :** Redémarrez Copilot après avoir modifié le fichier de configuration.
+**Si MCP ne fonctionne pas :** Redémarre Copilot après avoir modifié le fichier de configuration.
 
 </details>
 
 ### Défi bonus : Construire un serveur MCP personnalisé
 
-Prêt à aller plus loin ? Suivez le [guide du serveur MCP personnalisé](mcp-custom-server.md) pour construire votre propre serveur MCP en Python qui se connecte à n'importe quelle API.
+Prêt à aller plus loin ? Suis le [guide du serveur MCP personnalisé](mcp-custom-server.md) pour construire ton propre serveur MCP en Python qui se connecte à n'importe quelle API.
 
 ---
 
 <details>
-<summary>🔧 <strong>Erreurs courantes et dépannage</strong> (cliquez pour développer)</summary>
+<summary>🔧 <strong>Erreurs courantes et dépannage</strong> (clique pour développer)</summary>
 
 ### Erreurs courantes
 
 | Erreur | Ce qui se passe | Correction |
 |---------|--------------|-----|
-| Ne pas savoir que GitHub MCP est intégré | Essayer de l'installer/configurer manuellement | GitHub MCP est inclus par défaut. Essayez simplement : « Liste les commits récents de ce dépôt » |
+| Ne pas savoir que GitHub MCP est intégré | Essayer de l'installer/configurer manuellement | GitHub MCP est inclus par défaut. Essaie simplement : « Liste les commits récents de ce dépôt » |
 | Chercher la configuration au mauvais endroit | Impossible de trouver ou modifier les paramètres MCP | La configuration au niveau utilisateur est dans `~/.copilot/mcp-config.json`, celle au niveau projet est `.mcp.json` à la racine du projet |
-| JSON invalide dans le fichier de configuration | Les serveurs MCP ne se chargent pas | Utilisez `/mcp show` pour vérifier la configuration ; validez la syntaxe JSON |
-| Oublier d'authentifier les serveurs MCP | Erreurs « Authentication failed » | Certains MCP nécessitent une authentification séparée. Vérifiez les exigences de chaque serveur |
+| JSON invalide dans le fichier de configuration | Les serveurs MCP ne se chargent pas | Utilise `/mcp show` pour vérifier la configuration ; valide la syntaxe JSON |
+| Oublier d'authentifier les serveurs MCP | Erreurs « Authentication failed » | Certains MCP nécessitent une authentification séparée. Vérifie les exigences de chaque serveur |
 
 ### Dépannage
 
-**« MCP server not found »** - Vérifiez que :
+**« MCP server not found »** - Vérifie que :
 1. Le paquet npm existe : `npm view @modelcontextprotocol/server-github`
-2. Votre configuration est un JSON valide
-3. Le nom du serveur correspond à votre configuration
+2. Ta configuration est un JSON valide
+3. Le nom du serveur correspond à ta configuration
 
-Utilisez `/mcp show` pour voir la configuration actuelle.
+Utilise `/mcp show` pour voir la configuration actuelle.
 
-**« GitHub authentication failed »** - Le GitHub MCP intégré utilise vos identifiants `/login`. Essayez :
+**« GitHub authentication failed »** - Le GitHub MCP intégré utilise tes identifiants `/login`. Essaie :
 
 ```bash
 copilot
 > /login
 ```
 
-Cela vous réauthentifiera auprès de GitHub. Si les problèmes persistent, vérifiez que votre compte GitHub dispose des permissions nécessaires pour le dépôt auquel vous accédez.
+Cela te réauthentifiera auprès de GitHub. Si les problèmes persistent, vérifie que ton compte GitHub dispose des permissions nécessaires pour le dépôt auquel tu accèdes.
 
-**« MCP server failed to start »** - Vérifiez les logs du serveur :
+**« MCP server failed to start »** - Vérifie les logs du serveur :
 ```bash
-# Exécutez la commande du serveur manuellement pour voir les erreurs
+# Exécute la commande du serveur manuellement pour voir les erreurs
 npx -y @modelcontextprotocol/server-github
 ```
 
-**Outils MCP non disponibles** - Assurez-vous que le serveur est activé :
+**Outils MCP non disponibles** - Assure-toi que le serveur est activé :
 ```bash
 copilot
 
 > /mcp show
-# Vérifiez si le serveur est listé et activé
+# Vérifie si le serveur est listé et activé
 ```
 
-Si un serveur est désactivé, consultez les [commandes `/mcp` supplémentaires](#-additional-mcp-commands) ci-dessous pour savoir comment le réactiver.
+Si un serveur est désactivé, consulte les [commandes `/mcp` supplémentaires](#-additional-mcp-commands) ci-dessous pour savoir comment le réactiver.
 
-> 💡 **Fiabilité après un redémarrage** *(depuis Copilot CLI v1.0.83)* : si un serveur MCP redémarre en cours de session, ses outils restent appelables — vous n'avez plus besoin de relancer Copilot pour qu'ils redeviennent disponibles.
+> 💡 **Fiabilité après un redémarrage** *(depuis Copilot CLI v1.0.83)* : si un serveur MCP redémarre en cours de session, ses outils restent appelables — tu n'as plus besoin de relancer Copilot pour qu'ils redeviennent disponibles.
 
 </details>
 
 ---
 
 <details>
-<summary>📚 <strong>Commandes MCP supplémentaires</strong> (cliquez pour développer)</summary>
+<summary>📚 <strong>Commandes MCP supplémentaires</strong> (clique pour développer)</summary>
 <a id="-additional-mcp-commands"></a>
 
-Vous pouvez gérer les serveurs MCP de deux façons : en utilisant les **commandes slash à l'intérieur d'une session de chat**, ou en utilisant la **commande `copilot mcp` directement dans votre terminal** (aucune session de chat nécessaire).
+Tu peux gérer les serveurs MCP de deux façons : en utilisant les **commandes slash à l'intérieur d'une session de chat**, ou en utilisant la **commande `copilot mcp` directement dans ton terminal** (aucune session de chat nécessaire).
 
 ### Option 1 : Commandes slash (à l'intérieur d'une session de chat)
 
-Celles-ci fonctionnent lorsque vous êtes déjà dans `copilot` :
+Celles-ci fonctionnent lorsque tu es déjà dans `copilot` :
 
 | Commande | Ce qu'elle fait |
 |---------|--------------|
@@ -1019,9 +1019,9 @@ Celles-ci fonctionnent lorsque vous êtes déjà dans `copilot` :
 | `/mcp delete <server-name>` | Supprimer un serveur définitivement |
 | `/mcp auth <server-name>` | Se réauthentifier auprès d'un serveur MCP utilisant OAuth (par ex., après un changement de compte) |
 
-### Option 2 : Commande `copilot mcp` (depuis votre terminal)
+### Option 2 : Commande `copilot mcp` (depuis ton terminal)
 
-Vous pouvez aussi gérer les serveurs MCP directement depuis votre terminal sans démarrer d'abord une session de chat :
+Tu peux aussi gérer les serveurs MCP directement depuis ton terminal sans démarrer d'abord une session de chat :
 
 ```bash
 # Lister tous les serveurs MCP configurés
@@ -1034,9 +1034,9 @@ copilot mcp enable filesystem
 copilot mcp disable context7
 ```
 
-> 💡 **Quand utiliser quoi ?** Utilisez les commandes slash `/mcp` lorsque vous êtes déjà dans une session de chat. Utilisez `copilot mcp` depuis le terminal lorsque vous voulez vérifier ou modifier rapidement vos paramètres de serveur avant de démarrer une session.
+> 💡 **Quand utiliser quoi ?** Utilise les commandes slash `/mcp` lorsque tu es déjà dans une session de chat. Utilise `copilot mcp` depuis le terminal lorsque tu veux vérifier ou modifier rapidement tes paramètres de serveur avant de démarrer une session.
 
-Pour la plupart de ce cours, `/mcp show` est tout ce dont vous avez besoin. Les autres commandes deviennent utiles à mesure que vous gérez davantage de serveurs au fil du temps.
+Pour la plupart de ce cours, `/mcp show` est tout ce dont tu as besoin. Les autres commandes deviennent utiles à mesure que tu gères davantage de serveurs au fil du temps.
 
 ### Authentification OAuth des serveurs MCP distants
 
@@ -1057,21 +1057,21 @@ Certains serveurs MCP distants (protégés par OAuth) nécessitent une authentif
 2. **GitHub MCP est intégré** - aucune configuration nécessaire, juste `/login`
 3. **Filesystem et Context7** se configurent via `~/.copilot/mcp-config.json`
 4. **Les workflows multi-serveurs** combinent des données de plusieurs sources en une seule session
-5. **Gérez les serveurs de deux façons** : utilisez les commandes slash `/mcp` dans le chat, ou `copilot mcp` depuis le terminal
+5. **Gère les serveurs de deux façons** : utilise les commandes slash `/mcp` dans le chat, ou `copilot mcp` depuis le terminal
 6. **`/mcp` sans argument ouvre le tableau de bord unifié** (serveurs MCP, compétences, agents) ; `/mcp config` reste l'assistant dédié pour ajouter/éditer/authentifier un serveur *(depuis v1.0.81)*
-7. **Les serveurs personnalisés** vous permettent de connecter n'importe quelle API (facultatif, couvert dans le guide en annexe)
+7. **Les serveurs personnalisés** te permettent de connecter n'importe quelle API (facultatif, couvert dans le guide en annexe)
 
-> 📋 **Référence rapide** : Consultez la [référence des commandes GitHub Copilot CLI](https://docs.github.com/en/copilot/reference/cli-command-reference) pour une liste complète des commandes et raccourcis.
+> 📋 **Référence rapide** : Consulte la [référence des commandes GitHub Copilot CLI](https://docs.github.com/en/copilot/reference/cli-command-reference) pour une liste complète des commandes et raccourcis.
 
 ---
 
 ## ➡️ Et ensuite
 
-Vous disposez maintenant de tous les éléments de base : les modes, le contexte, les workflows, les agents, les compétences et MCP. Il est temps de tout assembler.
+Tu disposes maintenant de tous les éléments de base : les modes, le contexte, les workflows, les agents, les compétences et MCP. Il est temps de tout assembler.
 
-> 🎁 **Envie d'aller plus loin ?** Le [Chapitre 17 (bonus) : mcp2cli et le coût en tokens](../17-mcp2cli/README.md) revient sur ce que MCP coûte en tokens à chaque session, et vous montre comment interroger le serveur Context7 directement depuis le terminal, sans passer par Copilot.
+> 🎁 **Envie d'aller plus loin ?** Le [Chapitre 17 (bonus) : mcp2cli et le coût en tokens](../17-mcp2cli/README.md) revient sur ce que MCP coûte en tokens à chaque session, et te montre comment interroger le serveur Context7 directement depuis le terminal, sans passer par Copilot.
 
-Dans le **[Chapitre 08 : Tout assembler](../08-putting-it-together/README.md)**, vous apprendrez :
+Dans le **[Chapitre 08 : Tout assembler](../08-putting-it-together/README.md)**, tu apprendras :
 
 - Combiner agents, compétences et MCP dans des workflows unifiés
 - Développement complet de fonctionnalités, de l'idée à la PR fusionnée
