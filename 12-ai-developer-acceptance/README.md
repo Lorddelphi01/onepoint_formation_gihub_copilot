@@ -2,7 +2,7 @@
 ---
 id: CopilotCLI-12
 title: !translate Comprendre l'acceptation de l'IA par les développeurs
-description: !translate Découvrez ce que les études de GitHub, McKinsey, DORA, Stack Overflow et LinearB révèlent sur les impacts positifs de l'IA sur les développeurs, et confrontez ces résultats à votre propre expérience de Copilot CLI.
+description: !translate Découvre ce que les études de GitHub, McKinsey, DORA, Stack Overflow et LinearB révèlent sur les impacts positifs de l'IA sur les développeurs, et confronte ces résultats à ta propre expérience de Copilot CLI.
 audience: Developers / Students / Terminal users
 slug: developer-acceptance-of-ai
 weight: 13
@@ -11,18 +11,18 @@ weight: 13
 
 ![Chapitre 12 : Acceptation de l'IA](assets/chapter-header.png)
 
-> **Et si vos impressions sur l'IA pouvaient être vérifiées par des chiffres ?**
+> **Et si tes impressions sur l'IA pouvaient être vérifiées par des chiffres ?**
 
-Depuis le Chapitre 01, vous avez installé, testé et pratiqué Copilot CLI sur des tâches concrètes : revue de code, débogage, génération de tests, agents personnalisés, skills, serveurs MCP, workflows n8n. Ce chapitre bonus change de nature : il ne vous apprend pas une nouvelle commande, mais vous invite à prendre du recul. Que dit la recherche indépendante — et pas seulement le discours commercial des éditeurs d'outils — de l'impact réel de l'IA sur le travail des développeurs et développeuses ? Et où se situe votre propre expérience par rapport à ces données ?
+Depuis le Chapitre 01, tu as installé, testé et pratiqué Copilot CLI sur des tâches concrètes : revue de code, débogage, génération de tests, agents personnalisés, skills, serveurs MCP, workflows n8n. Ce chapitre bonus change de nature : il ne t'apprend pas une nouvelle commande, mais t'invite à prendre du recul. Que dit la recherche indépendante — et pas seulement le discours commercial des éditeurs d'outils — de l'impact réel de l'IA sur le travail des développeurs et développeuses ? Et où se situe ta propre expérience par rapport à ces données ?
 
 ## 🎯 Objectifs d'apprentissage
 
-À la fin de ce chapitre, vous serez capable de :
+À la fin de ce chapitre, tu seras capable de :
 
 - Citer cinq études de référence sur l'IA et la productivité des développeurs (GitHub, McKinsey, DORA, Stack Overflow, LinearB)
 - Distinguer un chiffre de productivité mesurée d'un chiffre de productivité perçue ou autodéclarée
 - Identifier les facteurs qui font varier les bénéfices de l'IA d'une équipe à l'autre
-- Mener votre propre auto-évaluation et la confronter aux données présentées
+- Mener ta propre auto-évaluation et la confronter aux données présentées
 
 > ⏱️ **Durée estimée : ~30 minutes** (20 min de lecture + 10 min d'auto-évaluation)
 
@@ -46,7 +46,7 @@ Depuis le Chapitre 01, vous avez installé, testé et pratiqué Copilot CLI sur 
 | Ce que les études ont fini par montrer | Les développeurs qui cherchaient en ligne résolvaient certains problèmes plus vite qu'en épluchant des manuels | Les développeurs qui utilisent l'IA complètent certaines tâches nettement plus vite, avec une charge mentale réduite |
 | Ce qui reste vrai malgré l'adoption | Il faut toujours vérifier la réponse trouvée et son contexte avant de l'utiliser | Il faut toujours relire et valider ce que l'IA produit avant de l'utiliser |
 
-Chaque vague d'outillage a connu le même cycle : scepticisme légitime, puis données à l'appui, puis adoption prudente plutôt qu'aveugle. Ce chapitre vous donne les données ; à vous d'en tirer une adoption réfléchie plutôt qu'un simple effet de mode.
+Chaque vague d'outillage a connu le même cycle : scepticisme légitime, puis données à l'appui, puis adoption prudente plutôt qu'aveugle. Ce chapitre te donne les données ; à toi d'en tirer une adoption réfléchie plutôt qu'un simple effet de mode.
 
 ---
 
@@ -116,14 +116,14 @@ L'écart se creuse encore en amont : une PR générée par IA attend en moyenne 
 
 ## Ce qu'il faut nuancer
 
-Ces cinq études racontent la même histoire à des degrés différents : des bénéfices réels et mesurés, mais ni uniformes ni automatiques. La thèse « amplificateur » de DORA explique pourquoi deux équipes utilisant le même outil peuvent obtenir des résultats opposés. Le paradoxe confiance/adoption de Stack Overflow rappelle qu'utiliser un outil plus souvent ne veut pas dire lui faire une confiance aveugle. Et la limite identifiée par McKinsey sur les tâches complexes confirme ce que vous avez sans doute déjà observé en pratiquant Copilot CLI : plus une tâche est bien cadrée, plus l'IA y excelle.
+Ces cinq études racontent la même histoire à des degrés différents : des bénéfices réels et mesurés, mais ni uniformes ni automatiques. La thèse « amplificateur » de DORA explique pourquoi deux équipes utilisant le même outil peuvent obtenir des résultats opposés. Le paradoxe confiance/adoption de Stack Overflow rappelle qu'utiliser un outil plus souvent ne veut pas dire lui faire une confiance aveugle. Et la limite identifiée par McKinsey sur les tâches complexes confirme ce que tu as sans doute déjà observé en pratiquant Copilot CLI : plus une tâche est bien cadrée, plus l'IA y excelle.
 
-Les chiffres LinearB éclairent une tension que DORA nomme la **taxe de vérification** (*« le temps gagné à l'écriture est souvent réinvesti dans l'audit »*) : les gains de vitesse mesurés par GitHub Research et McKinsey portent sur l'écriture d'une tâche isolée, mais ce temps gagné en amont peut être en partie reperdu plus loin dans le cycle, au moment de relire et de valider le résultat. C'est exactement ce que montre l'écart entre 32,7 % et 84,5 % : produire du code plus vite ne suffit pas à le faire accepter plus vite, et c'est précisément le rôle de la relecture humaine que vous pratiquez depuis le Chapitre 04.
+Les chiffres LinearB éclairent une tension que DORA nomme la **taxe de vérification** (*« le temps gagné à l'écriture est souvent réinvesti dans l'audit »*) : les gains de vitesse mesurés par GitHub Research et McKinsey portent sur l'écriture d'une tâche isolée, mais ce temps gagné en amont peut être en partie reperdu plus loin dans le cycle, au moment de relire et de valider le résultat. C'est exactement ce que montre l'écart entre 32,7 % et 84,5 % : produire du code plus vite ne suffit pas à le faire accepter plus vite, et c'est précisément le rôle de la relecture humaine que tu pratiques depuis le Chapitre 04.
 
 <details>
-<summary>🎬 Voyez-le en action !</summary>
+<summary>🎬 Vois-le en action !</summary>
 
-Ce chapitre ne comporte pas de commande à exécuter ni de démo à filmer. Voici à la place un exemple (fictif, à titre d'illustration) de ce à quoi peut ressembler une auto-évaluation une fois remplie, pour vous donner un modèle avant de faire la vôtre à la section Pratique :
+Ce chapitre ne comporte pas de commande à exécuter ni de démo à filmer. Voici à la place un exemple (fictif, à titre d'illustration) de ce à quoi peut ressembler une auto-évaluation une fois remplie, pour te donner un modèle avant de faire la tienne à la section Pratique :
 
 | Question | Exemple de réponse |
 |---|---|
@@ -132,18 +132,18 @@ Ce chapitre ne comporte pas de commande à exécuter ni de démo à filmer. Voic
 | Moment où il a fallu corriger l'IA | Un test généré ignorait un cas limite (liste vide) |
 | Chiffre d'étude qui correspond le mieux à mon ressenti | « 87 % économisent de l'effort mental sur les tâches répétitives » (GitHub Research) |
 
-*Le résultat de votre propre auto-évaluation variera selon vos tâches, votre projet et votre contexte : ne soyez pas surpris si vos réponses diffèrent largement de cet exemple.*
+*Le résultat de ta propre auto-évaluation variera selon tes tâches, ton projet et ton contexte : ne sois pas surpris si tes réponses diffèrent largement de cet exemple.*
 
 </details>
 
 <details>
 <summary>Approfondir : comment lire une étude d'adoption technologique sans se faire biaiser</summary>
 
-- **Autodéclaration vs mesure directe** : un chiffre du type « 88 % se sentent plus productifs » décrit un ressenti, pas une mesure chronométrée. Les deux se complètent mais ne se remplacent pas — croisez enquête et expérience contrôlée quand c'est possible, comme le fait l'étude GitHub Research.
+- **Autodéclaration vs mesure directe** : un chiffre du type « 88 % se sentent plus productifs » décrit un ressenti, pas une mesure chronométrée. Les deux se complètent mais ne se remplacent pas — croise enquête et expérience contrôlée quand c'est possible, comme le fait l'étude GitHub Research.
 - **Taille et composition de l'échantillon** : une expérience sur 95 développeurs volontaires n'est pas représentative de toute la profession ; une enquête à 2 000+ réponses est plus solide, mais reste soumise au profil de qui répond (les utilisateurs déjà convaincus répondent souvent plus volontiers).
 - **Qui finance et publie l'étude** : une étude publiée par l'éditeur d'un outil IA a un intérêt à en montrer les bénéfices — cela ne rend pas ses chiffres faux, mais justifie de les croiser avec une source indépendante, comme DORA ou Stack Overflow, qui ne vendent pas d'outil IA.
 - **Le biais de sélection des cas publiés** : les études de cas à succès (comme Adidas dans le rapport DORA) sont choisies pour illustrer un potentiel, pas une moyenne garantie — le même rapport documente aussi des équipes qui n'en tirent presque aucun bénéfice.
-- **« Acceptation » n'a pas un seul sens** : ce mot recouvre au moins trois métriques différentes, souvent confondues dans les articles qui en parlent — l'acceptation d'une suggestion inline pendant que vous tapez (environ 30 % selon plusieurs études tierces ; GitHub Copilot ne publie pas de chiffre officiel unique pour ce cas précis), l'acceptation d'une pull request générée par un agent IA au sens où elle est fusionnée (32,7 % selon LinearB), et l'acceptation au sens de la confiance déclarée dans un sondage (33 % selon Stack Overflow). Avant de citer un pourcentage d'« acceptation de l'IA », vérifiez toujours laquelle de ces trois choses est réellement mesurée.
+- **« Acceptation » n'a pas un seul sens** : ce mot recouvre au moins trois métriques différentes, souvent confondues dans les articles qui en parlent — l'acceptation d'une suggestion inline pendant que tu tapes (environ 30 % selon plusieurs études tierces ; GitHub Copilot ne publie pas de chiffre officiel unique pour ce cas précis), l'acceptation d'une pull request générée par un agent IA au sens où elle est fusionnée (32,7 % selon LinearB), et l'acceptation au sens de la confiance déclarée dans un sondage (33 % selon Stack Overflow). Avant de citer un pourcentage d'« acceptation de l'IA », vérifie toujours laquelle de ces trois choses est réellement mesurée.
 
 </details>
 
@@ -151,17 +151,17 @@ Ce chapitre ne comporte pas de commande à exécuter ni de démo à filmer. Voic
 
 ## Pratique
 
-Reprenez vos notes (ou votre mémoire) des chapitres précédents : les tâches où vous avez délégué du travail à Copilot CLI, le temps que cela vous a semblé faire gagner, et les moments où il a fallu corriger ou ignorer sa proposition.
+Reprends tes notes (ou ta mémoire) des chapitres précédents : les tâches où tu as délégué du travail à Copilot CLI, le temps que cela t'a semblé faire gagner, et les moments où il a fallu corriger ou ignorer sa proposition.
 
-### ▶️ À vous de jouer
+### ▶️ À toi de jouer
 
-1. Listez trois tâches où Copilot CLI vous a fait gagner du temps depuis le début de ce cours
-2. Pour chacune, estimez le temps gagné en pourcentage, comme le font les études de ce chapitre
-3. Identifiez laquelle des cinq études présentées correspond le mieux à votre propre expérience, et expliquez pourquoi
+1. Liste trois tâches où Copilot CLI t'a fait gagner du temps depuis le début de ce cours
+2. Pour chacune, estime le temps gagné en pourcentage, comme le font les études de ce chapitre
+3. Identifie laquelle des cinq études présentées correspond le mieux à ta propre expérience, et explique pourquoi
 
-### 🧪 Activité avant/après : mesurez votre propre expérience
+### 🧪 Activité avant/après : mesure ta propre expérience
 
-Choisissez une tâche de code courte et bien cadrée (par exemple : écrire une fonction utilitaire avec son test, ou corriger un bug simple dans `samples/book-app-project/`). Réalisez-la deux fois sur deux variantes comparables de cette tâche — une fois sans l'aide de Copilot CLI, une fois avec — puis consignez ces quatre métriques comparables, à la manière des études de ce chapitre :
+Choisis une tâche de code courte et bien cadrée (par exemple : écrire une fonction utilitaire avec son test, ou corriger un bug simple dans `samples/book-app-project/`). Réalise-la deux fois sur deux variantes comparables de cette tâche — une fois sans l'aide de Copilot CLI, une fois avec — puis consigne ces quatre métriques comparables, à la manière des études de ce chapitre :
 
 | Métrique | Sans IA | Avec Copilot CLI |
 |---|---|---|
@@ -170,21 +170,21 @@ Choisissez une tâche de code courte et bien cadrée (par exemple : écrire une 
 | Nombre d'erreurs repérées à la relecture finale | | |
 | Niveau de confiance dans le résultat (échelle de 1 = faible à 5 = élevé) | | |
 
-Comparez ensuite vos deux colonnes : sur quelle métrique l'écart est-il le plus marqué ? Rapprochez ce constat d'une étude précise du chapitre — par exemple le temps gagné (GitHub Research), ou la confiance et la charge mentale (DORA, Stack Overflow) — plutôt que d'une impression générale.
+Compare ensuite tes deux colonnes : sur quelle métrique l'écart est-il le plus marqué ? Rapproche ce constat d'une étude précise du chapitre — par exemple le temps gagné (GitHub Research), ou la confiance et la charge mentale (DORA, Stack Overflow) — plutôt que d'une impression générale.
 
 ---
 
 ## 📝 Devoir
 
-**Défi principal** : rédigez un bilan personnel de 3 à 5 phrases comparant votre expérience de Copilot CLI aux résultats présentés dans ce chapitre — sur quels points vos observations rejoignent-elles les études, sur quels points s'en écartent-elles ?
+**Défi principal** : rédige un bilan personnel de 3 à 5 phrases comparant ton expérience de Copilot CLI aux résultats présentés dans ce chapitre — sur quels points tes observations rejoignent-elles les études, sur quels points s'en écartent-elles ?
 
-**Défi bonus** : recherchez une étude récente (2025 ou 2026) sur l'IA et les développeurs que ce chapitre ne cite pas, et résumez en quelques phrases sa méthode et son résultat principal.
+**Défi bonus** : recherche une étude récente (2025 ou 2026) sur l'IA et les développeurs que ce chapitre ne cite pas, et résume en quelques phrases sa méthode et son résultat principal.
 
 <details>
 <summary>💡 Indices</summary>
 
-- Pour le défi principal, appuyez-vous sur un exemple concret plutôt qu'une impression générale (« le Chapitre 04, sur la génération de tests, m'a fait gagner... »)
-- Pour le défi bonus, privilégiez une source qui indique clairement sa méthode (taille d'échantillon, enquête ou expérience contrôlée) plutôt qu'un article qui se contente de citer des chiffres sans les sourcer
+- Pour le défi principal, appuie-toi sur un exemple concret plutôt qu'une impression générale (« le Chapitre 04, sur la génération de tests, m'a fait gagner... »)
+- Pour le défi bonus, privilégie une source qui indique clairement sa méthode (taille d'échantillon, enquête ou expérience contrôlée) plutôt qu'un article qui se contente de citer des chiffres sans les sourcer
 
 </details>
 
@@ -193,14 +193,14 @@ Comparez ensuite vos deux colonnes : sur quelle métrique l'écart est-il le plu
 ## 🔧 Erreurs courantes et dépannage
 
 <details>
-<summary>Cliquez pour voir les pièges d'interprétation les plus fréquents</summary>
+<summary>Clique pour voir les pièges d'interprétation les plus fréquents</summary>
 
 | Piège | Ce qui se passe | Comment l'éviter |
 |---|---|---|
-| Confondre ressenti et mesure | Un chiffre d'enquête (« 88 % se sentent plus productifs ») est traité comme une mesure chronométrée | Vérifiez si l'étude décrit une enquête déclarative ou une expérience contrôlée — les deux ont une valeur différente |
-| Généraliser un chiffre moyen à son propre cas | « L'IA fait gagner 55 % de temps » est appliqué tel quel à une tâche très différente de celle testée | Repérez la tâche exacte utilisée dans l'étude (ici, un serveur HTTP en JavaScript) avant de comparer à votre contexte |
-| Ignorer qui publie l'étude | Un chiffre très favorable venant d'un éditeur d'outil IA est pris pour une vérité absolue | Croisez toujours avec au moins une source indépendante (DORA, Stack Overflow) avant de tirer une conclusion |
-| Oublier l'effet « amplificateur » | On attend les mêmes gains d'IA quelle que soit la maturité de son équipe ou de son organisation | Rappelez-vous que le rapport DORA montre des gains très inégaux selon les pratiques d'ingénierie déjà en place (architecture, formation, etc.) |
+| Confondre ressenti et mesure | Un chiffre d'enquête (« 88 % se sentent plus productifs ») est traité comme une mesure chronométrée | Vérifie si l'étude décrit une enquête déclarative ou une expérience contrôlée — les deux ont une valeur différente |
+| Généraliser un chiffre moyen à son propre cas | « L'IA fait gagner 55 % de temps » est appliqué tel quel à une tâche très différente de celle testée | Repère la tâche exacte utilisée dans l'étude (ici, un serveur HTTP en JavaScript) avant de comparer à ton contexte |
+| Ignorer qui publie l'étude | Un chiffre très favorable venant d'un éditeur d'outil IA est pris pour une vérité absolue | Croise toujours avec au moins une source indépendante (DORA, Stack Overflow) avant de tirer une conclusion |
+| Oublier l'effet « amplificateur » | On attend les mêmes gains d'IA quelle que soit la maturité de son équipe ou de son organisation | Rappelle-toi que le rapport DORA montre des gains très inégaux selon les pratiques d'ingénierie déjà en place (architecture, formation, etc.) |
 | Confondre taux de fusion et jugement de qualité | Un taux d'acceptation de PR (« 32,7 % fusionnées ») est interprété comme une note de qualité du code produit | Le taux LinearB mesure une PR fusionnée ou non sous 30 jours — une PR peut attendre longtemps pour des raisons de priorité ou de charge de l'équipe, pas seulement à cause d'un défaut du code |
 
 </details>
@@ -209,11 +209,11 @@ Comparez ensuite vos deux colonnes : sur quelle métrique l'écart est-il le plu
 
 ## Résumé
 
-Les études indépendantes convergent sur un point : l'IA de codage produit des bénéfices mesurables sur la vitesse, la charge mentale et la satisfaction des développeurs, mais ces bénéfices ne sont ni uniformes ni automatiques — ils dépendent du type de tâche, de l'organisation et de l'esprit critique avec lequel on interprète les chiffres. Votre propre expérience de Copilot CLI depuis le début de ce cours est une donnée tout aussi valable que celles présentées ici.
+Les études indépendantes convergent sur un point : l'IA de codage produit des bénéfices mesurables sur la vitesse, la charge mentale et la satisfaction des développeurs, mais ces bénéfices ne sont ni uniformes ni automatiques — ils dépendent du type de tâche, de l'organisation et de l'esprit critique avec lequel on interprète les chiffres. Ta propre expérience de Copilot CLI depuis le début de ce cours est une donnée tout aussi valable que celles présentées ici.
 
 ### 🔑 Points clés à retenir
 
-1. Les expériences contrôlées (GitHub Research) et les enquêtes déclaratives (Stack Overflow) mesurent des choses différentes — ne les confondez pas
+1. Les expériences contrôlées (GitHub Research) et les enquêtes déclaratives (Stack Overflow) mesurent des choses différentes — ne les confonds pas
 2. Les gains de productivité varient fortement selon le type de tâche : très élevés sur les tâches répétitives et bien cadrées (McKinsey), beaucoup plus faibles sur les tâches complexes
 3. L'IA agit comme un amplificateur des pratiques existantes, pas comme une solution universelle — c'est la thèse centrale du rapport DORA
 4. L'adoption de l'IA progresse plus vite que la confiance qu'on lui accorde (Stack Overflow) — un scepticisme mesuré reste une posture saine, pas un obstacle à l'usage
@@ -228,12 +228,12 @@ Les études indépendantes convergent sur un point : l'IA de codage produit des 
 - [DORA : State of AI-Assisted Software Development 2025](https://dora.dev/dora-report-2025/)
 - [Stack Overflow Developer Survey 2025 — section IA](https://survey.stackoverflow.co/2025/ai)
 - [LinearB : 8 million pull requests reveal where engineering productivity breaks down](https://linearb.io/blog/8-million-prs-engineering-productivity)
-- [Chapitre 04 : Flux de travail de développement](../04-development-workflows/README.md) — pour revoir les tâches déléguées à Copilot CLI que vous allez confronter à ces études
+- [Chapitre 04 : Flux de travail de développement](../04-development-workflows/README.md) — pour revoir les tâches déléguées à Copilot CLI que tu vas confronter à ces études
 
 ---
 
 ## ➡️ Et ensuite ?
 
-Vous avez pris du recul sur ce que la recherche indépendante dit de l'IA en développement, et mesuré votre propre expérience avec l'activité avant/après. Dans le **[Chapitre 13 : Explorer l'historique de vos sessions avec /chronicle](../13-chronicle-session-insights/README.md)**, vous allez passer de cette auto-évaluation manuelle à une mesure objectivée, construite directement à partir de votre historique réel de sessions Copilot CLI.
+Tu as pris du recul sur ce que la recherche indépendante dit de l'IA en développement, et mesuré ta propre expérience avec l'activité avant/après. Dans le **[Chapitre 13 : Explorer l'historique de tes sessions avec /chronicle](../13-chronicle-session-insights/README.md)**, tu vas passer de cette auto-évaluation manuelle à une mesure objectivée, construite directement à partir de ton historique réel de sessions Copilot CLI.
 
-**[← Chapitre précédent : Sécuriser son code avec Copilot CLI](../11-security-with-copilot/README.md)** | **[Chapitre suivant : Explorer l'historique de vos sessions avec /chronicle →](../13-chronicle-session-insights/README.md)**
+**[← Chapitre précédent : Sécuriser ton code avec Copilot CLI](../11-security-with-copilot/README.md)** | **[Chapitre suivant : Explorer l'historique de tes sessions avec /chronicle →](../13-chronicle-session-insights/README.md)**
