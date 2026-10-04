@@ -82,6 +82,8 @@ docker run -it --rm \
   docker.n8n.io/n8nio/n8n
 ```
 
+> 🤖 **Raccourci :** `bash 18-n8n-workflows/scripts/start-n8n.sh` (ou `.\18-n8n-workflows\scripts\start-n8n.ps1`) crée le volume, lance n8n et ajoute le bloc `n8n` à votre `~/.copilot/mcp-config.json` sans écraser le reste. Options : `-d` / `-Detach` pour l'arrière-plan, `--no-mcp` / `-NoMcp` pour ne pas toucher à la config.
+
 Ouvrez [http://localhost:5678](http://localhost:5678) dans votre navigateur : n8n vous demande de créer un compte propriétaire local (email + mot de passe, stockés uniquement dans votre volume Docker). C'est tout, vous avez une instance n8n qui tourne.
 
 > 💡 **Le conteneur s'arrête quand vous fermez le terminal.** C'est voulu ici (`--rm` et `-it`) pour un usage de TP. Pour une instance qui tourne en arrière-plan pendant que vous continuez à travailler, relancez la même commande en remplaçant `-it --rm` par `-d` (mode détaché).

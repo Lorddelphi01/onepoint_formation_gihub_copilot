@@ -455,6 +455,8 @@ Maintenant que vos serveurs MCP sont configurés, voyons ce qu'ils peuvent faire
 
 ---
 
+> 🤖 **Raccourci :** plutôt que de copier ce JSON à la main, lancez `bash 07-mcp-servers/scripts/setup-mcp-config.sh` (Linux/macOS/WSL, nécessite `jq`) ou `.\07-mcp-servers\scripts\setup-mcp-config.ps1` (Windows). Le script **fusionne** filesystem et Context7 dans `~/.copilot/mcp-config.json` sans toucher à vos autres serveurs, et crée une sauvegarde `.bak`. Relancez-le sans risque : il est idempotent.
+
 ## Exemples d'utilisation des serveurs
 
 **Choisissez un serveur à explorer, ou parcourez-les dans l'ordre.**

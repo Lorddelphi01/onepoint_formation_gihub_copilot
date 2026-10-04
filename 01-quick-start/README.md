@@ -674,6 +674,8 @@ npm install -g pyright
 
 **Vérification** : `copilot lsp list` doit afficher `python (.py)` ; en session, `/lsp test python`.
 
+> 🤖 **Raccourci Python :** `bash 01-quick-start/scripts/setup-lsp.sh` ou `.\01-quick-start/scripts/setup-lsp.ps1` installe Pyright et fusionne le serveur `python` dans `~/.copilot/lsp-config.json` (sauvegarde `.bak`), puis lance `copilot lsp list`. Java et .NET restent manuels.
+
 #### F.2. Java — Eclipse JDT Language Server (jdtls)
 
 **Disponibilité** : 🍎 macOS (`brew install jdtls`, vérifié) · 🐧 Linux · 🪟 PowerShell — installation non documentée officiellement pour ces deux plateformes, téléchargement manuel requis (voir issue de suivi de ce chapitre).

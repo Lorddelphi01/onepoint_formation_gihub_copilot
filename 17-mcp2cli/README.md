@@ -121,6 +121,8 @@ mcp2cli config init --name context7 --app bridge \
 mcp2cli link create --name context7
 ```
 
+> 🤖 **Raccourci :** `bash 17-mcp2cli/scripts/install-mcp2cli.sh` enchaîne ces trois commandes (avec confirmation avant d'exécuter l'installeur distant ; `--yes` pour l'éviter). Sous Windows, `.\17-mcp2cli\scripts\install-mcp2cli.ps1` délègue à WSL.
+
 Fermez et rouvrez le terminal si la commande `context7` n'est pas encore trouvée (l'alias est un lien symbolique créé à côté du binaire `mcp2cli` — ajoutez ce dossier à votre `PATH` si besoin). Vous pouvez contrôler la version et la configuration effectivement utilisées :
 
 ```bash

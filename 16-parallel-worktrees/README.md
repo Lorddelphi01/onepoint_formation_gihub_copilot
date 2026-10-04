@@ -397,6 +397,9 @@ Aucune des deux autres sessions n'a besoin d'être interrompue ou de perdre son 
 
 Écrivez un script bash qui prend un nom de branche en argument, crée le worktree correspondant, lance Copilot CLI en mode programmatique (`-p`) avec un prompt donné en second argument, puis supprime automatiquement le worktree une fois la commande terminée.
 
+> 🤖 **Solution prête à l'emploi :** [`scripts/wt-parallel.sh`](scripts/wt-parallel.sh) (bash) et [`scripts/wt-parallel.ps1`](scripts/wt-parallel.ps1) (PowerShell) vont plus loin que l'indice ci-dessous : nettoyage garanti même en cas d'erreur, refus d'écraser un worktree existant et option `--keep` / `-Keep` pour conserver le résultat. Essayez d'abord de l'écrire vous-même !
+> `bash 16-parallel-worktrees/scripts/wt-parallel.sh feature/demo "Ajoute une docstring à utils.py"`
+
 <details>
 <summary>💡 Indices</summary>
 
