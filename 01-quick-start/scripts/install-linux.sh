@@ -3,6 +3,7 @@
 # Automatise la section "Installation" et les Étapes 1-2 de "Vérifier que tout
 # fonctionne" du Chapitre 01. L'authentification (/login) reste manuelle :
 # elle nécessite un navigateur ou un code d'appareil, non scriptables.
+# Installe aussi RTK (optionnel, non bloquant) : voir Chapitre 01, section C.3.
 set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
@@ -48,6 +49,28 @@ else
     (cd "$REPO_ROOT/samples/book-app-project" && "$PYTHON_BIN" book_app.py list)
 fi
 
+# --- 4. Installer RTK (optionnel, outil tiers) ---
+# RTK compresse la sortie des commandes avant qu'elle n'atteigne l'agent.
+# Un échec ici n'interrompt pas le script : RTK n'est pas requis pour la suite.
+echo "🪶 Installation de RTK (optionnel)..."
+if command -v rtk &> /dev/null && rtk gain &> /dev/null; then
+    echo "✅ RTK déjà installé."
+else
+    if command -v brew &> /dev/null; then
+        brew install rtk || echo "⚠️  Échec de l'installation de RTK via Homebrew (ignoré)."
+    elif ! (curl -fsSL https://raw.githubusercontent.com/rtk-ai/rtk/master/install.sh | sh); then
+        echo "⚠️  Échec de l'installation de RTK (ignoré). Voir le Chapitre 01, section C.3."
+    fi
+fi
+if command -v rtk &> /dev/null; then
+    rtk --version
+    if ! rtk gain &> /dev/null; then
+        echo "⚠️  'rtk gain' échoue : un autre paquet nommé 'rtk' occupe peut-être le PATH (which rtk)."
+    fi
+else
+    echo "⚠️  'rtk' introuvable dans le PATH (rouvrez votre terminal si l'installation vient d'aboutir)."
+fi
+
 echo "----------------------------------------------------"
 echo "✅ Installation et vérifications terminées !"
 echo "----------------------------------------------------"
@@ -55,3 +78,4 @@ echo "Étapes manuelles restantes (interactives, non automatisables) :"
 echo "1. Lancez 'copilot' puis tapez '/login' pour vous connecter avec votre compte GitHub."
 echo "2. Posez votre première question, par exemple :"
 echo "   > Say hello and tell me what you can help with"
+echo "3. Optionnel : connectez RTK à Copilot CLI avec 'rtk init -g --copilot' (Chapitre 01, section C.3)."

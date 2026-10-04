@@ -4,6 +4,7 @@
     Automatise la section "Installation" et les Étapes 1-2 de "Vérifier que tout
     fonctionne" du Chapitre 01. L'authentification (/login) reste manuelle :
     elle nécessite un navigateur ou un code d'appareil, non scriptables.
+    Installe aussi RTK (optionnel, non bloquant) : voir Chapitre 01, section C.3.
 #>
 
 $ErrorActionPreference = 'Stop'
@@ -69,6 +70,35 @@ else {
     }
 }
 
+# --- 4. Installer RTK (optionnel, outil tiers) ---
+# Un echec ici n'interrompt pas le script : RTK n'est pas requis pour la suite.
+Write-Host "Installation de RTK (optionnel)..."
+$ErrorActionPreference = 'Continue'
+$rtkOk = $false
+if (Get-Command rtk -ErrorAction SilentlyContinue) {
+    rtk gain *> $null
+    $rtkOk = ($LASTEXITCODE -eq 0)
+}
+if ($rtkOk) {
+    Write-Host "OK : RTK est deja installe."
+}
+elseif (Get-Command winget -ErrorAction SilentlyContinue) {
+    winget install --id rtk-ai.rtk -e --accept-source-agreements --accept-package-agreements
+    if ($LASTEXITCODE -ne 0) {
+        Write-Warning "Echec de l'installation de RTK via winget (ignore). Voir le Chapitre 01, section C.3."
+    }
+}
+else {
+    Write-Warning "winget introuvable : RTK non installe (ignore). Voir le Chapitre 01, section C.3."
+}
+if (Get-Command rtk -ErrorAction SilentlyContinue) {
+    rtk --version
+}
+else {
+    Write-Warning "'rtk' introuvable dans le PATH (rouvrez votre terminal si l'installation vient d'aboutir)."
+}
+$ErrorActionPreference = 'Stop'
+
 Write-Host ""
 Write-Host "----------------------------------------------------"
 Write-Host "Installation et verifications terminees !" -ForegroundColor Green
@@ -77,3 +107,4 @@ Write-Host "Etapes manuelles restantes (interactives, non automatisables) :"
 Write-Host "1. Lancez 'copilot' puis tapez '/login' pour vous connecter avec votre compte GitHub."
 Write-Host "2. Posez votre premiere question, par exemple :"
 Write-Host "   > Say hello and tell me what you can help with"
+Write-Host "3. Optionnel : connectez RTK a Copilot CLI avec 'rtk init -g --copilot' (Chapitre 01, section C.3)."

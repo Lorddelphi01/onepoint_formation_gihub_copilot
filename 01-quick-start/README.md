@@ -84,7 +84,7 @@ Suivez ces étapes si vous souhaitez exécuter Copilot CLI sur votre machine loc
     cd onepoint_formation_gihub_copilot
     ```
 
-2. Exécutez le script correspondant à votre système, depuis la racine du dépôt. Il installe Copilot CLI, vérifie sa version, **et** contrôle que la Book App fonctionne (Étape 2 de la section « Vérifier que tout fonctionne ») :
+2. Exécutez le script correspondant à votre système, depuis la racine du dépôt. Il installe Copilot CLI, vérifie sa version, installe en option [RTK](#c3-rtk--réduire-la-sortie-des-commandes-à-la-source) (outil tiers, non bloquant), **et** contrôle que la Book App fonctionne (Étape 2 de la section « Vérifier que tout fonctionne ») :
 
     ```bash
     # 🐧 Linux (WSL Debian)
@@ -460,7 +460,32 @@ npx -y peon-ping
 
 Dépôt officiel : [`github.com/PeonPing/peon-ping`](https://github.com/PeonPing/peon-ping) — site : [peonping.com](https://www.peonping.com/)
 
-**Défi** : installez les deux, puis décidez lequel garde sa place dans votre configuration quotidienne — et pourquoi.
+#### C.3. RTK — réduire la sortie des commandes à la source
+
+**Ce que c'est** : [RTK](https://github.com/rtk-ai/rtk) (« Rust Token Killer ») est un proxy en ligne de commande écrit en Rust. Il s'intercale entre l'agent et plus d'une centaine de commandes courantes (`git`, `npm`, `pytest`, `docker`...), exécute la vraie commande, puis renvoie une version compressée de sa sortie. Le résultat reste le même, seul son volume (donc le nombre de tokens consommés) diminue. À ne pas confondre avec Caveman (C.1), qui agit sur la prose de l'agent : RTK agit sur ce que les commandes affichent.
+
+**Installation** : déjà faite par les scripts d'installation de la section [Installation locale](#installation-locale) (étape optionnelle, non bloquante : si elle échoue, le reste de l'installation n'est pas affecté). Vérifiez-la :
+
+```bash
+rtk --version
+rtk gain
+```
+
+> ⚠️ **Collision de nom possible** : si `rtk gain` échoue, un autre paquet nommé `rtk` (« Rust Type Kit ») occupe peut-être le nom. Contrôlez `which rtk` (🐧 Linux · 🍎 macOS) ou `Get-Command rtk` (🪟 PowerShell).
+
+**Connexion à Copilot CLI** (seule étape manuelle) :
+
+```bash
+rtk init -g --copilot
+```
+
+**Vérification** : après avoir relancé `copilot`, exécutez `rtk gain` : il affiche les tokens économisés au fil de votre usage.
+
+**Limite** : projet tiers non maintenu par GitHub, à évaluer comme n'importe quelle dépendance externe. Les chiffres d'économie sont des estimations. Le [Chapitre 14](../14-token-consumption-analysis/README.md) détaille la comparaison avant/après et la lecture d'un rapport `rtk gain`.
+
+Dépôt officiel : [`github.com/rtk-ai/rtk`](https://github.com/rtk-ai/rtk)
+
+**Défi** : installez Caveman et peon-ping, vérifiez que RTK répond, puis décidez lesquels gardent leur place dans votre configuration quotidienne — et pourquoi.
 
 ---
 
