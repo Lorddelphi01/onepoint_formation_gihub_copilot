@@ -55,7 +55,7 @@ Ce document est conçu pour être compris **sans formateur présent** : chaque c
 1. **Slide de chapitre** : l'analogie et ce qu'on va apprendre, expliqués en clair.
 2. **Slides de concepts** : chaque notion est décrite en une phrase complète, pas juste un mot-clé.
 3. **Slides de TP** (rôle → déroulé → exercice) : de quoi refaire le TP seul, pas à pas.
-4. **Slide de quiz** : questions seules — **répondez par écrit avant de tourner la page.**
+4. **Slide de quiz** : questions seules — **réponds par écrit avant de tourner la page.**
 5. **Slide de corrigé** : réponse + explication détaillée, pensée pour être apprenante même en simple lecture.
 6. **Slide de transition** : le lien logique vers le chapitre suivant.
 
@@ -98,7 +98,7 @@ Ces 5 pistes s'enchaînent dans un ordre logique : on équipe d'abord son termin
 
 ---
 
-# Chapitre 00 — Équipez votre terminal
+# Chapitre 00 — Équipe ton terminal
 ### *(optionnel, ~35–60 min)*
 
 **Analogie** : piloter un avion depuis un cockpit nu (quelques cadrans) est possible, mais un cockpit instrumenté — radar, GPS, boîte noire, copilote — rend chaque décision plus sûre et plus rapide. Un terminal par défaut, c'est le cockpit nu ; la stack de ce chapitre, c'est l'instrumentation complète.
@@ -156,7 +156,7 @@ Ces 5 pistes s'enchaînent dans un ordre logique : on équipe d'abord son termin
 2. Quel raccourci historique Atuin remplace-t-il, et pour quel bénéfice concret ?
 3. Citer un outil de la stack et l'ancienne commande qu'il remplace.
 
-*Notez vos réponses avant de continuer.*
+*Note tes réponses avant de continuer.*
 
 ---
 
@@ -227,7 +227,7 @@ Le terminal est maintenant confortable et rapide. Il manque encore l'outil princ
 2. **Vrai ou faux** : le flux d'authentification par défaut depuis la v1.0.77 est le device-code (code à saisir).
 3. À quoi sert Tokscale par rapport à l'export OpenTelemetry ?
 
-*Notez vos réponses avant de continuer.*
+*Note tes réponses avant de continuer.*
 
 ---
 
@@ -302,7 +302,7 @@ L'outil est installé, authentifié, et on sait déjà poser une question simple
 2. Quel critère valide la réussite de l'exercice sur `utils.py` ?
 3. **Vrai ou faux** : le mode Plan exécute directement les modifications qu'il propose.
 
-*Notez vos réponses avant de continuer.*
+*Note tes réponses avant de continuer.*
 
 ---
 
@@ -385,7 +385,7 @@ Les fondamentaux sont posés : terminal équipé, outil installé, 3 modes maît
 2. À quel seuil approximatif la compaction automatique du contexte se déclenche-t-elle ?
 3. **Vrai ou faux** : `/compact focus on...` permet de cibler ce qui doit être conservé lors de la compaction.
 
-*Notez vos réponses avant de continuer.*
+*Note tes réponses avant de continuer.*
 
 ---
 
@@ -462,14 +462,14 @@ Le contexte est maîtrisé : l'IA voit maintenant ce qu'il faut, ni plus ni moin
 2. Sur quels dossiers s'appuie le TP de debugging, et pourquoi ne faut-il jamais les "réparer" définitivement dans le dépôt ?
 3. **Vrai ou faux** : `/pr auto` peut créer une PR automatiquement.
 
-*Notez vos réponses avant de continuer.*
+*Note tes réponses avant de continuer.*
 
 ---
 
 # Corrigé — Chapitre 04
 
 1. **`/diff`** — elle affiche le changement en cours sous une forme interactive, permettant de le parcourir et de le valider avant de committer, plutôt que de committer à l'aveugle.
-2. **`samples/book-app-buggy/`** et **`samples/buggy-code/`** — leurs bugs sont **intentionnels**, ajoutés spécifiquement pour servir d'exercices de debugging à tous les apprenants qui suivront la formation après vous. Les corriger définitivement dans le dépôt priverait les prochains apprenants de l'exercice : on corrige uniquement une copie de travail.
+2. **`samples/book-app-buggy/`** et **`samples/buggy-code/`** — leurs bugs sont **intentionnels**, ajoutés spécifiquement pour servir d'exercices de debugging à tous les apprenants qui suivront la formation après toi. Les corriger définitivement dans le dépôt priverait les prochains apprenants de l'exercice : on corrige uniquement une copie de travail.
 3. **Vrai** — `/pr auto` automatise la création de la pull request à partir des changements en cours, sans nécessiter une série manuelle de commandes Git séparées.
 
 ---
@@ -546,7 +546,7 @@ Le cycle "un développeur + Copilot CLI" est maîtrisé. La piste suivante chang
 2. Quel champ du frontmatter `.agent.md` est obligatoire ?
 3. **Vrai ou faux** : un agent personnalisé peut restreindre les outils qu'il est autorisé à utiliser.
 
-*Notez vos réponses avant de continuer.*
+*Note tes réponses avant de continuer.*
 
 ---
 
@@ -621,7 +621,7 @@ Les agents personnalisés se déclenchent quand on les **invoque explicitement**
 2. Comment invoquer un skill directement, sans attendre son déclenchement automatique ?
 3. **Vrai ou faux** : il faut vérifier un skill avant de l'installer, comme on vérifierait une dépendance externe.
 
-*Notez vos réponses avant de continuer.*
+*Note tes réponses avant de continuer.*
 
 ---
 
@@ -696,7 +696,7 @@ Les agents et les skills automatisent des tâches **internes** au projet. Mais C
 2. Quelle anomalie de données l'exercice principal demande-t-il de retrouver ?
 3. Quelles sont les 4 étapes du diagnostic d'un serveur MCP en panne ?
 
-*Notez vos réponses avant de continuer.*
+*Note tes réponses avant de continuer.*
 
 ---
 
@@ -770,7 +770,7 @@ Modes d'interaction, contexte, workflows, agents, skills, MCP : toutes les briqu
 2. Quelle commande permet d'auditer la configuration (agents/skills/instructions) réellement chargée dans la session ?
 3. **Vrai ou faux** : ce chapitre s'appuie sur des fonctionnalités avancées (agents, skills, MCP) vues aux chapitres 05–07.
 
-*Notez vos réponses avant de continuer.*
+*Note tes réponses avant de continuer.*
 
 ---
 
@@ -791,7 +791,7 @@ Modes d'interaction, contexte, workflows, agents, skills, MCP : toutes les briqu
 
 ---
 
-# Chapitre 11 — Sécuriser votre code avec Copilot CLI
+# Chapitre 11 — Sécuriser ton code avec Copilot CLI
 ### *(~40 min)*
 
 **Analogie** : `/security-review` est un contrôle de sécurité rapide à l'aéroport — efficace et systématique — tandis que des outils comme CodeQL, Dependabot ou Snyk sont une inspection douanière approfondie, plus lente mais plus exhaustive. Les deux sont complémentaires, pas substituables.
@@ -848,7 +848,7 @@ Modes d'interaction, contexte, workflows, agents, skills, MCP : toutes les briqu
 2. Citer deux catégories de vulnérabilités détectables par `/security-review`.
 3. **Vrai ou faux** : `/security-review` est une commande stable, activée par défaut.
 
-*Notez vos réponses avant de continuer.*
+*Note tes réponses avant de continuer.*
 
 ---
 
@@ -866,7 +866,7 @@ La sécurité protège le code produit. Mais après plusieurs semaines d'utilisa
 
 ---
 
-# Chapitre 13 — Explorer l'historique de vos sessions avec `/chronicle`
+# Chapitre 13 — Explorer l'historique de tes sessions avec `/chronicle`
 ### *(~30 min)*
 
 **Analogie** : `/rewind` est la touche "annuler" d'une session en cours — utile mais limitée au présent. `/chronicle` est le journal de bord d'un capitaine : il retrace **toutes** les sessions passées, pas seulement la dernière.
@@ -923,7 +923,7 @@ La sécurité protège le code produit. Mais après plusieurs semaines d'utilisa
 2. Quelle sous-commande peut proposer d'ajouter des règles à `copilot-instructions.md` ?
 3. **Vrai ou faux** : `/chronicle search` recherche uniquement dans la session en cours.
 
-*Notez vos réponses avant de continuer.*
+*Note tes réponses avant de continuer.*
 
 ---
 
@@ -1006,7 +1006,7 @@ Le tronc commun et les commandes natives couvrent tout ce dont un usage quotidie
 2. Quelle commande initialise une politique réseau "tout refuser" pour Docker Sandbox ?
 3. **Vrai ou faux** : dans le TP, on vérifie l'isolation en créant un fichier côté hôte et en confirmant que Copilot ne peut pas y accéder depuis le sandbox.
 
-*Notez vos réponses avant de continuer.*
+*Note tes réponses avant de continuer.*
 
 ---
 
@@ -1018,7 +1018,7 @@ Le tronc commun et les commandes natives couvrent tout ce dont un usage quotidie
 
 ---
 
-# Chapitre 10 — RAG sur votre vault Obsidian
+# Chapitre 10 — RAG sur ton vault Obsidian
 ### *(bonus, ~55 min, nécessite Obsidian)*
 
 **Analogie** : un chercheur qui consulte un dossier indexé par thème répond bien plus vite et plus précisément qu'un autre qui fouille une pile de documents en vrac. Le RAG (retrieval-augmented generation) donne à l'IA cette capacité de recherche indexée sur ses propres notes.
@@ -1074,7 +1074,7 @@ Le tronc commun et les commandes natives couvrent tout ce dont un usage quotidie
 2. Pourquoi vérifier manuellement les citations `[[wikilink]]` produites par l'IA ?
 3. **Vrai ou faux** : la clé API du serveur Local REST API doit être écrite en dur dans `.mcp.json`.
 
-*Notez vos réponses avant de continuer.*
+*Note tes réponses avant de continuer.*
 
 ---
 
@@ -1141,7 +1141,7 @@ Le tronc commun et les commandes natives couvrent tout ce dont un usage quotidie
 2. Que désigne la "taxe de vérification" évoquée par l'étude LinearB ?
 3. **Vrai ou faux** : toutes les études citées concluent unanimement à un gain de productivité systématique, sans nuance.
 
-*Notez vos réponses avant de continuer.*
+*Note tes réponses avant de continuer.*
 
 ---
 
@@ -1208,7 +1208,7 @@ Le tronc commun et les commandes natives couvrent tout ce dont un usage quotidie
 2. Quelle commande native permet de consulter sa consommation de crédits IA sans outil tiers ?
 3. **Vrai ou faux** : Tokscale nécessite une installation préalable via un gestionnaire de paquets.
 
-*Notez vos réponses avant de continuer.*
+*Note tes réponses avant de continuer.*
 
 ---
 
@@ -1275,7 +1275,7 @@ Le tronc commun et les commandes natives couvrent tout ce dont un usage quotidie
 2. Pourquoi les templates de prompts sont-ils de simples fichiers Markdown copier-coller plutôt que des commandes slash natives ?
 3. **Vrai ou faux** : un prompt vague et un prompt structuré produisent généralement des résultats de qualité équivalente.
 
-*Notez vos réponses avant de continuer.*
+*Note tes réponses avant de continuer.*
 
 ---
 
@@ -1343,7 +1343,7 @@ Le tronc commun et les commandes natives couvrent tout ce dont un usage quotidie
 2. Quelle différence essentielle entre `/worktree [branch]` et `/move` ?
 3. **Vrai ou faux** : un environnement virtuel Python installé dans le dépôt principal est automatiquement disponible dans un nouveau worktree.
 
-*Notez vos réponses avant de continuer.*
+*Note tes réponses avant de continuer.*
 
 ---
 
@@ -1411,7 +1411,7 @@ Le tronc commun et les commandes natives couvrent tout ce dont un usage quotidie
 2. Quelle commande crée un alias nommé réutilisable vers un serveur MCP ?
 3. **Vrai ou faux** : mcp2cli.dev est le même projet que d'autres outils portant un nom similaire.
 
-*Notez vos réponses avant de continuer.*
+*Note tes réponses avant de continuer.*
 
 ---
 
@@ -1478,7 +1478,7 @@ Le tronc commun et les commandes natives couvrent tout ce dont un usage quotidie
 2. Quel service externe le nœud HTTP Request interroge-t-il dans le TP principal ?
 3. **Vrai ou faux** : les skills n8n-io utilisés dans ce chapitre sont nativement compatibles Copilot CLI sans aucune adaptation.
 
-*Notez vos réponses avant de continuer.*
+*Note tes réponses avant de continuer.*
 
 ---
 

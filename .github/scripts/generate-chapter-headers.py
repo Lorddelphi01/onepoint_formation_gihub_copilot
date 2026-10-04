@@ -10,7 +10,7 @@ import sys
 
 # Configuration
 CHAPTERS = {
-    "00-modern-terminal-stack": "Chapitre 00 : Équipez votre terminal",
+    "00-modern-terminal-stack": "Chapitre 00 : Équipe ton terminal",
     "01-quick-start": "Chapitre 01 : Démarrage rapide",
     "02-setup-and-first-steps": "Chapitre 02 : Premiers pas",
     "03-context-conversations": "Chapitre 03 : Contexte et conversations",

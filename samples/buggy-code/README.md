@@ -68,7 +68,7 @@ copilot
 
 ## Exercices pratiques
 
-1. **Audit de sécurité** : Effectuez une revue de sécurité complète et listez toutes les vulnérabilités par niveau de gravité
-2. **Corriger un bug** : Choisissez un bug critique, obtenez la correction proposée par Copilot, et comprenez pourquoi elle fonctionne
-3. **Générer des tests** : Créez des tests qui détecteraient ces bugs avant le déploiement
-4. **Refactoriser en toute sécurité** : Corrigez les bugs d'injection SQL tout en conservant les fonctionnalités
+1. **Audit de sécurité** : Effectue une revue de sécurité complète et liste toutes les vulnérabilités par niveau de gravité
+2. **Corriger un bug** : Choisis un bug critique, obtiens la correction proposée par Copilot, et comprends pourquoi elle fonctionne
+3. **Générer des tests** : Crée des tests qui détecteraient ces bugs avant le déploiement
+4. **Refactoriser en toute sécurité** : Corrige les bugs d'injection SQL tout en conservant les fonctionnalités

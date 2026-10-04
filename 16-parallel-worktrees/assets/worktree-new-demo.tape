@@ -13,7 +13,7 @@ Set MarginFill "#282a36"
 Set Framerate 10
 Set TypingSpeed 45ms
 
-Type "printf '\033[1;36mSECURITE\033[0m : une branche par worktree ; vérifiez les changements avant toute suppression.\n$ git status --short\n$ git branch --show-current\n'"
+Type "printf '\033[1;36mSECURITE\033[0m : une branche par worktree ; vérifie les changements avant toute suppression.\n$ git status --short\n$ git branch --show-current\n'"
 Enter
 Sleep 3s
 

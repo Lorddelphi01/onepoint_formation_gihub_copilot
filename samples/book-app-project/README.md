@@ -1,8 +1,8 @@
 # Book Collection App
 
-*(Ce README est volontairement imparfait afin que vous puissiez l'améliorer avec GitHub Copilot CLI)*
+*(Ce README est volontairement imparfait afin que tu puisses l'améliorer avec GitHub Copilot CLI)*
 
-Une application Python pour gérer les livres que vous possédez ou souhaitez lire.
+Une application Python pour gérer les livres que tu possèdes ou souhaites lire.
 Elle permet d'ajouter, de supprimer et de lister des livres. Elle permet aussi de les marquer comme lus.
 
 ---

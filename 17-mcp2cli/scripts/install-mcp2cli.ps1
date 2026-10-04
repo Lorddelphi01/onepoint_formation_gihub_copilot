@@ -7,8 +7,8 @@ et y délègue install-mcp2cli.sh ; sans WSL, il explique la marche à suivre.
 $ErrorActionPreference = 'Stop'
 
 if (-not (Get-Command wsl -ErrorAction SilentlyContinue)) {
-    Write-Host "WSL est introuvable. Installez-le (wsl --install) puis relancez ce script,"
-    Write-Host "ou suivez la page d'installation officielle : https://mcp2cli.dev"
+    Write-Host "WSL est introuvable. Installe-le (wsl --install) puis relance ce script,"
+    Write-Host "ou suis la page d'installation officielle : https://mcp2cli.dev"
     exit 1
 }
 

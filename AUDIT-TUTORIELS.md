@@ -43,7 +43,7 @@ Les principaux écarts à corriger sont les suivants :
 
 ## Corrections et améliorations par tutoriel
 
-### 00 — Équipez votre terminal
+### 00 — Équipe ton terminal
 
 - Conserver les GIF existants : les 11 références correspondent bien aux 11 fichiers présents.
 - Ajouter, au début de chaque famille d'outils, un encart **macOS / Linux / WSL / Windows** avec la commande réellement supportée.

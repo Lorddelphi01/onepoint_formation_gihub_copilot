@@ -37,7 +37,7 @@ Un premier passage de corrections factuelles et de cohérence (affirmations non 
 
 Presque tous les chapitres sourcent leurs affirmations avec des numéros de version Copilot CLI précis (`v1.0.77` à `v1.0.83` observés) et, par endroits, des dates calendaires exactes (Ch01, Ch08, Ch11, Ch13, Ch14, Ch16-18). C'est rigoureux mais crée une dette de maintenance élevée : un chapitre entier (Ch06) repose structurellement sur « depuis v1.0.81 » pour son concept central (tableau de bord unifié `/plugin`/`/mcp`/`/skills`).
 
-**Proposition** : généraliser la convention déjà esquissée par endroits (Ch01 ligne 365, Ch03 ligne 697) — accompagner systématiquement une affirmation versionnée d'un renvoi à `copilot --version` et à `/changelog` (« si ce comportement diffère, vérifiez... »), plutôt que de multiplier les dates en dur sans filet.
+**Proposition** : généraliser la convention déjà esquissée par endroits (Ch01 ligne 365, Ch03 ligne 697) — accompagner systématiquement une affirmation versionnée d'un renvoi à `copilot --version` et à `/changelog` (« si ce comportement diffère, vérifie... »), plutôt que de multiplier les dates en dur sans filet.
 
 ### Absence quasi générale de quiz de compréhension
 
@@ -53,7 +53,7 @@ Aucun des 19 chapitres ne propose de mini-quiz (QCM, vrai/faux, rappel actif) en
 
 ### Asymétrie structurelle essentiel / optionnel
 
-Ch01, 03, 05, 07, 09 séparent explicitement le tronc commun de l'approfondissement (marqueur type « 🎉 Vous connaissez maintenant l'essentiel ! », sections `<details>` repliables avec table de routage). Ch00, 02, 04, 06, 08, 14, 16 restent plus linéaires ou denses (Ch04 replie par flux de travail, mais pas par niveau de difficulté).
+Ch01, 03, 05, 07, 09 séparent explicitement le tronc commun de l'approfondissement (marqueur type « 🎉 Tu connais maintenant l'essentiel ! », sections `<details>` repliables avec table de routage). Ch00, 02, 04, 06, 08, 14, 16 restent plus linéaires ou denses (Ch04 replie par flux de travail, mais pas par niveau de difficulté).
 
 **Proposition** : étendre ce marqueur aux chapitres les plus chargés en priorité : **04**, **06**, **09**, **14**, **16**.
 
@@ -77,7 +77,7 @@ Ch01, 03, 05, 07, 09 séparent explicitement le tronc commun de l'approfondissem
 
 ## Propositions par chapitre
 
-### Chapitre 00 — Équipez votre terminal
+### Chapitre 00 — Équipe ton terminal
 
 - Ajouter un exemple concret « avant/après » montrant l'apport réel des outils dans une session Copilot CLI (ex. Atuin retrouvant une commande `copilot` passée) — le chapitre promet ce lien dès l'intro sans jamais le démontrer.
 - Rappeler localement (pas seulement dans la table d'erreurs finale) les points de friction connus par outil (`batcat`, `chsh`) au moment où l'outil concerné est installé.
@@ -87,7 +87,7 @@ Ch01, 03, 05, 07, 09 séparent explicitement le tronc commun de l'approfondissem
 
 - Ajouter l'analogie du monde réel manquante (seul chapitre des 19 sans cette section, alors que la structure du cours l'impose).
 - Déplacer le bloc « Peon Caveman » en annexe ou le retirer : il consacre une sous-section à corriger un nom qui « n'existe pas » sans enseigner de compétence Copilot CLI transférable.
-- Préférer des formulations relatives (« depuis la version X, vérifiez `copilot --version` ») aux dates calendaires précises (« depuis juillet 2026 », « GA depuis février 2026 »), conformément à la recommandation transversale sur la fragilité versionnelle.
+- Préférer des formulations relatives (« depuis la version X, vérifie `copilot --version` ») aux dates calendaires précises (« depuis juillet 2026 », « GA depuis février 2026 »), conformément à la recommandation transversale sur la fragilité versionnelle.
 - Le défi bonus Graphiti (intégration explicitement « non confirmée officiellement ») risque de faire perdre du temps à un débutant sur une fonctionnalité qui peut ne pas fonctionner — envisager de le retirer ou de le marquer plus clairement comme exploratoire dès son titre.
 
 ### Chapitre 02 — Premiers pas
@@ -119,8 +119,8 @@ Ch01, 03, 05, 07, 09 séparent explicitement le tronc commun de l'approfondissem
 
 ### Chapitre 06 — Système de skills
 
-- Ajouter un marqueur explicite de fin de tronc commun (façon Ch03 : « 🎉 Vous connaissez maintenant l'essentiel ! ») avant la section avancée « Sécurité avant d'installer ou de partager », pour ne pas alourdir le parcours d'un débutant qui veut seulement utiliser un skill existant.
-- Ajouter un petit exercice « réécrivez cette description vague » pour ancrer la distinction description vague/exploitable, déjà bien expliquée mais jamais testée activement.
+- Ajouter un marqueur explicite de fin de tronc commun (façon Ch03 : « 🎉 Tu connais maintenant l'essentiel ! ») avant la section avancée « Sécurité avant d'installer ou de partager », pour ne pas alourdir le parcours d'un débutant qui veut seulement utiliser un skill existant.
+- Ajouter un petit exercice « réécris cette description vague » pour ancrer la distinction description vague/exploitable, déjà bien expliquée mais jamais testée activement.
 - Ajouter un encadré « Pourquoi trois commandes (`/plugin`/`/mcp`/`/skills`) pour la même chose ? » expliquant la raison historique, pour couper court à une confusion probable.
 - Présenter le tableau agent/skill (quasi identique à celui du Ch05) comme un simple rappel synthétique plutôt qu'un nouveau tableau complet, pour éviter l'impression de redite.
 
@@ -170,18 +170,18 @@ Ch01, 03, 05, 07, 09 séparent explicitement le tronc commun de l'approfondissem
 ### Chapitre 14 — RTK et Tokscale (consommation de tokens)
 
 - Annoncer dès l'introduction de RTK qu'un regard critique suivra (benchmarks indépendants contredisant certains chiffres), plutôt qu'en renversement tardif après une section très positive sur les gains — cadrer la lecture dès le départ.
-- Ajouter un encadré « ⚠️ piège fréquent : `rtk gain` ≠ votre facture », message actuellement dispersé dans plusieurs paragraphes de prose.
+- Ajouter un encadré « ⚠️ piège fréquent : `rtk gain` ≠ ta facture », message actuellement dispersé dans plusieurs paragraphes de prose.
 - Ajouter une note de mise en perspective avec la fenêtre de contexte 1M tokens généralisée en juin 2026 : les optimisations de tokens restent-elles aussi critiques à cette échelle ? Bon point de réflexion critique, dans l'esprit de la section déjà existante sur les benchmarks RTK.
 - Envisager un schéma ou une reformulation plus simple pour le mécanisme du hook « PreToolUse deny-with-suggestion », actuellement dense pour un chapitre bonus.
 
 ### Chapitre 15 — Prompt engineering
 
 - *(Corrections déjà appliquées : référence mcp2cli corrigée vers le Chapitre 17, message de clôture et navigation corrigés.)*
-- Ajouter un mini-exercice « identifiez objectif/contraintes/format dans ce prompt » sur un exemple fourni, avant l'exercice pratique complet de création de template.
+- Ajouter un mini-exercice « identifie objectif/contraintes/format dans ce prompt » sur un exemple fourni, avant l'exercice pratique complet de création de template.
 
 ### Chapitre 16 — Worktrees parallèles
 
-- Au-delà de l'allègement proposé en section transversale, ajouter un arbre de décision (« je veux garder ma conversation actuelle intacte → utilisez X ») pour choisir rapidement entre les 4 commandes worktree (`/worktree new`, `/worktree`, `/move`, `/fork`/`/branch`), plutôt qu'un simple tableau à mémoriser.
+- Au-delà de l'allègement proposé en section transversale, ajouter un arbre de décision (« je veux garder ma conversation actuelle intacte → utilise X ») pour choisir rapidement entre les 4 commandes worktree (`/worktree new`, `/worktree`, `/move`, `/fork`/`/branch`), plutôt qu'un simple tableau à mémoriser.
 - Mentionner en « et ensuite » l'émergence de l'orchestration multi-agents native avec worktrees isolés automatiquement dans l'application Copilot (apparue courant 2026) comme alternative complémentaire de plus haut niveau à la manipulation manuelle enseignée dans ce chapitre — sans remplacer l'enseignement de la mécanique Git sous-jacente, qui reste une compétence transférable.
 - Valoriser/répliquer ailleurs les encadrés « 🛡️ Règles de sécurité », point fort de ce chapitre.
 

@@ -38,8 +38,8 @@
     {
       "chapter": "02-setup-and-first-steps",
       "name": "setup-and-first-steps-demo",
-      "description": "Votre première expérience avec Copilot CLI demo",
-      "prompt": "<votre prompt>"
+      "description": "Ta première expérience avec Copilot CLI demo",
+      "prompt": "<ton prompt>"
     },
     {
       "chapter": "03-context-conversations",

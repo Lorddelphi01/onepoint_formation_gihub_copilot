@@ -19,7 +19,7 @@ for arg in "$@"; do
     esac
 done
 
-command -v docker &> /dev/null || { echo "❌ docker introuvable : installez Docker (Chapitre 09)." >&2; exit 1; }
+command -v docker &> /dev/null || { echo "❌ docker introuvable : installe Docker (Chapitre 09)." >&2; exit 1; }
 
 # --- 1. Config MCP (fusion non destructive) ---
 if [ "$mcp" -eq 1 ]; then
@@ -38,16 +38,16 @@ fi
 # --- 2. Lancer n8n ---
 docker volume create n8n_data > /dev/null
 if docker ps -a --format '{{.Names}}' | grep -qx n8n; then
-    echo "❌ Un conteneur 'n8n' existe déjà : docker rm -f n8n, puis relancez." >&2
+    echo "❌ Un conteneur 'n8n' existe déjà : docker rm -f n8n, puis relance." >&2
     exit 1
 fi
 
 echo "🚀 n8n démarre sur http://localhost:5678"
-echo "   Puis activez Settings -> Instance-level MCP dans l'interface."
+echo "   Puis active Settings -> Instance-level MCP dans l'interface."
 if [ "$detach" -eq 1 ]; then
     docker run -d --name n8n -p 5678:5678 -v n8n_data:/home/node/.n8n docker.n8n.io/n8nio/n8n
     sleep 3
-    docker exec n8n n8n --version || echo "⚠️  Conteneur pas encore prêt : réessayez 'docker exec n8n n8n --version'."
+    docker exec n8n n8n --version || echo "⚠️  Conteneur pas encore prêt : réessaie 'docker exec n8n n8n --version'."
     echo "Arrêt : docker rm -f n8n"
 else
     docker run -it --rm --name n8n -p 5678:5678 -v n8n_data:/home/node/.n8n docker.n8n.io/n8nio/n8n

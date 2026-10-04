@@ -157,7 +157,7 @@ Le parcours est organisé en modules progressifs, du démarrage aux automatisati
 
 <img src="assets/tracks/fondamentaux-cover.png" width="100%" alt="">
 
-**🧰 [Équipez votre terminal](./00-modern-terminal-stack/README.md)**
+**🧰 [Équipe ton terminal](./00-modern-terminal-stack/README.md)**
 
 Une stack terminal moderne (zsh, Starship, tmux, Atuin, Zoxide, fzf, eza, bat).
 
@@ -282,7 +282,7 @@ Flux de travail complets.
 
 <img src="assets/tracks/securite-cover.png" width="100%" alt="">
 
-**🔒 [Sécuriser votre code avec Copilot CLI](./11-security-with-copilot/README.md)**
+**🔒 [Sécuriser ton code avec Copilot CLI](./11-security-with-copilot/README.md)**
 
 Une revue de sécurité de bout en bout : commande `/security-review`, instructions sécurisées par défaut, protection des secrets.
 
@@ -293,9 +293,9 @@ Une revue de sécurité de bout en bout : commande `/security-review`, instructi
 
 <img src="assets/tracks/securite-cover.png" width="100%" alt="">
 
-**🕰️ [Explorer l'historique de vos sessions avec /chronicle](./13-chronicle-session-insights/README.md)**
+**🕰️ [Explorer l'historique de tes sessions avec /chronicle](./13-chronicle-session-insights/README.md)**
 
-Des rapports d'activité, conseils et recherches générés à partir de votre historique Copilot CLI.
+Des rapports d'activité, conseils et recherches générés à partir de ton historique Copilot CLI.
 
 <sub>Chapitre 13 · Niveau Débutant</sub>
 
@@ -322,9 +322,9 @@ Dev container, sandboxing natif de Copilot CLI et sandbox Docker isolée pour au
 
 <img src="assets/tracks/bonus-cover.png" width="100%" alt="">
 
-**🧠 [RAG sur votre vault Obsidian](./10-obsidian-rag/README.md)** *(nécessite Obsidian)*
+**🧠 [RAG sur ton vault Obsidian](./10-obsidian-rag/README.md)** *(nécessite Obsidian)*
 
-Un pipeline RAG local (recherche sémantique + citations) sur vos propres notes, via deux serveurs MCP.
+Un pipeline RAG local (recherche sémantique + citations) sur tes propres notes, via deux serveurs MCP.
 
 <sub>Chapitre 10 · Niveau Avancé · Bonus</sub>
 

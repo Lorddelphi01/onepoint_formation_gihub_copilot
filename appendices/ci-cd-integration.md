@@ -2,7 +2,7 @@
 ---
 id: CopilotCLI-Appendix-CI-CD-Integration
 title: !translate Intégration CI/CD
-description: !translate Intégrez GitHub Copilot CLI dans les workflows GitHub Actions pour automatiser les revues de pull requests.
+description: !translate Intègre GitHub Copilot CLI dans les workflows GitHub Actions pour automatiser les revues de pull requests.
 audience: Developers / Students / Terminal users
 slug: ci-cd-integration
 weight: 91
@@ -11,11 +11,11 @@ weight: 91
 
 # Intégration CI/CD
 
-> 📖 **Prérequis** : terminez le [Chapitre 08 : Tout assembler](../08-putting-it-together/README.md) avant de lire cette annexe.
+> 📖 **Prérequis** : termine le [Chapitre 08 : Tout assembler](../08-putting-it-together/README.md) avant de lire cette annexe.
 >
-> ⚠️ **Cette annexe s'adresse aux équipes disposant déjà de pipelines CI/CD.** Si vous découvrez GitHub Actions ou les concepts de CI/CD, commencez plutôt par l'approche plus simple du hook pre-commit décrite dans la section [Automatisation de la revue de code](../08-putting-it-together/README.md#workflow-3-code-review-automation-optional) du Chapitre 08.
+> ⚠️ **Cette annexe s'adresse aux équipes disposant déjà de pipelines CI/CD.** Si tu découvres GitHub Actions ou les concepts de CI/CD, commence plutôt par l'approche plus simple du hook pre-commit décrite dans la section [Automatisation de la revue de code](../08-putting-it-together/README.md#workflow-3-code-review-automation-optional) du Chapitre 08.
 
-Cette annexe montre comment intégrer GitHub Copilot CLI dans vos pipelines CI/CD pour automatiser la revue de code sur les pull requests.
+Cette annexe montre comment intégrer GitHub Copilot CLI dans tes pipelines CI/CD pour automatiser la revue de code sur les pull requests.
 
 ---
 
@@ -93,7 +93,7 @@ jobs:
 
 ### Limiter la portée de la revue
 
-Vous pouvez concentrer la revue sur des types de problèmes spécifiques :
+Tu peux concentrer la revue sur des types de problèmes spécifiques :
 
 ```yaml
 # Revue axée uniquement sur la sécurité
@@ -105,7 +105,7 @@ copilot --allow-all -p "Performance review of @$file. Check for: N+1 queries, me
 
 ### Gérer les PR volumineuses
 
-Pour les PR comportant de nombreux fichiers, envisagez un traitement par lots ou une limitation :
+Pour les PR comportant de nombreux fichiers, envisage un traitement par lots ou une limitation :
 
 ```yaml
 # Limiter aux 10 premiers fichiers
@@ -117,7 +117,7 @@ timeout 60 copilot --allow-all -p "Review @$file" --silent || echo "Review timed
 
 ### Configuration d'équipe
 
-Pour des revues cohérentes au sein de votre équipe, créez une configuration partagée :
+Pour des revues cohérentes au sein de ton équipe, crée une configuration partagée :
 
 ```json
 // .copilot/config.json (versionné dans le dépôt)
@@ -134,7 +134,7 @@ Pour des revues cohérentes au sein de votre équipe, créez une configuration p
 
 ## Alternative : bot de revue de PR
 
-Pour des workflows de revue plus sophistiqués, envisagez d'utiliser l'agent cloud GitHub Copilot :
+Pour des workflows de revue plus sophistiqués, envisage d'utiliser l'agent cloud GitHub Copilot :
 
 ```yaml
 # .github/workflows/copilot-agent-review.yml
@@ -164,11 +164,11 @@ jobs:
 
 ## Bonnes pratiques pour l'intégration CI/CD
 
-1. **Utilisez l'option `--silent`** - Supprime la sortie de progression pour des logs plus propres
-2. **Définissez des délais d'expiration** - Évitez que des revues bloquées n'immobilisent votre pipeline
-3. **Filtrez les types de fichiers** - Ne passez en revue que les fichiers pertinents (ignorez le code généré, les dépendances)
-4. **Attention aux limites de débit** - Espacez les revues pour les PR volumineuses
-5. **Échouez avec élégance** - Ne bloquez pas les fusions en cas d'échec de la revue ; journalisez et continuez
+1. **Utilise l'option `--silent`** - Supprime la sortie de progression pour des logs plus propres
+2. **Définis des délais d'expiration** - Évite que des revues bloquées n'immobilisent ton pipeline
+3. **Filtre les types de fichiers** - Ne passe en revue que les fichiers pertinents (ignore le code généré, les dépendances)
+4. **Attention aux limites de débit** - Espace les revues pour les PR volumineuses
+5. **Échoue avec élégance** - Ne bloque pas les fusions en cas d'échec de la revue ; journalise et continue
 
 ---
 
@@ -176,7 +176,7 @@ jobs:
 
 ### « Authentication failed » en CI
 
-Assurez-vous que votre workflow dispose des permissions correctes :
+Assure-toi que ton workflow dispose des permissions correctes :
 
 ```yaml
 permissions:
@@ -187,7 +187,7 @@ permissions:
 
 ### Les revues expirent (timeout)
 
-Augmentez le délai d'expiration ou réduisez la portée :
+Augmente le délai d'expiration ou réduis la portée :
 
 ```bash
 timeout 120 copilot --allow-all -p "Quick review of @$file - critical issues only" --silent
@@ -195,7 +195,7 @@ timeout 120 copilot --allow-all -p "Quick review of @$file - critical issues onl
 
 ### Limites de tokens sur les fichiers volumineux
 
-Ignorez les fichiers très volumineux :
+Ignore les fichiers très volumineux :
 
 ```bash
 if [ $(wc -l < "$file") -lt 500 ]; then

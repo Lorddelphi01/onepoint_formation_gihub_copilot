@@ -2,7 +2,7 @@
 ---
 id: CopilotCLI-Appendices
 title: !translate Annexes
-description: !translate Explorez du contenu de référence optionnel qui complète le cours Onepoint - Formation GitHub Copilot CLI.
+description: !translate Explore du contenu de référence optionnel qui complète le cours Onepoint - Formation GitHub Copilot CLI.
 audience: Développeurs / Étudiants / Utilisateurs du terminal
 slug: appendices
 weight: 10
@@ -11,7 +11,7 @@ weight: 10
 
 # Annexes
 
-Ces annexes couvrent des sujets supplémentaires qui complètent le contenu principal du cours. Il s'agit de lectures optionnelles, à consulter lorsque vous avez besoin de ces fonctionnalités spécifiques.
+Ces annexes couvrent des sujets supplémentaires qui complètent le contenu principal du cours. Il s'agit de lectures optionnelles, à consulter lorsque tu as besoin de ces fonctionnalités spécifiques.
 
 | Annexe | Description | Prérequis |
 |----------|-------------|--------------|

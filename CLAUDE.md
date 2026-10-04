@@ -38,6 +38,7 @@ cd samples/book-app-project-cs && dotnet test
 ## Content conventions (from `.github/copilot-instructions.md`)
 
 - Audience is AI/ML beginners — define jargon on first use; friendly, encouraging, practical tone.
+- Tutoiement (tu/ton/tes) partout, jamais de vouvoiement.
 - All `copilot` command blocks must be copy-paste ready; use `kebab-case` for session names, files, and identifiers; standardize flags as `--flag=value` (with value) / `--flag` (boolean).
 - Don't over-specify behavior that varies by shell/OS — describe what the user sees, not implementation details.
 - When citing a minimum tool version, always give an upgrade path or manual fallback.

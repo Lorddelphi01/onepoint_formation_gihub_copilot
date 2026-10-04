@@ -11,7 +11,7 @@ weight: 92
 
 # Fonctionnalités de contexte supplémentaires
 
-> 📖 **Prérequis** : Terminez le [Chapitre 03 : Contexte et conversations](../03-context-conversations/README.md) avant de lire cette annexe.
+> 📖 **Prérequis** : Termine le [Chapitre 03 : Contexte et conversations](../03-context-conversations/README.md) avant de lire cette annexe.
 
 Cette annexe couvre deux fonctionnalités de contexte supplémentaires : travailler avec des images et gérer les permissions sur plusieurs répertoires.
 
@@ -19,7 +19,7 @@ Cette annexe couvre deux fonctionnalités de contexte supplémentaires : travail
 
 ## Travailler avec des images
 
-Vous pouvez inclure des images dans vos conversations en utilisant la syntaxe `@`. Copilot peut analyser des captures d'écran, des maquettes, des diagrammes et d'autres contenus visuels.
+Tu peux inclure des images dans tes conversations en utilisant la syntaxe `@`. Copilot peut analyser des captures d'écran, des maquettes, des diagrammes et d'autres contenus visuels.
 
 ### Référence d'image de base
 
@@ -32,7 +32,7 @@ copilot
 
 > @mockup.png @current-design.png Compare these two designs
 
-# Vous pouvez aussi glisser-déposer des images ou coller depuis le presse-papiers
+# Tu peux aussi glisser-déposer des images ou coller depuis le presse-papiers
 ```
 
 ### Formats d'image pris en charge
@@ -84,16 +84,16 @@ copilot
 
 ### Astuces sur les images
 
-- **Recadrez les captures d'écran** pour ne montrer que les parties pertinentes (économise des jetons de contexte)
-- **Utilisez un contraste élevé** pour les éléments d'interface que vous voulez faire analyser
-- **Annotez si nécessaire** - entourez ou surlignez les zones problématiques avant de téléverser
-- **Une image par concept** - plusieurs images fonctionnent, mais restez ciblé
+- **Recadre les captures d'écran** pour ne montrer que les parties pertinentes (économise des jetons de contexte)
+- **Utilise un contraste élevé** pour les éléments d'interface que tu veux faire analyser
+- **Annote si nécessaire** - entoure ou surligne les zones problématiques avant de téléverser
+- **Une image par concept** - plusieurs images fonctionnent, mais reste ciblé
 
 ---
 
 ## Schémas de permissions
 
-Par défaut, Copilot peut accéder aux fichiers de votre répertoire courant. Pour des fichiers situés ailleurs, vous devez accorder l'accès.
+Par défaut, Copilot peut accéder aux fichiers de ton répertoire courant. Pour des fichiers situés ailleurs, tu dois accorder l'accès.
 
 ### Ajouter des répertoires
 
@@ -118,7 +118,7 @@ copilot --allow-all-paths
 copilot
 
 > /add-dir /path/to/other/project
-# Vous pouvez maintenant référencer des fichiers de ce répertoire
+# Tu peux maintenant référencer des fichiers de ce répertoire
 
 > /list-dirs
 # Voir tous les répertoires autorisés
@@ -133,13 +133,13 @@ copilot
 # Autoriser toutes les permissions pour des scripts non interactifs
 copilot -p "Review @src/" --allow-all
 
-# Ou utilisez l'alias facile à retenir
+# Ou utilise l'alias facile à retenir
 copilot -p "Review @src/" --yolo
 ```
 
-### Quand vous avez besoin d'un accès multi-répertoires
+### Quand tu as besoin d'un accès multi-répertoires
 
-Scénarios courants où vous aurez besoin de ces permissions :
+Scénarios courants où tu auras besoin de ces permissions :
 
 1. **Travail en monorepo** - Comparer du code entre différents paquets
 2. **Refactoring inter-projets** - Mettre à jour des bibliothèques partagées

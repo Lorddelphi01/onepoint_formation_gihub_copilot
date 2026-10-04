@@ -21,7 +21,7 @@ if (git status --porcelain) {
 }
 
 $Path = "..\wt-$($Branch -replace '/', '-')"
-if (Test-Path $Path) { throw "$Path existe déjà : supprimez-le (git worktree remove $Path) ou changez de branche." }
+if (Test-Path $Path) { throw "$Path existe déjà : supprime-le (git worktree remove $Path) ou change de branche." }
 
 git worktree add -b $Branch $Path
 if ($LASTEXITCODE -ne 0) { throw "Échec de git worktree add." }

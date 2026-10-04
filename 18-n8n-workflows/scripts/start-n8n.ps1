@@ -14,7 +14,7 @@ $Source = Join-Path $RepoRoot 'samples\mcp-configs\n8n-mcp-config.json'
 $CopilotHome = if ($env:COPILOT_HOME) { $env:COPILOT_HOME } else { Join-Path $HOME '.copilot' }
 $Target = Join-Path $CopilotHome 'mcp-config.json'
 
-if (-not (Get-Command docker -ErrorAction SilentlyContinue)) { throw "docker introuvable : installez Docker Desktop (Chapitre 09)." }
+if (-not (Get-Command docker -ErrorAction SilentlyContinue)) { throw "docker introuvable : installe Docker Desktop (Chapitre 09)." }
 
 if (-not $NoMcp) {
     New-Item -ItemType Directory -Force -Path $CopilotHome | Out-Null
@@ -32,11 +32,11 @@ if (-not $NoMcp) {
 
 docker volume create n8n_data | Out-Null
 if (docker ps -a --format '{{.Names}}' | Select-String -Pattern '^n8n$' -Quiet) {
-    throw "Un conteneur 'n8n' existe déjà : docker rm -f n8n, puis relancez."
+    throw "Un conteneur 'n8n' existe déjà : docker rm -f n8n, puis relance."
 }
 
 Write-Host "n8n démarre sur http://localhost:5678"
-Write-Host "Puis activez Settings -> Instance-level MCP dans l'interface."
+Write-Host "Puis active Settings -> Instance-level MCP dans l'interface."
 if ($Detach) {
     docker run -d --name n8n -p 5678:5678 -v n8n_data:/home/node/.n8n docker.n8n.io/n8nio/n8n
     Start-Sleep -Seconds 3

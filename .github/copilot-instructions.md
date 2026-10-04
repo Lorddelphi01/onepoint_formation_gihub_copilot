@@ -8,29 +8,30 @@ Il s'agit d'un **cours pédagogique pour débutants** enseignant GitHub Copilot 
 
 ## Conventions de rédaction
 
-- **Public visé** : Débutants sans expérience en IA/ML. Expliquez chaque terme technique lors de sa première utilisation.
-- **Ton** : Amical, encourageant, pratique. Évitez le jargon sans explication.
-- **Exemples** : Tous les blocs de code et commandes `copilot` doivent être prêts à copier-coller. Testez-les mentalement avant de les inclure.
-- **Nommage** : Utilisez le kebab-case pour les noms de sessions, les noms de fichiers et les identifiants (par exemple, `book-app-review`, et non `book app review`).
-- **Syntaxe des commandes** : Standardisez le format des options — utilisez `--flag=value` de manière cohérente lorsqu'une valeur est requise, `--flag` pour les booléens.
-- **Précision** : Ne sur-spécifiez pas le comportement d'un outil qui peut varier selon les shells ou les systèmes d'exploitation. Décrivez ce que l'utilisateur verra, pas les détails d'implémentation.
-- **Solutions de repli** : Lorsque vous mentionnez des exigences de version d'outil (par exemple, la version de la CLI `gh`), incluez toujours des instructions de mise à niveau ou une alternative manuelle.
+- **Public visé** : Débutants sans expérience en IA/ML. Explique chaque terme technique lors de sa première utilisation.
+- **Ton** : Amical, encourageant, pratique. Évite le jargon sans explication.
+- **Tutoiement** : Tutoiement (tu/ton/tes) partout, jamais de vouvoiement. Les impératifs suivent la même règle (« essaie », « ouvre », « crée »).
+- **Exemples** : Tous les blocs de code et commandes `copilot` doivent être prêts à copier-coller. Teste-les mentalement avant de les inclure.
+- **Nommage** : Utilise le kebab-case pour les noms de sessions, les noms de fichiers et les identifiants (par exemple, `book-app-review`, et non `book app review`).
+- **Syntaxe des commandes** : Standardise le format des options — utilise `--flag=value` de manière cohérente lorsqu'une valeur est requise, `--flag` pour les booléens.
+- **Précision** : Ne sur-spécifie pas le comportement d'un outil qui peut varier selon les shells ou les systèmes d'exploitation. Décris ce que l'utilisateur verra, pas les détails d'implémentation.
+- **Solutions de repli** : Lorsque tu mentionnes des exigences de version d'outil (par exemple, la version de la CLI `gh`), inclus toujours des instructions de mise à niveau ou une alternative manuelle.
 
 ## Conventions de contenu (issues des retours de revue de PR)
 
 Ces patterns ont été extraits des retours réels de revue de PR et représentent des attentes récurrentes des mainteneurs :
 
-- Lors de la présentation de workflows en plusieurs étapes, veillez à inclure toutes les étapes prérequises (par exemple, `git add` avant `git diff --staged`).
-- Lors de l'introduction d'un concept avec un exemple, utilisez un nommage cohérent tout au long de la section — ne mélangez pas le kebab-case et les noms entre guillemets.
-- Lors de la description du comportement d'une commande, alignez le niveau de précision sur celui des notes de version officielles — n'affirmez pas un comportement qui pourrait différer selon les environnements.
-- Si une fonctionnalité nécessite une version minimale d'un outil, mentionnez la version ET proposez une solution de repli pour les utilisateurs qui ne peuvent pas encore effectuer la mise à niveau.
+- Lors de la présentation de workflows en plusieurs étapes, veille à inclure toutes les étapes prérequises (par exemple, `git add` avant `git diff --staged`).
+- Lors de l'introduction d'un concept avec un exemple, utilise un nommage cohérent tout au long de la section — ne mélange pas le kebab-case et les noms entre guillemets.
+- Lors de la description du comportement d'une commande, aligne le niveau de précision sur celui des notes de version officielles — n'affirme pas un comportement qui pourrait différer selon les environnements.
+- Si une fonctionnalité nécessite une version minimale d'un outil, mentionne la version ET propose une solution de repli pour les utilisateurs qui ne peuvent pas encore effectuer la mise à niveau.
 
 ## Conventions pour le code d'exemple
 
-- **Exemple principal** : Utilisez toujours `samples/book-app-project/` (Python) pour les exemples dans les chapitres.
+- **Exemple principal** : Utilise toujours `samples/book-app-project/` (Python) pour les exemples dans les chapitres.
 - **Framework de test** : pytest — les fichiers de test se trouvent dans `samples/book-app-project/tests/` et suivent la convention de nommage `test_*.py`.
 - **Version Python** : 3.10+ (selon `samples/book-app-project/pyproject.toml`).
-- **Bugs intentionnels** : Les fichiers de `samples/book-app-buggy/` et `samples/buggy-code/` contiennent des **bugs délibérés** destinés aux exercices. Ne les corrigez jamais.
+- **Bugs intentionnels** : Les fichiers de `samples/book-app-buggy/` et `samples/buggy-code/` contiennent des **bugs délibérés** destinés aux exercices. Ne les corrige jamais.
 
 ## Structure des chapitres
 
@@ -42,13 +43,13 @@ Chaque chapitre (00–08) suit le même schéma dans son `README.md` :
 4. Exercice
 5. Et ensuite ?
 
-Ne vous écartez pas de cette structure lors de la modification ou de l'ajout de contenu de chapitre.
+Ne t'écarte pas de cette structure lors de la modification ou de l'ajout de contenu de chapitre.
 
 ## Formatage Markdown
 
-- Utilisez le Markdown GitHub-Flavored standard.
+- Utilise le Markdown GitHub-Flavored standard.
 - Les images vont dans le répertoire `assets/` à la racine du dépôt.
-- Utilisez des liens relatifs pour les références inter-chapitres (par exemple, `../04-development-workflows/README.md`).
+- Utilise des liens relatifs pour les références inter-chapitres (par exemple, `../04-development-workflows/README.md`).
 - L'utilisation d'emojis est encouragée pour les titres de section (en cohérence avec le style existant).
 
 ## Matrice de maintenance

@@ -53,6 +53,7 @@ estimation si le contenu d'un chapitre change significativement.
 - Garder des explications accessibles aux débutants ; expliquer le jargon IA/ML lorsqu'il est utilisé
 - S'assurer que les exemples bash sont prêts à copier-coller
 - Ton : amical, encourageant, pratique
+- Tutoiement (tu/ton/tes) partout, jamais de vouvoiement
 - Utiliser les chemins de `samples/book-app-project/` dans tous les exemples principaux
 - Utiliser un contexte Python/pytest pour les exemples de code
 

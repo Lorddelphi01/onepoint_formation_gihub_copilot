@@ -52,7 +52,7 @@ Un skill + proxy open source (`JuliusBrussee/caveman`) qui réduit la consommati
 
 ### Chronicle
 
-La commande `/chronicle` de Copilot CLI, qui analyse l'historique de vos sessions stockées localement et en tire des rapports d'activité (`standup`), des conseils personnalisés (`tips`, `cost-tips`), une recherche ciblée (`search`), des suggestions pour `.github/copilot-instructions.md` (`improve`), des brouillons de skills réutilisables à partir de vos schémas de travail répétés (`skills review`, depuis la v1.0.66), ou une reconstruction de l'index local (`reindex`). Présentée au Chapitre 13.
+La commande `/chronicle` de Copilot CLI, qui analyse l'historique de tes sessions stockées localement et en tire des rapports d'activité (`standup`), des conseils personnalisés (`tips`, `cost-tips`), une recherche ciblée (`search`), des suggestions pour `.github/copilot-instructions.md` (`improve`), des brouillons de skills réutilisables à partir de tes schémas de travail répétés (`skills review`, depuis la v1.0.66), ou une reconstruction de l'index local (`reindex`). Présentée au Chapitre 13.
 
 ### CIMD (Client ID Metadata Document)
 
@@ -136,7 +136,7 @@ Un remplaçant moderne de la commande `ls`, avec icônes, couleurs par type de f
 
 ### Fleet
 
-Un mode de Copilot CLI (`/fleet`) qui laisse Copilot décomposer lui-même une tâche complexe en sous-tâches indépendantes, exécutées par des sous-agents en parallèle au sein d'une même session. Complémentaire des worktrees, qui parallélisent des tâches *distinctes* orchestrées par vous plutôt qu'une seule tâche décomposée par Copilot. Présenté aux Chapitres 08 et 16.
+Un mode de Copilot CLI (`/fleet`) qui laisse Copilot décomposer lui-même une tâche complexe en sous-tâches indépendantes, exécutées par des sous-agents en parallèle au sein d'une même session. Complémentaire des worktrees, qui parallélisent des tâches *distinctes* orchestrées par toi plutôt qu'une seule tâche décomposée par Copilot. Présenté aux Chapitres 08 et 16.
 
 ### Fork de session
 
@@ -306,7 +306,7 @@ Un outil tiers open source (`rtk-ai/rtk`), écrit en Rust, qui agit comme un pro
 
 ### Sandbox
 
-Un environnement d'exécution isolé qui restreint l'accès de Copilot CLI au système de fichiers et au réseau, permettant d'utiliser `--allow-all`/`--yolo` sans surveillance humaine constante. Deux niveaux existent : le **sandboxing natif** de Copilot CLI (`/sandbox enable`, isolation au niveau processus sur votre OS, sans dépendance externe) et les **Docker Sandboxes** (`sbx run copilot`, isolation microVM complète avec Docker Desktop 4.50+). Présentés tous les deux au Chapitre 09.
+Un environnement d'exécution isolé qui restreint l'accès de Copilot CLI au système de fichiers et au réseau, permettant d'utiliser `--allow-all`/`--yolo` sans surveillance humaine constante. Deux niveaux existent : le **sandboxing natif** de Copilot CLI (`/sandbox enable`, isolation au niveau processus sur ton OS, sans dépendance externe) et les **Docker Sandboxes** (`sbx run copilot`, isolation microVM complète avec Docker Desktop 4.50+). Présentés tous les deux au Chapitre 09.
 
 ### Session
 
@@ -406,7 +406,7 @@ YAML Ain't Markup Language. Un format de données lisible par les humains utilis
 
 ### Zoxide
 
-Un remplaçant intelligent de `cd` qui retient la fréquence et la récence de vos déplacements, pour sauter directement vers un projet fréquent avec quelques lettres (`z monrepo`). Présenté au Chapitre 00.
+Un remplaçant intelligent de `cd` qui retient la fréquence et la récence de tes déplacements, pour sauter directement vers un projet fréquent avec quelques lettres (`z monrepo`). Présenté au Chapitre 00.
 
 ### zsh
 
