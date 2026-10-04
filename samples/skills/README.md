@@ -1,14 +1,14 @@
 # Exemples de skills
 
-Modèles de skills prêts à l'emploi pour GitHub Copilot CLI. Copiez n'importe quel dossier de skill pour commencer à l'utiliser immédiatement.
+Modèles de skills prêts à l'emploi pour GitHub Copilot CLI. Copie n'importe quel dossier de skill pour commencer à l'utiliser immédiatement.
 
 ## Démarrage rapide
 
 ```bash
-# Copier un skill dans votre dossier de skills personnel
+# Copier un skill dans ton dossier de skills personnel
 cp -r hello-world ~/.copilot/skills/
 
-# Ou copier dans votre projet pour un partage en équipe
+# Ou copier dans ton projet pour un partage en équipe
 cp -r code-checklist .github/skills/
 ```
 
@@ -23,7 +23,7 @@ cp -r code-checklist .github/skills/
 
 ## Fonctionnement des skills
 
-Les skills se déclenchent **automatiquement** lorsque votre requête correspond au champ `description` du skill. Vous n'avez pas besoin de les invoquer manuellement.
+Les skills se déclenchent **automatiquement** lorsque ta requête correspond au champ `description` du skill. Tu n'as pas besoin de les invoquer manuellement.
 
 ```bash
 copilot
@@ -35,7 +35,7 @@ copilot
 # Copilot charge le skill "commit-message"
 ```
 
-Vous pouvez aussi invoquer les skills directement :
+Tu peux aussi invoquer les skills directement :
 ```bash
 > /code-checklist Check books.py
 > /pytest-gen Generate tests for BookCollection
@@ -69,11 +69,11 @@ Your instructions here...
 - **[github/awesome-copilot](https://github.com/github/awesome-copilot)** - Ressources officielles de GitHub avec des skills communautaires
 - **`/plugin marketplace`** - Parcourir et installer des skills directement depuis Copilot CLI
 
-## Créer vos propres skills
+## Créer tes propres skills
 
-1. Créez un dossier : `mkdir ~/.copilot/skills/my-skill`
-2. Créez `SKILL.md` avec le frontmatter
-3. Ajoutez vos instructions
-4. Testez en demandant à Copilot quelque chose qui correspond à votre description
+1. Crée un dossier : `mkdir ~/.copilot/skills/my-skill`
+2. Crée `SKILL.md` avec le frontmatter
+3. Ajoute tes instructions
+4. Teste en demandant à Copilot quelque chose qui correspond à ta description
 
 Voir [Chapitre 06 : Skills](../../06-skills/README.md) pour des conseils détaillés.

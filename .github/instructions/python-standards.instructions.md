@@ -11,17 +11,17 @@ dépourvue de bruit inutile.
 
 ## Style
 
-- Respectez les conventions de style PEP 8.
-- Ajoutez des type hints à chaque signature de fonction.
-- Préférez les f-strings au formatage `%` ou à `str.format()`.
+- Respecte les conventions de style PEP 8.
+- Ajoute des type hints à chaque signature de fonction.
+- Préfère les f-strings au formatage `%` ou à `str.format()`.
 
 ## Gestion des erreurs
 
-- Capturez des exceptions spécifiques ; n'utilisez jamais un `except:` nu.
-- Validez les entrées aux limites des fonctions et échouez avec un message clair.
+- Capture des exceptions spécifiques ; n'utilise jamais un `except:` nu.
+- Valide les entrées aux limites des fonctions et échoue avec un message clair.
 
 ## Tests
 
-- Placez les tests pytest dans `samples/book-app-project/tests/` en suivant la
+- Place les tests pytest dans `samples/book-app-project/tests/` en suivant la
   convention de nommage `test_*.py`.
-- Couvrez le cas nominal ainsi que les cas limites (entrée vide, données manquantes).
+- Couvre le cas nominal ainsi que les cas limites (entrée vide, données manquantes).

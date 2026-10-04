@@ -1,6 +1,6 @@
 # Template : correction de bug
 
-Remplissez les emplacements `<...>` puis collez le résultat dans une session `copilot`.
+Remplis les emplacements `<...>` puis colle le résultat dans une session `copilot`.
 
 ---
 

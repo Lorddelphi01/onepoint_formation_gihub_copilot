@@ -5,7 +5,7 @@ description: Checklist qualité de code de l'équipe - à utiliser pour vérifie
 
 # Skill Checklist de code
 
-Appliquez cette checklist lors de la vérification du code Python.
+Applique cette checklist lors de la vérification du code Python.
 
 ## Checklist qualité de code
 
@@ -30,7 +30,7 @@ Appliquez cette checklist lors de la vérification du code Python.
 
 ## Format de sortie
 
-Présentez les résultats sous la forme suivante :
+Présente les résultats sous la forme suivante :
 
 ```
 ## Checklist de code : [filename]

@@ -4,15 +4,15 @@ Trois templates de prompts prêts à remplir, utilisés par le [Chapitre 15 : R�
 
 ## Comment les utiliser
 
-1. Ouvrez le fichier du template concerné
-2. Remplissez chaque emplacement entre `<...>`
-3. Collez le résultat dans une session `copilot`
+1. Ouvre le fichier du template concerné
+2. Remplis chaque emplacement entre `<...>`
+3. Colle le résultat dans une session `copilot`
 
 ```bash
 cat code-review-prompt.md
-# remplissez les emplacements <...> dans un éditeur, puis :
+# remplis les emplacements <...> dans un éditeur, puis :
 copilot
-> <collez ici le contenu rempli>
+> <colle ici le contenu rempli>
 ```
 
 ## Templates disponibles

@@ -11,19 +11,19 @@ weight: 5
 
 ![Chapitre 04 : Flux de travail de développement](assets/chapter-header.png)
 
-> **Et si l'IA pouvait trouver des bugs que vous ne saviez même pas devoir chercher ?**
+> **Et si l'IA pouvait trouver des bugs que tu ne savais même pas devoir chercher ?**
 
-Dans ce chapitre, GitHub Copilot CLI devient votre outil quotidien. Vous l'utiliserez au sein des flux de travail que vous utilisez déjà tous les jours : tests, refactoring, débogage et Git.
+Dans ce chapitre, GitHub Copilot CLI devient ton outil quotidien. Tu l'utiliseras au sein des flux de travail que tu utilises déjà tous les jours : tests, refactoring, débogage et Git.
 
 ## 🎯 Objectifs d'apprentissage
 
-À la fin de ce chapitre, vous serez capable de :
+À la fin de ce chapitre, tu seras capable de :
 
 - Effectuer des revues de code complètes avec Copilot CLI
 - Refactoriser du code existant en toute sécurité
 - Déboguer des problèmes avec l'assistance de l'IA
 - Générer des tests automatiquement
-- Intégrer Copilot CLI dans votre flux de travail git
+- Intégrer Copilot CLI dans ton flux de travail git
 
 > ⏱️ **Durée estimée** : ~60 minutes (15 min de lecture + 45 min de pratique)
 
@@ -35,7 +35,7 @@ Un charpentier ne se contente pas de savoir utiliser des outils, il a des *flux 
 
 <img src="assets/carpenter-workflow-steps.png" alt="Atelier d'artisan montrant trois flux de travail : Construire un meuble (Mesurer, Couper, Assembler, Finir), Réparer un dommage (Évaluer, Retirer, Réparer, Harmoniser), et Contrôle qualité (Inspecter, Tester les joints, Vérifier l'alignement)" width="800"/>
 
-De la même manière, les développeurs ont des flux de travail pour différentes tâches. GitHub Copilot CLI améliore chacun de ces flux, vous rendant plus efficace au quotidien.
+De la même manière, les développeurs ont des flux de travail pour différentes tâches. GitHub Copilot CLI améliore chacun de ces flux, te rendant plus efficace au quotidien.
 
 ---
 
@@ -43,26 +43,26 @@ De la même manière, les développeurs ont des flux de travail pour différente
 
 <img src="assets/five-workflows.png" alt="Cinq icônes néon lumineuses représentant les flux de revue de code, de tests, de débogage, de refactoring et d'intégration Git" width="800"/>
 
-Chaque flux de travail ci-dessous est autonome. Choisissez ceux qui correspondent à vos besoins actuels, ou parcourez-les tous.
+Chaque flux de travail ci-dessous est autonome. Choisis ceux qui correspondent à tes besoins actuels, ou parcours-les tous.
 
 ### ✅ Pipeline vérifiable de chaque workflow
 
-Pour que le flux soit réellement vérifiable, suivez la même séquence à chaque fois :
+Pour que le flux soit réellement vérifiable, suis la même séquence à chaque fois :
 
-1. **Préparer** : choisissez le bon fichier et décrivez le symptôme ou l'objectif.
-2. **Demander** : donnez un prompt précis à Copilot CLI avec `@` ou `/review`.
-3. **Vérifier** : relisez la réponse et confirmez qu'elle correspond à la cible.
-4. **Tester** : exécutez la commande de validation ciblée (par exemple `python -m pytest tests/`).
-5. **Diff** : utilisez `git add` sur les fichiers modifiés, puis `git diff --staged` pour relire les changements.
-6. **Commit** : générez le message de commit et appliquez-le uniquement si le diff est propre.
+1. **Préparer** : choisis le bon fichier et décris le symptôme ou l'objectif.
+2. **Demander** : donne un prompt précis à Copilot CLI avec `@` ou `/review`.
+3. **Vérifier** : relis la réponse et confirme qu'elle correspond à la cible.
+4. **Tester** : exécute la commande de validation ciblée (par exemple `python -m pytest tests/`).
+5. **Diff** : utilise `git add` sur les fichiers modifiés, puis `git diff --staged` pour relire les changements.
+6. **Commit** : génère le message de commit et applique-le uniquement si le diff est propre.
 
 > 💡 **Critère de réussite pour chaque workflow** : le résultat doit être observable et reproductible : une checklist de revue, un diff de refactoring à l'œil, un bug reproduit, des tests qui passent, ou un message de commit généré à partir d'un diff indexé.
 
 ---
 
-## Choisissez votre propre parcours
+## Choisis ton propre parcours
 
-Ce chapitre couvre cinq flux de travail que les développeurs utilisent habituellement. **Cependant, vous n'avez pas besoin de tout lire d'un coup !** Chaque flux de travail est autonome dans une section repliable ci-dessous. Choisissez ceux qui correspondent le mieux à votre projet actuel. Vous pourrez toujours revenir explorer les autres plus tard.
+Ce chapitre couvre cinq flux de travail que les développeurs utilisent habituellement. **Cependant, tu n'as pas besoin de tout lire d'un coup !** Chaque flux de travail est autonome dans une section repliable ci-dessous. Choisis ceux qui correspondent le mieux à ton projet actuel. Tu pourras toujours revenir explorer les autres plus tard.
 
 <img src="assets/five-workflows-swimlane.png" alt="Cinq flux de travail de développement : Revue de code, Refactoring, Débogage, Génération de tests et Intégration Git, présentés sous forme de bandes horizontales" width="800"/>
 
@@ -76,7 +76,7 @@ Ce chapitre couvre cinq flux de travail que les développeurs utilisent habituel
 | Faire des recherches avant de coder | [Astuce rapide : Rechercher avant de planifier ou coder](#quick-tip-research-before-you-plan-or-code) |
 | Voir un flux complet de correction de bug de bout en bout | [Tout assembler](#putting-it-all-together-bug-fix-workflow) |
 
-**Sélectionnez un flux de travail ci-dessous pour le développer** et voir comment GitHub Copilot CLI peut améliorer votre processus de développement dans ce domaine.
+**Sélectionne un flux de travail ci-dessous pour le développer** et voir comment GitHub Copilot CLI peut améliorer ton processus de développement dans ce domaine.
 
 ---
 
@@ -105,7 +105,7 @@ copilot
 
 ![Code Review Demo](assets/code-review-demo.gif)
 
-*Le résultat de la démo peut varier. Votre modèle, vos outils et vos réponses seront différents de ce qui est montré ici.*
+*Le résultat de la démo peut varier. Ton modèle, tes outils et tes réponses seront différents de ce qui est montré ici.*
 
 </details>
 
@@ -113,7 +113,7 @@ copilot
 
 ### Revue de la validation des entrées
 
-Demandez à Copilot CLI de concentrer sa revue sur une préoccupation spécifique (ici, la validation des entrées) en listant les catégories qui vous intéressent dans le prompt.
+Demande à Copilot CLI de concentrer sa revue sur une préoccupation spécifique (ici, la validation des entrées) en listant les catégories qui t'intéressent dans le prompt.
 
 ```text
 copilot
@@ -124,7 +124,7 @@ copilot
 
 ### Revue de projet inter-fichiers
 
-Référencez un répertoire entier avec `@` pour laisser Copilot CLI analyser tous les fichiers du projet en une seule fois.
+Référence un répertoire entier avec `@` pour laisser Copilot CLI analyser tous les fichiers du projet en une seule fois.
 
 ```bash
 copilot
@@ -134,7 +134,7 @@ copilot
 
 ### Revue de code interactive
 
-Utilisez une conversation à plusieurs tours pour approfondir. Commencez par une revue large, puis posez des questions de suivi sans redémarrer.
+Utilise une conversation à plusieurs tours pour approfondir. Commence par une revue large, puis pose des questions de suivi sans redémarrer.
 
 ```bash
 copilot
@@ -157,7 +157,7 @@ copilot
 
 ### Modèle de checklist de revue
 
-Demandez à Copilot CLI de structurer sa sortie dans un format spécifique (ici, une checklist markdown classée par gravité que vous pouvez coller dans une issue).
+Demande à Copilot CLI de structurer sa sortie dans un format spécifique (ici, une checklist markdown classée par gravité que tu peux coller dans une issue).
 
 ```bash
 copilot
@@ -171,12 +171,12 @@ copilot
 
 ### Comprendre les changements Git (important pour /review)
 
-Avant d'utiliser la commande `/review`, vous devez comprendre deux types de changements dans git :
+Avant d'utiliser la commande `/review`, tu dois comprendre deux types de changements dans git :
 
 | Type de changement | Ce que ça signifie | Comment le voir |
 |-------------|---------------|------------|
-| **Changements indexés (staged)** | Fichiers que vous avez marqués pour le prochain commit avec `git add` | `git diff --staged` |
-| **Changements non indexés (unstaged)** | Fichiers que vous avez modifiés mais pas encore ajoutés | `git diff` |
+| **Changements indexés (staged)** | Fichiers que tu as marqués pour le prochain commit avec `git add` | `git diff --staged` |
+| **Changements non indexés (unstaged)** | Fichiers que tu as modifiés mais pas encore ajoutés | `git diff` |
 
 ```bash
 # Référence rapide
@@ -188,9 +188,9 @@ git diff --staged    # Affiche les changements indexés
 
 ### Utiliser la commande /review
 
-La commande `/review` invoque l'**agent de revue de code** intégré, optimisé pour analyser les changements indexés et non indexés avec une sortie à haut rapport signal/bruit. Utilisez une commande slash pour déclencher un agent intégré spécialisé plutôt que d'écrire un prompt libre.
+La commande `/review` invoque l'**agent de revue de code** intégré, optimisé pour analyser les changements indexés et non indexés avec une sortie à haut rapport signal/bruit. Utilise une commande slash pour déclencher un agent intégré spécialisé plutôt que d'écrire un prompt libre.
 
-> ✅ **Résultat observable attendu** : `/review` retourne une revue structurée, priorisée par gravité, et vous pouvez facilement décider si le diff est prêt ou s'il faut corriger un problème avant le commit.
+> ✅ **Résultat observable attendu** : `/review` retourne une revue structurée, priorisée par gravité, et tu peux facilement décider si le diff est prêt ou s'il faut corriger un problème avant le commit.
 
 ```bash
 copilot
@@ -203,11 +203,11 @@ copilot
 # Lance une revue avec un domaine de focus spécifique
 ```
 
-> 💡 **Astuce** : L'agent code-review fonctionne mieux lorsque vous avez des changements en attente. Indexez vos fichiers avec `git add` pour des revues plus ciblées.
+> 💡 **Astuce** : L'agent code-review fonctionne mieux lorsque tu as des changements en attente. Indexe tes fichiers avec `git add` pour des revues plus ciblées.
 
 ### 🆕 Obtenir un second avis avec /rubber-duck
 
-Après une revue avec `/review`, si vous hésitez encore sur une correction ou un plan, la commande `/rubber-duck` consulte un agent dédié pour un second avis sur votre code, vos plans ou vos tests — comme le fait un vrai canard en plastique posé sur le bureau, mais avec des retours concrets.
+Après une revue avec `/review`, si tu hésites encore sur une correction ou un plan, la commande `/rubber-duck` consulte un agent dédié pour un second avis sur ton code, tes plans ou tes tests — comme le fait un vrai canard en plastique posé sur le bureau, mais avec des retours concrets.
 
 ```bash
 copilot
@@ -231,9 +231,9 @@ copilot
 
 ### Refactoring simple
 
-> **Essayez ceci en premier :** `@samples/book-app-project/book_app.py The command handling uses if/elif chains. Refactor it to use a dictionary dispatch pattern.`
+> **Essaie ceci en premier :** `@samples/book-app-project/book_app.py The command handling uses if/elif chains. Refactor it to use a dictionary dispatch pattern.`
 
-Commencez par des améliorations simples. Essayez celles-ci sur l'application de livres. Chaque prompt utilise une référence de fichier `@` associée à une instruction de refactoring précise afin que Copilot CLI sache exactement quoi changer.
+Commence par des améliorations simples. Essaie celles-ci sur l'application de livres. Chaque prompt utilise une référence de fichier `@` associée à une instruction de refactoring précise afin que Copilot CLI sache exactement quoi changer.
 
 ```bash
 copilot
@@ -245,7 +245,7 @@ copilot
 > @samples/book-app-project/book_app.py Extract the book display logic into utils.py for better separation of concerns
 ```
 
-> 💡 **Nouveau dans le refactoring ?** Commencez par des demandes simples comme l'ajout de type hints ou l'amélioration des noms de variables avant de vous attaquer à des transformations complexes.
+> 💡 **Tu débutes en refactoring ?** Commence par des demandes simples comme l'ajout de type hints ou l'amélioration des noms de variables avant de t'attaquer à des transformations complexes.
 
 ---
 
@@ -254,7 +254,7 @@ copilot
 
 ![Refactor Demo](assets/refactor-demo.gif)
 
-*Le résultat de la démo peut varier. Votre modèle, vos outils et vos réponses seront différents de ce qui est montré ici.*
+*Le résultat de la démo peut varier. Ton modèle, tes outils et tes réponses seront différents de ce qui est montré ici.*
 
 </details>
 
@@ -262,7 +262,7 @@ copilot
 
 ### Séparer les responsabilités
 
-Référencez plusieurs fichiers avec `@` dans un seul prompt afin que Copilot CLI puisse déplacer du code entre eux dans le cadre du refactoring.
+Référence plusieurs fichiers avec `@` dans un seul prompt afin que Copilot CLI puisse déplacer du code entre eux dans le cadre du refactoring.
 
 ```bash
 copilot
@@ -273,7 +273,7 @@ copilot
 
 ### Améliorer la gestion des erreurs
 
-Fournissez deux fichiers liés et décrivez la préoccupation transversale afin que Copilot CLI puisse suggérer une correction cohérente sur les deux.
+Fournis deux fichiers liés et décris la préoccupation transversale afin que Copilot CLI puisse suggérer une correction cohérente sur les deux.
 
 ```bash
 copilot
@@ -284,7 +284,7 @@ copilot
 
 ### Ajouter de la documentation
 
-Utilisez une liste à puces détaillée pour préciser exactement ce que chaque docstring doit contenir.
+Utilise une liste à puces détaillée pour préciser exactement ce que chaque docstring doit contenir.
 
 ```bash
 copilot
@@ -298,7 +298,7 @@ copilot
 
 ### Refactoring sécurisé avec des tests
 
-Enchaînez deux demandes liées dans une conversation à plusieurs tours. Générez d'abord des tests, puis refactorisez avec ces tests comme filet de sécurité.
+Enchaîne deux demandes liées dans une conversation à plusieurs tours. Génère d'abord des tests, puis refactorise avec ces tests comme filet de sécurité.
 
 ```bash
 copilot
@@ -324,13 +324,13 @@ copilot
 
 <img src="assets/debugging-swimlane-single.png" alt="Flux de débogage : comprendre l'erreur, localiser la cause racine, corriger, tester." width="800"/>
 
-> ⚠️ **Attention :** les dossiers `samples/book-app-buggy/` et `samples/buggy-code/` sont volontairement bogués pour l'apprentissage. Ne corrigez pas ces fichiers dans le dépôt du cours pendant les exercices ; utilisez-les pour reproduire et diagnostiquer un bug, pas pour livrer une correction permanente.
+> ⚠️ **Attention :** les dossiers `samples/book-app-buggy/` et `samples/buggy-code/` sont volontairement bogués pour l'apprentissage. Ne corrige pas ces fichiers dans le dépôt du cours pendant les exercices ; utilise-les pour reproduire et diagnostiquer un bug, pas pour livrer une correction permanente.
 
 ### Débogage simple
 
-> **Essayez ceci en premier :** `@samples/book-app-buggy/books_buggy.py Users report that searching for "The Hobbit" returns no results even though it's in the data. Debug why.`
+> **Essaie ceci en premier :** `@samples/book-app-buggy/books_buggy.py Users report that searching for "The Hobbit" returns no results even though it's in the data. Debug why.`
 
-Commencez par décrire ce qui ne va pas. Voici des schémas de débogage courants que vous pouvez essayer avec l'application de livres bogguée. Chaque prompt associe une référence de fichier `@` à une description claire du symptôme afin que Copilot CLI puisse localiser et diagnostiquer le bug.
+Commence par décrire ce qui ne va pas. Voici des schémas de débogage courants que tu peux essayer avec l'application de livres bogguée. Chaque prompt associe une référence de fichier `@` à une description claire du symptôme afin que Copilot CLI puisse localiser et diagnostiquer le bug.
 
 ```bash
 copilot
@@ -345,7 +345,7 @@ copilot
 > @samples/book-app-buggy/books_buggy.py When I mark one book as read, ALL books get marked. What's the bug?
 ```
 
-> 💡 **Astuce de débogage** : Décrivez le *symptôme* (ce que vous observez) et l'*attente* (ce qui devrait se passer). Copilot CLI se charge du reste.
+> 💡 **Astuce de débogage** : Décris le *symptôme* (ce que tu observes) et l'*attente* (ce qui devrait se passer). Copilot CLI se charge du reste.
 
 ---
 
@@ -354,7 +354,7 @@ copilot
 
 ![Fix Bug Demo](assets/fix-bug-demo.gif)
 
-*Le résultat de la démo peut varier. Votre modèle, vos outils et vos réponses seront différents de ce qui est montré ici.*
+*Le résultat de la démo peut varier. Ton modèle, tes outils et tes réponses seront différents de ce qui est montré ici.*
 
 </details>
 
@@ -362,7 +362,7 @@ copilot
 
 ### Le « détective des bugs » - l'IA trouve des bugs LIÉS
 
-C'est là que le débogage contextuel brille vraiment. Essayez ce scénario avec l'application de livres bogguée. Fournissez le fichier entier via `@` et décrivez uniquement le symptôme rapporté par l'utilisateur. Copilot CLI remontera à la cause racine et pourra repérer des bugs supplémentaires à proximité.
+C'est là que le débogage contextuel brille vraiment. Essaie ce scénario avec l'application de livres bogguée. Fournis le fichier entier via `@` et décris uniquement le symptôme rapporté par l'utilisateur. Copilot CLI remontera à la cause racine et pourra repérer des bugs supplémentaires à proximité.
 
 ```bash
 copilot
@@ -386,13 +386,13 @@ Fix: Change to case-insensitive partial match:
 return [b for b in self.books if author.lower() in b.author.lower()]
 ```
 
-**Pourquoi c'est important** : Copilot CLI lit le fichier entier, comprend le contexte de votre rapport de bug, et vous donne une correction précise avec une explication claire.
+**Pourquoi c'est important** : Copilot CLI lit le fichier entier, comprend le contexte de ton rapport de bug, et te donne une correction précise avec une explication claire.
 
-> 💡 **Bonus** : Comme Copilot CLI analyse le fichier entier, il découvre souvent *d'autres* problèmes que vous n'aviez pas demandés. Par exemple, en corrigeant la recherche par auteur, Copilot CLI pourrait aussi remarquer le bug de sensibilité à la casse dans `find_book_by_title` !
+> 💡 **Bonus** : Comme Copilot CLI analyse le fichier entier, il découvre souvent *d'autres* problèmes que tu n'avais pas demandés. Par exemple, en corrigeant la recherche par auteur, Copilot CLI pourrait aussi remarquer le bug de sensibilité à la casse dans `find_book_by_title` !
 
 ### Aparté sur la sécurité en conditions réelles
 
-Bien que déboguer votre propre code soit important, comprendre les vulnérabilités de sécurité dans les applications de production est essentiel. Essayez cet exemple : pointez Copilot CLI vers un fichier inconnu et demandez-lui d'auditer les problèmes de sécurité.
+Bien que déboguer ton propre code soit important, comprendre les vulnérabilités de sécurité dans les applications de production est essentiel. Essaie cet exemple : pointe Copilot CLI vers un fichier inconnu et demande-lui d'auditer les problèmes de sécurité.
 
 ```bash
 copilot
@@ -400,9 +400,9 @@ copilot
 > @samples/buggy-code/python/user_service.py Find all security vulnerabilities in this Python user service
 ```
 
-Ce fichier illustre des schémas de sécurité réels que vous rencontrerez dans les applications de production.
+Ce fichier illustre des schémas de sécurité réels que tu rencontreras dans les applications de production.
 
-> 💡 **Termes de sécurité courants que vous rencontrerez :**
+> 💡 **Termes de sécurité courants que tu rencontreras :**
 > - **Injection SQL** : Quand une entrée utilisateur est insérée directement dans une requête de base de données, permettant à des attaquants d'exécuter des commandes malveillantes
 > - **Requêtes paramétrées** : L'alternative sûre - des espaces réservés (`?`) séparent les données utilisateur des commandes SQL
 > - **Condition de concurrence (race condition)** : Quand deux opérations se produisent en même temps et interfèrent l'une avec l'autre
@@ -412,7 +412,7 @@ Ce fichier illustre des schémas de sécurité réels que vous rencontrerez dans
 
 ### Comprendre une erreur
 
-Collez une trace de pile directement dans votre prompt avec une référence de fichier `@` afin que Copilot CLI puisse relier l'erreur au code source.
+Colle une trace de pile directement dans ton prompt avec une référence de fichier `@` afin que Copilot CLI puisse relier l'erreur au code source.
 
 ```bash
 copilot
@@ -426,7 +426,7 @@ copilot
 
 ### Débogage avec un cas de test
 
-Décrivez l'entrée exacte et la sortie observée pour donner à Copilot CLI un cas de test concret et reproductible à analyser.
+Décris l'entrée exacte et la sortie observée pour donner à Copilot CLI un cas de test concret et reproductible à analyser.
 
 ```bash
 copilot
@@ -437,7 +437,7 @@ copilot
 
 ### Tracer un problème à travers le code
 
-Référencez plusieurs fichiers et demandez à Copilot CLI de suivre le flux de données entre eux pour localiser l'origine du problème.
+Référence plusieurs fichiers et demande à Copilot CLI de suivre le flux de données entre eux pour localiser l'origine du problème.
 
 ```bash
 copilot
@@ -449,7 +449,7 @@ copilot
 
 ### 🆕 Reproduire le bug sans quitter la session
 
-Préfixez une ligne avec `!` pour exécuter une commande shell directement depuis votre session Copilot CLI, sans perdre le contexte de la conversation. Utile pour relancer un test qui échoue juste après avoir décrit le symptôme.
+Préfixe une ligne avec `!` pour exécuter une commande shell directement depuis ta session Copilot CLI, sans perdre le contexte de la conversation. Utile pour relancer un test qui échoue juste après avoir décrit le symptôme.
 
 ```bash
 copilot
@@ -464,9 +464,9 @@ copilot
 # Copilot CLI peut confirmer ou corriger son hypothèse à partir du résultat réel
 ```
 
-> 💡 **Astuce** : `!` (seul, sans commande) bascule en mode shell pour enchaîner plusieurs commandes de suite. `$` (seul) rend la main à votre shell interactif habituel si vous avez besoin d'une session complète.
+> 💡 **Astuce** : `!` (seul, sans commande) bascule en mode shell pour enchaîner plusieurs commandes de suite. `$` (seul) rend la main à ton shell interactif habituel si tu as besoin d'une session complète.
 
-Si l'hypothèse de Copilot CLI vous semble incertaine, demandez un second avis avec `/rubber-duck` avant d'appliquer le correctif :
+Si l'hypothèse de Copilot CLI te semble incertaine, demande un second avis avec `/rubber-duck` avant d'appliquer le correctif :
 
 ```bash
 > /rubber-duck Before I apply this fix, does the root cause explanation actually match the symptom?
@@ -474,7 +474,7 @@ Si l'hypothèse de Copilot CLI vous semble incertaine, demandez un second avis a
 
 ### Comprendre les problèmes de données
 
-Incluez un fichier de données à côté du code qui le lit afin que Copilot CLI comprenne l'ensemble du contexte lors de la suggestion d'améliorations de la gestion des erreurs.
+Inclus un fichier de données à côté du code qui le lit afin que Copilot CLI comprenne l'ensemble du contexte lors de la suggestion d'améliorations de la gestion des erreurs.
 
 ```bash
 copilot
@@ -495,7 +495,7 @@ copilot
 
 <img src="assets/test-gen-swimlane-single.png" alt="Flux de génération de tests : analyser la fonction, générer les tests, inclure les cas limites, exécuter." width="800"/>
 
-> **Essayez ceci en premier :** `@samples/book-app-project/books.py Generate pytest tests for all functions including edge cases`
+> **Essaie ceci en premier :** `@samples/book-app-project/books.py Generate pytest tests for all functions including edge cases`
 
 ### L'« explosion de tests » - 2 tests contre 15+ tests
 
@@ -504,7 +504,7 @@ En écrivant des tests manuellement, les développeurs créent généralement 2 
 - Tester une entrée invalide
 - Tester un cas limite
 
-Regardez ce qui se passe quand vous demandez à Copilot CLI de générer des tests complets ! Ce prompt utilise une liste à puces structurée avec une référence de fichier `@` pour guider Copilot CLI vers une couverture de test approfondie :
+Regarde ce qui se passe quand tu demandes à Copilot CLI de générer des tests complets ! Ce prompt utilise une liste à puces structurée avec une référence de fichier `@` pour guider Copilot CLI vers une couverture de test approfondie :
 
 ```bash
 copilot
@@ -525,13 +525,13 @@ copilot
 
 ![Test Generation Demo](assets/test-gen-demo.gif)
 
-*Le résultat de la démo peut varier. Votre modèle, vos outils et vos réponses seront différents de ce qui est montré ici.*
+*Le résultat de la démo peut varier. Ton modèle, tes outils et tes réponses seront différents de ce qui est montré ici.*
 
 </details>
 
 ---
 
-**Ce que vous obtenez** : 15+ tests complets incluant :
+**Ce que tu obtiens** : 15+ tests complets incluant :
 
 ```python
 class TestBookCollection:
@@ -574,13 +574,13 @@ class TestBookCollection:
         ...
 ```
 
-**Résultat** : En 30 secondes, vous obtenez des tests de cas limites qui prendraient une heure à imaginer et à écrire.
+**Résultat** : En 30 secondes, tu obtiens des tests de cas limites qui prendraient une heure à imaginer et à écrire.
 
 ---
 
 ### Tests unitaires
 
-Ciblez une seule fonction et énumérez les catégories d'entrées que vous voulez tester afin que Copilot CLI génère des tests unitaires ciblés et approfondis.
+Cible une seule fonction et énumère les catégories d'entrées que tu veux tester afin que Copilot CLI génère des tests unitaires ciblés et approfondis.
 
 ```bash
 copilot
@@ -595,7 +595,7 @@ copilot
 
 ### Exécuter les tests
 
-Posez à Copilot CLI une question en langage naturel sur votre chaîne d'outils. Il peut générer la bonne commande shell pour vous.
+Pose à Copilot CLI une question en langage naturel sur ta chaîne d'outils. Il peut générer la bonne commande shell pour toi.
 
 ```bash
 copilot
@@ -610,7 +610,7 @@ copilot
 
 ### Tester des scénarios spécifiques
 
-Listez des scénarios avancés ou délicats que vous voulez couvrir afin que Copilot CLI aille au-delà du cas nominal.
+Liste des scénarios avancés ou délicats que tu veux couvrir afin que Copilot CLI aille au-delà du cas nominal.
 
 ```bash
 copilot
@@ -625,7 +625,7 @@ copilot
 
 ### Ajouter des tests à un fichier existant
 
-Demandez des tests *supplémentaires* pour une seule fonction afin que Copilot CLI génère de nouveaux cas qui complètent ceux que vous avez déjà.
+Demande des tests *supplémentaires* pour une seule fonction afin que Copilot CLI génère de nouveaux cas qui complètent ceux que tu as déjà.
 
 ```bash
 copilot
@@ -650,11 +650,11 @@ copilot
 
 <img src="assets/git-integration-swimlane-single.png" alt="Flux d'intégration Git : indexer les changements, générer le message, committer, créer la PR." width="800"/>
 
-> 💡 **Ce flux de travail suppose une familiarité de base avec git** (indexation, commits, branches). Si git est nouveau pour vous, essayez d'abord les quatre autres flux de travail.
+> 💡 **Ce flux de travail suppose une familiarité de base avec git** (indexation, commits, branches). Si git est nouveau pour toi, essaie d'abord les quatre autres flux de travail.
 
 ### Générer des messages de commit
 
-> **Essayez ceci en premier :** indexez quelques changements (`git add .`), puis exécutez :
+> **Essaie ceci en premier :** indexe quelques changements (`git add .`), puis exécute :
 >
 > ```bash
 > git add .
@@ -693,7 +693,7 @@ copilot -p "Generate a conventional commit message for: $(git diff --staged)"
 
 ![Git Integration Demo](assets/git-integration-demo.gif)
 
-*Le résultat de la démo peut varier. Votre modèle, vos outils et vos réponses seront différents de ce qui est montré ici.*
+*Le résultat de la démo peut varier. Ton modèle, tes outils et tes réponses seront différents de ce qui est montré ici.*
 
 </details>
 
@@ -701,7 +701,7 @@ copilot -p "Generate a conventional commit message for: $(git diff --staged)"
 
 ### Expliquer des changements
 
-Transmettez la sortie de `git show` à un prompt `-p` pour obtenir un résumé en langage clair du dernier commit.
+Transmets la sortie de `git show` à un prompt `-p` pour obtenir un résumé en langage clair du dernier commit.
 
 ```bash
 # Qu'est-ce que ce commit a changé ?
@@ -710,7 +710,7 @@ copilot -p "Explain what this commit does: $(git show HEAD --stat)"
 
 ### Description de PR
 
-Combinez la sortie de `git log` avec un modèle de prompt structuré pour générer automatiquement une description complète de pull request.
+Combine la sortie de `git log` avec un modèle de prompt structuré pour générer automatiquement une description complète de pull request.
 
 ```bash
 # Générer une description de PR à partir des changements de la branche
@@ -726,7 +726,7 @@ Include:
 
 ### Utiliser /pr en mode interactif pour la branche actuelle
 
-Si vous travaillez avec une branche en mode interactif de Copilot CLI, vous pouvez utiliser la commande `/pr` pour travailler avec les pull requests. Utilisez `/pr` pour visualiser une PR, en créer une nouvelle, corriger une PR existante, ou laisser Copilot CLI décider automatiquement selon l'état de la branche.
+Si tu travailles avec une branche en mode interactif de Copilot CLI, tu peux utiliser la commande `/pr` pour travailler avec les pull requests. Utilise `/pr` pour visualiser une PR, en créer une nouvelle, corriger une PR existante, ou laisser Copilot CLI décider automatiquement selon l'état de la branche.
 
 ```bash
 copilot
@@ -742,11 +742,11 @@ copilot
 | `auto` | Corrige les vérifications CI jusqu'à ce qu'elles passent au vert, puis s'arrête |
 | `automerge` *(alias `agentmerge`)* 🆕 | Corrige les vérifications CI jusqu'au vert, **puis fusionne automatiquement** la PR |
 
-> ⚠️ **Attention avec `automerge`** : cette option fusionne la PR sans confirmation manuelle une fois les checks au vert. Réservez-la à des changements que vous avez déjà revus, sur des dépôts où la fusion automatique est acceptable.
+> ⚠️ **Attention avec `automerge`** : cette option fusionne la PR sans confirmation manuelle une fois les checks au vert. Réserve-la à des changements que tu as déjà revus, sur des dépôts où la fusion automatique est acceptable.
 
 ### Revue avant push
 
-Utilisez `git diff main..HEAD` dans un prompt `-p` pour une vérification rapide de bon sens avant de pousser, sur l'ensemble des changements de la branche.
+Utilise `git diff main..HEAD` dans un prompt `-p` pour une vérification rapide de bon sens avant de pousser, sur l'ensemble des changements de la branche.
 
 ```bash
 # Dernière vérification avant de pousser
@@ -756,7 +756,7 @@ $(git diff main..HEAD)"
 
 ### Utiliser /delegate pour des tâches en arrière-plan
 
-La commande `/delegate` confie le travail à l'agent cloud GitHub Copilot. Utilisez la commande slash `/delegate` (ou le raccourci `&`) pour déléguer une tâche bien définie à un agent en arrière-plan.
+La commande `/delegate` confie le travail à l'agent cloud GitHub Copilot. Utilise la commande slash `/delegate` (ou le raccourci `&`) pour déléguer une tâche bien définie à un agent en arrière-plan.
 
 ```bash
 copilot
@@ -764,19 +764,19 @@ copilot
 > /delegate Add input validation to the login form
 
 # Copilot CLI :
-# 1. Commite vos changements sur une nouvelle branche
+# 1. Commite tes changements sur une nouvelle branche
 # 2. Ouvre une pull request en brouillon
 # 3. Travaille en arrière-plan sur GitHub
-# 4. Demande votre revue une fois terminé
+# 4. Demande ta revue une fois terminé
 ```
 
-C'est idéal pour des tâches bien définies que vous voulez voir accomplies pendant que vous vous concentrez sur autre chose.
+C'est idéal pour des tâches bien définies que tu veux voir accomplies pendant que tu te concentres sur autre chose.
 
 ### Utiliser /diff pour relire et commenter les changements
 
 La commande `/diff` ouvre un véritable **mode de revue interactif** sur les changements du répertoire courant (elle bascule automatiquement sur le diff de branche quand l'arbre de travail est propre). Elle fonctionne aussi dans des dossiers qui ne sont pas des dépôts git.
 
-> 🧪 **Expérimental** : `/diff` est marquée expérimentale dans la documentation officielle. Si elle ne répond pas, activez les fonctionnalités expérimentales avec `/experimental on`.
+> 🧪 **Expérimental** : `/diff` est marquée expérimentale dans la documentation officielle. Si elle ne répond pas, active les fonctionnalités expérimentales avec `/experimental on`.
 
 ```bash
 copilot
@@ -802,31 +802,31 @@ Une fois en mode diff, quelques raccourcis utiles :
 
 > 💡 **Pourquoi c'est utile** : laisser des commentaires ligne par ligne avec `c` puis les soumettre avec `Enter` revient à faire une auto-revue de PR directement dans le terminal, avant même d'ouvrir GitHub.
 
-### Créer une branche de votre session avec /branch ou /fork
+### Créer une branche de ta session avec /branch ou /fork
 
-Parfois, vous voulez explorer deux approches différentes d'un problème sans perdre votre conversation d'origine. La commande `/branch` (aussi disponible sous `/fork`) crée une copie de votre session actuelle afin que vous puissiez essayer une direction différente puis comparer les résultats.
+Parfois, tu veux explorer deux approches différentes d'un problème sans perdre ta conversation d'origine. La commande `/branch` (aussi disponible sous `/fork`) crée une copie de ta session actuelle afin que tu puisses essayer une direction différente puis comparer les résultats.
 
 ```bash
 copilot
 
 > Fix the find_by_author function to support partial matches
 
-# Vous voulez essayer une approche différente — créez d'abord une branche !
+# Tu veux essayer une approche différente — crée d'abord une branche !
 > /branch
 
-# Vous êtes maintenant dans une nouvelle copie de session. Essayez votre approche alternative :
+# Tu es maintenant dans une nouvelle copie de session. Essaie ton approche alternative :
 > Fix find_by_author using a different regex-based strategy
 
-# Si le résultat ne vous plaît pas, revenez à votre session d'origine avec /session
+# Si le résultat ne te plaît pas, reviens à ta session d'origine avec /session
 ```
 
-> 💡 **`/branch` et `/fork` sont identiques** : Les deux commandes font exactement la même chose. `/branch` a été ajoutée comme nom plus intuitif. Utilisez celle qui vous convient le mieux. 🆕 Les deux acceptent désormais un nom optionnel (`/branch nom-de-session`, `/fork nom-de-session`) pour retrouver facilement la copie dans votre liste de sessions.
+> 💡 **`/branch` et `/fork` sont identiques** : Les deux commandes font exactement la même chose. `/branch` a été ajoutée comme nom plus intuitif. Utilise celle qui te convient le mieux. 🆕 Les deux acceptent désormais un nom optionnel (`/branch nom-de-session`, `/fork nom-de-session`) pour retrouver facilement la copie dans ta liste de sessions.
 
-> 💡 **Quand créer une branche** : Créer une branche est utile quand vous n'êtes pas sûr de quelle approche est la meilleure et que vous voulez garder les deux options ouvertes.
+> 💡 **Quand créer une branche** : Créer une branche est utile quand tu n'es pas sûr de quelle approche est la meilleure et que tu veux garder les deux options ouvertes.
 
 ### Isoler un flux de travail avec /worktree, /move ou --worktree
 
-`/branch` et `/fork` dupliquent votre *conversation*, mais les fichiers restent partagés sur le même disque. Pour de vraies copies de travail isolées — utile quand vous voulez travailler sur plusieurs branches en parallèle sans faire de `git stash` — utilisez plutôt un [worktree git](../GLOSSARY.md#worktree) dédié.
+`/branch` et `/fork` dupliquent ta *conversation*, mais les fichiers restent partagés sur le même disque. Pour de vraies copies de travail isolées — utile quand tu veux travailler sur plusieurs branches en parallèle sans faire de `git stash` — utilise plutôt un [worktree git](../GLOSSARY.md#worktree) dédié.
 
 > 🆕 *(depuis Copilot CLI v1.0.79)* Ajout expérimental de `/worktree new`, qui démarre une nouvelle session Copilot CLI dans un nouveau worktree git.
 
@@ -836,16 +836,16 @@ copilot
 > /worktree new
 
 # Crée un nouveau worktree git et démarre une session dedans :
-# vos fichiers sur disque sont réellement séparés de votre checkout actuel
+# tes fichiers sur disque sont réellement séparés de ton checkout actuel
 ```
 
-Vous pouvez aussi démarrer directement une session dans un nouveau worktree depuis la ligne de commande, sans passer par le mode interactif :
+Tu peux aussi démarrer directement une session dans un nouveau worktree depuis la ligne de commande, sans passer par le mode interactif :
 
 ```bash
 copilot --worktree
 ```
 
-🆕 `/worktree` accepte désormais directement un nom de branche ou une description de tâche, et **bascule votre session courante** dans le nouveau worktree (vos changements non commités restent derrière, dans le worktree d'origine) :
+🆕 `/worktree` accepte désormais directement un nom de branche ou une description de tâche, et **bascule ta session courante** dans le nouveau worktree (tes changements non commités restent derrière, dans le worktree d'origine) :
 
 ```bash
 copilot
@@ -858,7 +858,7 @@ copilot
 # et un nom de branche est généré automatiquement à partir de la conversation
 ```
 
-🆕 Si vous avez déjà des changements non commités et voulez les **déplacer** (plutôt que les laisser) vers un nouveau worktree, utilisez `/move` :
+🆕 Si tu as déjà des changements non commités et que tu veux les **déplacer** (plutôt que les laisser) vers un nouveau worktree, utilise `/move` :
 
 ```bash
 copilot
@@ -867,11 +867,11 @@ copilot
 # Déplace les changements non commités du checkout courant vers le nouveau worktree
 ```
 
-> 💡 **`/worktree` vs `/move`** : `/worktree` laisse vos changements non commités dans le worktree d'origine et démarre propre dans le nouveau. `/move` emporte ces changements avec vous.
+> 💡 **`/worktree` vs `/move`** : `/worktree` laisse tes changements non commités dans le worktree d'origine et démarre propre dans le nouveau. `/move` emporte ces changements avec toi.
 
-> 💡 **`/branch`/`/fork` vs `/worktree`** : `/branch` (ou `/fork`) est léger et rapide - il duplique la conversation, mais vous restez sur le même checkout de fichiers. `/worktree` (et `--worktree`) crée un dossier de checkout entièrement séparé : idéal pour garder une branche en cours de review pendant que vous travaillez déjà sur la suivante, sans conflits de fichiers ni stash.
+> 💡 **`/branch`/`/fork` vs `/worktree`** : `/branch` (ou `/fork`) est léger et rapide - il duplique la conversation, mais tu restes sur le même checkout de fichiers. `/worktree` (et `--worktree`) crée un dossier de checkout entièrement séparé : idéal pour garder une branche en cours de review pendant que tu travailles déjà sur la suivante, sans conflits de fichiers ni stash.
 
-> 🆕 *(depuis Copilot CLI v1.0.81)* Le réglage `worktreeBaseRef` contrôle si `/worktree`, `/worktree new` et `--worktree` démarrent depuis `HEAD` ou depuis la branche distante par défaut. Par défaut, les trois démarrent depuis `HEAD` (le checkout courant) ; réglez `worktreeBaseRef` sur `"defaultBranch"` pour démarrer plutôt depuis la branche distante par défaut.
+> 🆕 *(depuis Copilot CLI v1.0.81)* Le réglage `worktreeBaseRef` contrôle si `/worktree`, `/worktree new` et `--worktree` démarrent depuis `HEAD` ou depuis la branche distante par défaut. Par défaut, les trois démarrent depuis `HEAD` (le checkout courant) ; règle `worktreeBaseRef` sur `"defaultBranch"` pour démarrer plutôt depuis la branche distante par défaut.
 
 </details>
 
@@ -879,7 +879,7 @@ copilot
 
 ## Astuce rapide : rechercher avant de planifier ou coder
 
-Quand vous avez besoin d'investiguer une bibliothèque, comprendre des bonnes pratiques, ou explorer un sujet inconnu, utilisez `/research` pour lancer une investigation de recherche approfondie avant d'écrire du code :
+Quand tu as besoin d'investiguer une bibliothèque, comprendre des bonnes pratiques, ou explorer un sujet inconnu, utilise `/research` pour lancer une investigation de recherche approfondie avant d'écrire du code :
 
 ```bash
 copilot
@@ -887,9 +887,9 @@ copilot
 > /research What are the best Python libraries for validating user input in CLI apps?
 ```
 
-Copilot recherche dans les dépôts GitHub et des sources web, puis renvoie un résumé avec des références. Ceci est utile lorsque vous êtes sur le point de commencer une nouvelle fonctionnalité et que vous voulez prendre des décisions éclairées d'abord. Vous pouvez partager les résultats avec `/share`.
+Copilot recherche dans les dépôts GitHub et des sources web, puis renvoie un résumé avec des références. Ceci est utile lorsque tu es sur le point de commencer une nouvelle fonctionnalité et que tu veux prendre des décisions éclairées d'abord. Tu peux partager les résultats avec `/share`.
 
-> 💡 **Astuce** : `/research` fonctionne bien *avant* `/plan`. Recherchez l'approche, puis planifiez l'implémentation.
+> 💡 **Astuce** : `/research` fonctionne bien *avant* `/plan`. Recherche l'approche, puis planifie l'implémentation.
 
 ---
 
@@ -939,15 +939,15 @@ copilot -p "Generate commit message for: $(git diff --staged)"
 git commit -m "<coller le message généré>"
 ```
 
-> 🆕 **Rester dans la même session** : au lieu de `/exit` puis `git add .` dans un terminal séparé, vous pouvez préfixer une commande shell avec `!` pour l'exécuter directement depuis la session interactive, sans perdre le contexte de conversation :
+> 🆕 **Rester dans la même session** : au lieu de `/exit` puis `git add .` dans un terminal séparé, tu peux préfixer une commande shell avec `!` pour l'exécuter directement depuis la session interactive, sans perdre le contexte de conversation :
 > ```bash
 > > !git add .
 > > !git diff --staged
 > > /review
 > ```
-> Utile si vous voulez que Copilot CLI enchaîne l'indexation, une dernière revue avec `/review`, puis le message de commit, sans changer de fenêtre.
+> Utile si tu veux que Copilot CLI enchaîne l'indexation, une dernière revue avec `/review`, puis le message de commit, sans changer de fenêtre.
 >
-> 🆕 **Reprendre après un `-p`** : le résumé affiché à la fin d'une commande `copilot -p "..."` inclut désormais un indice `--resume=SESSION-ID`. S'il vous reste des questions après le commit, vous pouvez reprendre cette même session en mode interactif au lieu d'en démarrer une nouvelle.
+> 🆕 **Reprendre après un `-p`** : le résumé affiché à la fin d'une commande `copilot -p "..."` inclut désormais un indice `--resume=SESSION-ID`. S'il te reste des questions après le commit, tu peux reprendre cette même session en mode interactif au lieu d'en démarrer une nouvelle.
 
 ### Résumé du flux de correction de bug
 
@@ -967,26 +967,26 @@ git commit -m "<coller le message généré>"
 
 <img src="../assets/practice.png" alt="Bureau chaleureux avec un moniteur affichant du code, une lampe, une tasse de café et un casque, prêt pour la pratique" width="800"/>
 
-C'est maintenant à vous d'appliquer ces flux de travail.
+C'est maintenant à toi d'appliquer ces flux de travail.
 
 ---
 
-## ▶️ À vous d'essayer
+## ▶️ À toi d'essayer
 
-Après avoir terminé les démonstrations, essayez ces variations :
+Après avoir terminé les démonstrations, essaie ces variations :
 
-1. **Défi du détective de bug** : Demandez à Copilot CLI de déboguer la fonction `mark_as_read` dans `samples/book-app-buggy/books_buggy.py`. A-t-il expliqué pourquoi la fonction marque TOUS les livres comme lus au lieu d'un seul ?
+1. **Défi du détective de bug** : Demande à Copilot CLI de déboguer la fonction `mark_as_read` dans `samples/book-app-buggy/books_buggy.py`. A-t-il expliqué pourquoi la fonction marque TOUS les livres comme lus au lieu d'un seul ?
 
-2. **Défi de test** : Générez des tests pour la fonction `add_book` dans l'application de livres. Comptez combien de cas limites Copilot CLI inclut auxquels vous n'auriez pas pensé.
+2. **Défi de test** : Génère des tests pour la fonction `add_book` dans l'application de livres. Compte combien de cas limites Copilot CLI inclut auxquels tu n'aurais pas pensé.
 
-3. **Défi du message de commit** : Faites un petit changement dans un fichier de l'application de livres, indexez-le (`git add .`), puis exécutez :
+3. **Défi du message de commit** : Fais un petit changement dans un fichier de l'application de livres, indexe-le (`git add .`), puis exécute :
    ```bash
    git diff --staged
    copilot -p "Generate a conventional commit message for: $(git diff --staged)"
    ```
-   Vérifiez que le diff indexé est bien le bon changement et que le message généré décrit précisément ce qui a été modifié. Le message est-il meilleur que ce que vous auriez écrit rapidement ?
+   Vérifie que le diff indexé est bien le bon changement et que le message généré décrit précisément ce qui a été modifié. Le message est-il meilleur que ce que tu aurais écrit rapidement ?
 
-**Auto-vérification** : Vous comprenez les flux de travail de développement quand vous pouvez expliquer pourquoi « déboguer ce bug » est plus puissant que « trouver des bugs » (le contexte compte !).
+**Auto-vérification** : Tu comprends les flux de travail de développement quand tu peux expliquer pourquoi « déboguer ce bug » est plus puissant que « trouver des bugs » (le contexte compte !).
 
 ---
 
@@ -994,18 +994,18 @@ Après avoir terminé les démonstrations, essayez ces variations :
 
 ### Défi principal : refactoriser, tester et livrer
 
-Les exemples pratiques se sont concentrés sur `find_book_by_title` et les revues de code. Maintenant, mettez en pratique les mêmes compétences de flux de travail sur d'autres fonctions dans `book-app-project` :
+Les exemples pratiques se sont concentrés sur `find_book_by_title` et les revues de code. Maintenant, mets en pratique les mêmes compétences de flux de travail sur d'autres fonctions dans `book-app-project` :
 
-1. **Revue** : Demandez à Copilot CLI de relire `remove_book()` dans `books.py` pour les cas limites et problèmes potentiels :
+1. **Revue** : Demande à Copilot CLI de relire `remove_book()` dans `books.py` pour les cas limites et problèmes potentiels :
    `@samples/book-app-project/books.py Review the remove_book() function. What happens if the title partially matches another book (e.g., "Dune" vs "Dune Messiah")? Are there any edge cases not handled?`
-2. **Refactoring** : Demandez à Copilot CLI d'améliorer `remove_book()` pour gérer des cas limites comme la correspondance insensible à la casse et retourner un retour utile lorsqu'un livre n'est pas trouvé
-3. **Test** : Générez des tests pytest spécifiquement pour la fonction `remove_book()` améliorée, couvrant :
+2. **Refactoring** : Demande à Copilot CLI d'améliorer `remove_book()` pour gérer des cas limites comme la correspondance insensible à la casse et retourner un retour utile lorsqu'un livre n'est pas trouvé
+3. **Test** : Génère des tests pytest spécifiquement pour la fonction `remove_book()` améliorée, couvrant :
    - Supprimer un livre qui existe
    - Correspondance de titre insensible à la casse
    - Un livre qui n'existe pas retourne un retour approprié
    - Suppression depuis une collection vide
-4. **Revue** : Indexez vos changements et exécutez `/review` pour vérifier les problèmes restants
-5. **Commit** : Générez un message de commit conventionnel après avoir indexé les changements :
+4. **Revue** : Indexe tes changements et exécute `/review` pour vérifier les problèmes restants
+5. **Commit** : Génère un message de commit conventionnel après avoir indexé les changements :
    ```bash
    git add .
    git diff --staged
@@ -1040,15 +1040,15 @@ copilot
 > Generate a conventional commit message for this refactor
 ```
 
-**Astuce :** Après avoir amélioré `remove_book()`, essayez de demander à Copilot CLI : « Y a-t-il d'autres fonctions dans ce fichier qui pourraient bénéficier des mêmes améliorations ? ». Il pourrait suggérer des changements similaires à `find_book_by_title()` ou `find_by_author()`.
+**Astuce :** Après avoir amélioré `remove_book()`, essaie de demander à Copilot CLI : « Y a-t-il d'autres fonctions dans ce fichier qui pourraient bénéficier des mêmes améliorations ? ». Il pourrait suggérer des changements similaires à `find_book_by_title()` ou `find_by_author()`.
 
 </details>
 
 ### Défi bonus : créer une application avec Copilot CLI
 
-> 💡 **Remarque** : Cet exercice GitHub Skills utilise **Node.js** plutôt que Python. Les techniques de GitHub Copilot CLI que vous pratiquerez - créer des issues, générer du code et collaborer depuis le terminal - s'appliquent à n'importe quel langage.
+> 💡 **Remarque** : Cet exercice GitHub Skills utilise **Node.js** plutôt que Python. Les techniques de GitHub Copilot CLI que tu pratiqueras - créer des issues, générer du code et collaborer depuis le terminal - s'appliquent à n'importe quel langage.
 
-Cet exercice montre aux développeurs comment utiliser GitHub Copilot CLI pour créer des issues, générer du code et collaborer depuis le terminal en construisant une application calculatrice Node.js. Vous installerez le CLI, utiliserez des modèles et des agents, et pratiquerez un développement itératif piloté par la ligne de commande.
+Cet exercice montre aux développeurs comment utiliser GitHub Copilot CLI pour créer des issues, générer du code et collaborer depuis le terminal en construisant une application calculatrice Node.js. Tu installeras le CLI, utiliseras des modèles et des agents, et pratiqueras un développement itératif piloté par la ligne de commande.
 
 ##### <img src="../assets/github-skills-logo.png" width="28" align="center" /> [Démarrer l'exercice Skills « Create applications with the Copilot CLI »](https://github.com/skills/create-applications-with-the-copilot-cli)
 
@@ -1061,15 +1061,15 @@ Cet exercice montre aux développeurs comment utiliser GitHub Copilot CLI pour c
 
 | Erreur | Ce qui se passe | Correction |
 |---------|--------------|-----|
-| Utiliser des prompts vagues comme « Review this code » | Un retour générique qui passe à côté des problèmes spécifiques | Soyez précis : « Review for SQL injection, XSS, and auth issues » |
-| Ne pas utiliser `/review` pour les revues de code | Se priver de l'agent code-review optimisé | Utilisez `/review`, réglé pour une sortie à haut rapport signal/bruit |
-| Demander de « trouver des bugs » sans contexte | Copilot CLI ne sait pas quel bug vous rencontrez | Décrivez le symptôme : « Users report X happens when Y » |
-| Générer des tests sans préciser le framework | Les tests peuvent utiliser une syntaxe ou une bibliothèque d'assertions incorrecte | Précisez : « Generate tests using Jest » ou « using pytest » |
-| `/diff` ne répond pas | La commande est marquée expérimentale et peut être désactivée par défaut | Activez-la avec `/experimental on`, ou listez les commandes disponibles avec `copilot help commands` |
+| Utiliser des prompts vagues comme « Review this code » | Un retour générique qui passe à côté des problèmes spécifiques | Sois précis : « Review for SQL injection, XSS, and auth issues » |
+| Ne pas utiliser `/review` pour les revues de code | Se priver de l'agent code-review optimisé | Utilise `/review`, réglé pour une sortie à haut rapport signal/bruit |
+| Demander de « trouver des bugs » sans contexte | Copilot CLI ne sait pas quel bug tu rencontres | Décris le symptôme : « Users report X happens when Y » |
+| Générer des tests sans préciser le framework | Les tests peuvent utiliser une syntaxe ou une bibliothèque d'assertions incorrecte | Précise : « Generate tests using Jest » ou « using pytest » |
+| `/diff` ne répond pas | La commande est marquée expérimentale et peut être désactivée par défaut | Active-la avec `/experimental on`, ou liste les commandes disponibles avec `copilot help commands` |
 
 ### Dépannage
 
-**La revue semble incomplète** - Soyez plus précis sur ce qu'il faut chercher :
+**La revue semble incomplète** - Sois plus précis sur ce qu'il faut chercher :
 
 ```bash
 copilot
@@ -1077,11 +1077,11 @@ copilot
 # Au lieu de :
 > Review @samples/book-app-project/book_app.py
 
-# Essayez :
+# Essaie :
 > Review @samples/book-app-project/book_app.py for input validation, error handling, and edge cases
 ```
 
-**Les tests ne correspondent pas à mon framework** - Précisez le framework :
+**Les tests ne correspondent pas à mon framework** - Précise le framework :
 
 ```bash
 copilot
@@ -1089,7 +1089,7 @@ copilot
 > @samples/book-app-project/books.py Generate tests using pytest (not unittest)
 ```
 
-**Le refactoring change le comportement** - Demandez à Copilot CLI de préserver le comportement :
+**Le refactoring change le comportement** - Demande à Copilot CLI de préserver le comportement :
 
 ```bash
 copilot
@@ -1108,20 +1108,20 @@ copilot
 <img src="assets/specialized-workflows.png" alt="Des flux de travail spécialisés pour chaque tâche : revue de code, refactoring, débogage, tests et intégration Git" width="800"/>
 
 1. La **revue de code** devient complète avec des prompts précis
-2. Le **refactoring** est plus sûr quand vous générez d'abord des tests
+2. Le **refactoring** est plus sûr quand tu génères d'abord des tests
 3. Le **débogage** bénéficie de montrer à Copilot CLI l'erreur ET le code
 4. La **génération de tests** doit inclure les cas limites et les scénarios d'erreur
 5. L'**intégration git** automatise les messages de commit et les descriptions de PR
 
-> 📋 **Référence rapide** : Consultez la [référence des commandes GitHub Copilot CLI](https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference) pour une liste complète des commandes et raccourcis.
+> 📋 **Référence rapide** : Consulte la [référence des commandes GitHub Copilot CLI](https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference) pour une liste complète des commandes et raccourcis.
 
 ---
 
-## ✅ Point de contrôle : vous maîtrisez l'essentiel
+## ✅ Point de contrôle : tu maîtrises l'essentiel
 
-**Félicitations !** Vous avez maintenant toutes les compétences de base pour être productif avec GitHub Copilot CLI :
+**Félicitations !** Tu as maintenant toutes les compétences de base pour être productif avec GitHub Copilot CLI :
 
-| Compétence | Chapitre | Vous pouvez maintenant... |
+| Compétence | Chapitre | Tu peux maintenant... |
 |-------|---------|----------------|
 | Commandes de base | Ch 02 | Utiliser le mode interactif, le mode plan, le mode programmatique (-p) et les commandes slash |
 | Contexte | Ch 03 | Référencer des fichiers avec `@`, gérer des sessions, comprendre les fenêtres de contexte |
@@ -1131,20 +1131,20 @@ Les chapitres 05 à 07 couvrent des fonctionnalités supplémentaires qui apport
 
 ---
 
-## 🛠️ Construire votre flux de travail personnel
+## 🛠️ Construire ton flux de travail personnel
 
-Il n'existe pas de « bonne » façon unique d'utiliser GitHub Copilot CLI. Voici quelques conseils pendant que vous développez vos propres habitudes :
+Il n'existe pas de « bonne » façon unique d'utiliser GitHub Copilot CLI. Voici quelques conseils pendant que tu développes tes propres habitudes :
 
 > 📚 **Documentation officielle** : [Bonnes pratiques Copilot CLI](https://docs.github.com/en/copilot/how-tos/copilot-cli/cli-best-practices) pour des flux de travail recommandés et des astuces de GitHub.
 
-- **Commencez par `/plan`** pour tout ce qui n'est pas trivial. Affinez le plan avant l'exécution - un bon plan mène à de meilleurs résultats.
-- **Automatisez les tâches routinières avec `--plan --mode autopilot`.** *(depuis Copilot CLI v1.0.79)* 🆕 En combinant les deux, Copilot CLI planifie d'abord la tâche, puis l'implémente directement sans attendre votre approbation à chaque étape. Réservez cette combinaison aux tâches routinières ou déjà bien maîtrisées.
-- **Plafonnez la dépense avec `/goal --max-ai-credits N`.** 🆕 En mode interactif, `/autopilot [OBJECTIF]` (ou son alias `/goal [OBJECTIF]`) démarre ou réoriente le mode autopilot ; ajoutez `--max-ai-credits N` pour plafonner les crédits IA consommés sur cet objectif (ex. `/goal Refactor remove_book --max-ai-credits 5`). Une fois le plafond atteint, autopilot se met en pause et affiche un panneau pour reprendre avec une nouvelle fenêtre de crédits. `/goal on`/`/goal off` bascule le mode sans fixer de nouvel objectif.
-- **Enchaînez plusieurs étapes sans attendre.** *(depuis Copilot CLI v1.0.79)* 🆕 Vous pouvez mettre en file d'attente des prompts, des commandes shell et certaines commandes slash : ils s'exécutent dans l'ordre dès que la tâche en cours se termine, sans que vous ayez à surveiller la session pour enchaîner manuellement les étapes d'un flux de travail.
-- **Sauvegardez les prompts qui fonctionnent bien.** Quand Copilot CLI fait une erreur, notez ce qui n'a pas marché. Avec le temps, cela devient votre carnet de bord personnel.
-- **Expérimentez librement.** Certains développeurs préfèrent des prompts longs et détaillés. D'autres préfèrent des prompts courts avec des relances. Essayez différentes approches et voyez ce qui vous semble naturel.
+- **Commence par `/plan`** pour tout ce qui n'est pas trivial. Affine le plan avant l'exécution - un bon plan mène à de meilleurs résultats.
+- **Automatise les tâches routinières avec `--plan --mode autopilot`.** *(depuis Copilot CLI v1.0.79)* 🆕 En combinant les deux, Copilot CLI planifie d'abord la tâche, puis l'implémente directement sans attendre ton approbation à chaque étape. Réserve cette combinaison aux tâches routinières ou déjà bien maîtrisées.
+- **Plafonne la dépense avec `/goal --max-ai-credits N`.** 🆕 En mode interactif, `/autopilot [OBJECTIF]` (ou son alias `/goal [OBJECTIF]`) démarre ou réoriente le mode autopilot ; ajoute `--max-ai-credits N` pour plafonner les crédits IA consommés sur cet objectif (ex. `/goal Refactor remove_book --max-ai-credits 5`). Une fois le plafond atteint, autopilot se met en pause et affiche un panneau pour reprendre avec une nouvelle fenêtre de crédits. `/goal on`/`/goal off` bascule le mode sans fixer de nouvel objectif.
+- **Enchaîne plusieurs étapes sans attendre.** *(depuis Copilot CLI v1.0.79)* 🆕 Tu peux mettre en file d'attente des prompts, des commandes shell et certaines commandes slash : ils s'exécutent dans l'ordre dès que la tâche en cours se termine, sans que tu aies à surveiller la session pour enchaîner manuellement les étapes d'un flux de travail.
+- **Sauvegarde les prompts qui fonctionnent bien.** Quand Copilot CLI fait une erreur, note ce qui n'a pas marché. Avec le temps, cela devient ton carnet de bord personnel.
+- **Expérimente librement.** Certains développeurs préfèrent des prompts longs et détaillés. D'autres préfèrent des prompts courts avec des relances. Essaie différentes approches et vois ce qui te semble naturel.
 
-> 💡 **À venir** : Dans les chapitres 05 et 06, vous apprendrez à codifier vos meilleures pratiques en instructions personnalisées et en skills que Copilot CLI charge automatiquement.
+> 💡 **À venir** : Dans les chapitres 05 et 06, tu apprendras à codifier tes meilleures pratiques en instructions personnalisées et en skills que Copilot CLI charge automatiquement.
 
 ---
 
@@ -1152,19 +1152,19 @@ Il n'existe pas de « bonne » façon unique d'utiliser GitHub Copilot CLI. Voic
 
 Les chapitres restants couvrent des fonctionnalités supplémentaires qui étendent les capacités de Copilot CLI :
 
-| Chapitre | Ce qu'il couvre | Quand vous en aurez besoin |
+| Chapitre | Ce qu'il couvre | Quand tu en auras besoin |
 |---------|----------------|---------------------|
-| Ch 05 : Agents | Créer des personas IA spécialisés | Quand vous voulez des experts de domaine (frontend, sécurité) |
-| Ch 06 : Skills | Charger automatiquement des instructions pour des tâches | Quand vous répétez souvent les mêmes prompts |
-| Ch 07 : MCP | Connecter des services externes | Quand vous avez besoin de données en direct depuis GitHub, des bases de données |
+| Ch 05 : Agents | Créer des personas IA spécialisés | Quand tu veux des experts de domaine (frontend, sécurité) |
+| Ch 06 : Skills | Charger automatiquement des instructions pour des tâches | Quand tu répètes souvent les mêmes prompts |
+| Ch 07 : MCP | Connecter des services externes | Quand tu as besoin de données en direct depuis GitHub, des bases de données |
 
-**Recommandation** : Essayez les flux de travail principaux pendant une semaine, puis revenez aux chapitres 05-07 quand vous aurez des besoins spécifiques.
+**Recommandation** : Essaie les flux de travail principaux pendant une semaine, puis reviens aux chapitres 05-07 quand tu auras des besoins spécifiques.
 
 ---
 
 ## Continuer vers des sujets supplémentaires
 
-Dans le **[Chapitre 05 : Agents et instructions personnalisées](../05-agents-custom-instructions/README.md)**, vous apprendrez :
+Dans le **[Chapitre 05 : Agents et instructions personnalisées](../05-agents-custom-instructions/README.md)**, tu apprendras :
 
 - Utiliser les agents intégrés (`/plan`, `/review`)
 - Créer des agents spécialisés (expert frontend, auditeur de sécurité) avec des fichiers `.agent.md`

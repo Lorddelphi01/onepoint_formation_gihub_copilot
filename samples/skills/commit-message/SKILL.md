@@ -33,9 +33,9 @@ Génère des messages de commit en suivant la spécification Conventional Commit
 ## Règles
 
 1. La ligne de sujet fait au maximum 72 caractères
-2. Utilisez l'impératif ("add" et non "added" ou "adds")
+2. Utilise l'impératif ("add" et non "added" ou "adds")
 3. Pas de point final sur la ligne de sujet
-4. Séparez le sujet du corps par une ligne vide
+4. Sépare le sujet du corps par une ligne vide
 5. Le corps explique le **quoi** et le **pourquoi**, pas le comment
 
 ## Exemples
