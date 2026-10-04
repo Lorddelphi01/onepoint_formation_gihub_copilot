@@ -1,4 +1,4 @@
-# 02-setup-and-first-steps: Votre première expérience avec Copilot CLI demo
+# 02-setup-and-first-steps: Ta première expérience avec Copilot CLI demo
 # Auto-generated from demos.json - Real copilot execution
 
 Output setup-and-first-steps-demo.gif
@@ -24,7 +24,7 @@ Enter
 Sleep 5s
 
 # Execute the prompt
-Type "<votre prompt>"
+Type "<ton prompt>"
 Sleep 2s
 Enter
 

@@ -296,7 +296,7 @@ uninstall_zsh_syntax_highlighting() {
 
 uninstall_tmux() {
     if tool_is_installed tmux-plugins; then
-        echo "⚠️  tmux-plugins (TPM) dépend de tmux : désinstallez-le d'abord (--uninstall=tmux-plugins)." >&2
+        echo "⚠️  tmux-plugins (TPM) dépend de tmux : désinstalle-le d'abord (--uninstall=tmux-plugins)." >&2
         return 1
     fi
     if ! tool_is_installed tmux; then echo "⬜ tmux n'est pas installé."; return 0; fi
@@ -399,9 +399,9 @@ print_status_list() {
 
 print_footer() {
     echo "----------------------------------------------------"
-    echo "1. Ouvrez un nouveau terminal (zsh est déjà votre shell par défaut sur macOS)."
-    echo "2. Tapez 'source ~/.zshrc' pour charger la configuration immédiatement."
-    echo "3. Tapez 'tmux' pour démarrer votre première session persistante."
+    echo "1. Ouvre un nouveau terminal (zsh est déjà ton shell par défaut sur macOS)."
+    echo "2. Tape 'source ~/.zshrc' pour charger la configuration immédiatement."
+    echo "3. Tape 'tmux' pour démarrer ta première session persistante."
 }
 
 run_interactive_menu() {
@@ -421,7 +421,7 @@ run_interactive_menu() {
         echo "   a) Installer tous les outils"
         echo "   u) Désinstaller tous les outils"
         echo "   q) Quitter"
-        read -r -p "Votre choix : " choice
+        read -r -p "Ton choix : " choice
         case "$choice" in
             a | A) do_install_all ;;
             u | U)

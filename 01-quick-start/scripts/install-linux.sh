@@ -18,7 +18,7 @@ else
     if ! (curl -fsSL https://gh.io/copilot-install | bash); then
         echo "⚠️  Le script d'installation a échoué, tentative via npm..."
         if ! command -v npm &> /dev/null; then
-            echo "❌ npm introuvable. Installez Node.js LTS (https://nodejs.org), puis relancez ce script." >&2
+            echo "❌ npm introuvable. Installe Node.js LTS (https://nodejs.org), puis relance ce script." >&2
             exit 1
         fi
         npm install -g @github/copilot
@@ -28,7 +28,7 @@ fi
 # --- 2. Vérifier la version installée ---
 echo "🔎 Vérification de la version installée..."
 if ! command -v copilot &> /dev/null; then
-    echo "❌ 'copilot' reste introuvable dans le PATH. Fermez et rouvrez votre terminal, puis relancez : copilot --version" >&2
+    echo "❌ 'copilot' reste introuvable dans le PATH. Ferme et rouvre ton terminal, puis relance : copilot --version" >&2
     exit 1
 fi
 copilot --version
@@ -43,7 +43,7 @@ elif command -v python &> /dev/null; then
 fi
 
 if [ -z "$PYTHON_BIN" ]; then
-    echo "⚠️  Python introuvable : installez Python 3.10+ (https://www.python.org/downloads/) pour utiliser la Book App."
+    echo "⚠️  Python introuvable : installe Python 3.10+ (https://www.python.org/downloads/) pour utiliser la Book App."
 else
     "$PYTHON_BIN" --version
     (cd "$REPO_ROOT/samples/book-app-project" && "$PYTHON_BIN" book_app.py list)
@@ -68,14 +68,14 @@ if command -v rtk &> /dev/null; then
         echo "⚠️  'rtk gain' échoue : un autre paquet nommé 'rtk' occupe peut-être le PATH (which rtk)."
     fi
 else
-    echo "⚠️  'rtk' introuvable dans le PATH (rouvrez votre terminal si l'installation vient d'aboutir)."
+    echo "⚠️  'rtk' introuvable dans le PATH (rouvre ton terminal si l'installation vient d'aboutir)."
 fi
 
 echo "----------------------------------------------------"
 echo "✅ Installation et vérifications terminées !"
 echo "----------------------------------------------------"
 echo "Étapes manuelles restantes (interactives, non automatisables) :"
-echo "1. Lancez 'copilot' puis tapez '/login' pour vous connecter avec votre compte GitHub."
-echo "2. Posez votre première question, par exemple :"
+echo "1. Lance 'copilot' puis tape '/login' pour te connecter avec ton compte GitHub."
+echo "2. Pose ta première question, par exemple :"
 echo "   > Say hello and tell me what you can help with"
-echo "3. Optionnel : connectez RTK à Copilot CLI avec 'rtk init -g --copilot' (Chapitre 01, section C.3)."
+echo "3. Optionnel : connecte RTK à Copilot CLI avec 'rtk init -g --copilot' (Chapitre 01, section C.3)."

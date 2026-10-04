@@ -298,7 +298,7 @@ uninstall_zsh() {
     if ! tool_is_installed zsh; then echo "⬜ zsh n'est pas installé."; return 0; fi
     echo "🗑️  Désinstallation de zsh..."
     sudo apt-get remove -y zsh
-    echo "ℹ️  Le shell par défaut n'est pas modifié automatiquement ; utilisez 'chsh -s /bin/bash' si besoin."
+    echo "ℹ️  Le shell par défaut n'est pas modifié automatiquement ; utilise 'chsh -s /bin/bash' si besoin."
 }
 
 uninstall_starship() {
@@ -357,7 +357,7 @@ uninstall_zsh_syntax_highlighting() {
 
 uninstall_tmux() {
     if tool_is_installed tmux-plugins; then
-        echo "⚠️  tmux-plugins (TPM) dépend de tmux : désinstallez-le d'abord (--uninstall=tmux-plugins)." >&2
+        echo "⚠️  tmux-plugins (TPM) dépend de tmux : désinstalle-le d'abord (--uninstall=tmux-plugins)." >&2
         return 1
     fi
     if ! tool_is_installed tmux; then echo "⬜ tmux n'est pas installé."; return 0; fi
@@ -462,11 +462,11 @@ print_status_list() {
 
 print_footer() {
     echo "----------------------------------------------------"
-    echo "1. Installez la police Anka/Coder côté Windows (pas dans WSL) :"
+    echo "1. Installe la police Anka/Coder côté Windows (pas dans WSL) :"
     echo "   https://github.com/nicktindall/Anka-Coder-Font"
-    echo "   puis sélectionnez-la dans Windows Terminal ou Ghostty."
-    echo "2. Ouvrez une nouvelle session (ou lancez 'exec zsh') pour activer les changements."
-    echo "3. Tapez 'tmux' pour démarrer votre première session persistante."
+    echo "   puis sélectionne-la dans Windows Terminal ou Ghostty."
+    echo "2. Ouvre une nouvelle session (ou lance 'exec zsh') pour activer les changements."
+    echo "3. Tape 'tmux' pour démarrer ta première session persistante."
 }
 
 run_interactive_menu() {
@@ -486,7 +486,7 @@ run_interactive_menu() {
         echo "   a) Installer tous les outils"
         echo "   u) Désinstaller tous les outils"
         echo "   q) Quitter"
-        read -r -p "Votre choix : " choice
+        read -r -p "Ton choix : " choice
         case "$choice" in
             a | A) do_install_all ;;
             u | U)

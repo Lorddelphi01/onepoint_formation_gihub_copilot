@@ -27,5 +27,5 @@ echo "✅ Serveur LSP Python déclaré dans $TARGET"
 if command -v copilot &> /dev/null; then
     copilot lsp list
 else
-    echo "⚠️  'copilot' introuvable : vérifiez plus tard avec 'copilot lsp list' (attendu : python (.py))."
+    echo "⚠️  'copilot' introuvable : vérifie plus tard avec 'copilot lsp list' (attendu : python (.py))."
 fi

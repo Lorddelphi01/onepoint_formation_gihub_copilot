@@ -7,7 +7,7 @@
 
     zsh, eza, zsh-autosuggestions, zsh-syntax-highlighting, Tmux et TPM
     (tmux-resurrect/tmux-continuum) n'ont pas d'équivalent natif PowerShell :
-    pour ces outils, installez WSL Debian puis exécutez install-linux.sh.
+    pour ces outils, installe WSL Debian puis exécute install-linux.sh.
 
     Les identifiants winget d'Atuin n'ont pas pu être vérifiés sur une vraie
     machine Windows dans l'environnement qui a produit ce script — voir
@@ -54,7 +54,7 @@ Options :
 Outils gérés : $($Tools.Keys -join ', ')
 
 eza, zsh, zsh-autosuggestions, zsh-syntax-highlighting, Tmux et TPM n'ont pas
-d'équivalent natif PowerShell : installez WSL Debian puis exécutez
+d'équivalent natif PowerShell : installe WSL Debian puis exécute
 install-linux.sh depuis WSL.
 "@
 }
@@ -164,7 +164,7 @@ function Show-InteractiveMenu {
         Write-Host "   a) Installer tous les outils"
         Write-Host "   u) Désinstaller tous les outils"
         Write-Host "   q) Quitter"
-        $choice = Read-Host "Votre choix"
+        $choice = Read-Host "Ton choix"
 
         switch -Regex ($choice) {
             '^[aA]$' { Invoke-InstallAll }
@@ -197,7 +197,7 @@ if ($Help) {
 }
 
 if (-not (Get-Command winget -ErrorAction SilentlyContinue)) {
-    Write-Error "winget est introuvable. Installez 'App Installer' depuis le Microsoft Store, puis relancez ce script."
+    Write-Error "winget est introuvable. Installe 'App Installer' depuis le Microsoft Store, puis relance ce script."
     exit 1
 }
 
@@ -236,4 +236,4 @@ if ($Uninstall) {
 
 Show-InteractiveMenu
 Write-Host ""
-Write-Host "Terminé. Ouvrez un nouveau terminal PowerShell pour charger la configuration." -ForegroundColor Green
+Write-Host "Terminé. Ouvre un nouveau terminal PowerShell pour charger la configuration." -ForegroundColor Green

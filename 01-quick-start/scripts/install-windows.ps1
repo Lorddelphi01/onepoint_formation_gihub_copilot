@@ -23,7 +23,7 @@ elseif (Get-Command winget -ErrorAction SilentlyContinue) {
     if ($LASTEXITCODE -ne 0) {
         Write-Warning "Echec de l'installation via winget. Tentative via npm..."
         if (-not (Get-Command npm -ErrorAction SilentlyContinue)) {
-            Write-Error "npm introuvable. Installez Node.js LTS (https://nodejs.org), puis relancez ce script."
+            Write-Error "npm introuvable. Installe Node.js LTS (https://nodejs.org), puis relance ce script."
             exit 1
         }
         npm install -g '@github/copilot'
@@ -32,7 +32,7 @@ elseif (Get-Command winget -ErrorAction SilentlyContinue) {
 else {
     Write-Warning "winget introuvable, tentative via npm..."
     if (-not (Get-Command npm -ErrorAction SilentlyContinue)) {
-        Write-Error "npm introuvable. Installez Node.js LTS (https://nodejs.org), puis relancez ce script."
+        Write-Error "npm introuvable. Installe Node.js LTS (https://nodejs.org), puis relance ce script."
         exit 1
     }
     npm install -g '@github/copilot'
@@ -41,7 +41,7 @@ else {
 # --- 2. Verifier la version installee ---
 Write-Host "Verification de la version installee..."
 if (-not (Get-Command copilot -ErrorAction SilentlyContinue)) {
-    Write-Error "'copilot' reste introuvable dans le PATH. Fermez et rouvrez votre terminal, puis relancez : copilot --version"
+    Write-Error "'copilot' reste introuvable dans le PATH. Ferme et rouvre ton terminal, puis relance : copilot --version"
     exit 1
 }
 copilot --version
@@ -57,7 +57,7 @@ foreach ($candidate in @('python', 'py')) {
 }
 
 if (-not $PythonCmd) {
-    Write-Warning "Python introuvable : installez Python 3.10+ (https://www.python.org/downloads/) pour utiliser la Book App."
+    Write-Warning "Python introuvable : installe Python 3.10+ (https://www.python.org/downloads/) pour utiliser la Book App."
 }
 else {
     & $PythonCmd --version
@@ -95,7 +95,7 @@ if (Get-Command rtk -ErrorAction SilentlyContinue) {
     rtk --version
 }
 else {
-    Write-Warning "'rtk' introuvable dans le PATH (rouvrez votre terminal si l'installation vient d'aboutir)."
+    Write-Warning "'rtk' introuvable dans le PATH (rouvre ton terminal si l'installation vient d'aboutir)."
 }
 $ErrorActionPreference = 'Stop'
 
@@ -104,7 +104,7 @@ Write-Host "----------------------------------------------------"
 Write-Host "Installation et verifications terminees !" -ForegroundColor Green
 Write-Host "----------------------------------------------------"
 Write-Host "Etapes manuelles restantes (interactives, non automatisables) :"
-Write-Host "1. Lancez 'copilot' puis tapez '/login' pour vous connecter avec votre compte GitHub."
-Write-Host "2. Posez votre premiere question, par exemple :"
+Write-Host "1. Lance 'copilot' puis tape '/login' pour te connecter avec ton compte GitHub."
+Write-Host "2. Pose ta premiere question, par exemple :"
 Write-Host "   > Say hello and tell me what you can help with"
-Write-Host "3. Optionnel : connectez RTK a Copilot CLI avec 'rtk init -g --copilot' (Chapitre 01, section C.3)."
+Write-Host "3. Optionnel : connecte RTK a Copilot CLI avec 'rtk init -g --copilot' (Chapitre 01, section C.3)."
