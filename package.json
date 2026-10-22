@@ -18,7 +18,5 @@
     "cli",
     "tutorial",
     "course"
-  ],
-  "author": "Microsoft Corporation",
-  "license": "MIT"
+  ]
 }

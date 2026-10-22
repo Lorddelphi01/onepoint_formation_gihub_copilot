@@ -11,10 +11,8 @@ weight: 0
 
 ![Onepoint - Formation GitHub Copilot CLI](./assets/copilot-banner.png)
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)&ensp;
 [![Open project in GitHub Codespaces](https://img.shields.io/badge/Codespaces-Open-blue?style=flat-square&logo=github)](https://codespaces.new/Lorddelphi01/onepoint_formation_gihub_copilot?hide_repo_select=true&ref=main&quickstart=true)&ensp;
 [![Official Copilot CLI documentation](https://img.shields.io/badge/GitHub-CLI_Documentation-00a3ee?style=flat-square&logo=github)](https://docs.github.com/en/copilot/how-tos/copilot-cli)&ensp;
-[![Join AI Foundry Discord](https://img.shields.io/badge/Discord-AI_Community-blue?style=flat-square&logo=discord&color=5865f2&logoColor=fff)](https://aka.ms/foundry/discord)
 
 🎯 [Ce que tu vas apprendre](#-ce-que-tu-vas-apprendre) &ensp; ✅ [Prérequis](#-prérequis) &ensp; 🤖 [Famille Copilot](#-comprendre-la-famille-github-copilot) &ensp; 📚 [Catalogue de formation](#-catalogue-de-formation) &ensp; 📋 [Référence des commandes](#-référence-des-commandes-github-copilot-cli)
 
@@ -25,8 +23,6 @@ weight: 0
 GitHub Copilot CLI apporte l'assistance de l'IA directement dans ton terminal. Plutôt que de basculer vers un navigateur ou un éditeur de code, tu peux poser des questions, générer des applications complètes, relire du code, générer des tests, et déboguer des problèmes sans quitter ta ligne de commande.
 
 Imagine-le comme un collègue compétent disponible 24 h/24 et 7 j/7, capable de lire ton code, d'expliquer des motifs déroutants, et de t'aider à travailler plus vite !
-
-> 📘 **Tu préfères une expérience web ?** Tu peux suivre ce cours ici même sur GitHub, ou le consulter sur [Awesome Copilot](https://awesome-copilot.github.com/learning-hub/cli-for-beginners/) pour une expérience de navigation plus traditionnelle.
 
 ### Ce cours est conçu pour
 
@@ -66,34 +62,6 @@ Ce cours pratique t'emmène de zéro à la productivité avec GitHub Copilot CLI
 **Aucune expérience de l'IA n'est requise.** Si tu sais utiliser un terminal, tu peux apprendre cela.
 
 **Parfait pour :** les développeurs, les étudiants, et toute personne ayant une expérience du développement logiciel.
-
-## ✅ Prérequis
-
-<table>
-<tr>
-<td width="33%" valign="top">
-
-**🐙 Un compte GitHub**
-
-[Crée-en un gratuitement](https://github.com/signup)
-
-</td>
-<td width="33%" valign="top">
-
-**🔑 Un accès à GitHub Copilot**
-
-[Offre gratuite](https://github.com/features/copilot/plans) · [Abonnement mensuel](https://github.com/features/copilot/plans) · [Gratuit pour les étudiants/enseignants](https://education.github.com/pack)
-
-</td>
-<td width="33%" valign="top">
-
-**⌨️ Des bases du terminal**
-
-Être à l'aise avec `cd`, `ls`, l'exécution de commandes.
-
-</td>
-</tr>
-</table>
 
 ## 🤖 Comprendre la famille GitHub Copilot
 
@@ -473,8 +441,3 @@ npm run audit -- --report=./audit-report.md
 
 Les nouveaux assets suivent la convention `<concept>-demo.gif` pour une
 démonstration animée et `<concept>-analogy.png` pour une illustration statique.
-
-## Licence
-
-Ce projet est distribué sous les termes de la licence open source MIT. Consulte le fichier [LICENSE](./LICENSE) pour les termes complets.
-</content>
